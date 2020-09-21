@@ -1,3 +1,3 @@
 Week 1
 
-Created the group. Brainstormed on project objectives with team. Created epics, user stories, and sub tasks in Atlassian Jira. Initiated project meeting twice in the week and assigned tasks for project proposal. Discussed on available software tools, database design, chose backend programming language and frontend framework. From the project proposal I will be working on interface and flow diagrams.}
+Created the group. Brainstormed on project objectives with team. Created epics, user stories, and sub tasks in Atlassian Jira. Initiated project meeting twice in the week and assigned tasks for project proposal. Discussed on available software tools, database design, chose backend programming language and frontend framework. From the project proposal I will be working on interface and flow diagrams.

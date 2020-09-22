@@ -1,2 +1,5 @@
-# capstone-project-comp9900-h12a-5star
-capstone-project-comp9900-h12a-5star created by GitHub Classroom
+# Scripts
+This section contains the database scripts used in this project
+
+## Technology Stack
+MongoDB

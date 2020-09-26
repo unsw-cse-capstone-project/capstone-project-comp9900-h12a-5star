@@ -3,6 +3,6 @@ Week 1
 Attended two group meetings to discuss project ideas to work on.
 Decided on scrum master and allotted tasks for the project.
 Setup a work enviornment on Jira and Github
+Created User Stories and Epics on Jira
 
-Week 2
 

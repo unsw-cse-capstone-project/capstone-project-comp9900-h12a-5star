@@ -1,3 +1,5 @@
 Week 1
-
 Participated in the initial discussion to form the team and discuss the topic for the group project. Created user stories on JIRA for the project deliverables. Conducted two meetings for defining the deliverables for the project, discussed and allocated the tasks for the project proposal.
+
+Week 2
+Added additional user stories for the project objectives. Worked on the project Background section of the proposal report. Worked on the user stories and sprints section of teh proposal document. Created the innitial setup of the react applocation.

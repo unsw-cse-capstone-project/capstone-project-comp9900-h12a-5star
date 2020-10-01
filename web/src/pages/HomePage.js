@@ -1,27 +1,14 @@
-import React from 'react'
-import logo from '../logo.svg';
-
+import React from 'react';
+import { Container } from 'semantic-ui-react';
+import NavBar from '../components/NavBar';
 
 const HomePage = () => (
     <React.Fragment>
-        <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+        <NavBar />
+        <Container style={{ margin: 20 }}>
+            <p>The content will appear here</p>
+        </Container>
     </React.Fragment>
-
 );
 
 export default HomePage;

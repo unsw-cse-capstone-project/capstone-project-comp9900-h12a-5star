@@ -6,4 +6,11 @@ Made a split of work for project proposal
 
 Week 2:
 Joined github classroom
-Working on System Architecture
+Joined a meeting to discuss on worksplit and i will be working on backend as well as being scrumm master
+Started working on System Architecture
+
+Week 3:
+Finished System Architecture project proposal
+Decieded to use Django to develope API framework
+Created the environment required for backend development
+Created the MongoDB on cloud and shared the details with team

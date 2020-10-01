@@ -1,2 +1,6 @@
 Week 1:
    Participated in two Intial project meetings ,which are required to choose to topic and Recurring Meeting Time. Created User Stories in Jira for Proposal Document Epic. Task assigned : Software Architecture to Add into Proposal Document. Research on Different System Architectures done by Streaming and Website Buliding Websites. Joined JIRA team and Git-Hub Repository is Created.
+
+Week 2:
+    System Architecture Research is done and Proposal Document is updated with the System Architure Diagram . System Setup is done for Using DJANGO framework for Backend Development . Attended Weekly Scrum Meeting Held on Friday and Sunday of Week 2 . Updated Subtasks for Jira User Stories . Finalised External API'S to be used for developement(The Movie DB).
+

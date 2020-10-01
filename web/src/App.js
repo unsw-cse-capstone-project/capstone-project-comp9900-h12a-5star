@@ -5,6 +5,8 @@ import{
   Switch,
 } from 'react-router-dom';
 import './App.css';
+import NavBar from './components/NavBar';
+import NotFoundPage from './pages/NotFoundPage';
 
 import HomePage from './pages/HomePage';
 
@@ -13,6 +15,7 @@ function App() {
     <Router>
       <Switch>
         <Route path="/" component={HomePage} exact/>
+        <Route component = {NotFoundPage} />
       </Switch>
     </Router>
   );

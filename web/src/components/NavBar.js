@@ -66,6 +66,16 @@ export default class MenuExampleInvertedSegment extends Component {
           />
           <Menu.Menu position='right'>
             <Menu.Item
+              name='notification'
+              active={activeItem === 'notification'}
+              onClick={this.handleItemClick}
+            />
+            <Menu.Item
+              name='my profile'
+              active={activeItem === 'my profile'}
+              onClick={this.handleItemClick}
+            />
+            <Menu.Item
               name='my wishlist'
               active={activeItem === 'my wishlist'}
               onClick={this.handleItemClick}

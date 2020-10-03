@@ -3,17 +3,13 @@ import { Icon, Button, Menu, Segment, Search } from 'semantic-ui-react'
 import _ from 'lodash'
 import faker from 'faker'
 
-
 const source = _.times(6, () => ({
   title: faker.company.companyName(),
   description: faker.company.catchPhrase(),
   image: faker.internet.avatar(),
-  price: faker.finance.amount(0, 100, 2, '$'),
 }))
 
 const initialState = { isLoading: false, results: [], value: '' }
-
-
 
 export default class MenuExampleInvertedSegment extends Component {
   state = { activeItem: 'home', isLoading: false, results: [], value: '' }
@@ -101,7 +97,7 @@ export default class MenuExampleInvertedSegment extends Component {
               })}
               results={results}
               value={value}
-              minCharacters={2}
+              minCharacters={1}
               noResultsMessage="No movie title found."
               noResultsDescription="Don't worry! We will check other parameters once you press enter!"
             />

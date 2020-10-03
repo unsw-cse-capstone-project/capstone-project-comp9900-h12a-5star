@@ -15,7 +15,11 @@ function App() {
     <Router>
       <Switch>
         <Route path="/" component={HomePage} exact/>
-        <Route component = {NotFoundPage} />
+        <Route path="/welcome" component={HomePage} />
+        <Route path="/browse" component = {NotFoundPage} />
+        <Route path="/wishlist" component={HomePage} />
+        <Route path="/myprofile" component = {NotFoundPage} />
+        <Route path="/login" component = {NotFoundPage} />
       </Switch>
     </Router>
   );

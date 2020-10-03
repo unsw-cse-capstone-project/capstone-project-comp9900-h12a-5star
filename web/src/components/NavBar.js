@@ -24,6 +24,22 @@ export default class MenuExampleInvertedSegment extends Component {
 
   handleItemClick = (e, { name }) => {
     this.setState({ activeItem: name })
+    if (name === 'browse') {
+      window.location.href='/browse'
+    }
+    else if (name === 'home'){
+      window.location.href='/welcome'
+    }
+    else if (name === 'my wishlist'){
+      window.location.href='/wishlist'
+    }
+    else if (name === 'my profile'){
+      window.location.href='/myprofile'
+    }
+  }
+
+  performLogout = async () => {
+    window.location.href='/login'
   }
 
   handleResultSelect = (e, { result }) => this.setState({ value: result.title })
@@ -102,10 +118,10 @@ export default class MenuExampleInvertedSegment extends Component {
               <Icon name='user circle' size='large' corner/>
             </Menu.Item>
             <Menu.Item>
-              <Button primary>Sign In</Button>
+              <Button primary onClick={this.performLogout}>Logout</Button>
             </Menu.Item>
             <Menu.Item>
-              <Button primary>Logout</Button>
+              <Button primary onClick={event =>  window.location.href='/login'}>LogIn</Button>
             </Menu.Item>
           </Menu.Menu>
           

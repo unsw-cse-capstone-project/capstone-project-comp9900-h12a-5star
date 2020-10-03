@@ -1,13 +1,45 @@
 import React, { Component } from 'react'
 import { Button, Menu, Segment } from 'semantic-ui-react'
 
+import _ from 'lodash'
+import faker from 'faker'
+import { Search, Grid, Header } from 'semantic-ui-react'
+
+const source = _.times(6, () => ({
+  title: faker.company.companyName(),
+  description: faker.company.catchPhrase(),
+  image: faker.internet.avatar(),
+  price: faker.finance.amount(0, 100, 2, '$'),
+}))
+
+const initialState = { isLoading: false, results: [], value: '' }
+
+
 export default class MenuExampleInvertedSegment extends Component {
-  state = { activeItem: 'home' }
+  state = { activeItem: 'home', isLoading: false, results: [], value: '' }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
+  handleResultSelect = (e, { result }) => this.setState({ value: result.title })
+
+  handleSearchChange = (e, { value }) => {
+    this.setState({ isLoading: true, value })
+
+    setTimeout(() => {
+      if (this.state.value.length < 1) return this.setState(initialState)
+
+      const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
+      const isMatch = (result) => re.test(result.title)
+
+      this.setState({
+        isLoading: false,
+        results: _.filter(source, isMatch),
+      })
+    }, 300)
+  }
+
   render() {
-    const { activeItem } = this.state
+    const { activeItem, isLoading, value, results } = this.state
 
     return (
       <Segment inverted>
@@ -22,12 +54,22 @@ export default class MenuExampleInvertedSegment extends Component {
             active={activeItem === 'browse'}
             onClick={this.handleItemClick}
           />
-          <Menu.Menu position='right'>
-          <Menu.Item
-            name='my wishlist'
-            active={activeItem === 'my wishlist'}
-            onClick={this.handleItemClick}
+          <Search
+            input={{ icon: 'search', iconPosition: 'left' }}
+            loading={isLoading}
+            onResultSelect={this.handleResultSelect}
+            onSearchChange={_.debounce(this.handleSearchChange, 500, {
+              leading: true,
+            })}
+            results={results}
+            value={value}
           />
+          <Menu.Menu position='right'>
+            <Menu.Item
+              name='my wishlist'
+              active={activeItem === 'my wishlist'}
+              onClick={this.handleItemClick}
+            />
             <Menu.Item>
               <Button primary>Sign In</Button>
             </Menu.Item>

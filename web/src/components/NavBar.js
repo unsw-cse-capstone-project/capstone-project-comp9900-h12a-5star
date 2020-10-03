@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu, Segment } from 'semantic-ui-react'
+import { Button, Menu, Segment } from 'semantic-ui-react'
 
 export default class MenuExampleInvertedSegment extends Component {
   state = { activeItem: 'home' }
@@ -18,15 +18,21 @@ export default class MenuExampleInvertedSegment extends Component {
             onClick={this.handleItemClick}
           />
           <Menu.Item
-            name='messages'
-            active={activeItem === 'messages'}
+            name='browse'
+            active={activeItem === 'browse'}
             onClick={this.handleItemClick}
           />
+          <Menu.Menu position='right'>
           <Menu.Item
-            name='friends'
-            active={activeItem === 'friends'}
+            name='my wishlist'
+            active={activeItem === 'my wishlist'}
             onClick={this.handleItemClick}
           />
+            <Menu.Item>
+              <Button primary>Sign In</Button>
+            </Menu.Item>
+          </Menu.Menu>
+          
         </Menu>
       </Segment>
     )

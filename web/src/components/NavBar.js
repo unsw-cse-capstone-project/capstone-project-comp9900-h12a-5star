@@ -90,6 +90,9 @@ export default class MenuExampleInvertedSegment extends Component {
             <Menu.Item>
               <Button primary>Sign In</Button>
             </Menu.Item>
+            <Menu.Item>
+              <Button primary>Logout</Button>
+            </Menu.Item>
           </Menu.Menu>
           
         </Menu>

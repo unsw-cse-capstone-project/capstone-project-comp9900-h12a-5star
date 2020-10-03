@@ -4,6 +4,7 @@ import { Button, Menu, Segment } from 'semantic-ui-react'
 import _ from 'lodash'
 import faker from 'faker'
 import { Search, Grid, Header } from 'semantic-ui-react'
+import { ReactComponent as Logo } from '../images/logo192.png';
 
 const source = _.times(6, () => ({
   title: faker.company.companyName(),
@@ -13,6 +14,7 @@ const source = _.times(6, () => ({
 }))
 
 const initialState = { isLoading: false, results: [], value: '' }
+
 
 
 export default class MenuExampleInvertedSegment extends Component {
@@ -44,16 +46,11 @@ export default class MenuExampleInvertedSegment extends Component {
     return (
       <Segment inverted>
         <Menu inverted secondary>
-          <Menu.Item
-            name='home'
-            active={activeItem === 'home'}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            name='browse'
-            active={activeItem === 'browse'}
-            onClick={this.handleItemClick}
-          />
+          <Menu.Item>
+            5Star logo
+          </Menu.Item>
+          
+          
           <Search
             input={{ icon: 'search', iconPosition: 'left' }}
             loading={isLoading}
@@ -65,6 +62,16 @@ export default class MenuExampleInvertedSegment extends Component {
             value={value}
           />
           <Menu.Menu position='right'>
+            <Menu.Item
+              name='home'
+              active={activeItem === 'home'}
+              onClick={this.handleItemClick}
+            />
+            <Menu.Item
+              name='browse'
+              active={activeItem === 'browse'}
+              onClick={this.handleItemClick}
+            />
             <Menu.Item
               name='notification'
               active={activeItem === 'notification'}

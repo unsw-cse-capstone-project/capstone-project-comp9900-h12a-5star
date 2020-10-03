@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
-import { Icon, Button, Menu, Segment } from 'semantic-ui-react'
-
+import { Icon, Button, Menu, Segment, Search } from 'semantic-ui-react'
 import _ from 'lodash'
 import faker from 'faker'
-import { Search, Image, Grid, Header } from 'semantic-ui-react'
-import { ReactComponent as Logo } from '../images/logo192.png';
 
-import NotFoundPage from '../pages/NotFoundPage';
 
 const source = _.times(6, () => ({
   title: faker.company.companyName(),
@@ -31,10 +27,20 @@ export default class MenuExampleInvertedSegment extends Component {
       window.location.href='/welcome'
     }
     else if (name === 'my wishlist'){
-      window.location.href='/wishlist'
+      if (window.sessionStorage.getItem('username') === null || window.sessionStorage.getItem('username') === "guest"){
+        window.location.href='/login'
+      }
+      else{
+        window.location.href='/wishlist'
+      }
     }
     else if (name === 'my profile'){
-      window.location.href='/myprofile'
+      if (window.sessionStorage.getItem('username') === null || window.sessionStorage.getItem('username') === "guest"){
+        window.location.href='/login'
+      }
+      else{
+        window.location.href='/myprofile' 
+      }
     }
   }
 
@@ -67,8 +73,7 @@ export default class MenuExampleInvertedSegment extends Component {
       <Segment inverted>
         <Menu inverted pointing secondary stackable >
           <Menu.Item>
-            5Star logo
-            <img src='../images/logo192.png' />
+            5Star Logo
           </Menu.Item>
           <Menu.Item
             name='home'
@@ -108,23 +113,27 @@ export default class MenuExampleInvertedSegment extends Component {
               active={activeItem === 'notification'}
               onClick={this.handleItemClick}
             >
-              <Icon name='bell' size='large' corner/>
+              <Icon name='bell' size='large'/>
             </Menu.Item>
             <Menu.Item
               name='my profile'
               active={activeItem === 'my profile'}
               onClick={this.handleItemClick}
             >
-              <Icon name='user circle' size='large' corner/>
+              <Icon name='user circle' size='large'/>
             </Menu.Item>
-            <Menu.Item>
-              <Button primary onClick={this.performLogout}>Logout</Button>
-            </Menu.Item>
-            <Menu.Item>
-              <Button primary onClick={event =>  window.location.href='/login'}>LogIn</Button>
-            </Menu.Item>
+
+            {(window.sessionStorage.getItem('username') === null || window.sessionStorage.getItem('username') === "guest") ?
+              <Menu.Item>
+                <Button primary onClick={event =>  window.location.href='/login'}>Sign In</Button>
+              </Menu.Item>
+              :
+              <Menu.Item>
+                <Button primary onClick={this.performLogout}>Logout</Button>
+              </Menu.Item>
+            }
           </Menu.Menu>
-          
+            
         </Menu>
       </Segment>
     )

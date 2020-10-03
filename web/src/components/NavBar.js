@@ -60,6 +60,9 @@ export default class MenuExampleInvertedSegment extends Component {
             })}
             results={results}
             value={value}
+            minCharacters={2}
+            noResultsMessage="No movie title found."
+            noResultsDescription="Don't worry! We will check other parameters once you press enter!"
           />
           <Menu.Menu position='right'>
             <Menu.Item

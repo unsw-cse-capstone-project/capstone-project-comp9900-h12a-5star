@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { Button, Menu, Segment } from 'semantic-ui-react'
+import { Icon, Button, Menu, Segment } from 'semantic-ui-react'
 
 import _ from 'lodash'
 import faker from 'faker'
-import { Search, Grid, Header } from 'semantic-ui-react'
+import { Search, Image, Grid, Header } from 'semantic-ui-react'
 import { ReactComponent as Logo } from '../images/logo192.png';
+
+import NotFoundPage from '../pages/NotFoundPage';
 
 const source = _.times(6, () => ({
   title: faker.company.companyName(),
@@ -20,7 +22,9 @@ const initialState = { isLoading: false, results: [], value: '' }
 export default class MenuExampleInvertedSegment extends Component {
   state = { activeItem: 'home', isLoading: false, results: [], value: '' }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleItemClick = (e, { name }) => {
+    this.setState({ activeItem: name })
+  }
 
   handleResultSelect = (e, { result }) => this.setState({ value: result.title })
 
@@ -45,51 +49,58 @@ export default class MenuExampleInvertedSegment extends Component {
 
     return (
       <Segment inverted>
-        <Menu inverted secondary>
+        <Menu inverted pointing secondary stackable >
           <Menu.Item>
             5Star logo
+            <img src='../images/logo192.png' />
           </Menu.Item>
-          
-          
-          <Search
-            input={{ icon: 'search', iconPosition: 'left' }}
-            loading={isLoading}
-            onResultSelect={this.handleResultSelect}
-            onSearchChange={_.debounce(this.handleSearchChange, 500, {
-              leading: true,
-            })}
-            results={results}
-            value={value}
-            minCharacters={2}
-            noResultsMessage="No movie title found."
-            noResultsDescription="Don't worry! We will check other parameters once you press enter!"
+          <Menu.Item
+            name='home'
+            active={activeItem === 'home'}
+            onClick={this.handleItemClick}
           />
+          <Menu.Item
+            name='browse'
+            active={activeItem === 'browse'}
+            onClick={this.handleItemClick}
+          />
+          <Menu.Item
+            name='my wishlist'
+            active={activeItem === 'my wishlist'}
+            onClick={this.handleItemClick}
+          />
+          
           <Menu.Menu position='right'>
-            <Menu.Item
-              name='home'
-              active={activeItem === 'home'}
-              onClick={this.handleItemClick}
+            <Search
+              input={{ icon: 'search', iconPosition: 'left' }}
+              loading={isLoading}
+              onResultSelect={this.handleResultSelect}
+              onSearchChange={_.debounce(this.handleSearchChange, 500, {
+                leading: true,
+              })}
+              results={results}
+              value={value}
+              minCharacters={2}
+              noResultsMessage="No movie title found."
+              noResultsDescription="Don't worry! We will check other parameters once you press enter!"
             />
-            <Menu.Item
-              name='browse'
-              active={activeItem === 'browse'}
-              onClick={this.handleItemClick}
-            />
+            <Menu.Item>
+
+            </Menu.Item>
             <Menu.Item
               name='notification'
               active={activeItem === 'notification'}
               onClick={this.handleItemClick}
-            />
+            >
+              <Icon name='bell' size='large' corner/>
+            </Menu.Item>
             <Menu.Item
               name='my profile'
               active={activeItem === 'my profile'}
               onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              name='my wishlist'
-              active={activeItem === 'my wishlist'}
-              onClick={this.handleItemClick}
-            />
+            >
+              <Icon name='user circle' size='large' corner/>
+            </Menu.Item>
             <Menu.Item>
               <Button primary>Sign In</Button>
             </Menu.Item>

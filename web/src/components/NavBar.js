@@ -1,32 +1,135 @@
 import React, { Component } from 'react'
-import { Menu, Segment } from 'semantic-ui-react'
+import { Icon, Button, Menu, Segment, Search } from 'semantic-ui-react'
+import _ from 'lodash'
+import faker from 'faker'
+
+const source = _.times(6, () => ({
+  title: faker.company.companyName(),
+  description: faker.company.catchPhrase(),
+  image: faker.internet.avatar(),
+}))
+
+const initialState = { isLoading: false, results: [], value: '' }
 
 export default class MenuExampleInvertedSegment extends Component {
-  state = { activeItem: 'home' }
+  state = { activeItem: 'home', isLoading: false, results: [], value: '' }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleItemClick = (e, { name }) => {
+    this.setState({ activeItem: name })
+    if (name === 'browse') {
+      window.location.href='/browse'
+    }
+    else if (name === 'home'){
+      window.location.href='/welcome'
+    }
+    else if (name === 'my wishlist'){
+      if (window.sessionStorage.getItem('username') === null || window.sessionStorage.getItem('username') === "guest"){
+        window.location.href='/login'
+      }
+      else{
+        window.location.href='/wishlist'
+      }
+    }
+    else if (name === 'my profile'){
+      if (window.sessionStorage.getItem('username') === null || window.sessionStorage.getItem('username') === "guest"){
+        window.location.href='/login'
+      }
+      else{
+        window.location.href='/myprofile' 
+      }
+    }
+  }
+
+  performLogout = async () => {
+    window.location.href='/login'
+  }
+
+  handleResultSelect = (e, { result }) => this.setState({ value: result.title })
+
+  handleSearchChange = (e, { value }) => {
+    this.setState({ isLoading: true, value })
+
+    setTimeout(() => {
+      if (this.state.value.length < 1) return this.setState(initialState)
+
+      const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
+      const isMatch = (result) => re.test(result.title)
+
+      this.setState({
+        isLoading: false,
+        results: _.filter(source, isMatch),
+      })
+    }, 300)
+  }
 
   render() {
-    const { activeItem } = this.state
+    const { activeItem, isLoading, value, results } = this.state
 
     return (
       <Segment inverted>
-        <Menu inverted secondary>
+        <Menu inverted pointing secondary stackable >
+          <Menu.Item>
+            5Star Logo
+          </Menu.Item>
           <Menu.Item
             name='home'
             active={activeItem === 'home'}
             onClick={this.handleItemClick}
           />
           <Menu.Item
-            name='messages'
-            active={activeItem === 'messages'}
+            name='browse'
+            active={activeItem === 'browse'}
             onClick={this.handleItemClick}
           />
           <Menu.Item
-            name='friends'
-            active={activeItem === 'friends'}
+            name='my wishlist'
+            active={activeItem === 'my wishlist'}
             onClick={this.handleItemClick}
           />
+          
+          <Menu.Menu position='right'>
+            <Search
+              input={{ icon: 'search', iconPosition: 'left' }}
+              loading={isLoading}
+              onResultSelect={this.handleResultSelect}
+              onSearchChange={_.debounce(this.handleSearchChange, 500, {
+                leading: true,
+              })}
+              results={results}
+              value={value}
+              minCharacters={1}
+              noResultsMessage="No movie title found."
+              noResultsDescription="Don't worry! We will check other parameters once you press enter!"
+            />
+            <Menu.Item>
+
+            </Menu.Item>
+            <Menu.Item
+              name='notification'
+              active={activeItem === 'notification'}
+              onClick={this.handleItemClick}
+            >
+              <Icon name='bell' size='large'/>
+            </Menu.Item>
+            <Menu.Item
+              name='my profile'
+              active={activeItem === 'my profile'}
+              onClick={this.handleItemClick}
+            >
+              <Icon name='user circle' size='large'/>
+            </Menu.Item>
+
+            {(window.sessionStorage.getItem('username') === null || window.sessionStorage.getItem('username') === "guest") ?
+              <Menu.Item>
+                <Button primary onClick={event =>  window.location.href='/login'}>Sign In</Button>
+              </Menu.Item>
+              :
+              <Menu.Item>
+                <Button primary onClick={this.performLogout}>Logout</Button>
+              </Menu.Item>
+            }
+          </Menu.Menu>
+            
         </Menu>
       </Segment>
     )

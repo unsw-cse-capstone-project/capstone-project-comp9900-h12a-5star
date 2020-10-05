@@ -19,6 +19,7 @@ function App() {
         <Route path="/wishlist" component={HomePage} />
         <Route path="/myprofile" component = {NotFoundPage} />
         <Route path="/login" component = {NotFoundPage} />
+        <Route path="/movieDetails" component = {NotFoundPage} />
       </Switch>
     </Router>
   );

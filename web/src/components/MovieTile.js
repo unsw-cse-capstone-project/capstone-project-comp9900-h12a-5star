@@ -10,11 +10,15 @@ import { Button, Dimmer, Rating } from 'semantic-ui-react'
     handleShow = () => this.setState({ active: true })
     handleHide = () => this.setState({ active: false })
   
+    clickViewDetails = () => {
+        window.location.href='/movieDetails'
+    }
+
     render() {
       const { active } = this.state
       const content = (
         <div>
-          <Button primary>View Details</Button>
+          <Button primary onClick={this.clickViewDetails}>View Details</Button>
         </div>
       )
   
@@ -41,9 +45,7 @@ import { Button, Dimmer, Rating } from 'semantic-ui-react'
             <Rating icon='star' defaultRating={4} maxRating={5} disabled/>
         </a>
       </Card.Content>
-    </Card>
-
-        
+    </Card> 
       )
     }
   }

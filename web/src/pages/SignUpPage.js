@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, TextArea, Button, Select, Checkbox, Dropdown,Icon} from 'semantic-ui-react'
+import { Form, Segment, Accordion, Input, TextArea, Button, Select, Checkbox, Dropdown,Icon} from 'semantic-ui-react'
 
 const genderOptions = [
     { key: 'm', text: 'Male', value: 'male' },
@@ -40,39 +40,76 @@ const genreOptions = [
 
 const SignUpPage = () => (
     <>
-      <h1>Sign Up</h1>
-      <Form>
-        <Form.Field>
-          <label>First Name</label>
-          <input placeholder='First Name' />
-        </Form.Field>
+      <Segment>
+        <h1>Sign Up</h1>
+        <Form>
+          <Form.Group widths={2}>
+            <Form.Field>
+              <label>First Name</label>
+              <input placeholder='First Name' />
+            </Form.Field>
+          </Form.Group>
 
-        <Form.Field>
-          <label>Last Name</label>
-          <input placeholder='Last Name' />
-        </Form.Field>
+          <Form.Group widths={2}>
+            <Form.Field>
+              <label>Last Name</label>
+              <input placeholder='Last Name' />
+            </Form.Field>
+          </Form.Group>
 
-        <Form.Field>
-          <label>Gender</label>
-          <Dropdown placeholder='Gender' fluid selection options={genderOptions} />
-        </Form.Field>
+          <Form.Group widths={2}>
+            <Form.Field>
+              <label>Gender</label>
+              <Dropdown placeholder='Gender' fluid selection options={genderOptions} />
+            </Form.Field>
+          </Form.Group>
 
-        <Form.Field>
-          <label>Favorite Languages</label>
-          <Dropdown placeholder='Favorite Languages' fluid multiple selection options={languageOptions} />
-        </Form.Field>
+          <Form.Group widths={2}>
+            <Form.Field>
+              <label> Username</label>
+              <input placeholder='Username' />
+            </Form.Field>
+          </Form.Group>
+      
+          <Form.Group widths={2}>
+            <Form.Field>
+              <label>Email</label>
+              <input type='email' placeholder='joe@schmoe.com' />
+            </Form.Field>
+          </Form.Group>
 
-        <Form.Field>
-          <label>Favorite Genres</label>
-          <Dropdown placeholder='Favorite Genres' fluid multiple selection options={genreOptions} />
-        </Form.Field>
+          <Form.Group widths={2}>
+            <Form.Field>
+              <label>Password</label>
+              <input type='password' placeholder='Password' />
+            </Form.Field>
+          </Form.Group>
 
-        <Form.Field>
-          <Checkbox label='I agree to the Terms and Conditions' />
-        </Form.Field>
+          
 
-        <Button type='submit'>Join Now</Button>
-      </Form>
+          <Form.Group widths={2}>
+            <Form.Field>
+              <label>Favorite Languages</label>
+              <Dropdown placeholder='Favorite Languages' fluid multiple selection options={languageOptions} />
+            </Form.Field>
+          </Form.Group>
+
+          <Form.Group widths={2}>
+            <Form.Field>
+              <label>Favorite Genres</label>
+              <Dropdown placeholder='Favorite Genres' fluid multiple selection options={genreOptions}/>
+            </Form.Field>
+          </Form.Group>
+
+            <Form.Field>
+              <Checkbox label='I agree to the Terms and Conditions' />
+            </Form.Field>
+      
+      
+
+          <Button type='submit'>Join Now</Button>
+        </Form>
+      </Segment>
     </>
     
     

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Icon, Button, Menu, Segment, Search } from 'semantic-ui-react'
+import { Icon, Button, Menu, Segment, Search, Image } from 'semantic-ui-react'
 import _ from 'lodash'
 import faker from 'faker'
 
@@ -69,7 +69,7 @@ export default class MenuExampleInvertedSegment extends Component {
       <Segment inverted>
         <Menu inverted pointing secondary stackable >
           <Menu.Item>
-            5Star Logo
+            <Image src={require('../images/logo192.png')} size='mini'  />
           </Menu.Item>
           <Menu.Item
             name='home'
@@ -88,6 +88,7 @@ export default class MenuExampleInvertedSegment extends Component {
           />
           
           <Menu.Menu position='right'>
+          <Menu.Item>
             <Search
               input={{ icon: 'search', iconPosition: 'left' }}
               loading={isLoading}
@@ -101,6 +102,7 @@ export default class MenuExampleInvertedSegment extends Component {
               noResultsMessage="No movie title found."
               noResultsDescription="Don't worry! We will check other parameters once you press enter!"
             />
+            </Menu.Item>
             <Menu.Item>
 
             </Menu.Item>

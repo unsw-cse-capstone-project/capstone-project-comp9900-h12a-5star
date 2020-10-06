@@ -6,7 +6,7 @@ import{
 } from 'react-router-dom';
 import './App.css';
 import NotFoundPage from './pages/NotFoundPage';
-
+import MovieDetails from './pages/MovieDetails'
 import HomePage from './pages/HomePage';
 
 function App() {
@@ -19,6 +19,7 @@ function App() {
         <Route path="/wishlist" component={HomePage} />
         <Route path="/myprofile" component = {NotFoundPage} />
         <Route path="/login" component = {NotFoundPage} />
+        <Route path="/movieDetails" component = {MovieDetails} />
       </Switch>
     </Router>
   );

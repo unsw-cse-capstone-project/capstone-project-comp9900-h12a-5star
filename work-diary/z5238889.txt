@@ -13,6 +13,13 @@ started working on an initial draft for project proposal
 Brainstorming novel functionalities for the project
 Decided to use React for frontend development
 
+Week 3
+
+Completed and submitted the project propsal
+completed initial set up for the frontend end development
+Decided on Novel functionalities for the project and added them to the sprints
+
+
 
 
 

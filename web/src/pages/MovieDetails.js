@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header } from 'semantic-ui-react'
+import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating } from 'semantic-ui-react'
 import NavBar from '../components/NavBar';
 
 export default class MovieDetails extends Component {
@@ -9,40 +9,54 @@ export default class MovieDetails extends Component {
                 < NavBar />
                 <Container>
                     <Segment>
+                        <Header as='h1'>
+                            The Avengers
+                        </Header>
+                        <Icon name='calendar alternate outline' /> 2012
+                        <br />
+                        <Rating icon='star' defaultRating={1} maxRating={1} disable /> 4.7
                         <Image src={'https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg'} />
                         <List>
                             <List.Item as='a'>
-                                <Icon name='help' />
+                                <Icon name='map outline' />
                                 <List.Content>
-                                    <List.Header>Floated Icon</List.Header>
+                                    <List.Header>Director</List.Header>
                                     <List.Description>
-                                        This text will always have a left margin to make sure it sits
-                                        alongside your icon
+                                        Joss Whedon
                                     </List.Description>
                                 </List.Content>
                             </List.Item>
                             <List.Item as='a'>
-                                <Icon name='right triangle' />
+                                <Icon name='map outline' />
                                 <List.Content>
-                                    <List.Header>Icon Alignment</List.Header>
+                                    <List.Header>Genre</List.Header>
                                     <List.Description>
-                                        Floated icons are by default top aligned. To have an icon top aligned
-                                        try this example.
+                                        Comic, Action
                                     </List.Description>
                                 </List.Content>
                             </List.Item>
-                            <List.Item>
-                                <Icon name='help' />
-                                Inline Text
+                            <List.Item as='a'>
+                                <Icon name='map outline' />
+                                <List.Content>
+                                    <List.Header>Cast</List.Header>
+                                    <List.Description>
+                                        Robert Downey Jr., Mark Ruffalo, Chris Evans, Scarlett Johansson
+                                    </List.Description>
+                                </List.Content>
                             </List.Item>
                         </List>
 
-
-                        <Comment.Group>
-                            <Header as='h3' dividing>
-                                Reviews
+                        <Header as='h3' >
+                            About the Movie
                         </Header>
-
+                        <p>
+                        Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.
+                        </p>
+                        
+                        <Comment.Group>
+                        <Header as='h3' >
+                                User Reviews
+                        </Header>
                             <Comment>
                                 <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg' />
                                 <Comment.Content>

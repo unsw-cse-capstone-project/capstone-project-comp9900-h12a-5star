@@ -5,4 +5,15 @@ Decided on scrum master and allotted tasks for the project.
 Setup a work enviornment on Jira and Github
 Created User Stories and Epics on Jira
 
+Week 2
+
+Worked on some more user stories
+Decided on sprints and planned the timeline
+started working on an initial draft for project proposal
+Brainstorming novel functionalities for the project
+Decided to use React for frontend development
+
+
+
+
 

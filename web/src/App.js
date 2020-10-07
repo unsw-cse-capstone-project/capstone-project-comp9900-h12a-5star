@@ -9,6 +9,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import SignUpPage from './pages/SignUpPage';
 import MovieDetails from './pages/MovieDetails'
 import HomePage from './pages/HomePage';
+import Login from './pages/Login';
 
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
         <Route path="/browse" component = {NotFoundPage} />
         <Route path="/wishlist" component={HomePage} />
         <Route path="/myprofile" component = {NotFoundPage} />
-        <Route path="/login" component = {NotFoundPage} />
+        <Route path="/login" component = {Login} />
         <Route path="/signup" component = {SignUpPage} />
         <Route path="/movieDetails" component = {MovieDetails} />
       </Switch>

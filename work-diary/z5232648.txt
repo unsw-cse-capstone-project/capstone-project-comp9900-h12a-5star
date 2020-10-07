@@ -4,5 +4,8 @@ Week 1
 
 Created the group. Brainstormed on project objectives with team. Created epics, user stories, and sub tasks in Atlassian Jira. Initiated project meeting twice in the week and assigned tasks for project proposal. Discussed on available software tools, database design, chose backend programming language and frontend framework. From the project proposal I will be working on interface and flow diagrams.
 
-Week2
+Week 2
 Created the first draft of interface and flow diagrams. Discussed with team on jira activities, setting up work environment of project in our system. I will be working on assigned Jira tasks for the sprint and make the final draft of interface and flow diagrams.
+
+Week 3
+Prepared the final draft of the interface and flow diagrams. Included the user boards in the proposal document. Reviewed format of proposal document before submission. Completed the setup of front end environment on local machine. Tested the same environment on VLAB machine. Further, I will be working on assigned JIRA tasks i.e sign up form.

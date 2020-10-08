@@ -7,54 +7,76 @@ export default class MovieDetails extends Component {
         return (
             <React.Fragment>
                 < NavBar />
-                <Container>
-                    <Segment>
-                        <Header as='h1'>
-                            The Avengers
-                        </Header>
-                        <Icon name='calendar alternate outline' /> 2012
-                        <br />
-                        <Rating icon='star' defaultRating={1} maxRating={1} disable /> 4.7
-                        <Image src={'https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg'} />
-                        <List>
-                            <List.Item as='a'>
-                                <Icon name='map outline' />
-                                <List.Content>
-                                    <List.Header>Director</List.Header>
-                                    <List.Description>
-                                        Joss Whedon
-                                    </List.Description>
-                                </List.Content>
-                            </List.Item>
-                            <List.Item as='a'>
-                                <Icon name='map outline' />
-                                <List.Content>
-                                    <List.Header>Genre</List.Header>
-                                    <List.Description>
-                                        Comic, Action
-                                    </List.Description>
-                                </List.Content>
-                            </List.Item>
-                            <List.Item as='a'>
-                                <Icon name='map outline' />
-                                <List.Content>
-                                    <List.Header>Cast</List.Header>
-                                    <List.Description>
-                                        Robert Downey Jr., Mark Ruffalo, Chris Evans, Scarlett Johansson
-                                    </List.Description>
-                                </List.Content>
-                            </List.Item>
-                        </List>
+                <Container >
+                    <Segment > 
+                        <Grid columns='equal'   divided={'vertically'} padded style={{margin : 20}}>
+                            <Grid.Row >
+                                <Grid.Column>
+                                    <Header as='h3'>
+                                        The Avengers
+                                </Header>
+                                </Grid.Column>
+                                <Grid.Column>
+                                    <Icon name='calendar alternate outline' /> 2012
+                                </Grid.Column>
+                                <Grid.Column>
+                                    <Rating icon='star' defaultRating={1} maxRating={1} disable /> 4.7
+                                </Grid.Column>
+                                <Grid.Column>
+                                <Button circular icon='thumbs up'  size={'big'}/>
+                                <Icon name='thumbs up' size = {"big"} link/>
+                                <Icon name='eye' size = {"big"}/>
+                                <Icon name='plus' size = {"big"}/>
+                                <Icon name='share alternate' size = {"big"}/>
+                                </Grid.Column>
+                            </Grid.Row>
+                            <Grid.Row>
 
-                        <Header as='h3' >
+                                <Grid.Column width={4}>
+                                    <Image src={'https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg'} />
+                                </Grid.Column>
+                                <Grid.Column >
+                                    <List>
+                                        <List.Item as='a'>
+                                            <Icon name='map outline' />
+                                            <List.Content>
+                                                <List.Header>Director</List.Header>
+                                                <List.Description>
+                                                    Joss Whedon
+                                    </List.Description>
+                                            </List.Content>
+                                        </List.Item>
+                                        <List.Item as='a'>
+                                            <Icon name='map outline' />
+                                            <List.Content>
+                                                <List.Header>Genre</List.Header>
+                                                <List.Description>
+                                                    Comic, Action
+                                    </List.Description>
+                                            </List.Content>
+                                        </List.Item>
+                                        <List.Item as='a'>
+                                            <Icon name='map outline' />
+                                            <List.Content>
+                                                <List.Header>Cast</List.Header>
+                                                <List.Description>
+                                                    Robert Downey Jr., Mark Ruffalo, Chris Evans, Scarlett Johansson
+                                    </List.Description>
+                                            </List.Content>
+                                        </List.Item>
+                                    </List>
+                                    <Header as='h3' >
                             About the Movie
                         </Header>
                         <p>
-                        Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.
+                            Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.
                         </p>
-                        
-                        <Comment.Group>
-                        <Header as='h3' >
+                                </Grid.Column>
+                            </Grid.Row>
+                            <Grid.Row>
+                                <Grid.Column stretched>
+                                <Comment.Group>
+                            <Header as='h3' >
                                 User Reviews
                         </Header>
                             <Comment>
@@ -121,6 +143,15 @@ export default class MovieDetails extends Component {
                                 <Button content='Add Reply' labelPosition='left' icon='edit' primary />
                             </Form>
                         </Comment.Group>
+                                </Grid.Column>
+                            </Grid.Row>
+                        </Grid>
+
+
+
+                        
+
+                       
 
 
                     </Segment>

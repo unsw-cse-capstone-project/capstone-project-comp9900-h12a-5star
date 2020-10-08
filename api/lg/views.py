@@ -24,7 +24,31 @@ class Index(TemplateView):
         if self.request.user.is_authenticated:
             ctx['loggedIn'] = True
         return ctx
-
+class Homepage(APIView):
+    def get(self, request):
+            required=['popular','top_rated','now_playing']
+            #Tmdb provides maximum of 20 results for each page and we can't send Multiple page requests in single Query so using For loop
+            intial_homepage=defaultdict(list)
+            final_homepage=defaultdict(list)
+            poster_url='http://image.tmdb.org/t/p/w780/'
+            for i in range(1,4):
+                for j in required:
+                    url='https://api.themoviedb.org/3/movie/'+j+'?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&page='+str(i)
+                    response=requests.get(url)
+                    intial_homepage[j].extend(response.json()['results'])
+            #intial_homepage consistis of all the details of movies returned from the movie , but we require only ID, RELASEDATE , POSTER, DESCRIPTION, TITLE of every movie in each Required list. so forming our final home_page
+            for i in required:
+                for j in range(0,50):
+                    d={}
+                    d['id']=intial_homepage[i][j]['id']
+                    d['title']=intial_homepage[i][j]['title']
+                    d['rating']=int(intial_homepage[i][j]['vote_average'])/2
+                    d['description']=intial_homepage[i][j]['overview']
+                    d['poster']=poster_url+intial_homepage[i][j]['poster_path']
+                    d['release_date']=intial_homepage[i][j]['release_date']
+                    final_homepage[i].append(d)
+            home_page=json.dumps(final_homepage)
+            return JsonResponse(home_page)
 class SignUpView(TemplateView):
     template_name = 'signup.html'
 

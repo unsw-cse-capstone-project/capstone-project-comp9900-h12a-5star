@@ -48,7 +48,7 @@ class Homepage(APIView):
                     d['release_date']=intial_homepage[i][j]['release_date']
                     final_homepage[i].append(d)
             home_page=json.dumps(final_homepage)
-            return JsonResponse(home_page)
+            return JsonResponse(home_page, safe=False)
 class SignUpView(TemplateView):
     template_name = 'signup.html'
 

@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'lg.apps.LgConfig',
-    'rest_framework'
+    'rest_framework',
+    'multiselectfield'
 ]
 
 MIDDLEWARE = [

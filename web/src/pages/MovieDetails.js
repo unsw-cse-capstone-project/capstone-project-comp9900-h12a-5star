@@ -139,7 +139,9 @@ export default class MovieDetails extends Component {
                             </Comment>
 
                             <Form reply>
+                                How was this Movie?  <Rating icon='star' defaultRating={0} maxRating={5}/>
                                 <Form.TextArea />
+
                                 <Button content='Add Reply' labelPosition='left' icon='edit' primary />
                             </Form>
                         </Comment.Group>

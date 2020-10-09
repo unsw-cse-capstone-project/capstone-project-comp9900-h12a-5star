@@ -9,3 +9,5 @@ Python and Flask
 ```(bash)
 python3 -m pip install -r requirement
 ```
+
+Install TMDB Version 3 API

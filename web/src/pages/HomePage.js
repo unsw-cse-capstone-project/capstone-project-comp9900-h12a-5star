@@ -40,18 +40,18 @@ export default class HomePage extends Component {
     // article = MovieData.find(serType => serType === 'popular')
     columnsTopMovies = _.times(5, (i) => (
         <Grid.Column key={i}>
-            <MovieTile title = {this.movie_data.popular[i].title} poster = {this.state.url} release = {''} rating = {''} description = {''}/>
+            <MovieTile title = {this.movie_data.popular[i].title} poster = {this.state.url} release = {''} rating = {3.5} description = {''}/>
         </Grid.Column>
     ))
     columnsRecentlyReleased = _.times(5, (i) => (
         
         <Grid.Column key={i}>
-            <MovieTile title = {'Avengers'} poster = {'https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg'}/>
+            <MovieTile title = {'Avengers'} poster = {'https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg'} release = {''} rating = {3.5} description = {''}/>
         </Grid.Column>
     ))
     columnsMostPopular = _.times(5, (i) => (
         <Grid.Column key={i}>
-            <MovieTile title = {'The Last Days of American Crime'} poster = {'http://image.tmdb.org/t/p/w780//ygCQnDEqUEIamBpdQdDYnFfxvgM.jpg'} />
+            <MovieTile title = {'The Last Days of American Crime'} poster = {'http://image.tmdb.org/t/p/w780//ygCQnDEqUEIamBpdQdDYnFfxvgM.jpg'} release = {''} rating = {3.5} description = {''} />
         </Grid.Column>
     ))
 

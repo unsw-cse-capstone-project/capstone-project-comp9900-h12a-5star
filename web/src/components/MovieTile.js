@@ -5,7 +5,12 @@ import { Button, Dimmer, Rating } from 'semantic-ui-react'
 
 
   export default class MovieTile extends Component {
-    state = {}
+
+    
+    state ={}
+    // state = this.setState(this.props.value)
+    // mut  = this.props.mutateState()
+    // 
   
     handleShow = () => this.setState({ active: true })
     handleHide = () => this.setState({ active: false })
@@ -15,7 +20,9 @@ import { Button, Dimmer, Rating } from 'semantic-ui-react'
     }
 
     render() {
+      console.log('I was triggered during render')
       const { active } = this.state
+      
       const content = (
         <div>
           <Button primary onClick={this.clickViewDetails}>View Details</Button>
@@ -23,7 +30,8 @@ import { Button, Dimmer, Rating } from 'semantic-ui-react'
       )
   
       return (
-        <Card>
+        <React.Fragment>
+            <Card>
       <Dimmer.Dimmable
           as={Image}
           dimmed={active}
@@ -31,13 +39,13 @@ import { Button, Dimmer, Rating } from 'semantic-ui-react'
           onMouseEnter={this.handleShow}
           onMouseLeave={this.handleHide}
           size='medium'
-          src='https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg'
+          src= {this.props.poster}
         />
       <Card.Content>
-        <Card.Header>Avengers</Card.Header>
-        <Card.Meta>Released in 2012</Card.Meta>
+        <Card.Header>{this.props.title}</Card.Header>
+        <Card.Meta>Released in 2012 </Card.Meta>
         <Card.Description>
-        The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.
+        The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name. 
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
@@ -46,6 +54,8 @@ import { Button, Dimmer, Rating } from 'semantic-ui-react'
         </a>
       </Card.Content>
     </Card> 
+        </React.Fragment>
+        
       )
     }
   }

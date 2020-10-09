@@ -24,6 +24,7 @@ function App() {
         <Route path="/login" component = {Login} />
         <Route path="/signup" component = {SignUpPage} />
         <Route path="/movieDetails" component = {MovieDetails} />
+        <Route component = {NotFoundPage} />
       </Switch>
     </Router>
   );

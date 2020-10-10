@@ -2,7 +2,13 @@ import React, { Component } from 'react'
 import { Card, Image } from 'semantic-ui-react'
 import { Button, Dimmer, Rating } from 'semantic-ui-react'
 
-
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams
+} from "react-router-dom";
 
   export default class MovieTile extends Component {
 
@@ -16,7 +22,7 @@ import { Button, Dimmer, Rating } from 'semantic-ui-react'
     handleHide = () => this.setState({ active: false })
   
     clickViewDetails = () => {
-        window.location.href='/movieDetails'
+        // window.location.href={`/movieDetails/${this.props.MovieTile}`}
     }
 
     render() {
@@ -25,7 +31,9 @@ import { Button, Dimmer, Rating } from 'semantic-ui-react'
       
       const content = (
         <div>
-          <Button primary onClick={this.clickViewDetails}>View Details</Button>
+          <Button primary><Link className="MovieDetails" key={this.props.movieId} to= {`/movieDetails/${this.props.movieId}`}>
+            View Details
+        </Link></Button>
         </div>
       )
   

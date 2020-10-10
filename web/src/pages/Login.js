@@ -1,42 +1,6 @@
 import React from 'react';
-import { Grid, Container, Form, Segment, Accordion, Input, TextArea, Button, Select, Checkbox, Dropdown,Icon} from 'semantic-ui-react'
+import { Grid, Form, Segment, Button} from 'semantic-ui-react'
 import NavBar from '../components/NavBar';
-const genderOptions = [
-    { key: 'm', text: 'Male', value: 'male' },
-    { key: 'f', text: 'Female', value: 'female' },
-]
-
-
-const languageOptions = [
-    { key: 'english', text: 'English', value: 'english' },
-    { key: 'gujrati', text: 'Gujrati', value: 'gujrati' },
-    { key: 'hindi', text: 'Hindi', value: 'hindi' },
-    { key: 'kannada', text: 'Kannada', value: 'kannada' },
-    { key: 'marathi', text: 'Marathi', value: 'marathi' },
-    { key: 'chinese', text: 'Mandarin Chinese', value: 'chinese' },
-    { key: 'punjabi', text: 'Punjabi', value: 'punjabi' },
-    { key: 'spanish', text: 'Spanish', value: 'spanish' },
-    { key: 'telugu', text: 'Telugu', value: 'telegu' },
-    { key: 'urdu', text: 'Urdu', value: 'urdu' },
-
-]
-
-const genreOptions = [
-    { key: 'action', text: 'Action', value: 'action' },
-    { key: 'adventure', text: 'Adventure', value: 'adventure' },
-    { key: 'comedy', text: 'Comedy', value: 'comedy' },
-    { key: 'crime', text: 'Crime', value: 'crime' },
-    { key: 'drama', text: 'Drama', value: 'drama' },
-    { key: 'family', text: 'Family', value: 'family' },
-    { key: 'fantasy', text: 'Fantasy', value: 'fantasy' },
-    { key: 'horror', text: 'Horror', value: 'horror' },
-    { key: 'mystery', text: 'Mystery', value: 'mystery' },
-    { key: 'romance', text: 'Romance', value: 'romance' },
-    { key: 'sciencefiction', text: 'Science Fiction', value: 'sciencefiction' },
-    { key: 'thriller', text: 'Thriller', value: 'thriller' },
-
-]
-
 
 const Login = () => (
     <React.Fragment>

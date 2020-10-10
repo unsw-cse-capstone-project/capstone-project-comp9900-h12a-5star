@@ -42,29 +42,128 @@ export default class HomePage extends Component {
     movie_data = {
         popular: [
             {
-                id: 497582,
+                id: 1,
                 title: "Enola Holmes",
-                rating: 3.5
+                rating: 3.5,
+                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
+                poster: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg",
+                release: "2020"
             },
             {
-                id: 497582,
-                title: "Enola Holmes 2",
-                rating: 3.5
+                id: 2,
+                title: "The Avengers",
+                rating: 3.5,
+                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
+                poster: "https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg",
+                release: "2020"
             },
             {
-                id: 497582,
-                title: "Enola Holmes 3",
-                rating: 3.5
+                id: 3,
+                title: "The Last Days of American Crime",
+                rating: 3.5,
+                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
+                poster: "http://image.tmdb.org/t/p/w780//ygCQnDEqUEIamBpdQdDYnFfxvgM.jpg",
+                release: "2020"
             },
             {
-                id: 497582,
+                id: 4,
                 title: "Enola Holmes 4",
-                rating: 3.5
+                rating: 3.5,
+                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
+                poster: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg",
+                release: "2020"
             },
             {
-                id: 497582,
+                id: 5,
                 title: "Enola Holmes 5",
-                rating: 3.5
+                rating: 3.5,
+                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
+                poster: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg",
+                release: "2020"
+            }
+        ],
+        topRated: [
+            {
+                id: 1,
+                title: "Enola Holmes",
+                rating: 3.5,
+                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
+                poster: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg",
+                release: "2020"
+            },
+            {
+                id: 2,
+                title: "The Avengers",
+                rating: 3.5,
+                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
+                poster: "https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg",
+                release: "2020"
+            },
+            {
+                id: 3,
+                title: "The Last Days of American Crime",
+                rating: 3.5,
+                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
+                poster: "http://image.tmdb.org/t/p/w780//ygCQnDEqUEIamBpdQdDYnFfxvgM.jpg",
+                release: "2020"
+            },
+            {
+                id: 4,
+                title: "Enola Holmes 4",
+                rating: 3.5,
+                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
+                poster: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg",
+                release: "2020"
+            },
+            {
+                id: 5,
+                title: "Enola Holmes 5",
+                rating: 3.5,
+                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
+                poster: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg",
+                release: "2020"
+            }
+        ],
+        recent: [
+            {
+                id: 1,
+                title: "Enola Holmes",
+                rating: 3.5,
+                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
+                poster: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg",
+                release: "2020"
+            },
+            {
+                id: 2,
+                title: "The Avengers",
+                rating: 3.5,
+                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
+                poster: "https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg",
+                release: "2020"
+            },
+            {
+                id: 3,
+                title: "The Last Days of American Crime",
+                rating: 3.5,
+                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
+                poster: "http://image.tmdb.org/t/p/w780//ygCQnDEqUEIamBpdQdDYnFfxvgM.jpg",
+                release: "2020"
+            },
+            {
+                id: 4,
+                title: "Enola Holmes 4",
+                rating: 3.5,
+                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
+                poster: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg",
+                release: "2020"
+            },
+            {
+                id: 5,
+                title: "Enola Holmes 5",
+                rating: 3.5,
+                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
+                poster: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg",
+                release: "2020"
             }
         ]
     }
@@ -80,19 +179,40 @@ export default class HomePage extends Component {
         if (this.state.items.data) {
             columnsTopMovies = _.times(5, (i) => (
                 <Grid.Column key={i}>
-                    <MovieTile title={this.movie_data.popular[i].title} poster={url} release={''} rating={3.5} description={''} movieId={''} />
+                    <MovieTile 
+                        title={this.movie_data.topRated[i].title} 
+                        poster={this.movie_data.topRated[i].poster} 
+                        release={this.movie_data.topRated[i].release} 
+                        rating={this.movie_data.topRated[i].rating} 
+                        description={this.movie_data.topRated[i].description} 
+                        movieId={this.movie_data.topRated[i].id} 
+                    />
                 </Grid.Column>
             ))
             columnsRecentlyReleased = _.times(5, (i) => (
 
                 <Grid.Column key={i}>
-                    <MovieTile title={this.state.items.data[i].employee_name} poster={'https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg'} release={''} rating={3.5} description={''} />
+                    <MovieTile 
+                        title={this.movie_data.recent[i].title} 
+                        poster={this.movie_data.recent[i].poster} 
+                        release={this.movie_data.recent[i].release} 
+                        rating={this.movie_data.recent[i].rating} 
+                        description={this.movie_data.recent[i].description} 
+                        movieId={this.movie_data.recent[i].id}
+                    />
                 </Grid.Column>
 
             ))
             columnsMostPopular = _.times(5, (i) => (
                 <Grid.Column key={i}>
-                    <MovieTile title={'The Last Days of American Crime'} poster={'http://image.tmdb.org/t/p/w780//ygCQnDEqUEIamBpdQdDYnFfxvgM.jpg'} release={''} rating={3.5} description={''} />
+                    <MovieTile 
+                        title={this.movie_data.popular[i].title} 
+                        poster={this.movie_data.popular[i].poster} 
+                        release={this.movie_data.popular[i].release} 
+                        rating={this.movie_data.popular[i].rating} 
+                        description={this.movie_data.popular[i].description} 
+                        movieId={this.movie_data.popular[i].id}
+                    />
                 </Grid.Column>
             ))
         }

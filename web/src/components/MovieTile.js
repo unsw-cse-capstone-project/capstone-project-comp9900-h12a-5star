@@ -45,13 +45,11 @@ import { Button, Dimmer, Rating } from 'semantic-ui-react'
         <Card.Header>{this.props.title}</Card.Header>
         <Card.Meta><Rating icon='star' defaultRating={1} maxRating={1} disabled/> {this.props.rating}  </Card.Meta>
         <Card.Description>
-        The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name. 
+          {this.props.description} 
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <a>
-        Released in 2012
-        </a>
+        Released in {this.props.release} 
       </Card.Content>
     </Card> 
         </React.Fragment>

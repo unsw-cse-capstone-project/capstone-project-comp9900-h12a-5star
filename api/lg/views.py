@@ -37,6 +37,7 @@ class Homepage(APIView):
                     response=requests.get(url)
                     intial_homepage[j].extend(response.json()['results'])
             #intial_homepage consistis of all the details of movies returned from the movie , but we require only ID, RELASEDATE , POSTER, DESCRIPTION, TITLE of every movie in each Required list. so forming our final home_page
+            #Rating is given out of 10, so for this project rating is maintained in between 0 to 5
             for i in required:
                 for j in range(0,50):
                     d={}
@@ -48,7 +49,7 @@ class Homepage(APIView):
                     d['release_date']=intial_homepage[i][j]['release_date']
                     final_homepage[i].append(d)
             home_page=json.dumps(final_homepage)
-            return JsonResponse(home_page, safe=False)
+            return JsonResponse(json.loads(home_page), safe=False)
 class SignUpView(TemplateView):
     template_name = 'signup.html'
 

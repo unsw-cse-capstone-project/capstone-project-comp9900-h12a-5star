@@ -6,3 +6,6 @@ Added additional user stories for the project objectives. Worked on the project 
 
 Week 3
 Completed the user stories and background section of the proposal document. Started learning react.js for user interface development. Completed the user story for the development of the navigation bar for the website. Started working on the user inteface of the Home page.
+
+Week 4
+Completed the user story for the development of logout functionality. Developed the user interface for home page and movie details page using static data. Added the functionality for capturing the data using rest api. 

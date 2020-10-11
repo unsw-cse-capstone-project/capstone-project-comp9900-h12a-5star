@@ -41,6 +41,7 @@ export default class MenuExampleInvertedSegment extends Component {
   }
 
   performLogout = async () => {
+    window.sessionStorage.setItem('username', "guest");
     window.location.href='/login'
   }
 

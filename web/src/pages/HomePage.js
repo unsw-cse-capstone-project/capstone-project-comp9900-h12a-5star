@@ -188,7 +188,7 @@ export default class HomePage extends Component {
                             <Header as='h1'>Popular Movies</Header>
                         </Grid.Column>
                         <Grid.Column>
-                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = '/searchResult/popularMovies'}>
+                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = '/popularMovies'}>
                                 see more
                             </Label>
                         </Grid.Column>

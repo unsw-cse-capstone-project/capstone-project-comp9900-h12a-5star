@@ -11,7 +11,8 @@ import MovieDetails from './pages/MovieDetails'
 import HomePage from './pages/HomePage';
 import Login from './pages/Login';
 import RecentReleased from './pages/RecentReleased';
-import TopRated from './pages/TopRated'
+import TopRated from './pages/TopRated';
+import PopularMovies from './pages/PopularMovies';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" component={HomePage} exact/>
         <Route path="/recentReleased" component={RecentReleased} exact/>
         <Route path="/topRated" component={TopRated} exact/>
+        <Route path="/popularMovies" component={PopularMovies} exact/>
         <Route path="/welcome" component={HomePage} />
         <Route path="/browse" component = {NotFoundPage} />
         <Route path="/wishlist" component={HomePage} />

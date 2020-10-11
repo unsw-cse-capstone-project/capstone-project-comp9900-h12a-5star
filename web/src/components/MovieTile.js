@@ -31,7 +31,7 @@ import {
       
       const content = (
         <div>
-          <Button primary><Link className="MovieDetails" key={this.props.movieId} to= {`/movieDetails/${this.props.movieId}`}>
+          <Button primary><Link style={{ color: '#FFF' }} className="MovieDetails" key={this.props.movieId} to= {`/movieDetails/${this.props.movieId}`}>
             View Details
         </Link></Button>
         </div>

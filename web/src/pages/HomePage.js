@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
-import { Container, Header, Divider, Grid, Label } from 'semantic-ui-react';
+import { Container, Header, Divider, Grid, Label, Card, Placeholder } from 'semantic-ui-react';
 import NavBar from '../components/NavBar';
 import MovieTile from '../components/MovieTile';
 
@@ -213,6 +213,76 @@ export default class HomePage extends Component {
                         description={this.movie_data.popular[i].description} 
                         movieId={this.movie_data.popular[i].id}
                     />
+                </Grid.Column>
+            ))
+        }
+        else{
+            columnsTopMovies = _.times(5, (i) => (
+                <Grid.Column key={i}>
+                    <Card.Group>
+                        <Card>
+                            <Placeholder>
+                                <Placeholder.Image square />
+                            </Placeholder>
+                        </Card>
+                        <Card.Content>
+                            <Placeholder>
+                                <Placeholder.Header>
+                                    <Placeholder.Line length='very short' />
+                                    <Placeholder.Line length='medium' />
+                                </Placeholder.Header>
+                                <Placeholder.Paragraph>
+                                    <Placeholder.Line length='short' />
+                                </Placeholder.Paragraph>
+                            </Placeholder>
+                        </Card.Content>
+                    </Card.Group>
+                </Grid.Column>
+            ))
+            columnsRecentlyReleased = _.times(5, (i) => (
+
+                <Grid.Column key={i}>
+                    <Card.Group>
+                        <Card>
+                            <Placeholder>
+                                <Placeholder.Image square />
+                            </Placeholder>
+                        </Card>
+                        <Card.Content>
+                            <Placeholder>
+                                <Placeholder.Header>
+                                    <Placeholder.Line length='very short' />
+                                    <Placeholder.Line length='medium' />
+                                </Placeholder.Header>
+                                <Placeholder.Paragraph>
+                                    <Placeholder.Line length='short' />
+                                </Placeholder.Paragraph>
+                            </Placeholder>
+                        </Card.Content>
+                    </Card.Group>
+                </Grid.Column>
+
+            ))
+            columnsMostPopular = _.times(5, (i) => (
+                <Grid.Column key={i}>
+                    <Card.Group>
+                        <Card>
+                            <Placeholder>
+                                <Placeholder.Image square />
+                            </Placeholder>
+                        </Card>
+                        <Card.Content>
+                            <Placeholder>
+                                <Placeholder.Header>
+                                    <Placeholder.Line length='very short' />
+                                    <Placeholder.Line length='medium' />
+                                </Placeholder.Header>
+                                <Placeholder.Paragraph>
+                                    <Placeholder.Line length='short' />
+                                </Placeholder.Paragraph>
+                            </Placeholder>
+                        </Card.Content>
+                    </Card.Group>
                 </Grid.Column>
             ))
         }

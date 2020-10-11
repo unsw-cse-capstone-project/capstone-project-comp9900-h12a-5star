@@ -11,39 +11,52 @@ export default class MovieDetails extends Component {
                     <Segment > 
                         <Grid columns='equal'   divided={'vertically'} padded style={{margin : 20}}>
                             <Grid.Row >
-                                <Grid.Column>
-                                    <Header as='h3'>
+                                <Grid.Column >
+                                    <Header as='h1'>
                                         The Avengers
                                 </Header>
                                 </Grid.Column>
-                                <Grid.Column>
-                                    <Icon name='calendar alternate outline' /> 2012
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <Rating icon='star' defaultRating={1} maxRating={1} disable /> 4.7
-                                </Grid.Column>
-                                <Grid.Column>
-                                <Button circular icon='thumbs up'  size={'big'}/>
-                                <Icon name='thumbs up' size = {"big"} link/>
-                                <Icon name='eye' size = {"big"}/>
-                                <Icon name='plus' size = {"big"}/>
-                                <Icon name='share alternate' size = {"big"}/>
+                                    
+                                <Grid.Column textAlign={"right"} >
+                                        <Button circular icon='thumbs up'  size={'big'}/>
+                                        <Button circular icon='eye'  size={'big'}/>
+                                        <Button circular icon='plus'  size={'big'}/>
+                                        <Button circular icon='share alternate'  size={'big'}/>
                                 </Grid.Column>
                             </Grid.Row>
                             <Grid.Row>
 
-                                <Grid.Column width={4}>
-                                    <Image src={'https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg'} />
-                                </Grid.Column>
+                                
                                 <Grid.Column >
-                                    <List>
+                                    <List >
+                                        <List.Item>
+                                            <br /><br />
+                                        </List.Item>
+                                        <List.Item as='a'>
+                                            <Icon name='star' color={"yellow"}/>
+                                            <List.Content>
+                                                <List.Header>Rating</List.Header>
+                                                <List.Description>
+                                                    4.7<br /><br />
+                                                </List.Description>
+                                            </List.Content>
+                                        </List.Item>
+                                        <List.Item as='a'>
+                                            <Icon name='calendar alternate outline' />
+                                            <List.Content>
+                                                <List.Header>Release Date</List.Header>
+                                                <List.Description>
+                                                    2012<br /><br />
+                                                </List.Description>
+                                            </List.Content>
+                                        </List.Item>
                                         <List.Item as='a'>
                                             <Icon name='map outline' />
                                             <List.Content>
                                                 <List.Header>Director</List.Header>
                                                 <List.Description>
-                                                    Joss Whedon
-                                    </List.Description>
+                                                    Joss Whedon <br /><br />
+                                                </List.Description>
                                             </List.Content>
                                         </List.Item>
                                         <List.Item as='a'>
@@ -51,8 +64,8 @@ export default class MovieDetails extends Component {
                                             <List.Content>
                                                 <List.Header>Genre</List.Header>
                                                 <List.Description>
-                                                    Comic, Action
-                                    </List.Description>
+                                                    Comic, Action<br /><br />
+                                                </List.Description>
                                             </List.Content>
                                         </List.Item>
                                         <List.Item as='a'>
@@ -61,16 +74,24 @@ export default class MovieDetails extends Component {
                                                 <List.Header>Cast</List.Header>
                                                 <List.Description>
                                                     Robert Downey Jr., Mark Ruffalo, Chris Evans, Scarlett Johansson
-                                    </List.Description>
+                                                </List.Description>
                                             </List.Content>
                                         </List.Item>
                                     </List>
+                                    
+                                </Grid.Column>
+                                <Grid.Column width={4}>
+                                    <Image src={'https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg'} />
+                                </Grid.Column>
+                            </Grid.Row>
+                            <Grid.Row>
+                                <Grid.Column>
                                     <Header as='h3' >
-                            About the Movie
-                        </Header>
-                        <p>
-                            Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.
-                        </p>
+                                        About the Movie
+                                    </Header>
+                                    <p>
+                                        Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.
+                                    </p>
                                 </Grid.Column>
                             </Grid.Row>
                             <Grid.Row>

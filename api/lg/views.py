@@ -45,7 +45,10 @@ class Homepage(APIView):
                     d['title']=intial_homepage[i][j]['title']
                     d['rating']=int(intial_homepage[i][j]['vote_average'])/2
                     d['description']=intial_homepage[i][j]['overview']
-                    d['poster']=poster_url+intial_homepage[i][j]['poster_path']
+                    if intial_homepage[i][j]['poster_path'] is None:
+                        d['poster']='https://i.stack.imgur.com/Q3vyk.png'
+                    else:
+                        d['poster']=poster_url+intial_homepage[i][j]['poster_path']
                     d['release_date']=intial_homepage[i][j]['release_date']
                     final_homepage[i].append(d)
             home_page=json.dumps(final_homepage)

@@ -50,14 +50,14 @@ import {
           src= {this.props.poster}
         />
       <Card.Content>
-        <Card.Header>{this.props.title}</Card.Header>
+        <Card.Header>{this.props.title.substring(0,24)}</Card.Header>
         <Card.Meta><Rating icon='star' defaultRating={1} maxRating={1} disabled/> {this.props.rating}  </Card.Meta>
         <Card.Description>
-          {this.props.description} 
+          {this.props.description.substring(0,100)} ... 
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        Released in {this.props.release} 
+        Released in {this.props.release.substring(0,4)} 
       </Card.Content>
     </Card> 
         </React.Fragment>

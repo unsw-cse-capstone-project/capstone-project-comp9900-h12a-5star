@@ -45,7 +45,7 @@ export default class HomePage extends Component {
         var columnsMostPopular = null
 
         if (this.state.items.popular) {
-            columnsTopMovies = _.times(5, (i) => (
+            columnsTopMovies = _.times(4, (i) => (
                 <Grid.Column key={i}>
                     <MovieTile 
                         title={this.state.items.top_rated[i].title} 
@@ -57,7 +57,7 @@ export default class HomePage extends Component {
                     />
                 </Grid.Column>
             ))
-            columnsRecentlyReleased = _.times(5, (i) => (
+            columnsRecentlyReleased = _.times(4, (i) => (
 
                 <Grid.Column key={i}>
                     <MovieTile 
@@ -71,7 +71,7 @@ export default class HomePage extends Component {
                 </Grid.Column>
 
             ))
-            columnsMostPopular = _.times(5, (i) => (
+            columnsMostPopular = _.times(4, (i) => (
                 <Grid.Column key={i}>
                     <MovieTile 
                         title={this.state.items.popular[i].title} 
@@ -85,7 +85,7 @@ export default class HomePage extends Component {
             ))
         }
         else{
-            columnsTopMovies = _.times(5, (i) => (
+            columnsTopMovies = _.times(4, (i) => (
                 <Grid.Column key={i}>
                     <Card.Group>
                         <Card>
@@ -107,7 +107,7 @@ export default class HomePage extends Component {
                     </Card.Group>
                 </Grid.Column>
             ))
-            columnsRecentlyReleased = _.times(5, (i) => (
+            columnsRecentlyReleased = _.times(4, (i) => (
 
                 <Grid.Column key={i}>
                     <Card.Group>
@@ -131,7 +131,7 @@ export default class HomePage extends Component {
                 </Grid.Column>
 
             ))
-            columnsMostPopular = _.times(5, (i) => (
+            columnsMostPopular = _.times(4, (i) => (
                 <Grid.Column key={i}>
                     <Card.Group>
                         <Card>

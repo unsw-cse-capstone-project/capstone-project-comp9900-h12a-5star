@@ -83,9 +83,9 @@ const Login = () => (
 
                             <Button fluid type='submit' floated='left' >Log In</Button>
 
-                            <center> OR </center>
+                            <p>&nbsp;</p>
 
-                            <Button fluid type='submit' floated='left' onClick={event => window.location.href = '/signup'}>Sign Up</Button>
+                            New to FilmFinder? <Button  onClick={event => window.location.href = '/signup'}>Sign Up</Button>
 
 
 

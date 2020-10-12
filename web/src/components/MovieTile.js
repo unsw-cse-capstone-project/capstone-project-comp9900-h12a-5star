@@ -2,28 +2,44 @@ import React, { Component } from 'react'
 import { Card, Image } from 'semantic-ui-react'
 import { Button, Dimmer, Rating } from 'semantic-ui-react'
 
-
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams
+} from "react-router-dom";
 
   export default class MovieTile extends Component {
-    state = {}
+
+    
+    state ={}
+    // state = this.setState(this.props.value)
+    // mut  = this.props.mutateState()
+    // 
   
     handleShow = () => this.setState({ active: true })
     handleHide = () => this.setState({ active: false })
   
     clickViewDetails = () => {
-        window.location.href='/movieDetails'
+        // window.location.href={`/movieDetails/${this.props.MovieTile}`}
     }
 
     render() {
+      console.log('I was triggered during render')
       const { active } = this.state
+      
       const content = (
         <div>
-          <Button primary onClick={this.clickViewDetails}>View Details</Button>
+          <Button primary><Link className="MovieDetails" key={this.props.movieId} to= {`/movieDetails/${this.props.movieId}`}>
+            View Details
+        </Link></Button>
         </div>
       )
   
       return (
-        <Card>
+        <React.Fragment>
+            <Card>
       <Dimmer.Dimmable
           as={Image}
           dimmed={active}
@@ -31,21 +47,21 @@ import { Button, Dimmer, Rating } from 'semantic-ui-react'
           onMouseEnter={this.handleShow}
           onMouseLeave={this.handleHide}
           size='medium'
-          src='https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg'
+          src= {this.props.poster}
         />
       <Card.Content>
-        <Card.Header>Avengers</Card.Header>
-        <Card.Meta>Released in 2012</Card.Meta>
+        <Card.Header>{this.props.title}</Card.Header>
+        <Card.Meta><Rating icon='star' defaultRating={1} maxRating={1} disabled/> {this.props.rating}  </Card.Meta>
         <Card.Description>
-        The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.
+          {this.props.description} 
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <a>
-            <Rating icon='star' defaultRating={4} maxRating={5} disabled/>
-        </a>
+        Released in {this.props.release} 
       </Card.Content>
     </Card> 
+        </React.Fragment>
+        
       )
     }
   }

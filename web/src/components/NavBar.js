@@ -41,6 +41,7 @@ export default class MenuExampleInvertedSegment extends Component {
   }
 
   performLogout = async () => {
+    window.sessionStorage.setItem('username', "guest");
     window.location.href='/login'
   }
 
@@ -67,7 +68,7 @@ export default class MenuExampleInvertedSegment extends Component {
 
     return (
       <Segment inverted>
-        <Menu inverted pointing secondary stackable >
+        <Menu inverted secondary stackable >
           <Menu.Item>
             <Image src={require('../images/logo192.png')} size='mini'  />
           </Menu.Item>

@@ -25,6 +25,64 @@ class Index(TemplateView):
             ctx['loggedIn'] = True
         return ctx
 
+class Homepage(APIView):
+    def get(self, request):
+            required=['popular','top_rated','now_playing']
+            #Tmdb provides maximum of 20 results for each page and we can't send Multiple page requests in single Query so using For loop
+            intial_homepage=defaultdict(list)
+            final_homepage=defaultdict(list)
+            poster_url='http://image.tmdb.org/t/p/w780/'
+            for i in range(1,4):
+                for j in required:
+                    url='https://api.themoviedb.org/3/movie/'+j+'?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&page='+str(i)
+                    response=requests.get(url)
+                    intial_homepage[j].extend(response.json()['results'])
+            #intial_homepage consistis of all the details of movies returned from the movie , but we require only ID, RELASEDATE , POSTER, DESCRIPTION, TITLE of every movie in each Required list. so forming our final home_page
+            #Rating is given out of 10, so for this project rating is maintained in between 0 to 5
+            for i in required:
+                for j in range(0,50):
+                    d={}
+                    d['id']=intial_homepage[i][j]['id']
+                    d['title']=intial_homepage[i][j]['title']
+                    d['rating']=int(intial_homepage[i][j]['vote_average'])/2
+                    d['description']=intial_homepage[i][j]['overview']
+                    if intial_homepage[i][j]['poster_path'] is None:
+                        d['poster']='https://i.stack.imgur.com/Q3vyk.png'
+                    else:
+                        d['poster']=poster_url+intial_homepage[i][j]['poster_path']
+                    d['release_date']=intial_homepage[i][j]['release_date']
+                    final_homepage[i].append(d)
+            home_page=json.dumps(final_homepage)
+            return JsonResponse(json.loads(home_page), safe=False)
+#request should be "https://127.0.0.1:8000/search/?query='movie name'
+class MovieSearch(APIView):
+    def get(self, request):
+        query=request.GET.get('query', '')
+        if len(query)>=1:
+            initial_search=defaultdict(list)
+            for i in range(1,4):
+                url='https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query='+str(query)+'&page='+str(i)+'&include_adult=false'
+                response=requests.get(url)
+                initial_search['result'].extend(response.json()['results'])
+             final_search=defaultdict(list)
+             poster_url='http://image.tmdb.org/t/p/w780/'
+             for i in initial_search['result']:
+                 d={}
+                 d['id']=i['id']
+                 d['title']=i['title']
+                 d['rating']=int(i['vote_average'])/2
+                 d['description']=i['overview']
+                 if i['poster_path'] is None:
+                        d['poster']='https://i.stack.imgur.com/Q3vyk.png'
+                 else:
+                        d['poster']=poster_url+i['poster_path']
+                 d['release_date']=i['release_date']
+                 final_search['result'].append(d)
+             search_page=json.dumps(final_search)
+             return JsonResponse(json.loads(search_page), safe=False)
+         else:
+              return redirect('/homepage')
+
 class SignUpView(TemplateView):
     template_name = 'signup.html'
 

@@ -4,3 +4,5 @@ Week 1:
 Week 2:
     System Architecture Research is done and Proposal Document is updated with the System Architure Diagram . System Setup is done for Using DJANGO framework for Backend Development . Attended Weekly Scrum Meeting Held on Friday and Sunday of Week 2 . Updated Subtasks for Jira User Stories . Finalised External API'S to be used for developement(The Movie DB).
 
+Week 3:
+   Submitted Proposal document . Sprint 1 is started worked with TMDB API Querying and Homepage Api is created and tested with Popular, Top rated and Currently playing Movie shows . Response structure is JSON .

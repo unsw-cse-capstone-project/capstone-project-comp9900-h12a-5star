@@ -118,3 +118,43 @@ class MovieSearch(APIView):
              return JsonResponse(json.loads(search_page), safe=False)
          else:
               return redirect('/homepage')
+class MovieDetails(APIView):
+    def get(self, request):
+        id=request.GET.get('id', 0)
+        print("id received",id);
+        youtube_path="https://www.youtube.com/watch?v="
+        if id != 0:
+            movie_details=defaultdict(list)
+            url='https://api.themoviedb.org/3/movie/'+str(id)+'?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&append_to_response=credits,videos'
+            response=requests.get(url)
+            movie_details['id']=response.json()['id']
+            movie_details['rating']=int(response.json()['vote_average'])/2
+            movie_details['description']=response.json()['overview']
+            movie_details['title']=response.json()['title']
+            for i in range(len(response.json()['genres'])):
+                 movie_details['genres'].append(response.json()['genres'][i]['name'])
+            for i in range(len(response.json()['videos']['results'])):
+                    if response.json()['videos']['results'][i]['type'] == 'Trailer' :
+                         movie_details['trailers'].append(youtube_path+str(response.json()['videos']['results'][i]['key']))
+            for i in range(len(response.json()['videos']['results'])):
+                    if response.json()['videos']['results'][i]['type'] == 'Teaser' :
+                         movie_details['teasers'].append(youtube_path+str(response.json()['videos']['results'][i]['key']))
+            for i in range(len(response.json()['credits']['cast'])):
+                    if i<10:
+                           movie_details['cast'].append(response.json()['credits']['cast'][i]['name'])
+                    else:
+                         break
+
+            for i in range(len(response.json()['credits']['crew'])):
+                      if response.json()['credits']['crew'][i]['job'] == 'Director':
+                               movie_details['director'].append(response.json()['credits']['crew'][i]['name'])
+                      if response.json()['credits']['crew'][i]['job'] == 'Producer':
+                               movie_details['producer'].append(response.json()['credits']['crew'][i]['name'])
+            if not(movie_details['trailers']):
+                        movie_details['trailers'].append(None)
+            if not(movie_details['teasers']):
+                        movie_details['teasers'].append(None)
+             details_page=json.dumps(movie_details)
+             return JsonResponse(json.loads(details_page), safe=False)
+         else:
+              return redirect('/homepage')

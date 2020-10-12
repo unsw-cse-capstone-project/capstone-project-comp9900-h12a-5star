@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating } from 'semantic-ui-react'
+import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating , Popup} from 'semantic-ui-react'
 import NavBar from '../components/NavBar';
 
 export default class MovieDetails extends Component {
@@ -14,12 +14,19 @@ export default class MovieDetails extends Component {
     handleClick_wishlist = () =>{
         this.setState((prevState) => ({ active_wishlist: !prevState.active_wishlist }))
     }
-
     render() {
 
         const { active_like } = this.state
         const { active_seen } = this.state
         const { active_wishlist } = this.state
+
+        const { temp_name } = "matt"
+
+        const style = {
+            borderRadius: 0,
+            opacity: 0.9,
+            padding: '2em',
+          }
 
         return (
             <React.Fragment>
@@ -113,7 +120,25 @@ export default class MovieDetails extends Component {
                             <Comment>
                                 <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg' />
                                 <Comment.Content>
-                                    <Comment.Author as='a'>Matt</Comment.Author>
+                                    <Popup trigger={<Comment.Author as='a'>Matt</Comment.Author>} 
+                                            flowing 
+                                            hoverable 
+                                            style={style} 
+                                            inverted 
+                                            position='top center'
+                                            on='click'>
+                                        <Grid   columns={3} >
+                                            <Grid.Column textAlign='center' >
+                                                <Button primary onClick={event =>  window.location.href='/Wishlist/Matt' }>View Wishlist</Button>
+                                            </Grid.Column>
+                                            <Grid.Column textAlign='center'>
+                                                <Button primary>Ban</Button>
+                                            </Grid.Column>
+                                            <Grid.Column textAlign='center'>
+                                                <Button primary>Follow</Button>
+                                            </Grid.Column>
+                                        </Grid>
+                                    </Popup>
                                     <Comment.Metadata>
                                         <div>Today at 5:42PM</div>
                                     </Comment.Metadata>

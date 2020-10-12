@@ -3,7 +3,24 @@ import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Hea
 import NavBar from '../components/NavBar';
 
 export default class MovieDetails extends Component {
+
+    state = {}
+    handleClick_like = () =>{
+        this.setState((prevState) => ({ active_like: !prevState.active_like }))
+    }
+    handleClick_seen = () =>{
+        this.setState((prevState) => ({ active_seen: !prevState.active_seen }))
+    }
+    handleClick_wishlist = () =>{
+        this.setState((prevState) => ({ active_wishlist: !prevState.active_wishlist }))
+    }
+
     render() {
+
+        const { active_like } = this.state
+        const { active_seen } = this.state
+        const { active_wishlist } = this.state
+
         return (
             <React.Fragment>
                 < NavBar />
@@ -19,9 +36,9 @@ export default class MovieDetails extends Component {
                                 </Grid.Column>
                                     
                                 <Grid.Column textAlign={"right"} >
-                                        <Button circular icon='thumbs up'  size={'big'}/>
-                                        <Button circular icon='eye'  size={'big'}/>
-                                        <Button circular icon='plus'  size={'big'}/>
+                                        <Button circular icon='thumbs up'  size={'big'} toggle active={active_like} onClick={this.handleClick_like}/>
+                                        <Button circular icon='eye'  size={'big'} toggle active={active_seen} onClick={this.handleClick_seen}/>
+                                        <Button circular icon='plus'  size={'big'} toggle active={active_wishlist} onClick={this.handleClick_wishlist}/>
                                         <Button circular icon='share alternate'  size={'big'}/>
                                 </Grid.Column>
                             </Grid.Row>

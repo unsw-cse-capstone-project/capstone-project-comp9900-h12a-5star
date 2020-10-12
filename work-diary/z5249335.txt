@@ -8,7 +8,7 @@ Week 3:
    Submitted Proposal document . Sprint 1 is started worked with TMDB API Querying and Login Api is created and tested with Username and Password present in Data Base . Response structure is JSON .
    
 Week 4:
-   Testing from both Front end and Back end is done. Few changes to code is done . Connections issues are fixed for Login, Registration pages . Home Page API is developed with Popular , Most rated and Latest release movies.
+   Completed User stories assigned in this week.Testing from both Front end and Back end is done. Few changes to code is done . Connections issues are fixed for Login, Registration pages . Home Page API is developed with Popular , Most rated and Latest release movies.
    
 Week 5:
-     We need to have end to end flow for our first demo presentation . Added Movie search api which takes Query(Movie name or Keyword) as input and returns the similar movies with same name .
+     We need to have end to end flow for our first demo presentation . Added Movie search api which takes Query(Movie name or Keyword) as input and returns the similar movies with same name .Working on User Stories assigned in this week.

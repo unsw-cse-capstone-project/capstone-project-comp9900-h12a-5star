@@ -3,11 +3,7 @@ import { Card, Image } from 'semantic-ui-react'
 import { Button, Dimmer, Rating } from 'semantic-ui-react'
 
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
   Link,
-  useParams
 } from "react-router-dom";
 
   export default class MovieTile extends Component {

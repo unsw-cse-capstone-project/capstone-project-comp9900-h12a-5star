@@ -13,8 +13,9 @@ export default class MovieDetails extends Component {
                             <Grid.Row >
                                 <Grid.Column >
                                     <Header as='h1'>
-                                        The Avengers
+                                        The Avengers 
                                 </Header>
+                                <Icon name='star' color={"yellow"}/> 4.7
                                 </Grid.Column>
                                     
                                 <Grid.Column textAlign={"right"} >
@@ -32,15 +33,7 @@ export default class MovieDetails extends Component {
                                         <List.Item>
                                             <br /><br />
                                         </List.Item>
-                                        <List.Item as='a'>
-                                            <Icon name='star' color={"yellow"}/>
-                                            <List.Content>
-                                                <List.Header>Rating</List.Header>
-                                                <List.Description>
-                                                    4.7<br /><br />
-                                                </List.Description>
-                                            </List.Content>
-                                        </List.Item>
+                                        
                                         <List.Item as='a'>
                                             <Icon name='calendar alternate outline' />
                                             <List.Content>

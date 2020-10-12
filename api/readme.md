@@ -6,7 +6,7 @@ Python and Django
 
 ## Installation Steps
 
-- Install Mongo Compass and connect to localhost
+- Install Mongo Compass community version and connect to localhost
 
 - Create conda environment and install requirements.txt
 ```(bash)
@@ -17,7 +17,7 @@ python3 -m pip install -r requirement
 
 - run the following commands
 ```(bash)
-python manage.py make migrations
+python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
 ```

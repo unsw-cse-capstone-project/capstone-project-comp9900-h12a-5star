@@ -126,8 +126,8 @@ export default class MovieDetails extends Component {
                                             style={style} 
                                             inverted 
                                             position='top center'
-                                            on='click'>
-                                        <Grid   columns={3} >
+                                            on={['hover', 'click']}>
+                                        <Grid columns={3} >
                                             <Grid.Column textAlign='center' >
                                                 <Button primary onClick={event =>  window.location.href='/Wishlist/Matt' }>View Wishlist</Button>
                                             </Grid.Column>

@@ -15,6 +15,25 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from profile.models import UserProfile
 
+'''
+Json input format for user registration. Do not change genres and languages inside profile
+{
+    "email":"123@gmail.com",
+    "password":"rohithkorupalli",
+    "genre":["Horror","Action"],
+    "Language":["Chinlish","Hindi"],
+    "profile": 
+        {
+            "first_name":"rohith",
+            "last_name":"korupalli",
+            "username":"roko123",
+            "Gender":"Male",
+            "Genres":"",
+            "Languages":"English"
+        }
+}
+'''
+
 @api_view(['POST', ])
 def UserRegistrationView(request):
     if request.method == 'POST':

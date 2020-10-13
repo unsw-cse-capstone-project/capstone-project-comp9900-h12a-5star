@@ -5,11 +5,6 @@ from . import views
 app_name = 'lg'
 
 urlpatterns = [
-    url(r'^$', views.Index.as_view(), name='index'),
-    url(r'^signup/$', views.SignUpView.as_view(), name='signup'),
-    url(r'^login/$', views.LoginView.as_view(), name='login'),
-    url(r'^logout/$', views.LogoutView.as_view(), name='logout'),
-    url(r'^homepage/$', views.Homepage.as_view(), name='logged_in'),
-    url(r'^search/$', views.MovieSearch.as_view(), name='MovieSearch'),
+  
 ]
 

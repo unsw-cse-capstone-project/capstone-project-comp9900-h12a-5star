@@ -1,56 +1,87 @@
-import React from 'react';
-import { Grid, Form, Segment, Button} from 'semantic-ui-react'
+import React, {useState} from 'react';
+import { Grid, Form, Segment, Button,Divider} from 'semantic-ui-react'
 import NavBar from '../components/NavBar';
 
-const Login = () => (
+const Login = () => {
+    const [username, setUsername] = useState('');
+    const [password, setpassword] = useState('')
+    const [error, setError] = useState('');
+
+    const checkLogin = async () => {
+        if (username !== '' || password !== ''){
+
+            const result = await fetch(`http://127.0.0.1:8000/api/signin`, {
+                method: 'post',
+                body: {username, password},
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                }
+
+            });
+            const body = await result.json();
+            if (body.status === 200){
+                window.sessionStorage.setItem('username', username);
+
+                window.location.href='/welcome';
+            }
+            else{
+                setError(body.error);
+            }
+        }
+        else{
+            setError('Either username or password not filled');
+        }
+
+
+    };
+    return(
+
     <React.Fragment>
-        <NavBar />
+        <NavBar/>
 
 
-
-        <div style={{ backgroundImage: `url(${require("../images/loginsignup.jpg")})`,height: 800 }}>
+        <div style={{backgroundImage: `url(${require("../images/loginsignup.jpg")})`, height: 800}}>
 
             <Grid>
                 <Grid.Column width={5}></Grid.Column>
                 <Grid.Column width={5} stretched>
 
-                    <Segment  inverted style={{margin: 15 }}>
+                    <Segment inverted style={{margin: 15}}>
 
 
-
-                        <h1 style={{textAlign:"center"}}>Log In</h1>
+                        <h1 style={{textAlign: "center"}}>Log In</h1>
                         <Form inverted>
 
 
-
-
-
-                            <Form.Group >
+                            <Form.Group>
                                 <Form.Field width={16}>
                                     <label>Email</label>
-                                    <input type='email' placeholder='joe@schmoe.com' />
+                                    <input type='email' value = {username} onChange= {(event) => setUsername(event.target.value)} placeholder='joe@schmoe.com'/>
                                 </Form.Field>
                             </Form.Group>
 
-                            <Form.Group >
+                            <Form.Group>
                                 <Form.Field width={16}>
                                     <label>Password</label>
-                                    <input type='password' placeholder='Password' />
+                                    <input value = {password} onChange= {(event) => setpassword(event.target.value)} type='password' placeholder='Password'/>
                                 </Form.Field>
                             </Form.Group>
-
-
-
 
 
                             <br></br>
 
-                            <Button fluid type='submit' floated='left' >Log In</Button>
-
+                            <Button onClick={checkLogin} color={"blue"} fluid type='submit' floated='left'>Log In</Button>
                             <p>&nbsp;</p>
+                            <Divider horizontal inverted>Or</Divider>
 
-                            New to FilmFinder? <Button  onClick={event => window.location.href = '/signup'}>Sign Up</Button>
 
+                            <center>
+                                <Button color={"blue"} animated='fade'
+                                        onClick={event => window.location.href = '/signup'}>
+                                    <Button.Content visible>New to Film Finder</Button.Content>
+                                    <Button.Content hidden>Sign up Now!</Button.Content>
+                                </Button></center>
 
 
                         </Form>
@@ -61,8 +92,9 @@ const Login = () => (
             </Grid>
         </div>
     </React.Fragment>
+    );
 
 
-);
+};
 
 export default Login;

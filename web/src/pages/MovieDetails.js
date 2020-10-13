@@ -1,9 +1,33 @@
 import React, { Component } from 'react';
-import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating } from 'semantic-ui-react'
+import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating , Popup} from 'semantic-ui-react'
 import NavBar from '../components/NavBar';
 
 export default class MovieDetails extends Component {
+
+    state = {}
+    handleClick_like = () =>{
+        this.setState((prevState) => ({ active_like: !prevState.active_like }))
+    }
+    handleClick_seen = () =>{
+        this.setState((prevState) => ({ active_seen: !prevState.active_seen }))
+    }
+    handleClick_wishlist = () =>{
+        this.setState((prevState) => ({ active_wishlist: !prevState.active_wishlist }))
+    }
     render() {
+
+        const { active_like } = this.state
+        const { active_seen } = this.state
+        const { active_wishlist } = this.state
+
+        const { temp_name } = "matt"
+
+        const style = {
+            borderRadius: 0,
+            opacity: 0.9,
+            padding: '2em',
+          }
+
         return (
             <React.Fragment>
                 < NavBar />
@@ -13,14 +37,15 @@ export default class MovieDetails extends Component {
                             <Grid.Row >
                                 <Grid.Column >
                                     <Header as='h1'>
-                                        The Avengers
+                                        The Avengers 
                                 </Header>
+                                <Icon name='star' color={"yellow"}/> 4.7
                                 </Grid.Column>
                                     
                                 <Grid.Column textAlign={"right"} >
-                                        <Button circular icon='thumbs up'  size={'big'}/>
-                                        <Button circular icon='eye'  size={'big'}/>
-                                        <Button circular icon='plus'  size={'big'}/>
+                                        <Button circular icon='thumbs up'  size={'big'} toggle active={active_like} onClick={this.handleClick_like}/>
+                                        <Button circular icon='eye'  size={'big'} toggle active={active_seen} onClick={this.handleClick_seen}/>
+                                        <Button circular icon='plus'  size={'big'} toggle active={active_wishlist} onClick={this.handleClick_wishlist}/>
                                         <Button circular icon='share alternate'  size={'big'}/>
                                 </Grid.Column>
                             </Grid.Row>
@@ -32,15 +57,7 @@ export default class MovieDetails extends Component {
                                         <List.Item>
                                             <br /><br />
                                         </List.Item>
-                                        <List.Item as='a'>
-                                            <Icon name='star' color={"yellow"}/>
-                                            <List.Content>
-                                                <List.Header>Rating</List.Header>
-                                                <List.Description>
-                                                    4.7<br /><br />
-                                                </List.Description>
-                                            </List.Content>
-                                        </List.Item>
+                                        
                                         <List.Item as='a'>
                                             <Icon name='calendar alternate outline' />
                                             <List.Content>
@@ -103,7 +120,25 @@ export default class MovieDetails extends Component {
                             <Comment>
                                 <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg' />
                                 <Comment.Content>
-                                    <Comment.Author as='a'>Matt</Comment.Author>
+                                    <Popup trigger={<Comment.Author as='a'>Matt</Comment.Author>} 
+                                            flowing 
+                                            hoverable 
+                                            style={style} 
+                                            inverted 
+                                            position='top center'
+                                            on={['hover', 'click']}>
+                                        <Grid columns={3} >
+                                            <Grid.Column textAlign='center' >
+                                                <Button primary onClick={event =>  window.location.href='/Wishlist/Matt' }>View Wishlist</Button>
+                                            </Grid.Column>
+                                            <Grid.Column textAlign='center'>
+                                                <Button primary>Ban</Button>
+                                            </Grid.Column>
+                                            <Grid.Column textAlign='center'>
+                                                <Button primary>Follow</Button>
+                                            </Grid.Column>
+                                        </Grid>
+                                    </Popup>
                                     <Comment.Metadata>
                                         <div>Today at 5:42PM</div>
                                     </Comment.Metadata>

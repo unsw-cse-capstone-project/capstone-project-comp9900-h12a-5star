@@ -90,6 +90,7 @@ class Homepage(APIView):
                     final_homepage[i].append(d)
             home_page=json.dumps(final_homepage)
             return JsonResponse(json.loads(home_page), safe=False)
+
 #request should be "https://127.0.0.1:8000/search/?query='movie name'
 class MovieSearch(APIView):
     def get(self, request):
@@ -100,28 +101,29 @@ class MovieSearch(APIView):
                 url='https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query='+str(query)+'&page='+str(i)+'&include_adult=false'
                 response=requests.get(url)
                 initial_search['result'].extend(response.json()['results'])
-             final_search=defaultdict(list)
-             poster_url='http://image.tmdb.org/t/p/w780/'
-             for i in initial_search['result']:
-                 d={}
-                 d['id']=i['id']
-                 d['title']=i['title']
-                 d['rating']=int(i['vote_average'])/2
-                 d['description']=i['overview']
-                 if i['poster_path'] is None:
-                        d['poster']='https://i.stack.imgur.com/Q3vyk.png'
-                 else:
-                        d['poster']=poster_url+i['poster_path']
-                 d['release_date']=i['release_date']
-                 final_search['result'].append(d)
-             search_page=json.dumps(final_search)
-             return JsonResponse(json.loads(search_page), safe=False)
-         else:
-              return redirect('/homepage')
+            final_search=defaultdict(list)
+            poster_url='http://image.tmdb.org/t/p/w780/'
+            for i in initial_search['result']:
+                d={}
+                d['id']=i['id']
+                d['title']=i['title']
+                d['rating']=int(i['vote_average'])/2
+                d['description']=i['overview']
+                if i['poster_path'] is None:
+                    d['poster']='https://i.stack.imgur.com/Q3vyk.png'
+                else:
+                    d['poster']=poster_url+i['poster_path']
+                d['release_date']=i['release_date']
+                final_search['result'].append(d)
+            search_page=json.dumps(final_search)
+            return JsonResponse(json.loads(search_page), safe=False)
+        else:
+            return redirect('/homepage')
+
 class MovieDetails(APIView):
     def get(self, request):
         id=request.GET.get('id', 0)
-        print("id received",id);
+        print("id received",id)
         youtube_path="https://www.youtube.com/watch?v="
         if id != 0:
             movie_details=defaultdict(list)
@@ -143,7 +145,7 @@ class MovieDetails(APIView):
                     if i<10:
                            movie_details['cast'].append(response.json()['credits']['cast'][i]['name'])
                     else:
-                         break
+                        break
 
             for i in range(len(response.json()['credits']['crew'])):
                       if response.json()['credits']['crew'][i]['job'] == 'Director':
@@ -154,7 +156,7 @@ class MovieDetails(APIView):
                         movie_details['trailers'].append(None)
             if not(movie_details['teasers']):
                         movie_details['teasers'].append(None)
-             details_page=json.dumps(movie_details)
-             return JsonResponse(json.loads(details_page), safe=False)
-         else:
-              return redirect('/homepage')
+            details_page=json.dumps(movie_details)
+            return JsonResponse(json.loads(details_page), safe=False)
+        else:
+            return redirect('/homepage')

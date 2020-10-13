@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from user.views import UserRegistrationView
 from user.views import UserLoginView, Homepage
+from user.views import MovieSearch, MovieDetails
 
 urlpatterns = [
     url(r'^signup', UserRegistrationView, name='signup'),

@@ -1,28 +1,31 @@
-import React, {useState} from 'react';
-import { Grid, Form, Segment, Button,Divider} from 'semantic-ui-react'
+import React from 'react';
+import {useState} from 'react';
+import { Grid, Form, Segment, Button,Divider} from 'semantic-ui-react';
 import NavBar from '../components/NavBar';
 
 const Login = () => {
-    const [username, setUsername] = useState('');
+    const [email, setUsername] = useState('');
     const [password, setpassword] = useState('')
     const [error, setError] = useState('');
 
     const checkLogin = async () => {
-        if (username !== '' || password !== ''){
+        if (email !== '' || password !== ''){
 
             const result = await fetch(`http://127.0.0.1:8000/api/signin`, {
                 method: 'post',
-                body: {username, password},
+                body: JSON.stringify({email, password}),
                 headers: {
-                    
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
                 }
+
+
 
             });
             const body = await result.json();
-            if (body.status === 200){
-                window.sessionStorage.setItem('username', username);
+
+            if (body.response.status_code === 200){
+                window.sessionStorage.setItem('username', email);
 
                 window.location.href='/welcome';
             }
@@ -58,7 +61,7 @@ const Login = () => {
                             <Form.Group>
                                 <Form.Field width={16}>
                                     <label>Email</label>
-                                    <input type='email' value = {username} onChange= {(event) => setUsername(event.target.value)} placeholder='joe@schmoe.com'/>
+                                    <input type='email' value = {email} onChange= {(event) => setUsername(event.target.value)} placeholder='joe@schmoe.com'/>
                                 </Form.Field>
                             </Form.Group>
 

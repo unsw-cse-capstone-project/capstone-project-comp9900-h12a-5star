@@ -70,7 +70,7 @@ def UserLoginView(request):
         user_profile = UserProfile.objects.get(user=user)
         context['response'] = {
                 'success' : 'True',
-                'status code' : status.HTTP_200_OK,
+                'status_code' : status.HTTP_200_OK,
                 'message': 'User logged in  successfully',
                 'id':str(user_profile),
 				'email':email,

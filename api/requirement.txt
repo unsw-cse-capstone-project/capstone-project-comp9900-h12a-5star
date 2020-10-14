@@ -16,5 +16,5 @@ tmdbv3api
 django-multiselectfield
 django-appconf
 django-select2
-sqlparse
+sqlparse==0.2.4
 asgiref==3.2.10

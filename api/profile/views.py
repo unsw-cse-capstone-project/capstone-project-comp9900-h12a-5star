@@ -20,10 +20,8 @@ class UserProfileView(RetrieveAPIView):
                 'status code': status_code,
                 'message': 'User profile fetched successfully',
                 'data': {
-                    'first_name': user_profile.first_name,
-                    'last_name': user_profile.last_name,
-                    'phone_number': user_profile.phone_number,
-                    'age': user_profile.age,
+                    'first_name': user_profile.firstname,
+                    'last_name': user_profile.lastname,
                     'gender': user_profile.gender,
                     }
                 }

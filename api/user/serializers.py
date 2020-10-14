@@ -9,7 +9,7 @@ from django_select2.forms import Select2MultipleWidget
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ('first_name', 'last_name','username', 'Gender','Languages','Genres')
+        fields = ('firstname', 'lastname','username', 'gender','languages','lenres')
         widgets = {
             'interests': Select2MultipleWidget,
         }
@@ -20,13 +20,13 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     genre = serializers.ListField(
         child = serializers.CharField()
     )
-    Language = serializers.ListField(
+    language = serializers.ListField(
         child = serializers.CharField()
     )
 
     class Meta:
         model = User
-        fields = ('email', 'password','profile','genre',"Language")
+        fields = ('email', 'password','profile','genre',"language")
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -37,11 +37,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         UserProfile.objects.create(
             user=user,
             username = profile_data['username'],
-            first_name=profile_data['first_name'],
-            last_name=profile_data['last_name'],
-            Gender=profile_data['Gender'],
-            Languages=validated_data['Language'],
-            Genres=validated_data['genre']
+            firstname=profile_data['firstname'],
+            lastname=profile_data['lastname'],
+            gender=profile_data['gender'],
+            languages=validated_data['ganguage'],
+            genres=validated_data['genre']
             #age=validated_data['age'],
             #gender=validated_data['gender']
         )

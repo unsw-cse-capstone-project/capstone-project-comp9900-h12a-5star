@@ -173,7 +173,7 @@ class MovieDetails(APIView):
                                movie_details['director'].append(response.json()['credits']['crew'][i]['name'])
                       if response.json()['credits']['crew'][i]['job'] == 'Producer':
                                movie_details['producer'].append(response.json()['credits']['crew'][i]['name'])
-	    movie_details['release_date']==response.json()['release_date']
+            movie_details['release_date']=response.json()['release_date']
             if not(movie_details['trailers']):
                         movie_details['trailers'].append(None)
             if not(movie_details['teasers']):

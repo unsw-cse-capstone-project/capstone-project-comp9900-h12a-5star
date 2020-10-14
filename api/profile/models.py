@@ -9,13 +9,13 @@ class UserProfile(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     username = models.CharField(max_length=30, blank=False, unique=True)
-    first_name = models.CharField(max_length=50, unique=False)
-    last_name = models.CharField(max_length=50, unique=False)
+    firstname = models.CharField(max_length=50, unique=False)
+    lastname = models.CharField(max_length=50, unique=False)
     GENDER_CHOICES = (
         ('Male', 'Male'),
         ('Female', 'Female'),
     )
-    Gender = models.CharField(max_length=6, choices=GENDER_CHOICES,default=None)
+    gender = models.CharField(max_length=6, choices=GENDER_CHOICES,default=None)
 
     Genre_CHOICES = (
         ('Horror', 'Horror'),
@@ -23,7 +23,7 @@ class UserProfile(models.Model):
         ('Comedy', 'Comedy'),
         ('Action', 'Action'),
      )
-    Genres = MultiSelectField(choices = Genre_CHOICES,blank=True,null=True)
+    genres = MultiSelectField(choices = Genre_CHOICES,blank=True,null=True)
 
     Language_CHOICES = (
         ('English', 'English'),
@@ -31,7 +31,7 @@ class UserProfile(models.Model):
         ('Chinkish', 'Chinkish'),
         ('Hindhi', 'Hindhi'),
      )
-    Languages = MultiSelectField(choices = Language_CHOICES, default= None)
+    languages = MultiSelectField(choices = Language_CHOICES, default= None)
 
     class Meta:
         '''

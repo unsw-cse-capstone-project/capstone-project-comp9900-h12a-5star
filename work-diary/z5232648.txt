@@ -9,3 +9,6 @@ Created the first draft of interface and flow diagrams. Discussed with team on j
 
 Week 3
 Prepared the final draft of the interface and flow diagrams. Included the user boards in the proposal document. Reviewed format of proposal document before submission. Completed the setup of front end environment on local machine. Tested the same environment on VLAB machine. Further, I will be working on assigned JIRA tasks i.e sign up form.
+
+Week 4
+Installed mongodb, compass and other backend requirements. Finished the UI of sign up form. Integrated the UI with the backend. Tested the sign up flow. Updated the JIRA stories accordingly.

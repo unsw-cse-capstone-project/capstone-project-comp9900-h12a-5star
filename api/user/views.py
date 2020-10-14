@@ -101,7 +101,7 @@ class Homepage(APIView):
                     d={}
                     d['id']=intial_homepage[i][j]['id']
                     d['title']=intial_homepage[i][j]['title']
-                    d['rating']=int(intial_homepage[i][j]['vote_average'])/2
+                    d['rating']=round((intial_homepage[i][j]['vote_average'])/2,1)
                     d['description']=intial_homepage[i][j]['overview']
                     if intial_homepage[i][j]['poster_path'] is None:
                         d['poster']='https://i.stack.imgur.com/Q3vyk.png'
@@ -151,7 +151,7 @@ class MovieDetails(APIView):
             url='https://api.themoviedb.org/3/movie/'+str(id)+'?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&append_to_response=credits,videos'
             response=requests.get(url)
             movie_details['id']=response.json()['id']
-            movie_details['rating']=int(response.json()['vote_average'])/2
+            movie_details['rating']=round((response.json()['vote_average'])/2,1)
             movie_details['description']=response.json()['overview']
             movie_details['title']=response.json()['title']
             for i in range(len(response.json()['genres'])):
@@ -173,6 +173,7 @@ class MovieDetails(APIView):
                                movie_details['director'].append(response.json()['credits']['crew'][i]['name'])
                       if response.json()['credits']['crew'][i]['job'] == 'Producer':
                                movie_details['producer'].append(response.json()['credits']['crew'][i]['name'])
+	    movie_details['release_date']==response.json()['release_date']
             if not(movie_details['trailers']):
                         movie_details['trailers'].append(None)
             if not(movie_details['teasers']):

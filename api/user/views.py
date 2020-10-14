@@ -74,8 +74,8 @@ def UserLoginView(request):
                 'message': 'User logged in  successfully',
                 'id':str(user_profile),
 				'email':email,
-                'first_name':user_profile.first_name,
-                'last_name':user_profile.last_name,
+                'firstname':user_profile.firstname,
+                'lastname':user_profile.lastname,
 		'username':user_profile.username
                 }
     status_code = status.HTTP_200_OK

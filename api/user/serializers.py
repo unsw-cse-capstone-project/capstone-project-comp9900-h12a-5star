@@ -9,7 +9,7 @@ from django_select2.forms import Select2MultipleWidget
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ('firstname', 'lastname','username', 'gender','languages','lenres')
+        fields = ('firstname', 'lastname','username', 'gender','languages','genres')
         widgets = {
             'interests': Select2MultipleWidget,
         }
@@ -40,7 +40,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             firstname=profile_data['firstname'],
             lastname=profile_data['lastname'],
             gender=profile_data['gender'],
-            languages=validated_data['ganguage'],
+            languages=validated_data['language'],
             genres=validated_data['genre']
             #age=validated_data['age'],
             #gender=validated_data['gender']

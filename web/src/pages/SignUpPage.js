@@ -7,11 +7,11 @@ const SignUpPage = () => {
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   const [genre, setgenre] = useState('');
-  const [Language, setLanguage] = useState('');
-  const [first_name, setfirst_name] = useState('');
-  const [last_name, setlast_name] = useState('');
+  const [language, setlanguage] = useState('');
+  const [firstname, setfirstname] = useState('');
+  const [lastname, setlastname] = useState('');
   const [username, setusername] = useState('');
-  const [Gender, setGender] = useState('');
+  const [gender, setgender] = useState('');
   const [error, setError] = useState('');
 
 
@@ -19,6 +19,11 @@ const SignUpPage = () => {
       { key: 'm', text: 'Male', value: 'male' },
       { key: 'f', text: 'Female', value: 'female' },
     ]
+
+  var obj = {"email": email, "password": password, "genre": genre, "language": language,
+              "profile": {"firstname": firstname, "lastname": lastname, "username": username,
+            "gender": gender, "genres": "", "languages":""}};
+
 
 
   const languageOptions = [
@@ -52,11 +57,11 @@ const SignUpPage = () => {
   ]
 
   const checkSignUp = async () => {
-    if (email !== '' || password !== ''){
+    if (email !== '' & password !== ''){
 
         const result = await fetch(`http://127.0.0.1:8000/api/signup`, {
             method: 'post',
-            body: JSON.stringify({email, password}),
+            body: JSON.stringify(obj),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -67,10 +72,10 @@ const SignUpPage = () => {
         });
         const body = await result.json();
 
-        if (body.response.status_code === 200){
-            window.sessionStorage.setItem('username', email);
+        if (body.response.status_code == 200){
+            // window.sessionStorage.setItem('username', email);
 
-            window.location.href='/welcome';
+            window.location.href='/login';
         }
         else{
             setError(body.error);
@@ -105,21 +110,21 @@ return(
           <Form.Group >
             <Form.Field width={16}>
               <label>First Name</label>
-              <input value = {first_name} onChange= {(event) => setfirst_name(event.target.value)} placeholder='First Name' required />
+              <input value = {firstname} onChange= {(event) => setfirstname(event.target.value)} placeholder='First Name' required />
             </Form.Field>
           </Form.Group>
 
           <Form.Group >
             <Form.Field width={16}>
               <label>Last Name</label>
-              <input value = {last_name} onChange= {(event) => setlast_name(event.target.value)} placeholder='Last Name' required/>
+              <input value = {lastname} onChange= {(event) => setlastname(event.target.value)} placeholder='Last Name' required/>
             </Form.Field>
           </Form.Group>
 
           <Form.Group >
             <Form.Field width={16}>
               <label>Gender</label>
-              <Dropdown value = {Gender} onChange= {(event) => setGender(event.target.value)} placeholder='Gender' fluid selection options={genderOptions} required/>
+              <Dropdown value = {gender} onChange= {(event) => setgender(event.target.value)} placeholder='Gender' fluid selection options={genderOptions} required/>
             </Form.Field>
           </Form.Group>
 
@@ -150,7 +155,7 @@ return(
           <Form.Group >
             <Form.Field width={16}>
               <label>Favorite Languages</label>
-              <Dropdown value = {Language} onChange= {(event) => setLanguage(event.target.value)} placeholder='Favorite Languages' fluid multiple selection options={languageOptions} required/>
+              <Dropdown value = {language} onChange= {(event) => setlanguage(event.target.value)} placeholder='Favorite Languages' fluid multiple selection options={languageOptions} required/>
             </Form.Field>
           </Form.Group>
 

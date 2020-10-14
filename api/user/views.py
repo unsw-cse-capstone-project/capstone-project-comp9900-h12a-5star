@@ -46,7 +46,7 @@ def UserRegistrationView(request):
         serializer.save()
         response = {
             'success' : 'True',
-            'status code' : status.HTTP_200_OK,
+            'status_code' : status.HTTP_200_OK,
             'message': 'User registered  successfully',
             }
         status_code = status.HTTP_200_OK
@@ -76,7 +76,7 @@ def UserLoginView(request):
 				'email':email,
                 'first_name':user_profile.first_name,
                 'last_name':user_profile.last_name,
-				'username':user_profile.username
+		'username':user_profile.username
                 }
     status_code = status.HTTP_200_OK
     return Response(context, status=status_code)

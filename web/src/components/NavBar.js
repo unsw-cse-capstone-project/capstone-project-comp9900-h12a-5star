@@ -23,12 +23,17 @@ export default class MenuExampleInvertedSegment extends Component {
       window.location.href='/welcome'
     }
     else if (name === 'my wishlist'){
-      if (window.sessionStorage.getItem('username') === null || window.sessionStorage.getItem('username') === "guest"){
-        window.location.href='/login'
+      if (window.sessionStorage.getItem('username') === null){
+        window.sessionStorage.setItem('username', "guest");
       }
-      else{
-        window.location.href='/wishlist'
-      }
+
+      window.location.href=`/wishlist/${window.sessionStorage.getItem('username')}`
+      // if (window.sessionStorage.getItem('username') === null || window.sessionStorage.getItem('username') === "guest"){
+      //   window.location.href='/login'
+      // }
+      // else{
+      //   window.location.href='/wishlist'
+      // }
     }
     else if (name === 'my profile'){
       if (window.sessionStorage.getItem('username') === null || window.sessionStorage.getItem('username') === "guest"){

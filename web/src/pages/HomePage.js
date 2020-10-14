@@ -18,7 +18,7 @@ export default class HomePage extends Component {
     }
 
     componentDidMount() {
-        fetch("http://dummy.restapiexample.com/api/v1/employees")
+        fetch("http://127.0.0.1:8000/api/homepage/")
             .then(res => res.json())
             .then(
                 (result) => {
@@ -39,185 +39,53 @@ export default class HomePage extends Component {
             )
     }
 
-    movie_data = {
-        popular: [
-            {
-                id: 1,
-                title: "Enola Holmes",
-                rating: 3.5,
-                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
-                poster: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg",
-                release: "2020"
-            },
-            {
-                id: 2,
-                title: "The Avengers",
-                rating: 3.5,
-                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
-                poster: "https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg",
-                release: "2020"
-            },
-            {
-                id: 3,
-                title: "The Last Days of American Crime",
-                rating: 3.5,
-                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
-                poster: "http://image.tmdb.org/t/p/w780//ygCQnDEqUEIamBpdQdDYnFfxvgM.jpg",
-                release: "2020"
-            },
-            {
-                id: 4,
-                title: "Enola Holmes 4",
-                rating: 3.5,
-                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
-                poster: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg",
-                release: "2020"
-            },
-            {
-                id: 5,
-                title: "Enola Holmes 5",
-                rating: 3.5,
-                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
-                poster: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg",
-                release: "2020"
-            }
-        ],
-        topRated: [
-            {
-                id: 1,
-                title: "Enola Holmes",
-                rating: 3.5,
-                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
-                poster: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg",
-                release: "2020"
-            },
-            {
-                id: 2,
-                title: "The Avengers",
-                rating: 3.5,
-                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
-                poster: "https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg",
-                release: "2020"
-            },
-            {
-                id: 3,
-                title: "The Last Days of American Crime",
-                rating: 3.5,
-                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
-                poster: "http://image.tmdb.org/t/p/w780//ygCQnDEqUEIamBpdQdDYnFfxvgM.jpg",
-                release: "2020"
-            },
-            {
-                id: 4,
-                title: "Enola Holmes 4",
-                rating: 3.5,
-                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
-                poster: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg",
-                release: "2020"
-            },
-            {
-                id: 5,
-                title: "Enola Holmes 5",
-                rating: 3.5,
-                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
-                poster: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg",
-                release: "2020"
-            }
-        ],
-        recent: [
-            {
-                id: 1,
-                title: "Enola Holmes",
-                rating: 3.5,
-                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
-                poster: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg",
-                release: "2020"
-            },
-            {
-                id: 2,
-                title: "The Avengers",
-                rating: 3.5,
-                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
-                poster: "https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg",
-                release: "2020"
-            },
-            {
-                id: 3,
-                title: "The Last Days of American Crime",
-                rating: 3.5,
-                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
-                poster: "http://image.tmdb.org/t/p/w780//ygCQnDEqUEIamBpdQdDYnFfxvgM.jpg",
-                release: "2020"
-            },
-            {
-                id: 4,
-                title: "Enola Holmes 4",
-                rating: 3.5,
-                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
-                poster: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg",
-                release: "2020"
-            },
-            {
-                id: 5,
-                title: "Enola Holmes 5",
-                rating: 3.5,
-                description: "The Avengers, is a 2012 American superhero film based on the Marvel Comics superhero team of the same name.",
-                poster: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg",
-                release: "2020"
-            }
-        ]
-    }
-
-
-
     render() {
-        const { error, isLoaded, items, url } = this.state;
         var columnsTopMovies = null
         var columnsRecentlyReleased = null
         var columnsMostPopular = null
 
-        if (this.state.items.data) {
-            columnsTopMovies = _.times(5, (i) => (
+        if (this.state.items.popular) {
+            columnsTopMovies = _.times(4, (i) => (
                 <Grid.Column key={i}>
                     <MovieTile 
-                        title={this.movie_data.topRated[i].title} 
-                        poster={this.movie_data.topRated[i].poster} 
-                        release={this.movie_data.topRated[i].release} 
-                        rating={this.movie_data.topRated[i].rating} 
-                        description={this.movie_data.topRated[i].description} 
-                        movieId={this.movie_data.topRated[i].id} 
+                        title={this.state.items.top_rated[i].title} 
+                        poster={this.state.items.top_rated[i].poster} 
+                        release={this.state.items.top_rated[i].release_date} 
+                        rating={this.state.items.top_rated[i].rating} 
+                        description={this.state.items.top_rated[i].description} 
+                        movieId={this.state.items.top_rated[i].id} 
                     />
                 </Grid.Column>
             ))
-            columnsRecentlyReleased = _.times(5, (i) => (
+            columnsRecentlyReleased = _.times(4, (i) => (
 
                 <Grid.Column key={i}>
                     <MovieTile 
-                        title={this.movie_data.recent[i].title} 
-                        poster={this.movie_data.recent[i].poster} 
-                        release={this.movie_data.recent[i].release} 
-                        rating={this.movie_data.recent[i].rating} 
-                        description={this.movie_data.recent[i].description} 
-                        movieId={this.movie_data.recent[i].id}
+                        title={this.state.items.now_playing[i].title} 
+                        poster={this.state.items.now_playing[i].poster} 
+                        release={this.state.items.now_playing[i].release_date} 
+                        rating={this.state.items.now_playing[i].rating} 
+                        description={this.state.items.now_playing[i].description} 
+                        movieId={this.state.items.now_playing[i].id}
                     />
                 </Grid.Column>
 
             ))
-            columnsMostPopular = _.times(5, (i) => (
+            columnsMostPopular = _.times(4, (i) => (
                 <Grid.Column key={i}>
                     <MovieTile 
-                        title={this.movie_data.popular[i].title} 
-                        poster={this.movie_data.popular[i].poster} 
-                        release={this.movie_data.popular[i].release} 
-                        rating={this.movie_data.popular[i].rating} 
-                        description={this.movie_data.popular[i].description} 
-                        movieId={this.movie_data.popular[i].id}
+                        title={this.state.items.popular[i].title} 
+                        poster={this.state.items.popular[i].poster} 
+                        release={this.state.items.popular[i].release_date} 
+                        rating={this.state.items.popular[i].rating} 
+                        description={this.state.items.popular[i].description} 
+                        movieId={this.state.items.popular[i].id}
                     />
                 </Grid.Column>
             ))
         }
         else{
-            columnsTopMovies = _.times(5, (i) => (
+            columnsTopMovies = _.times(4, (i) => (
                 <Grid.Column key={i}>
                     <Card.Group>
                         <Card>
@@ -239,7 +107,7 @@ export default class HomePage extends Component {
                     </Card.Group>
                 </Grid.Column>
             ))
-            columnsRecentlyReleased = _.times(5, (i) => (
+            columnsRecentlyReleased = _.times(4, (i) => (
 
                 <Grid.Column key={i}>
                     <Card.Group>
@@ -263,7 +131,7 @@ export default class HomePage extends Component {
                 </Grid.Column>
 
             ))
-            columnsMostPopular = _.times(5, (i) => (
+            columnsMostPopular = _.times(4, (i) => (
                 <Grid.Column key={i}>
                     <Card.Group>
                         <Card>
@@ -296,7 +164,7 @@ export default class HomePage extends Component {
                             <Header as='h1'>Top Rated Movies</Header>
                         </Grid.Column>
                         <Grid.Column>
-                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = '/searchResult/topRated'}>
+                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = '/topRated'}>
                                 see more
                             </Label>
                         </Grid.Column>
@@ -308,7 +176,7 @@ export default class HomePage extends Component {
                             <Header as='h1'>Recently Released Movies</Header>
                         </Grid.Column>
                         <Grid.Column>
-                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = '/searchResult/recentReleased'}>
+                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = '/recentReleased'}>
                                 see more
                             </Label>
                         </Grid.Column>
@@ -320,7 +188,7 @@ export default class HomePage extends Component {
                             <Header as='h1'>Popular Movies</Header>
                         </Grid.Column>
                         <Grid.Column>
-                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = '/searchResult/popularMovies'}>
+                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = '/popularMovies'}>
                                 see more
                             </Label>
                         </Grid.Column>

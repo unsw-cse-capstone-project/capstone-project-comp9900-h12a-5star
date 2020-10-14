@@ -1,43 +1,47 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import update_last_login
-from rest_framework import serializers
+from rest_framework import serializers, fields
 #from rest_framework_jwt.settings import api_settings
 from profile.models import UserProfile
 from user.models import User
-
-#JWT_PAYLOAD_HANDLER = api_settings.JWT_PAYLOAD_HANDLER
-#JWT_ENCODE_HANDLER = api_settings.JWT_ENCODE_HANDLER
-
+from django_select2.forms import Select2MultipleWidget
 
 class UserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = UserProfile
-        fields = ('first_name', 'last_name', 'phone_number', )
-
+        fields = ('first_name', 'last_name','username', 'Gender','Languages','Genres')
+        widgets = {
+            'interests': Select2MultipleWidget,
+        }
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
 
-    #profile = UserSerializer(required=False)
-    first_name = serializers.CharField(max_length=50)
-    last_name = serializers.CharField(max_length=50)
-    #age = serializers.PositiveIntegerField(null=False, blank=False)
+    profile = UserSerializer(required=False)
+    genre = serializers.ListField(
+        child = serializers.CharField()
+    )
+    Language = serializers.ListField(
+        child = serializers.CharField()
+    )
 
     class Meta:
         model = User
-        #fields = ('email', 'password','profile')
-        fields = ('email', 'password', 'first_name', 'last_name')
+        fields = ('email', 'password','profile','genre',"Language")
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         print('yes!!!!',validated_data)
-        #profile_data = validated_data.pop('profile')
+        profile_data = validated_data.pop('profile')
+        print(profile_data)
         user = User.objects.create_user(validated_data['email'],validated_data['password'])
         UserProfile.objects.create(
             user=user,
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
-            #phone_number=validated_data['phone_number'],
+            username = profile_data['username'],
+            first_name=profile_data['first_name'],
+            last_name=profile_data['last_name'],
+            Gender=profile_data['Gender'],
+            Languages=validated_data['Language'],
+            Genres=validated_data['genre']
             #age=validated_data['age'],
             #gender=validated_data['gender']
         )
@@ -47,7 +51,6 @@ class UserLoginSerializer(serializers.Serializer):
 
     email = serializers.CharField(max_length=255)
     password = serializers.CharField(max_length=128, write_only=True)
-    #token = serializers.CharField(max_length=255, read_only=True)
 
     def validate(self, data):
         email = data.get("email", None)

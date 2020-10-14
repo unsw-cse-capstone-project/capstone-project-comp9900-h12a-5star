@@ -3,11 +3,7 @@ import { Card, Image } from 'semantic-ui-react'
 import { Button, Dimmer, Rating } from 'semantic-ui-react'
 
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
   Link,
-  useParams
 } from "react-router-dom";
 
   export default class MovieTile extends Component {
@@ -31,7 +27,7 @@ import {
       
       const content = (
         <div>
-          <Button primary><Link className="MovieDetails" key={this.props.movieId} to= {`/movieDetails/${this.props.movieId}`}>
+          <Button primary><Link style={{ color: '#FFF' }} className="MovieDetails" key={this.props.movieId} to= {`/movieDetails/${this.props.movieId}`}>
             View Details
         </Link></Button>
         </div>
@@ -50,14 +46,14 @@ import {
           src= {this.props.poster}
         />
       <Card.Content>
-        <Card.Header>{this.props.title}</Card.Header>
+        <Card.Header>{this.props.title.substring(0,24)}</Card.Header>
         <Card.Meta><Rating icon='star' defaultRating={1} maxRating={1} disabled/> {this.props.rating}  </Card.Meta>
         <Card.Description>
-          {this.props.description} 
+          {this.props.description.substring(0,100)} ... 
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        Released in {this.props.release} 
+        Released in {this.props.release.substring(0,4)} 
       </Card.Content>
     </Card> 
         </React.Fragment>

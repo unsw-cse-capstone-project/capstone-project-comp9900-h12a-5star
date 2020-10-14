@@ -16,7 +16,7 @@ export default class TopRated extends Component {
     }
 
     componentDidMount() {
-        fetch("http://127.0.0.1:8000/homepage/")
+        fetch("http://127.0.0.1:8000/api/homepage/")
             .then(res => res.json())
             .then(
                 (result) => {

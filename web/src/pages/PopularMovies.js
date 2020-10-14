@@ -65,7 +65,7 @@ export default class PopularMovies extends Component {
                 <NavBar />
 
                 <Container style={{ margin: 20 }}>
-                    <Header as='h1'>Top Rated Movies</Header>
+                    <Header as='h1'>Popular Movies</Header>
                     <Grid columns='equal'>{columnsRecentlyReleased}</Grid>
                 </Container>
             </>

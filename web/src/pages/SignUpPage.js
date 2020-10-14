@@ -19,12 +19,27 @@ const SignUpPage = () => {
       { key: 'm', text: 'Male', value: 'male' },
       { key: 'f', text: 'Female', value: 'female' },
     ]
-
-  var obj = {"email": email, "password": password, "genre": genre, "language": language,
+  
+  
+  var obj = {"email": email, "password": password, "genre": ["Horror"], "language": ["English"],
               "profile": {"firstname": firstname, "lastname": lastname, "username": username,
-            "gender": gender, "genres": "", "languages":""}};
+            "gender": "Male", "genres": "", "languages":"English"}};
 
-
+  // var obj = {
+  //   "email":"kar@gmail.com",
+  //   "password":"karan",
+  //   "genre":["Horror"],
+  //   "language":["Chinlish"],
+  //   "profile": 
+  //       {
+  //           "firstname":"kar",
+  //           "lastname":"sin",
+  //           "username":"kar",
+  //           "gender":"Male",
+  //           "genres":"",
+  //           "languages":"English"
+  //       }
+  //     };
 
   const languageOptions = [
     { key: 'english', text: 'English', value: 'english' },
@@ -72,13 +87,13 @@ const SignUpPage = () => {
         });
         const body = await result.json();
 
-        if (body.response.status_code == 200){
+        if (body.status_code === 200){
             // window.sessionStorage.setItem('username', email);
 
             window.location.href='/login';
         }
         else{
-            setError(body.error);
+            window.location.href='/login'
         }
     }
     else{
@@ -155,14 +170,14 @@ return(
           <Form.Group >
             <Form.Field width={16}>
               <label>Favorite Languages</label>
-              <Dropdown value = {language} onChange= {(event) => setlanguage(event.target.value)} placeholder='Favorite Languages' fluid multiple selection options={languageOptions} required/>
+              <Dropdown value = {language} onChange= {(event) => setlanguage(event.target.value)} placeholder='Favorite Languages' fluid selection multiple options={languageOptions} required/>
             </Form.Field>
           </Form.Group>
 
           <Form.Group >
             <Form.Field width={16}>
               <label>Favorite Genres</label>
-              <Dropdown value = {genre} onChange= {(event) => setgenre(event.target.value)} placeholder='Favorite Genres' fluid multiple selection options={genreOptions} required/>
+              <Dropdown value = {genre} onChange= {(event) => setgenre(event.target.value)} placeholder='Favorite Genres' fluid selection multiple options={genreOptions} required/>
             </Form.Field>
           </Form.Group>
 

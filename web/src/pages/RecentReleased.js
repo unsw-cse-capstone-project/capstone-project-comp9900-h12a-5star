@@ -65,7 +65,7 @@ export default class RecentReleased extends Component {
                 <NavBar />
 
                 <Container style={{ margin: 20 }}>
-                    <Header as='h1'>Top Rated Movies</Header>
+                    <Header as='h1'>Recently Released Movies</Header>
                     <Grid columns='equal'>{columnsRecentlyReleased}</Grid>
                 </Container>
             </>

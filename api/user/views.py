@@ -73,8 +73,10 @@ def UserLoginView(request):
                 'status code' : status.HTTP_200_OK,
                 'message': 'User logged in  successfully',
                 'id':str(user_profile),
+				'email':email,
                 'first_name':user_profile.first_name,
-                'last_name':user_profile.last_name
+                'last_name':user_profile.last_name,
+				'username':user_profile.username
                 }
     status_code = status.HTTP_200_OK
     return Response(context, status=status_code)

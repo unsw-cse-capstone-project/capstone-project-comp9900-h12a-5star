@@ -18,6 +18,12 @@ Week 3
 Completed and submitted the project propsal
 completed initial set up for the frontend end development
 Decided on Novel functionalities for the project and added them to the sprints
+Started learning and developing system UI in react.js for user stories in Jira
+
+Week 4
+Completed the front end development for login page
+Completed integrating API calls to mongo DB backend
+
 
 
 

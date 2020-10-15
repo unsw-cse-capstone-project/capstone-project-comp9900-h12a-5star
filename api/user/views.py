@@ -127,7 +127,10 @@ def search_func(resp, n):
             d['poster'] = 'https://i.stack.imgur.com/Q3vyk.png'
         else:
             d['poster'] = poster_url + i['poster_path']
-        d['release_date'] = i['release_date']
+        try:
+            d['release_date']=i['poster_path']
+        except KeyError:
+            d['release_date']=0
         if n == 'genre':
             final_resp['genre_result'].append(d)
         else:
@@ -137,16 +140,24 @@ def search_func(resp, n):
 class MovieSearch(APIView):
     def get(self, request):
         query=request.GET.get('query', '')
-        query_list = query.split(" ")
+        query_list = query.split()
+        print(query_list)
         genre = requests.get("https://api.themoviedb.org/3/genre/movie/list?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US")
         genre_list = genre.json()['genres']
+        print(genre_list)
         genre_id = []
         for q in query_list:
+            print("q is",q)
             for genre in genre_list:
+                print("q in",q.lower())
+                print("name is ",genre['name'].lower())
                 if q.lower() == genre['name'].lower():
+                   print("entrered")
                    genre_id.append(genre['id'])
                    break
-        if len(genre_id) > 1:
+        print("genre",genre_id)
+        if len(genre_id) >= 1:
+            print("entered")
             res = requests.get("https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=1" + "&with_genres=" + str(genre_id[0]))
             if res.json()['total_pages'] > 4:
                 pages = 4

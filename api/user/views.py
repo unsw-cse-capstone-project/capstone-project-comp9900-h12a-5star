@@ -88,7 +88,7 @@ class Homepage(APIView):
             #Tmdb provides maximum of 20 results for each page and we can't send Multiple page requests in single Query so using For loop
             intial_homepage=defaultdict(list)
             final_homepage=defaultdict(list)
-            poster_url='http://image.tmdb.org/t/p/w780/'
+            poster_url='http://image.tmdb.org/t/p/original/'
             for i in range(1,4):
                 for j in required:
                     url='https://api.themoviedb.org/3/movie/'+j+'?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&page='+str(i)
@@ -112,39 +112,82 @@ class Homepage(APIView):
             home_page=json.dumps(final_homepage)
             return JsonResponse(json.loads(home_page), safe=False)
 
-#request should be "https://127.0.0.1:8000/search/?query='movie name'
+#request should be "https://127.0.0.1:8000/api/search/?query='movie name'
+
+def search_func(resp, n):
+    final_resp = defaultdict(list)
+    poster_url = 'http://image.tmdb.org/t/p/original/'
+    for i in resp['result']:
+        d = {}
+        d['id'] = i['id']
+        d['title'] = i['title']
+        d['rating'] = round(i['vote_average'] / 2, 1)
+        d['description'] = i['overview']
+        if i['poster_path'] is None:
+            d['poster'] = 'https://i.stack.imgur.com/Q3vyk.png'
+        else:
+            d['poster'] = poster_url + i['poster_path']
+        d['release_date'] = i['release_date']
+        if n == 'genre':
+            final_resp['genre_result'].append(d)
+        else:
+            final_resp['name_result'].append(d)
+    return final_resp
+
 class MovieSearch(APIView):
     def get(self, request):
         query=request.GET.get('query', '')
-        if len(query)>=1:
-            initial_search=defaultdict(list)
-            for i in range(1,4):
-                url='https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query='+str(query)+'&page='+str(i)+'&include_adult=false'
-                response=requests.get(url)
-                initial_search['result'].extend(response.json()['results'])
-            final_search=defaultdict(list)
-            poster_url='http://image.tmdb.org/t/p/w780/'
-            for i in initial_search['result']:
-                d={}
-                d['id']=i['id']
-                d['title']=i['title']
-                d['rating']=int(i['vote_average'])/2
-                d['description']=i['overview']
-                if i['poster_path'] is None:
-                    d['poster']='https://i.stack.imgur.com/Q3vyk.png'
-                else:
-                    d['poster']=poster_url+i['poster_path']
-                d['release_date']=i['release_date']
-                final_search['result'].append(d)
-            search_page=json.dumps(final_search)
-            return JsonResponse(json.loads(search_page), safe=False)
+        query_list = query.split(" ")
+        genre = requests.get("https://api.themoviedb.org/3/genre/movie/list?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US")
+        genre_list = genre.json()['genres']
+        genre_id = []
+        for q in query_list:
+            for genre in genre_list:
+                if q.lower() == genre['name'].lower():
+                   genre_id.append(genre['id'])
+                   break
+        if len(genre_id) > 1:
+            res = requests.get("https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=1" + "&with_genres=" + str(genre_id[0]))
+            if res.json()['total_pages'] > 4:
+                pages = 4
+            elif res.json()['total_pages'] < 4 and res.json()['total_pages'] != 0:
+                pages = res.json()['total_pages']
+            else:
+                pages = 2
+            genre_resp = defaultdict(list)
+            for i in range(1, pages):
+                  url = "https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=" + str(
+                i) + "&with_genres=" + str(genre_id[0])
+                  response = requests.get(url)
+                  genre_resp['result'].extend(response.json()['results'])
+            genre_search = search_func(genre_resp, "genre")
         else:
-            return redirect('/homepage')
+            genre_search = defaultdict(list)
+        if len(query) >= 1:
+            initial_search = defaultdict(list)
+            res = requests.get('https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query=' + str(query) + '&page=1' + '&include_adult=false')
+            if res.json()['total_pages'] > 4:
+                pages = 4
+            elif res.json()['total_pages'] < 4 and res.json()['total_pages'] != 0:
+                pages = res.json()['total_pages']
+            else:
+                pages = 2
+            for i in range(1, pages):
+                 url = 'https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query=' + str(query) + '&page=' + str(i) + '&include_adult=false'
+                 response = requests.get(url)
+                 initial_search['result'].extend(response.json()['results'])
+            name_search = search_func(initial_search, "name")
+        else:
+            name_search = defaultdict(list)
+        search_page = dict(list(genre_search.items()) + list(name_search.items()))
+        search_page = json.dumps(search_page)
+        return JsonResponse(json.loads(search_page), safe=False)
+
 
 class MovieDetails(APIView):
     def get(self, request):
         id=request.GET.get('id', 0)
-        print("id received",id)
+        #print("id received",id)
         youtube_path="https://www.youtube.com/watch?v="
         if id != 0:
             movie_details=defaultdict(list)
@@ -173,7 +216,7 @@ class MovieDetails(APIView):
                                movie_details['director'].append(response.json()['credits']['crew'][i]['name'])
                       if response.json()['credits']['crew'][i]['job'] == 'Producer':
                                movie_details['producer'].append(response.json()['credits']['crew'][i]['name'])
-	    movie_details['release_date']==response.json()['release_date']
+            movie_details['release_date']=response.json()['release_date']
             if not(movie_details['trailers']):
                         movie_details['trailers'].append(None)
             if not(movie_details['teasers']):

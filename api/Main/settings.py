@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'multiselectfield',
     'user',
-    'profile'
+    'profile',
+    'movie_review'
 ]
 
 MIDDLEWARE = [

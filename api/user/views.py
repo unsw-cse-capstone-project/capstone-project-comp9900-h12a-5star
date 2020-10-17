@@ -246,8 +246,9 @@ class MovieSearch(APIView):
 
 class MovieDetails(APIView):
     def get(self, request):
-        id=request.GET.get('id', 0)
+        id=request.POST.get('id', 0)
         #print("id received",id)
+        user=request.POST.get('user')
         youtube_path="https://www.youtube.com/watch?v="
         if id != 0:
             movie_details=defaultdict(list)
@@ -282,6 +283,10 @@ class MovieDetails(APIView):
             if not(movie_details['teasers']):
                         movie_details['teasers'].append(None)
             details_page=json.dumps(movie_details)
-            return JsonResponse(json.loads(details_page), safe=False)
+            if user == 'Guest':
+                return JsonResponse(json.loads(details_page), safe=False)
+            else:
+                if request.method=='POST':
+
         else:
             return redirect('/homepage')

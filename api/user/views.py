@@ -14,6 +14,10 @@ from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from profile.models import UserProfile
+from requests import get
+from requests.exceptions import RequestException
+from contextlib import closing
+from bs4 import BeautifulSoup
 
 '''
 Json input format for user registration. Do not change genres and languages inside profile
@@ -88,7 +92,7 @@ class Homepage(APIView):
             #Tmdb provides maximum of 20 results for each page and we can't send Multiple page requests in single Query so using For loop
             intial_homepage=defaultdict(list)
             final_homepage=defaultdict(list)
-            poster_url='http://image.tmdb.org/t/p/w780/'
+            poster_url='http://image.tmdb.org/t/p/original/'
             for i in range(1,4):
                 for j in required:
                     url='https://api.themoviedb.org/3/movie/'+j+'?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&page='+str(i)
@@ -112,39 +116,139 @@ class Homepage(APIView):
             home_page=json.dumps(final_homepage)
             return JsonResponse(json.loads(home_page), safe=False)
 
-#request should be "https://127.0.0.1:8000/search/?query='movie name'
+#request should be "https://127.0.0.1:8000/api/search/?query='movie name'
+
+def search_func(resp, n):
+    final_resp = defaultdict(list)
+    poster_url = 'http://image.tmdb.org/t/p/original/'
+    for i in resp['result']:
+        d = {}
+        d['id'] = i['id']
+        d['title'] = i['title']
+        d['rating'] = round(i['vote_average'] / 2, 1)
+        d['description'] = i['overview']
+        if i['poster_path'] is None:
+            d['poster'] = 'https://i.stack.imgur.com/Q3vyk.png'
+        else:
+            d['poster'] = poster_url + i['poster_path']
+        try:
+            d['release_date']=i['release_date']
+        except KeyError:
+            d['release_date']=0
+        if n == 'genre':
+            final_resp['genre_result'].append(d)
+        elif n=='name':
+            final_resp['name_result'].append(d)
+        else:
+            final_resp['description_result'].append(d)
+    return final_resp
+
+def simple_get(url):
+    try:
+        header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)\
+                                                                Chrome/77.0.3865.90 Safari/537.36'}
+        with closing(get(url,stream = True,headers=header)) as resp:
+            if 'html' in resp.headers['Content-Type'] and resp.status_code == 200:
+                return resp.content
+            else:
+                return None
+    except RequestException:
+        print(f'Request for {url} failed')
+        return None
+
 class MovieSearch(APIView):
     def get(self, request):
         query=request.GET.get('query', '')
-        if len(query)>=1:
-            initial_search=defaultdict(list)
-            for i in range(1,4):
-                url='https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query='+str(query)+'&page='+str(i)+'&include_adult=false'
-                response=requests.get(url)
-                initial_search['result'].extend(response.json()['results'])
-            final_search=defaultdict(list)
-            poster_url='http://image.tmdb.org/t/p/w780/'
-            for i in initial_search['result']:
-                d={}
-                d['id']=i['id']
-                d['title']=i['title']
-                d['rating']=int(i['vote_average'])/2
-                d['description']=i['overview']
-                if i['poster_path'] is None:
-                    d['poster']='https://i.stack.imgur.com/Q3vyk.png'
-                else:
-                    d['poster']=poster_url+i['poster_path']
-                d['release_date']=i['release_date']
-                final_search['result'].append(d)
-            search_page=json.dumps(final_search)
-            return JsonResponse(json.loads(search_page), safe=False)
+        query_list = query.split()
+        #print(query_list)
+        genre = requests.get("https://api.themoviedb.org/3/genre/movie/list?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US")
+        genre_list = genre.json()['genres']
+        #print(genre_list)
+        genre_id = []
+        for q in query_list:
+            #print("q is",q)
+            for genre in genre_list:
+                #print("q in",q.lower())
+                #print("name is ",genre['name'].lower())
+                if q.lower() == genre['name'].lower():
+                   print("entrered")
+                   genre_id.append(genre['id'])
+                   break
+        #print("genre",genre_id)
+        if len(genre_id) >= 1:
+            print("entered")
+            res = requests.get("https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=1" + "&with_genres=" + str(genre_id[0]))
+            if res.json()['total_pages'] > 4:
+                pages = 4
+            elif res.json()['total_pages'] < 4 and res.json()['total_pages'] != 0:
+                pages = res.json()['total_pages']
+            else:
+                pages = 2
+            genre_resp = defaultdict(list)
+            for i in range(1, pages):
+                  url = "https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=" + str(
+                i) + "&with_genres=" + str(genre_id[0])
+                  response = requests.get(url)
+                  genre_resp['result'].extend(response.json()['results'])
+            genre_search = search_func(genre_resp, "genre")
         else:
-            return redirect('/homepage')
+            genre_search = defaultdict(list)
+        if len(query) >= 1:
+            initial_search = defaultdict(list)
+            res = requests.get('https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query=' + str(query) + '&page=1' +'&sort_by=popularity.desc'+ '&include_adult=false')
+            if res.json()['total_pages'] > 4:
+                pages = 4
+            elif res.json()['total_pages'] < 4 and res.json()['total_pages'] != 0:
+                pages = res.json()['total_pages']
+            else:
+                pages = 2
+            for i in range(1, pages):
+                 url = 'https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query=' + str(query) + '&page=' + str(i)+'&sort_by=popularity.desc' + '&include_adult=false'
+                 response = requests.get(url)
+                 initial_search['result'].extend(response.json()['results'])
+            name_search = search_func(initial_search, "name")
+        else:
+            name_search = defaultdict(list)
+        s = BeautifulSoup(simple_get('https://www.whatismymovie.com/results?text='+query), 'html.parser')
+        desc_movies=[]
+        for heading in s.find_all(["h3"]):
+            #print(s)
+            if heading.text.strip().endswith(')'):
+                x=len(heading.text.strip())
+                if heading.text.strip()[:x-7] not in desc_movies:
+                    desc_movies.append(heading.text.strip()[:x-7])
+        description_search = defaultdict(list)
+        #print(desc_movies)
+        for i in desc_movies[:30]:
+            initial_search = defaultdict(list)
+            res = requests.get('https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query=' + str(i)+'&sort_by=popularity.desc' + '&page=1' + '&include_adult=false')
+            #print(res.json())
+            try:
+                if res.json()['total_pages'] > 4:
+                    pages = 4
+                elif res.json()['total_pages'] < 4 and res.json()['total_pages'] != 0:
+                    pages = res.json()['total_pages']
+                else:
+                    pages = 2
+                for i in range(1, pages):
+                     initial_search['result'].extend(res.json()['results'])
+                x_search = search_func(initial_search, "desc")
+                #print(x_search)
+                if len(x_search) !=0:
+                    description_search['description_result'].extend(x_search['description_result'])
+            except KeyError:
+                continue
+
+        search_page = dict(list(genre_search.items()) + list(name_search.items())+ list(description_search.items()))
+        search_page = json.dumps(search_page)
+        return JsonResponse(json.loads(search_page), safe=False)
+
 
 class MovieDetails(APIView):
     def get(self, request):
-        id=request.GET.get('id', 0)
-        print("id received",id)
+        id=request.POST.get('id', 0)
+        #print("id received",id)
+        user=request.POST.get('user')
         youtube_path="https://www.youtube.com/watch?v="
         if id != 0:
             movie_details=defaultdict(list)
@@ -179,6 +283,10 @@ class MovieDetails(APIView):
             if not(movie_details['teasers']):
                         movie_details['teasers'].append(None)
             details_page=json.dumps(movie_details)
-            return JsonResponse(json.loads(details_page), safe=False)
+            if user == 'Guest':
+                return JsonResponse(json.loads(details_page), safe=False)
+            else:
+                if request.method=='POST':
+
         else:
             return redirect('/homepage')

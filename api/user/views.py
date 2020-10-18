@@ -245,17 +245,18 @@ class MovieSearch(APIView):
 
 
 class MovieDetails(APIView):
-    def get(self, request):
-        id=request.POST.get('id', 0)
+    def post(self, request):
+
+        id=request.data['id']
         #print("id received",id)
-        user=request.POST.get('user')
+        user=request.data['user']
         youtube_path="https://www.youtube.com/watch?v="
         if id != 0:
             movie_details=defaultdict(list)
             url='https://api.themoviedb.org/3/movie/'+str(id)+'?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&append_to_response=credits,videos'
             response=requests.get(url)
             movie_details['id']=response.json()['id']
-            movie_details['rating']=round((response.json()['vote_average'])/2,1)
+            movie_details['imdb_rating']=round((response.json()['vote_average'])/2,1)
             movie_details['description']=response.json()['overview']
             movie_details['title']=response.json()['title']
             for i in range(len(response.json()['genres'])):
@@ -282,11 +283,24 @@ class MovieDetails(APIView):
                         movie_details['trailers'].append(None)
             if not(movie_details['teasers']):
                         movie_details['teasers'].append(None)
-            details_page=json.dumps(movie_details)
+
             if user == 'Guest':
+                details_page = json.dumps(movie_details)
                 return JsonResponse(json.loads(details_page), safe=False)
             else:
-                if request.method=='POST':
-
+                r=requests.get('http://127.0.0.1:8000/api/getreview',data={'movie':id})
+                #
+                print("r is",type(r),r.json())
+                #z=list(r.json()['rating'])
+                #print(z)
+                movie_details['review'].append(r.json()['review'])
+                movie_details['userrating'].append(r.json()['rating'])
+                movie_details['user'].append(r.json()['user'])
+                movie_details['watched'].append(r.json()['watched'])
+                movie_details['wishlist'].append(r.json()['wishlist'])
+                movie_details['liked'].append(r.json()['liked'])
+                print(movie_details)
+                details_page = json.dumps(movie_details)
+                return JsonResponse(json.loads(details_page), safe=False)
         else:
             return redirect('/homepage')

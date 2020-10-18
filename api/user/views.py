@@ -6,7 +6,8 @@ from user.serializers import UserRegistrationSerializer
 from user.serializers import UserLoginSerializer
 from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
-
+from profile.models import UserProfile
+from movie_review.models import movies,reviews
 import requests
 from collections import defaultdict
 import json
@@ -85,6 +86,29 @@ def UserLoginView(request):
     status_code = status.HTTP_200_OK
     return Response(context, status=status_code)
     #return Response(context)
+
+def get_review(user,id,final):
+    for i in reviews.objects.filter(movie__movie_id=id):
+        final['review'].append(i.review)
+        final['user'].append(i.review_user_id)
+        final['rating'].append(i.rating)
+    if user == 'Guest':
+        final['watched']= False
+        final['liked']=False
+        final['wishlist']=False
+    else:
+        print("yup")
+        #data=serializers.serialize("json", reviews.objects.all(),indent=4 )
+        print(id)
+        print(user)
+        for i in reviews.objects.filter(movie__movie_id=id , review_user_id=user):
+            print("entered")
+            final['watched'] = i.watched
+            final['liked'] = i.liked
+            final['wishlist'] = i.wishlist
+    return final
+
+
 
 class Homepage(APIView):
     def get(self, request):
@@ -283,24 +307,9 @@ class MovieDetails(APIView):
                         movie_details['trailers'].append(None)
             if not(movie_details['teasers']):
                         movie_details['teasers'].append(None)
-
-            if user == 'Guest':
-                details_page = json.dumps(movie_details)
-                return JsonResponse(json.loads(details_page), safe=False)
-            else:
-                r=requests.get('http://127.0.0.1:8000/api/getreview',data={'movie':id})
-                #
-                print("r is",type(r),r.json())
-                #z=list(r.json()['rating'])
-                #print(z)
-                movie_details['review'].append(r.json()['review'])
-                movie_details['userrating'].append(r.json()['rating'])
-                movie_details['user'].append(r.json()['user'])
-                movie_details['watched'].append(r.json()['watched'])
-                movie_details['wishlist'].append(r.json()['wishlist'])
-                movie_details['liked'].append(r.json()['liked'])
-                print(movie_details)
-                details_page = json.dumps(movie_details)
-                return JsonResponse(json.loads(details_page), safe=False)
+            reviews = get_review(user, id,movie_details)
+            #if user == 'Guest':
+            details_page = json.dumps(reviews)
+            return JsonResponse(json.loads(details_page), safe=False)
         else:
             return redirect('/homepage')

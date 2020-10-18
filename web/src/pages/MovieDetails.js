@@ -4,7 +4,45 @@ import NavBar from '../components/NavBar';
 
 export default class MovieDetails extends Component {
 
-    state = {}
+    constructor() {
+        super();
+        this.state = {
+            error: null,
+            isLoaded: false,
+            items: []
+        };
+    }
+
+    id = 618355
+    user = "shubhankar_mathur"
+
+    componentDidMount() {
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: 618355, user: 'shubhankar_mathur' })
+        };
+
+        fetch("http://127.0.0.1:8000/api/moviedetail", requestOptions)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        items: result
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+    }
+
+    // state = {}
     handleClick_like = () =>{
         this.setState((prevState) => ({ active_like: !prevState.active_like }))
     }
@@ -37,9 +75,9 @@ export default class MovieDetails extends Component {
                             <Grid.Row >
                                 <Grid.Column >
                                     <Header as='h1'>
-                                        The Avengers 
+                                        {this.state.items.title} 
                                 </Header>
-                                <Icon name='star' color={"yellow"}/> 4.7
+                                <Icon name='star' color={"yellow"}/> {this.state.items.imdb_rating} 
                                 </Grid.Column>
                                     
                                 <Grid.Column textAlign={"right"} >
@@ -63,7 +101,7 @@ export default class MovieDetails extends Component {
                                             <List.Content>
                                                 <List.Header>Release Date</List.Header>
                                                 <List.Description>
-                                                    2012<br /><br />
+                                                {this.state.items.release_date} <br /><br />
                                                 </List.Description>
                                             </List.Content>
                                         </List.Item>
@@ -107,7 +145,7 @@ export default class MovieDetails extends Component {
                                         About the Movie
                                     </Header>
                                     <p>
-                                        Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.
+                                    {this.state.items.description}
                                     </p>
                                 </Grid.Column>
                             </Grid.Row>

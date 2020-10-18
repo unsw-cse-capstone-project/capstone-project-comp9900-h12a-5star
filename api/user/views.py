@@ -88,6 +88,12 @@ def UserLoginView(request):
     #return Response(context)
 
 def get_review(user,id,final):
+    final['review']=[]
+    final['user']=[]
+    final['rating']=[]
+    final['watched'] = False
+    final['liked'] = False
+    final['wishlist'] = False
     for i in reviews.objects.filter(movie__movie_id=id):
         final['review'].append(i.review)
         final['user'].append(i.review_user_id)

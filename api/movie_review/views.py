@@ -41,7 +41,7 @@ def add_review(request):
                 i.rating=request.data['rating']
             i.save()
         response = {
-                'success': 'True',
+                'success': 'True' ,
                 'status code': status.HTTP_200_OK,
                 'message': 'Review updated',
                 }

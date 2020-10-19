@@ -26,7 +26,8 @@ export default class MovieDetails extends Component {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
+            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
+            body: JSON.stringify({ id: this.props.match.params.movieId, user: 'shubmat' })
         };
 
         fetch("http://127.0.0.1:8000/api/moviedetail", requestOptions)
@@ -59,6 +60,19 @@ export default class MovieDetails extends Component {
     }
     handleClick_wishlist = () =>{
         this.setState((prevState) => ({ active_wishlist: !prevState.active_wishlist }))
+
+        // this.state.active_wishlist = !this.state.active_wishlist
+
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
+            body: JSON.stringify({ movieId: this.props.match.params.movieId, username: 'shubmat', wishlist: !this.state.items.wishlist})
+        };
+
+        fetch("http://127.0.0.1:8000/api/addWishlist/", requestOptions)
+            
+            this.state.items.wishlist = !this.state.items.wishlist
     }
     render() {
 

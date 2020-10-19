@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating , Popup, Label} from 'semantic-ui-react'
+import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message} from 'semantic-ui-react'
 import NavBar from '../components/NavBar';
 
 export default class MovieDetails extends Component {
@@ -201,6 +201,20 @@ export default class MovieDetails extends Component {
                             <Header as='h3' >
                                 User Reviews
                         </Header>
+
+                            {
+                                (this.state.items.review)?
+                                (this.state.items.review.length === 0)?
+                                <Message>
+                                    <Message.Header>There are no reviews to show yet!</Message.Header>
+                                    <p>
+                                    Be the first one to review {this.state.items.title}
+                                    </p>
+                                </Message> : <div></div>
+                                :
+                                <div></div>
+                            }
+
                             <Comment>
                                 <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg' />
                                 <Comment.Content>

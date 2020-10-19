@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from profile.models import UserProfile
 from movie_review.models import movies,reviews
-from movie_review.helper import verify_user
+from movie_review.helper import verify_user, get_movie_details
 
 @api_view(['POST', ])
 def add_review(request):
@@ -112,14 +112,19 @@ def add_rating(request):
     return Response(response)
 
 ##adding or updating wishlist
-@api_view(['POST', ])
+# for deletion send key value as False and for addition, send as True
+@api_view(['PUT', ])
 def add_to_wishlist(request):
     print(request.data)
-    a,b = verify_user(request.data['user'])
+    a,b = verify_user(request.data['username'])
     if a==False:
         return Response(b)
     try:
-        for i in reviews.objects.filter(movie__movie_id=request.data['movie'] , review_user_id=request.data['user']):
+        i = reviews.objects.filter(movie__movie_id=request.data['movieId'] , review_user_id=request.data['username'])
+            #raise Exception
+        if len(i) ==0:
+            raise Exception
+        for i in reviews.objects.filter(movie__movie_id=request.data['movieId'] , review_user_id=request.data['username']):
             i.wishlist = request.data['wishlist']
             i.save()
         response = {
@@ -129,8 +134,8 @@ def add_to_wishlist(request):
                 }
     except Exception:
         e = reviews()
-        e.movie_id = request.data['movie']
-        e.review_user_id = request.data['user']
+        e.movie_id = request.data['movieId']
+        e.review_user_id = request.data['username']
         if 'wishlist' in request.data.keys():
             e.wishlist=request.data['wishlist']
         e.save()
@@ -142,18 +147,23 @@ def add_to_wishlist(request):
     return Response(response)
 
 ##getting all movies with wishlisted by a user
-@api_view(['GET', ])
+@api_view(['POST', ])
 def get_wishlist(request):
-    print(request.data)
-    a,b = verify_user(request.data['user'])
-    if a==False:
-        return Response(b)
+    #print(request.data)
+    for user in [request.data['username'], request.data['reviewerUsername']]:
+        a,b = verify_user(user)
+        if a==False:
+            return Response(b)
     response = {
                 'success': 'True',
                 'status code': status.HTTP_200_OK,
                 'wishlist': []
                 }
-    for i in reviews.objects.filter(review_user_id=request.data['user']):
+    wished, response = [],[]
+    for i in reviews.objects.filter(review_user_id=request.data['reviewerUsername']):
         if i.wishlist == True:
-            response['wishlist'].append(i.movie_id)
+            wished.append(i.movie_id)
+
+    for movie in wished:
+        response.append(get_movie_details(movie))
     return Response(response)

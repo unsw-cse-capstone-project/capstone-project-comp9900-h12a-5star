@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating , Popup} from 'semantic-ui-react'
+import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating , Popup, Label} from 'semantic-ui-react'
 import NavBar from '../components/NavBar';
 
 export default class MovieDetails extends Component {
@@ -92,9 +92,6 @@ export default class MovieDetails extends Component {
                                 
                                 <Grid.Column >
                                     <List >
-                                        <List.Item>
-                                            <br /><br />
-                                        </List.Item>
                                         
                                         <List.Item as='a'>
                                             <Icon name='calendar alternate outline' />
@@ -110,25 +107,73 @@ export default class MovieDetails extends Component {
                                             <List.Content>
                                                 <List.Header>Director</List.Header>
                                                 <List.Description>
-                                                    Joss Whedon <br /><br />
+                                                <Label.Group>
+                                                    {
+                                                        (this.state.items.director)?
+                                                            this.state.items.director.map((item) =>
+                                                        <Label as='a'>{item}</Label>
+                                                        )
+                                                        :
+                                                        <div></div>
+                                                    }
+                                                    </Label.Group>
                                                 </List.Description>
                                             </List.Content>
                                         </List.Item>
                                         <List.Item as='a'>
-                                            <Icon name='map outline' />
+                                            <Icon name='film' />
+                                            <List.Content>
+                                                <List.Header>Producer</List.Header>
+                                                <List.Description>
+                                                <Label.Group>
+                                                    {
+                                                        (this.state.items.producer)?
+                                                            this.state.items.producer.map((item) =>
+                                                        <Label as='a'>{item}</Label>
+                                                        )
+                                                        :
+                                                        <div></div>
+                                                    }
+                                                    </Label.Group>
+                                                </List.Description>
+                                            </List.Content>
+                                        </List.Item>
+                                        <List.Item as='a'>
+                                            <Icon name='globe' />
                                             <List.Content>
                                                 <List.Header>Genre</List.Header>
                                                 <List.Description>
-                                                    Comic, Action<br /><br />
+                                                <Label.Group>
+                                                {
+                                                        (this.state.items.genres)?
+                                                            this.state.items.genres.map((item) =>
+                                                        <Label as='a'>{item}</Label>
+                                                        )
+                                                        :
+                                                        <div></div>
+                                                        
+                                                    }
+                                                    </Label.Group>
                                                 </List.Description>
                                             </List.Content>
                                         </List.Item>
                                         <List.Item as='a'>
-                                            <Icon name='map outline' />
+                                            <Icon name='address book outline' />
                                             <List.Content>
                                                 <List.Header>Cast</List.Header>
                                                 <List.Description>
-                                                    Robert Downey Jr., Mark Ruffalo, Chris Evans, Scarlett Johansson
+                                                <Label.Group>
+                                                {
+                                                    
+                                                        (this.state.items.cast)?
+                                                            this.state.items.cast.map((item) =>
+                                                        <Label as='a'>{item}</Label>
+                                                        )
+                                                        :
+                                                        <div></div>
+                                                    
+                                                    }
+                                                    </Label.Group>
                                                 </List.Description>
                                             </List.Content>
                                         </List.Item>
@@ -136,7 +181,8 @@ export default class MovieDetails extends Component {
                                     
                                 </Grid.Column>
                                 <Grid.Column width={4}>
-                                    <Image src={'https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg'} />
+                                    {}
+                                    <Image src={`${this.state.items.poster}`} />
                                 </Grid.Column>
                             </Grid.Row>
                             <Grid.Row>

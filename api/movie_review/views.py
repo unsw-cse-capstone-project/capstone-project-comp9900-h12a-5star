@@ -94,7 +94,6 @@ def get_review(request):
 
 @api_view(['POST', ])
 def add_rating(request):
-    print('-------------------')
     print(request.data)
     try:
         for i in reviews.objects.filter(movie__movie_id=request.data['movie'] , review_user_id=request.data['user']):
@@ -118,6 +117,30 @@ def add_rating(request):
                 'message': 'rating added for a new user and movie',
                 }
     return Response(response)
-#@api_view(['GET', ])
-#def add_to_wishlist(request):
 
+##adding or updating wishlist
+@api_view(['POST', ])
+def add_to_wishlist(request):
+    print(request.data)
+    try:
+        for i in reviews.objects.filter(movie__movie_id=request.data['movie'] , review_user_id=request.data['user']):
+            i.wishlist = request.data['wishlist']
+            i.save()
+        response = {
+                'success': 'True',
+                'status code': status.HTTP_200_OK,
+                'message': 'wishlist updated for a new user and movie',
+                }
+    except Exception:
+        e = reviews()
+        e.movie_id = request.data['movie']
+        e.review_user_id = request.data['user']
+        if 'wishlist' in request.data.keys():
+            e.wishlist=request.data['wishlist']
+        e.save()
+        response = {
+                'success': 'True',
+                'status code': status.HTTP_200_OK,
+                'message': 'wishlist added for a new user and movie',
+                }
+    return Response(response)

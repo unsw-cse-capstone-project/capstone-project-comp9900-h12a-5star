@@ -25,6 +25,7 @@ def add_review(request):
         e.review = request.data['review']
         e.rating=request.data['rating']
         e.save()
+
         response = {
                 'success': 'True',
                 'status code': status.HTTP_200_OK,
@@ -34,8 +35,6 @@ def add_review(request):
         for i in reviews.objects.filter(movie__movie_id=request.data['movie'] , review_user_id=request.data['user']):
             i.review = request.data['review']
             i.rating=request.data['rating']
-            
-
             i.save()
         response = {
                 'success': 'True',
@@ -66,18 +65,13 @@ def get_review(request):
                 'status code': status.HTTP_200_OK,
                 'review':[],
                 'user':[],
-                'rating':[],
-                'liked':[],
-                'wishlist':[],
-                'watched':[]
+                'rating':[]
                 }
         for i in reviews.objects.filter(movie__movie_id=request.data['movie']):
             response['review'].append(i.review)
             response['user'].append(i.review_user_id)
             response['rating'].append(i.rating)
-            response['liked'].append(i.liked)
-            response['wishlist'].append(i.wishlist)
-            response['watched'].append(i.watched)
+
 
     else:
         response = {

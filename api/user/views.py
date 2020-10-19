@@ -19,6 +19,7 @@ from requests import get
 from requests.exceptions import RequestException
 from contextlib import closing
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 '''
 Json input format for user registration. Do not change genres and languages inside profile
@@ -156,6 +157,7 @@ class Homepage(APIView):
                         d['poster']=poster_url+intial_homepage[i][j]['poster_path']
                     d['release_date']=intial_homepage[i][j]['release_date']
                     final_homepage[i].append(d)
+            final_homepage['now_playing'].sort(key= lambda x : datetime.strptime(x['release_date'],'%Y-%m-%d'),reverse=True)
             home_page=json.dumps(final_homepage)
             return JsonResponse(json.loads(home_page), safe=False)
 

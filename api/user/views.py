@@ -29,12 +29,12 @@ Json input format for user registration. Do not change genres and languages insi
     "Language":["Chinlish","Hindi"],
     "profile": 
         {
-            "first_name":"rohith",
-            "last_name":"korupalli",
+            "firstname":"rohith",
+            "lastname":"korupalli",
             "username":"roko123",
-            "Gender":"Male",
-            "Genres":"",
-            "Languages":"English"
+            "gender":"Male",
+            "genres":"",
+            "languages":"English"
         }
 }
 '''

@@ -9,7 +9,7 @@ def add_review(request):
     print(request.data)
     try:
         a = UserProfile.objects.get(username=request.data['user'])
-        print('abc ', a)
+        #print('abc ', a)
     except Exception as e:
         response = {
             'success': 'False',
@@ -17,7 +17,6 @@ def add_review(request):
             'message': str(e),
             }
         return Response(response)
-
     try:
         e = reviews()
         e.movie_id = request.data['movie']
@@ -27,7 +26,6 @@ def add_review(request):
         if 'rating' in request.data.keys():
             e.rating=request.data['rating']
         e.save()
-
         response = {
                 'success': 'True',
                 'status code': status.HTTP_200_OK,
@@ -50,8 +48,7 @@ def add_review(request):
 @api_view(['GET', ])
 def get_review(request):
     #print(request.data.keys())
-    print("here")
-    print(request.data)
+    #print(request.data)
     if 'movie' in request.data.keys() and 'user' in request.data.keys():
         for i in reviews.objects.filter(movie__movie_id=request.data['movie'] , review_user_id=request.data['user']):
             response = {
@@ -75,8 +72,6 @@ def get_review(request):
             response['review'].append(i.review)
             response['user'].append(i.review_user_id)
             response['rating'].append(i.rating)
-
-
     else:
         response = {
                 'success': 'True',
@@ -95,6 +90,30 @@ def get_review(request):
             response['liked'].append(i.liked)
             response['wishlist'].append(i.wishlist)
             response['watched'].append(i.watched)
-    #print("resp",type(response))
     return Response(response)
 
+@api_view(['POST', ])
+def add_rating(request):
+    print(request.data)
+    try:
+        a = reviews.objects.filter(movie__movie_id=request.data['movie'] , review_user_id=request.data['user'])
+        a.rating = request.data['rating']
+        a.save()
+        response = {
+                'success': 'True',
+                'status code': status.HTTP_200_OK,
+                'message': 'rating updated for a new user and movie',
+
+                }
+    except Exception:
+        e = reviews()
+        e.movie_id = request.data['movie']
+        e.review_user_id = request.data['user']
+        if 'rating' in request.data.keys():
+            e.rating=request.data['rating']
+        e.save()
+        response = {
+                'success': 'True',
+                'status code': status.HTTP_200_OK,
+                'message': 'rating added for a new user and movie',
+                }

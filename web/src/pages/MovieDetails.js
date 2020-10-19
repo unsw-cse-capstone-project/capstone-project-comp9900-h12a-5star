@@ -31,7 +31,10 @@ export default class MovieDetails extends Component {
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        items: result
+                        items: result,
+                        active_like: result.liked,
+                        active_seen: result.watched,
+                        active_wishlist: result.wishlist
                     });
                 },
                 (error) => {
@@ -58,8 +61,6 @@ export default class MovieDetails extends Component {
         const { active_like } = this.state
         const { active_seen } = this.state
         const { active_wishlist } = this.state
-
-        const { temp_name } = "matt"
 
         const style = {
             borderRadius: 0,

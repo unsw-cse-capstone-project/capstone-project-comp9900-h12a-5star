@@ -8,9 +8,6 @@ from profile.models import UserProfile
 
 class UserProfileView(RetrieveAPIView):
 
-    #permission_classes = (IsAuthenticated,)
-    #authentication_class = JSONWebTokenAuthentication
-
     def get(self, request, *args, **kwargs):
         try:
             user_profile = UserProfile.objects.get(user=request.user)

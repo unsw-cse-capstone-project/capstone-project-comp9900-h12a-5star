@@ -18,16 +18,12 @@ export default class MovieDetails extends Component {
         this.user = window.sessionStorage.getItem('username')
     }
 
-    id = 618355
-    user = "shubhankar_mathur"
-
     componentDidMount() {
 
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
-            body: JSON.stringify({ id: this.props.match.params.movieId, user: 'shubmat' })
+            body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
         };
 
         fetch("http://127.0.0.1:8000/api/moviedetail", requestOptions)
@@ -67,7 +63,7 @@ export default class MovieDetails extends Component {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
-            body: JSON.stringify({ movieId: this.props.match.params.movieId, username: 'shubmat', wishlist: !this.state.items.wishlist})
+            body: JSON.stringify({ movieId: this.props.match.params.movieId, username: this.user, wishlist: !this.state.items.wishlist})
         };
 
         fetch("http://127.0.0.1:8000/api/addWishlist/", requestOptions)

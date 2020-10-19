@@ -9,6 +9,7 @@ def add_review(request):
     print(request.data)
     try:
         a = UserProfile.objects.get(username=request.data['user'])
+        print('abc ', a)
     except Exception as e:
         response = {
             'success': 'False',
@@ -16,6 +17,7 @@ def add_review(request):
             'message': str(e),
             }
         return Response(response)
+
     try:
         e = reviews()
         e.movie_id = request.data['movie']
@@ -25,6 +27,7 @@ def add_review(request):
         if 'rating' in request.data.keys():
             e.rating=request.data['rating']
         e.save()
+
         response = {
                 'success': 'True',
                 'status code': status.HTTP_200_OK,
@@ -47,17 +50,8 @@ def add_review(request):
 @api_view(['GET', ])
 def get_review(request):
     #print(request.data.keys())
-    #print(request.data)
-    response = {
-                'success': 'True',
-                'status code': status.HTTP_200_OK,
-                'review':[],
-                'user':[],
-                'rating':[],
-                'liked':[],
-                'wishlist':[],
-                'watched':[]
-                }
+    print("here")
+    print(request.data)
     if 'movie' in request.data.keys() and 'user' in request.data.keys():
         for i in reviews.objects.filter(movie__movie_id=request.data['movie'] , review_user_id=request.data['user']):
             response = {
@@ -70,15 +64,30 @@ def get_review(request):
                 'wishlist':i.wishlist
                 }
     elif 'movie' in request.data.keys():
+        response = {
+                'success': 'True',
+                'status code': status.HTTP_200_OK,
+                'review':[],
+                'user':[],
+                'rating':[]
+                }
         for i in reviews.objects.filter(movie__movie_id=request.data['movie']):
             response['review'].append(i.review)
             response['user'].append(i.review_user_id)
             response['rating'].append(i.rating)
-            response['liked'].append(i.liked)
-            response['wishlist'].append(i.wishlist)
-            response['watched'].append(i.watched)
+
 
     else:
+        response = {
+                'success': 'True',
+                'status code': status.HTTP_200_OK,
+                'review':[],
+                'movie':[],
+                'rating': [],
+                'liked': [],
+                'wishlist': [],
+                'watched': []
+                }
         for i in reviews.objects.filter(review_user_id=request.data['user']):
             response['review'].append(i.review)
             response['rating'].append(i.rating)

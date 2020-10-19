@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from movie_review.views import add_review, get_review
+from movie_review.views import add_review, get_review, add_rating
 
 
 urlpatterns = [

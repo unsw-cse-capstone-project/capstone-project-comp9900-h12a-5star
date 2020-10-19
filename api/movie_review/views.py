@@ -94,16 +94,16 @@ def get_review(request):
 
 @api_view(['POST', ])
 def add_rating(request):
+    print('-------------------')
     print(request.data)
     try:
-        a = reviews.objects.filter(movie__movie_id=request.data['movie'] , review_user_id=request.data['user'])
-        a.rating = request.data['rating']
-        a.save()
+        for i in reviews.objects.filter(movie__movie_id=request.data['movie'] , review_user_id=request.data['user']):
+            i.rating = request.data['rating']
+            i.save()
         response = {
                 'success': 'True',
                 'status code': status.HTTP_200_OK,
                 'message': 'rating updated for a new user and movie',
-
                 }
     except Exception:
         e = reviews()
@@ -117,3 +117,7 @@ def add_rating(request):
                 'status code': status.HTTP_200_OK,
                 'message': 'rating added for a new user and movie',
                 }
+    return Response(response)
+#@api_view(['GET', ])
+#def add_to_wishlist(request):
+

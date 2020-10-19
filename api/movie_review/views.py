@@ -3,20 +3,13 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from profile.models import UserProfile
 from movie_review.models import movies,reviews
+from movie_review.helper import verify_user
 
 @api_view(['POST', ])
 def add_review(request):
-    print(request.data)
-    try:
-        a = UserProfile.objects.get(username=request.data['user'])
-        #print('abc ', a)
-    except Exception as e:
-        response = {
-            'success': 'False',
-            'status code': status.HTTP_400_BAD_REQUEST,
-            'message': str(e),
-            }
-        return Response(response)
+    #print(request.data)
+    a,b = verify_user(request.data['user'])
+    if a==False:return Response(b)
     try:
         e = reviews()
         e.movie_id = request.data['movie']
@@ -122,6 +115,9 @@ def add_rating(request):
 @api_view(['POST', ])
 def add_to_wishlist(request):
     print(request.data)
+    a,b = verify_user(request.data['user'])
+    if a==False:
+        return Response(b)
     try:
         for i in reviews.objects.filter(movie__movie_id=request.data['movie'] , review_user_id=request.data['user']):
             i.wishlist = request.data['wishlist']
@@ -143,4 +139,21 @@ def add_to_wishlist(request):
                 'status code': status.HTTP_200_OK,
                 'message': 'wishlist added for a new user and movie',
                 }
+    return Response(response)
+
+##getting all movies with wishlisted by a user
+@api_view(['GET', ])
+def get_wishlist(request):
+    print(request.data)
+    a,b = verify_user(request.data['user'])
+    if a==False:
+        return Response(b)
+    response = {
+                'success': 'True',
+                'status code': status.HTTP_200_OK,
+                'wishlist': []
+                }
+    for i in reviews.objects.filter(review_user_id=request.data['user']):
+        if i.wishlist == True:
+            response['wishlist'].append(i.movie_id)
     return Response(response)

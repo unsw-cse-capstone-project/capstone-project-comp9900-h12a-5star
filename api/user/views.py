@@ -94,23 +94,10 @@ def get_review(user,id,final):
     final['watched'] = False
     final['liked'] = False
     final['wishlist'] = False
-    final['time']=[]
-    final['date']=[]
-    final['upvote']=[]
-    final['downvote']=[]
-    final['follow']=[]
-    #final['review_id']=[]
     for i in reviews.objects.filter(movie__movie_id=id):
         final['review'].append(i.review)
         final['user'].append(i.review_user_id)
         final['rating'].append(i.rating)
-        final['time'].append(i.review_time)
-        final['date'].append(i.review_date)
-        final['upvote'].append(i.upvote_count)
-        final['downvote'].append(i.downvote_count)
-        final['follow'].append(i.follow)
-        #final['review_id'].append(i.id)
-    print(final)
     if user == 'Guest':
         final['watched']= False
         final['liked']=False
@@ -294,7 +281,6 @@ class MovieDetails(APIView):
         #print("id received",id)
         user=request.data['user']
         youtube_path="https://www.youtube.com/watch?v="
-        poster_url = 'http://image.tmdb.org/t/p/original/'
         if id != 0:
             movie_details=defaultdict(list)
             url='https://api.themoviedb.org/3/movie/'+str(id)+'?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&append_to_response=credits,videos'
@@ -303,10 +289,6 @@ class MovieDetails(APIView):
             movie_details['imdb_rating']=round((response.json()['vote_average'])/2,1)
             movie_details['description']=response.json()['overview']
             movie_details['title']=response.json()['title']
-            if response.json()['poster_path'] is None:
-                movie_details['poster'] = 'https://i.stack.imgur.com/Q3vyk.png'
-            else:
-                movie_details['poster'] = poster_url + response.json()['poster_path']
             for i in range(len(response.json()['genres'])):
                  movie_details['genres'].append(response.json()['genres'][i]['name'])
             for i in range(len(response.json()['videos']['results'])):
@@ -333,7 +315,7 @@ class MovieDetails(APIView):
                         movie_details['teasers'].append(None)
             reviews = get_review(user, id,movie_details)
             #if user == 'Guest':
-            details_page = json.dumps(reviews,default=str)
+            details_page = json.dumps(reviews)
             return JsonResponse(json.loads(details_page), safe=False)
         else:
             return redirect('/homepage')

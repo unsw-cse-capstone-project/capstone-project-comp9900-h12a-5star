@@ -12,6 +12,10 @@ export default class MovieDetails extends Component {
             isLoaded: false,
             items: []
         };
+        if (window.sessionStorage.getItem('username') === null){
+            window.sessionStorage.setItem('username', 'guest');
+        }
+        this.user = window.sessionStorage.getItem('username')
     }
 
     id = 618355
@@ -22,7 +26,7 @@ export default class MovieDetails extends Component {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: 618355, user: 'shubhankar_mathur' })
+            body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
         };
 
         fetch("http://127.0.0.1:8000/api/moviedetail", requestOptions)

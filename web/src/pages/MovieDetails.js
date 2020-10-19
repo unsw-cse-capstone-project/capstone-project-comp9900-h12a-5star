@@ -85,7 +85,7 @@ export default class MovieDetails extends Component {
                                 <Grid.Column textAlign={"right"} >
                                         <Button circular icon='thumbs up'  size={'big'} toggle active={active_like} onClick={this.handleClick_like}/>
                                         <Button circular icon='eye'  size={'big'} toggle active={active_seen} onClick={this.handleClick_seen}/>
-                                        <Button circular icon='plus'  size={'big'} toggle active={active_wishlist} onClick={this.handleClick_wishlist}/>
+                                        <Button circular icon='bookmark'  size={'big'} toggle active={active_wishlist} onClick={this.handleClick_wishlist}/>
                                         <Button circular icon='share alternate'  size={'big'}/>
                                 </Grid.Column>
                             </Grid.Row>

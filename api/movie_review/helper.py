@@ -1,7 +1,8 @@
-from rest_framework.response import Response
 from rest_framework import status
 from profile.models import UserProfile
 from movie_review.models import movies,reviews
+import requests
+from collections import defaultdict
 
 def verify_user(user):
     try:
@@ -15,3 +16,24 @@ def verify_user(user):
             }
         return False,response
     return True, None
+
+def get_movie_details(movie):
+    movie_details=defaultdict(list)
+
+    #youtube_path="https://www.youtube.com/watch?v="
+    poster_url = 'http://image.tmdb.org/t/p/original/'
+    url='https://api.themoviedb.org/3/movie/'+str(movie)+'?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&append_to_response=credits,videos'
+
+    response=requests.get(url)
+
+    if response.json()['poster_path'] is None:
+        movie_details['poster'] = 'https://i.stack.imgur.com/Q3vyk.png'
+    else:
+        movie_details['poster'] = poster_url + response.json()['poster_path']
+
+    movie_details['rating']=round((response.json()['vote_average'])/2,1)
+    movie_details['movieID'] = movie
+    movie_details['title']=response.json()['title']
+    movie_details['release_date']=response.json()['release_date']
+    movie_details["myWishlist"] = True
+    return movie_details

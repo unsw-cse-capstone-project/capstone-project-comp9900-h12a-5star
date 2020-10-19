@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash'
 import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message} from 'semantic-ui-react'
 import NavBar from '../components/NavBar';
 
@@ -215,82 +216,48 @@ export default class MovieDetails extends Component {
                                 <div></div>
                             }
 
-                            <Comment>
-                                <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg' />
-                                <Comment.Content>
-                                    <Popup trigger={<Comment.Author as='a'>Matt</Comment.Author>} 
-                                            flowing 
-                                            hoverable 
-                                            style={style} 
-                                            inverted 
-                                            position='top center'
-                                            on={['hover', 'click']}>
-                                        <Grid columns={3} >
-                                            <Grid.Column textAlign='center' >
-                                                <Button primary onClick={event =>  window.location.href='/Wishlist/Matt' }>View Wishlist</Button>
-                                            </Grid.Column>
-                                            <Grid.Column textAlign='center'>
-                                                <Button primary>Ban</Button>
-                                            </Grid.Column>
-                                            <Grid.Column textAlign='center'>
-                                                <Button primary>Follow</Button>
-                                            </Grid.Column>
-                                        </Grid>
-                                    </Popup>
-                                    <Comment.Metadata>
-                                        <div>Today at 5:42PM</div>
-                                    </Comment.Metadata>
-                                    <Comment.Text>How artistic!</Comment.Text>
-                                    <Comment.Actions>
-                                        <Comment.Action>Reply</Comment.Action>
-                                    </Comment.Actions>
-                                </Comment.Content>
-                            </Comment>
-
-                            <Comment>
-                                <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/elliot.jpg' />
-                                <Comment.Content>
-                                    <Comment.Author as='a'>Elliot Fu</Comment.Author>
-                                    <Comment.Metadata>
-                                        <div>Yesterday at 12:30AM</div>
-                                    </Comment.Metadata>
-                                    <Comment.Text>
-                                        <p>This has been very useful for my research. Thanks as well!</p>
-                                    </Comment.Text>
-                                    <Comment.Actions>
-                                        <Comment.Action>Reply</Comment.Action>
-                                    </Comment.Actions>
-                                </Comment.Content>
-                                <Comment.Group>
+                            {
+                                (this.state.items.review)?
+                                _.times(this.state.items.review.length, (j) => (
                                     <Comment>
-                                        <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/jenny.jpg' />
+                                        <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg' />
                                         <Comment.Content>
-                                            <Comment.Author as='a'>Jenny Hess</Comment.Author>
+                                            <Popup trigger={<Comment.Author as='a'>{this.state.items.user[j]}</Comment.Author>} 
+                                                    flowing 
+                                                    hoverable 
+                                                    style={style} 
+                                                    inverted 
+                                                    position='top center'
+                                                    on={['hover', 'click']}>
+                                                <Grid columns={3} >
+                                                    <Grid.Column textAlign='center' >
+                                                        <Button primary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` }>View Wishlist</Button>
+                                                    </Grid.Column>
+                                                    <Grid.Column textAlign='center'>
+                                                        <Button primary>Ban</Button>
+                                                    </Grid.Column>
+                                                    <Grid.Column textAlign='center'>
+                                                        <Button primary>Follow</Button>
+                                                    </Grid.Column>
+                                                </Grid>
+                                            </Popup>
                                             <Comment.Metadata>
-                                                <div>Just now</div>
+                                                <div>{this.state.items.date[j]} {this.state.items.time[j]}</div>
                                             </Comment.Metadata>
-                                            <Comment.Text>Elliot you are always so right :)</Comment.Text>
+                                            <Comment.Text>
+                                                <Rating icon='star' defaultRating={this.state.items.rating[j]} maxRating={5} disabled /><br />
+                                                {this.state.items.review[j]}
+                                            </Comment.Text>
                                             <Comment.Actions>
-                                                <Comment.Action>Reply</Comment.Action>
+                                                <Comment.Action>upvote</Comment.Action>
+                                                <Comment.Action>downvote</Comment.Action>
                                             </Comment.Actions>
                                         </Comment.Content>
                                     </Comment>
-                                </Comment.Group>
-                            </Comment>
-
-                            <Comment>
-                                <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/joe.jpg' />
-                                <Comment.Content>
-                                    <Comment.Author as='a'>Joe Henderson</Comment.Author>
-                                    <Comment.Metadata>
-                                        <div>5 days ago</div>
-                                    </Comment.Metadata>
-                                    <Comment.Text>Dude, this is awesome. Thanks so much</Comment.Text>
-                                    <Comment.Actions>
-                                        <Comment.Action>Reply</Comment.Action>
-                                    </Comment.Actions>
-                                </Comment.Content>
-                            </Comment>
+                                ))
+                                :
+                                <div></div>
+                            }
 
                             <Form reply>
                                 How was this Movie?  <Rating icon='star' defaultRating={0} maxRating={5}/>

@@ -9,7 +9,6 @@ def add_review(request):
     print(request.data)
     try:
         a = UserProfile.objects.get(username=request.data['user'])
-        print('abc ', a)
     except Exception as e:
         response = {
             'success': 'False',
@@ -17,7 +16,6 @@ def add_review(request):
             'message': str(e),
             }
         return Response(response)
-
     try:
         e = reviews()
         e.movie_id = request.data['movie']
@@ -46,8 +44,17 @@ def add_review(request):
 @api_view(['GET', ])
 def get_review(request):
     #print(request.data.keys())
-    print("here")
-    print(request.data)
+    #print(request.data)
+    response = {
+                'success': 'True',
+                'status code': status.HTTP_200_OK,
+                'review':[],
+                'user':[],
+                'rating':[],
+                'liked':[],
+                'wishlist':[],
+                'watched':[]
+                }
     if 'movie' in request.data.keys() and 'user' in request.data.keys():
         for i in reviews.objects.filter(movie__movie_id=request.data['movie'] , review_user_id=request.data['user']):
             response = {
@@ -60,6 +67,7 @@ def get_review(request):
                 'wishlist':i.wishlist
                 }
     elif 'movie' in request.data.keys():
+<<<<<<< HEAD
         response = {
                 'success': 'True',
                 'status code': status.HTTP_200_OK,
@@ -67,6 +75,8 @@ def get_review(request):
                 'user':[],
                 'rating':[]
                 }
+=======
+>>>>>>> b7a3e21d4943044886b905031598e02095a8597a
         for i in reviews.objects.filter(movie__movie_id=request.data['movie']):
             response['review'].append(i.review)
             response['user'].append(i.review_user_id)
@@ -74,16 +84,6 @@ def get_review(request):
 
 
     else:
-        response = {
-                'success': 'True',
-                'status code': status.HTTP_200_OK,
-                'review':[],
-                'movie':[],
-                'rating': [],
-                'liked': [],
-                'wishlist': [],
-                'watched': []
-                }
         for i in reviews.objects.filter(review_user_id=request.data['user']):
             response['review'].append(i.review)
             response['rating'].append(i.rating)

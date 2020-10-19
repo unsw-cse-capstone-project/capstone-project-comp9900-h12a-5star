@@ -20,8 +20,10 @@ def add_review(request):
         e = reviews()
         e.movie_id = request.data['movie']
         e.review_user_id = request.data['user']
-        e.review = request.data['review']
-        e.rating=request.data['rating']
+        if 'review' in request.data.keys():
+            e.review = request.data['review']
+        if 'rating' in request.data.keys():
+            e.rating=request.data['rating']
         e.save()
         response = {
                 'success': 'True',
@@ -30,8 +32,10 @@ def add_review(request):
                 }
     except Exception:
         for i in reviews.objects.filter(movie__movie_id=request.data['movie'] , review_user_id=request.data['user']):
-            i.review = request.data['review']
-            i.rating=request.data['rating']
+            if 'review' in request.data.keys():
+                i.review = request.data['review']
+            if 'rating' in request.data.keys():
+                i.rating=request.data['rating']
             i.save()
         response = {
                 'success': 'True',

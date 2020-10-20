@@ -89,6 +89,7 @@ def UserLoginView(request):
     #return Response(context)
 
 def get_review(user,id,final):
+    final['review_id']=[]
     final['review']=[]
     final['user']=[]
     final['rating']=[]
@@ -102,14 +103,16 @@ def get_review(user,id,final):
     final['follow']=[]
     #final['review_id']=[]
     for i in reviews.objects.filter(movie__movie_id=id):
-        final['review'].append(i.review)
-        final['user'].append(i.review_user_id)
-        final['rating'].append(i.rating)
-        final['time'].append(i.review_time)
-        final['date'].append(i.review_date)
-        final['upvote'].append(i.upvote_count)
-        final['downvote'].append(i.downvote_count)
-        final['follow'].append(i.follow)
+        if i.review != "":
+           final['review_id'].append(i.id)
+           final['review'].append(i.review)
+           final['user'].append(i.review_user_id)
+           final['rating'].append(i.rating)
+           final['time'].append(i.review_time)
+           final['date'].append(i.review_date)
+           final['upvote'].append(i.upvote_count)
+           final['downvote'].append(i.downvote_count)
+           final['follow'].append(i.follow)
         #final['review_id'].append(i.id)
     print(final)
     if user == 'Guest':

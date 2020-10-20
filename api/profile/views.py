@@ -31,10 +31,35 @@ class UserProfileView(RetrieveAPIView):
             RESPONSE['error']= str(e)
             return Response(RESPONSE, status=STATUS_CODE)
         return Response(response, status=status_code)
+
+    def put(self, request, *args, **kwargs):
+        #print('PUT called ',request.data)
+        try:
+            user_profile = UserProfile.objects.get(username=request.data['username'])
+
+            if 'firstname' in request.data.keys():
+                user_profile.firstname = request.data['firstname']
+            if 'lastname' in request.data.keys():
+                user_profile.lastname = request.data['lastname']
+            if 'gender' in request.data.keys():
+                user_profile.gender = request.data['gender']
+            if 'genres' in request.data.keys():
+                user_profile.genres = request.data['genres']
+            if 'languages' in request.data.keys():
+                user_profile.languages = request.data['languages']
+            user_profile.save()
+            status_code = status.HTTP_200_OK
             response = {
-                'success': 'false',
-                'status code': status.HTTP_400_BAD_REQUEST,
-                'message': 'User does not exists',
-                'error': str(e)
-                }
+                'success': 'true',
+                'status code': status_code,
+                'message': 'User profile updates successfully',
+                'data': {
+                    'firstname': user_profile.firstname,
+                    'lastname': user_profile.lastname,
+                    'gender': user_profile.gender,
+                    'genres':user_profile.genres,
+                    'languages':user_profile.languages,}}
+        except Exception as e:
+            RESPONSE['error']= str(e)
+            return Response(RESPONSE, status=STATUS_CODE)
         return Response(response, status=status_code)

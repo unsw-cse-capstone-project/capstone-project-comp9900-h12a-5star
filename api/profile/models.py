@@ -35,6 +35,8 @@ class UserProfile(models.Model):
 
     banned = MultiSelectField(default= None)
 
+    watched = MultiSelectField(default= None)
+
     class Meta:
         '''
         to set table name in database

@@ -26,10 +26,13 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     banned = serializers.ListField(
         child = serializers.CharField()
     )
+    watched = serializers.ListField(
+        child = serializers.IntegerField()
+    )
 
     class Meta:
         model = User
-        fields = ('email', 'password','profile','genre',"language",'banned')
+        fields = ('email', 'password','profile','genre',"language",'banned','watched')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -46,6 +49,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             languages=validated_data['language'],
             genres=validated_data['genre'],
             banned = validated_data['banned'],
+            watched = validated_data['watched'],
         )
         return user
 

@@ -39,26 +39,26 @@ export default class SearchGenre extends Component {
 
     render() {
 
-        var columnsMovie = null
-        var movieLength=0;
-        if (this.state.items.name_result){
-            movieLength=this.state.items.name_result.length;
+        var columnsGenre = null
+        var genreLength=0;
+        if (this.state.items.genre_result){
+            genreLength=this.state.items.genre_result.length;
         }
-        var x = Math.floor(movieLength/4);
+        var x = Math.floor(genreLength/4);
 
 
-        if (this.state.items.name_result) {
-            columnsMovie = _.times(x, (i) => (
+        if (this.state.items.genre_result) {
+            columnsGenre = _.times(x, (i) => (
                 <Grid.Row key={i}>{
                     _.times(4, (j) => (
                         <Grid.Column>
                             <MovieTile 
-                                title={this.state.items.name_result[i*4+j].title} 
-                                poster={this.state.items.name_result[i*4+j].poster} 
-                                release={this.state.items.name_result[i*4+j].release_date} 
-                                rating={this.state.items.name_result[i*4+j].rating} 
-                                description={this.state.items.name_result[i*4+j].description} 
-                                movieId={this.state.items.name_result[i*4+j].id}
+                                title={this.state.items.genre_result[i*4+j].title} 
+                                poster={this.state.items.genre_result[i*4+j].poster} 
+                                release={this.state.items.genre_result[i*4+j].release_date} 
+                                rating={this.state.items.genre_result[i*4+j].rating} 
+                                description={this.state.items.genre_result[i*4+j].description} 
+                                movieId={this.state.items.genre_result[i*4+j].id}
                             />
                         </Grid.Column>
                     ))
@@ -68,7 +68,7 @@ export default class SearchGenre extends Component {
         }
         else{
 
-            columnsMovie = _.times(12, (i) => (
+            columnsGenre = _.times(12, (i) => (
                 <Grid.Row key={i}>{
                     _.times(4, (j) => (
                         <Grid.Column>
@@ -102,9 +102,9 @@ export default class SearchGenre extends Component {
 
                 <Container style={{ margin: 20 }}>
 
-                    <Header as='h1'>Search Results by Movie Title</Header>
+                    <Header as='h1'>Search Results by Genre</Header>
                     <Divider section />
-                    <Grid columns='equal'>{columnsMovie}</Grid>
+                    <Grid columns='equal'>{columnsGenre}</Grid>
                 </Container>
             </>
         )

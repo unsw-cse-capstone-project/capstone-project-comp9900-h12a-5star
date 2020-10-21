@@ -51,7 +51,7 @@ class UserProfileView(RetrieveAPIView):
             status_code = status.HTTP_200_OK
             response = {
                 'success': 'true',
-                'status code': status_code,
+                'status_code': status_code,
                 'message': 'User profile updates successfully',
                 'data': {
                     'firstname': user_profile.firstname,
@@ -67,17 +67,17 @@ class UserProfileView(RetrieveAPIView):
 class BanView(RetrieveAPIView):
     def put(self, request, *args, **kwargs):
         user_profile = UserProfile.objects.get(username=request.data['username'])
-        if request.data['bannedUsername'] not in user_profile.banned:
+        if request.data['banStatus'] and request.data['bannedUsername'] not in user_profile.banned:
             user_profile.banned.append(request.data['bannedUsername'])
             message = 'user banned'
-        else:
+        elif request.data['banStatus']==False and request.data['bannedUsername'] in user_profile.banned:
             user_profile.banned.remove(request.data['bannedUsername'])
             message = 'user unbanned'
         user_profile.save()
         status_code = status.HTTP_200_OK
         response = {
             'success': 'true',
-            'status code': status_code,
+            'status_code': status_code,
             'message': message,
             'data': {
                 'banned':user_profile.banned}}
@@ -104,7 +104,7 @@ class watchlistView(RetrieveAPIView):
         status_code = status.HTTP_200_OK
         response = {
             'success': 'true',
-            'status code': status_code,
+            'status_code': status_code,
             'message': message,
             'data': {
                 'banned':list(map(int, list(user_profile.watched)))}}

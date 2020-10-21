@@ -21,7 +21,7 @@ def add_review(request):
         e.save()
         response = {
                 'success': 'True',
-                'status code': status.HTTP_200_OK,
+                'status_code': status.HTTP_200_OK,
                 'message': 'Review added for a particular user and movie',
                 }
     except Exception:
@@ -33,7 +33,7 @@ def add_review(request):
             i.save()
         response = {
                 'success': 'True' ,
-                'status code': status.HTTP_200_OK,
+                'status_code': status.HTTP_200_OK,
                 'message': 'Review updated',
                 }
     return Response(response)
@@ -46,7 +46,7 @@ def get_review(request):
         for i in reviews.objects.filter(movie__movie_id=request.data['movie'] , review_user_id=request.data['user']):
             response = {
                 'success': 'True',
-                'status code': status.HTTP_200_OK,
+                'status_code': status.HTTP_200_OK,
                 'review':i.review,
                 'rating':i.rating,
                 'watched':i.watched,
@@ -56,7 +56,7 @@ def get_review(request):
     elif 'movie' in request.data.keys():
         response = {
                 'success': 'True',
-                'status code': status.HTTP_200_OK,
+                'status_code': status.HTTP_200_OK,
                 'review':[],
                 'user':[],
                 'rating':[]
@@ -68,7 +68,7 @@ def get_review(request):
     else:
         response = {
                 'success': 'True',
-                'status code': status.HTTP_200_OK,
+                'status_code': status.HTTP_200_OK,
                 'review':[],
                 'movie':[],
                 'rating': [],
@@ -94,7 +94,7 @@ def add_rating(request):
             i.save()
         response = {
                 'success': 'True',
-                'status code': status.HTTP_200_OK,
+                'status_code': status.HTTP_200_OK,
                 'message': 'rating updated for a new user and movie',
                 }
     except Exception:
@@ -106,7 +106,7 @@ def add_rating(request):
         e.save()
         response = {
                 'success': 'True',
-                'status code': status.HTTP_200_OK,
+                'status_code': status.HTTP_200_OK,
                 'message': 'rating added for a new user and movie',
                 }
     return Response(response)
@@ -128,7 +128,7 @@ def add_to_wishlist(request):
             i.save()
         response = {
                 'success': 'True',
-                'status code': status.HTTP_200_OK,
+                'status_code': status.HTTP_200_OK,
                 'message': 'wishlist updated for a new user and movie',
                 }
     except Exception:
@@ -140,7 +140,7 @@ def add_to_wishlist(request):
         e.save()
         response = {
                 'success': 'True',
-                'status code': status.HTTP_200_OK,
+                'status_code': status.HTTP_200_OK,
                 'message': 'wishlist added for a new user and movie',
                 }
     return Response(response)
@@ -155,7 +155,7 @@ def get_wishlist(request):
             return Response(b)
     response = {
                 'success': 'True',
-                'status code': status.HTTP_200_OK,
+                'status_code': status.HTTP_200_OK,
                 'wishlist': []
                 }
     wished, response = [],[]
@@ -182,7 +182,7 @@ def liked(request):
             i.save()
         response = {
                 'success': 'True',
-                'status code': status.HTTP_200_OK,
+                'status_code': status.HTTP_200_OK,
                 'message': 'likestatus updated for a new user and movie',
                 }
     except Exception:
@@ -194,7 +194,7 @@ def liked(request):
         e.save()
         response = {
                 'success': 'True',
-                'status code': status.HTTP_200_OK,
+                'status_code': status.HTTP_200_OK,
                 'message': 'like added for a new user and movie',
                 }
     return Response(response)

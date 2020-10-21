@@ -121,7 +121,6 @@ def add_to_wishlist(request):
         return Response(b)
     try:
         i = reviews.objects.filter(movie__movie_id=request.data['movieId'] , review_user_id=request.data['username'])
-            #raise Exception
         if len(i) ==0:
             raise Exception
         for i in reviews.objects.filter(movie__movie_id=request.data['movieId'] , review_user_id=request.data['username']):
@@ -176,7 +175,6 @@ def liked(request):
         return Response(b)
     try:
         i = reviews.objects.filter(movie__movie_id=request.data['movieId'] , review_user_id=request.data['username'])
-            #raise Exception
         if len(i) ==0:
             raise Exception
         for i in reviews.objects.filter(movie__movie_id=request.data['movieId'] , review_user_id=request.data['username']):

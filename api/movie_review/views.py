@@ -167,3 +167,36 @@ def get_wishlist(request):
     for movie in wished:
         response.append(get_movie_details(movie))
     return Response(response)
+
+@api_view(['PUT', ])
+def liked(request):
+    print(request.data)
+    a,b = verify_user(request.data['username'])
+    if a==False:
+        return Response(b)
+    try:
+        i = reviews.objects.filter(movie__movie_id=request.data['movieId'] , review_user_id=request.data['username'])
+            #raise Exception
+        if len(i) ==0:
+            raise Exception
+        for i in reviews.objects.filter(movie__movie_id=request.data['movieId'] , review_user_id=request.data['username']):
+            i.liked = request.data['likeMovie']
+            i.save()
+        response = {
+                'success': 'True',
+                'status code': status.HTTP_200_OK,
+                'message': 'likestatus updated for a new user and movie',
+                }
+    except Exception:
+        e = reviews()
+        e.movie_id = request.data['movieId']
+        e.review_user_id = request.data['username']
+        if 'wishlist' in request.data.keys():
+            e.liked=request.data['likeMovie']
+        e.save()
+        response = {
+                'success': 'True',
+                'status code': status.HTTP_200_OK,
+                'message': 'wishlist added for a new user and movie',
+                }
+    return Response(response)

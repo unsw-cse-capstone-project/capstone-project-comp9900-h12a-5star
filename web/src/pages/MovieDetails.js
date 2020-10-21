@@ -50,6 +50,17 @@ export default class MovieDetails extends Component {
     // state = {}
     handleClick_like = () =>{
         this.setState((prevState) => ({ active_like: !prevState.active_like }))
+
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
+            body: JSON.stringify({ movieId: this.props.match.params.movieId, username: this.user, likeMovie: !this.state.items.liked})
+        };
+
+        fetch("http://127.0.0.1:8000/api/likeMovie/", requestOptions)
+
+        this.state.items.liked = !this.state.items.liked
     }
     handleClick_seen = () =>{
         this.setState((prevState) => ({ active_seen: !prevState.active_seen }))

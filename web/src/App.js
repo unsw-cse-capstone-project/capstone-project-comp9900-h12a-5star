@@ -14,6 +14,7 @@ import RecentReleased from './pages/RecentReleased';
 import TopRated from './pages/TopRated';
 import PopularMovies from './pages/PopularMovies';
 import WishListPage from './pages/WishListPage';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
         <Route path="/welcome" component={HomePage} />
         <Route path="/browse" component = {NotFoundPage} />
         <Route path="/wishlist/:userId" component={WishListPage} />
-        <Route path="/myprofile" component = {NotFoundPage} />
+        <Route path="/myprofile" component = {ProfilePage} />
         <Route path="/login" component = {Login} />
         <Route path="/signup" component = {SignUpPage} />
         <Route path="/movieDetails/:movieId" component = {MovieDetails} />

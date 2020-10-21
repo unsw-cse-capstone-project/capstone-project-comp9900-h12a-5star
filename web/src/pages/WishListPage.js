@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
-import { Button, Container, Grid, Header, Icon, Image, Divider} from 'semantic-ui-react';
+import { Button, Container, Grid, Header, Icon, Image, Divider, Message} from 'semantic-ui-react';
 import NavBar from '../components/NavBar';
 import {
     Link,
@@ -48,7 +48,14 @@ export default class WishListPage extends Component {
     }
 
     removeFromWishlist = (val) => {
-        window.location.href=`/movieDetails/${val}`
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
+            body: JSON.stringify({ movieId: val, username: this.user, wishlist: false})
+        };
+
+        fetch("http://127.0.0.1:8000/api/addWishlist/", requestOptions)
     }
     
     addToMyWishlist = (val) => {
@@ -85,6 +92,8 @@ export default class WishListPage extends Component {
                         {this.props.match.params.userId.charAt(0).toUpperCase() + this.props.match.params.userId.slice(1)}'s Wishlist
                     </Header>
                     </Divider>
+                    {
+                    (this.state.items.length !== 0)?
                     <Grid columns='equal' divided={'vertically'}>
                         {
                             this.state.items.map((item)=>
@@ -123,6 +132,14 @@ export default class WishListPage extends Component {
                         }
                         
                     </Grid>
+                    :
+                    <Message>
+                        <Message.Header>There are items in your wishlist yet!</Message.Header>
+                        <p>
+                            Go ahead and add items to your wishlist.
+                        </p>
+                    </Message>
+                }
                 </Container>
                 
                 

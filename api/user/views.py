@@ -56,17 +56,17 @@ def UserRegistrationView(request):
             'message': 'User registered  successfully',
             }
         status_code = status.HTTP_200_OK
-        print(response)
+        #print(response)
         return Response(response, status=status_code)
 
 
 @api_view(['POST', ])
 def UserLoginView(request):
-    print(request.data)
+    #print(request.data)
     context = {}
     email = request.data['email']
     password = request.data['password']
-    print(email,password)
+    #print(email,password)
     user = authenticate(request,email=email, password=password)
     if user is None:
             context['response'] = 'A user with this email and password is not found.'
@@ -114,18 +114,18 @@ def get_review(user,id,final):
            final['downvote'].append(i.downvote_count)
            final['follow'].append(i.follow)
         #final['review_id'].append(i.id)
-    print(final)
+    #print(final)
     if user == 'Guest':
         final['watched']= False
         final['liked']=False
         final['wishlist']=False
     else:
-        print("yup")
+        #print("yup")
         #data=serializers.serialize("json", reviews.objects.all(),indent=4 )
-        print(id)
-        print(user)
+        #print(id)
+        #print(user)
         for i in reviews.objects.filter(movie__movie_id=id , review_user_id=user):
-            print("entered")
+            #print("entered")
             final['watched'] = i.watched
             final['liked'] = i.liked
             final['wishlist'] = i.wishlist
@@ -203,7 +203,7 @@ def simple_get(url):
             else:
                 return None
     except RequestException:
-        print(f'Request for {url} failed')
+        #print(f'Request for {url} failed')
         return None
 
 class MovieSearch(APIView):
@@ -222,12 +222,12 @@ class MovieSearch(APIView):
                 #print("q in",q.lower())
                 #print("name is ",genre['name'].lower())
                     if q.lower() == genre['name'].lower():
-                         print("entrered")
+                         #print("entrered")
                          genre_id.append(genre['id'])
                          break
         #print("genre",genre_id)
             if len(genre_id) >= 1:
-                print("entered")
+                #print("entered")
                 res = requests.get("https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=1" + "&with_genres=" + str(genre_id[0]))
                 if res.json()['total_pages'] > 4:
                     pages = 4

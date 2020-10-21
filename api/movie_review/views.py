@@ -87,7 +87,7 @@ def get_review(request):
 
 @api_view(['POST', ])
 def add_rating(request):
-    print(request.data)
+    #print(request.data)
     try:
         for i in reviews.objects.filter(movie__movie_id=request.data['movie'] , review_user_id=request.data['user']):
             i.rating = request.data['rating']
@@ -115,7 +115,7 @@ def add_rating(request):
 # for deletion send key value as False and for addition, send as True
 @api_view(['PUT', ])
 def add_to_wishlist(request):
-    print(request.data)
+    #print(request.data)
     a,b = verify_user(request.data['username'])
     if a==False:
         return Response(b)
@@ -169,7 +169,7 @@ def get_wishlist(request):
 
 @api_view(['PUT', ])
 def liked(request):
-    print(request.data)
+    #print(request.data)
     a,b = verify_user(request.data['username'])
     if a==False:
         return Response(b)

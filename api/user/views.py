@@ -52,12 +52,12 @@ def UserRegistrationView(request):
         serializer.save()
         response = {
             'success' : 'True',
-            'status_code' : status.HTTP_200_OK,
+            'statusCode' : status.HTTP_200_OK,
             'message': 'User registered  successfully',
             }
-        status_code = status.HTTP_200_OK
+        statusCode = status.HTTP_200_OK
         #print(response)
-        return Response(response, status=status_code)
+        return Response(response, status=statusCode)
 
 
 @api_view(['POST', ])
@@ -76,7 +76,7 @@ def UserLoginView(request):
         user_profile = UserProfile.objects.get(user=user)
         context['response'] = {
                 'success' : 'True',
-                'status_code' : status.HTTP_200_OK,
+                'statusCode' : status.HTTP_200_OK,
                 'message': 'User logged in  successfully',
                 'id':str(user_profile),
 				'email':email,
@@ -84,8 +84,8 @@ def UserLoginView(request):
                 'lastname':user_profile.lastname,
 		'username':user_profile.username
                 }
-    status_code = status.HTTP_200_OK
-    return Response(context, status=status_code)
+    statusCode = status.HTTP_200_OK
+    return Response(context, status=statusCode)
     #return Response(context)
 
 def get_review(user,id,final):
@@ -198,7 +198,7 @@ def simple_get(url):
         header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)\
                                                                 Chrome/77.0.3865.90 Safari/537.36'}
         with closing(get(url,stream = True,headers=header)) as resp:
-            if 'html' in resp.headers['Content-Type'] and resp.status_code == 200:
+            if 'html' in resp.headers['Content-Type'] and resp.statusCode == 200:
                 return resp.content
             else:
                 return None

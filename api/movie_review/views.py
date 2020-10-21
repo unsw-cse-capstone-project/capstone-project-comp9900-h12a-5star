@@ -189,12 +189,12 @@ def liked(request):
         e = reviews()
         e.movie_id = request.data['movieId']
         e.review_user_id = request.data['username']
-        if 'wishlist' in request.data.keys():
+        if 'likeMovie' in request.data.keys():
             e.liked=request.data['likeMovie']
         e.save()
         response = {
                 'success': 'True',
                 'status code': status.HTTP_200_OK,
-                'message': 'wishlist added for a new user and movie',
+                'message': 'like added for a new user and movie',
                 }
     return Response(response)

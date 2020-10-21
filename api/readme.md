@@ -10,7 +10,7 @@ Python and Django
 
 - Create conda environment and install requirements.txt
 ```(bash)
-python3 -m pip install -r requirement
+python3 -m pip install -r requirement.txt
 ```
 
 - activate conda environment and cd the api directory

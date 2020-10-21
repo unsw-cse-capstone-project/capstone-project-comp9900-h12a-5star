@@ -87,7 +87,7 @@ def get_review(request):
 
 @api_view(['POST', ])
 def add_rating(request):
-    print(request.data)
+    #print(request.data)
     try:
         for i in reviews.objects.filter(movie__movie_id=request.data['movie'] , review_user_id=request.data['user']):
             i.rating = request.data['rating']
@@ -115,13 +115,12 @@ def add_rating(request):
 # for deletion send key value as False and for addition, send as True
 @api_view(['PUT', ])
 def add_to_wishlist(request):
-    print(request.data)
+    #print(request.data)
     a,b = verify_user(request.data['username'])
     if a==False:
         return Response(b)
     try:
         i = reviews.objects.filter(movie__movie_id=request.data['movieId'] , review_user_id=request.data['username'])
-            #raise Exception
         if len(i) ==0:
             raise Exception
         for i in reviews.objects.filter(movie__movie_id=request.data['movieId'] , review_user_id=request.data['username']):
@@ -166,4 +165,36 @@ def get_wishlist(request):
 
     for movie in wished:
         response.append(get_movie_details(movie))
+    return Response(response)
+
+@api_view(['PUT', ])
+def liked(request):
+    #print(request.data)
+    a,b = verify_user(request.data['username'])
+    if a==False:
+        return Response(b)
+    try:
+        i = reviews.objects.filter(movie__movie_id=request.data['movieId'] , review_user_id=request.data['username'])
+        if len(i) ==0:
+            raise Exception
+        for i in reviews.objects.filter(movie__movie_id=request.data['movieId'] , review_user_id=request.data['username']):
+            i.liked = request.data['likeMovie']
+            i.save()
+        response = {
+                'success': 'True',
+                'status code': status.HTTP_200_OK,
+                'message': 'likestatus updated for a new user and movie',
+                }
+    except Exception:
+        e = reviews()
+        e.movie_id = request.data['movieId']
+        e.review_user_id = request.data['username']
+        if 'wishlist' in request.data.keys():
+            e.liked=request.data['likeMovie']
+        e.save()
+        response = {
+                'success': 'True',
+                'status code': status.HTTP_200_OK,
+                'message': 'wishlist added for a new user and movie',
+                }
     return Response(response)

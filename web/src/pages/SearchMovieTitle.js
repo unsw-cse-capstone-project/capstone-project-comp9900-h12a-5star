@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
-import { Container, Header,Grid} from 'semantic-ui-react';
+import { Container, Header, Divider, Grid, Label, Card, Placeholder} from 'semantic-ui-react';
 import NavBar from '../components/NavBar';
 import MovieTile from '../components/MovieTile';
 
@@ -59,6 +59,36 @@ export default class SearchMovieTitle extends Component {
                 }
                 </Grid.Row>
                 ))
+        }
+        else{
+
+            columnsMovie = _.times(12, (i) => (
+                <Grid.Row key={i}>{
+                    _.times(4, (j) => (
+                        <Grid.Column>
+                            <Card.Group>
+                                <Card>
+                                    <Placeholder>
+                                        <Placeholder.Image square />
+                                    </Placeholder>
+                                </Card>
+                                <Card.Content>
+                                    <Placeholder>
+                                        <Placeholder.Header>
+                                            <Placeholder.Line length='very short' />
+                                            <Placeholder.Line length='medium' />
+                                        </Placeholder.Header>
+                                        <Placeholder.Paragraph>
+                                            <Placeholder.Line length='short' />
+                                        </Placeholder.Paragraph>
+                                    </Placeholder>
+                                </Card.Content>
+                            </Card.Group>
+                        </Grid.Column>
+                    ))
+                }
+                </Grid.Row>
+            ))
         }
         return (
             <>

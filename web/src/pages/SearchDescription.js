@@ -4,7 +4,7 @@ import { Container, Header, Divider, Grid, Label, Card, Placeholder} from 'seman
 import NavBar from '../components/NavBar';
 import MovieTile from '../components/MovieTile';
 
-export default class SearchMovieTitle extends Component {
+export default class SearchDescription extends Component {
 
     constructor() {
         super();
@@ -39,26 +39,26 @@ export default class SearchMovieTitle extends Component {
 
     render() {
 
-        var columnsMovie = null
-        var movieLength=0;
-        if (this.state.items.name_result){
-            movieLength=this.state.items.name_result.length;
+        var columnsDesc = null
+        var descLength=0;
+        if (this.state.items.description_result){
+            descLength=this.state.items.description_result.length;
         }
-        var x = Math.floor(movieLength/4);
+        var x = Math.floor(descLength/4);
 
 
-        if (this.state.items.name_result) {
-            columnsMovie = _.times(x, (i) => (
+        if (this.state.items.description_result) {
+            columnsDesc = _.times(x, (i) => (
                 <Grid.Row key={i}>{
                     _.times(4, (j) => (
                         <Grid.Column>
                             <MovieTile 
-                                title={this.state.items.name_result[i*4+j].title} 
-                                poster={this.state.items.name_result[i*4+j].poster} 
-                                release={this.state.items.name_result[i*4+j].release_date} 
-                                rating={this.state.items.name_result[i*4+j].rating} 
-                                description={this.state.items.name_result[i*4+j].description} 
-                                movieId={this.state.items.name_result[i*4+j].id}
+                                title={this.state.items.description_result[i*4+j].title} 
+                                poster={this.state.items.description_result[i*4+j].poster} 
+                                release={this.state.items.description_result[i*4+j].release_date} 
+                                rating={this.state.items.description_result[i*4+j].rating} 
+                                description={this.state.items.description_result[i*4+j].description} 
+                                movieId={this.state.items.description_result[i*4+j].id}
                             />
                         </Grid.Column>
                     ))
@@ -68,7 +68,7 @@ export default class SearchMovieTitle extends Component {
         }
         else{
 
-            columnsMovie = _.times(12, (i) => (
+            columnsDesc = _.times(12, (i) => (
                 <Grid.Row key={i}>{
                     _.times(4, (j) => (
                         <Grid.Column>
@@ -102,9 +102,9 @@ export default class SearchMovieTitle extends Component {
 
                 <Container style={{ margin: 20 }}>
 
-                    <Header as='h1'>Search Results by Movie Title</Header>
+                    <Header as='h1'>Search Results by Description</Header>
                     <Divider section />
-                    <Grid columns='equal'>{columnsMovie}</Grid>
+                    <Grid columns='equal'>{columnsDesc}</Grid>
                 </Container>
             </>
         )

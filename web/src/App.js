@@ -14,6 +14,7 @@ import RecentReleased from './pages/RecentReleased';
 import TopRated from './pages/TopRated';
 import PopularMovies from './pages/PopularMovies';
 import WishListPage from './pages/WishListPage';
+import SearchPage from './pages/SearchPage';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/myprofile" component = {NotFoundPage} />
         <Route path="/login" component = {Login} />
         <Route path="/signup" component = {SignUpPage} />
+        <Route path="/search" component = {SearchPage} />
         <Route path="/movieDetails/:movieId" component = {MovieDetails} />
         <Route component = {NotFoundPage} />
       </Switch>

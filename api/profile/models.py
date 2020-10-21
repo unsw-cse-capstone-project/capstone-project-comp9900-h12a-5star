@@ -2,7 +2,6 @@ import uuid
 from django.db import models
 from user.models import User
 from multiselectfield import MultiSelectField
-from django.contrib.postgres.fields import ArrayField
 
 class UserProfile(models.Model):
 
@@ -36,10 +35,6 @@ class UserProfile(models.Model):
     banned = MultiSelectField(default= None)
 
     watched = MultiSelectField(default= None)
-
-    '''my_integer_array =  ArrayField(
-        models.IntegerField(),
-         default= list, blank=False,null = False, size = 100)'''
 
     class Meta:
         '''

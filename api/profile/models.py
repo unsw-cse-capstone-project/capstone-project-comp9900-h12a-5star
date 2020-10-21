@@ -33,6 +33,8 @@ class UserProfile(models.Model):
      )
     languages = MultiSelectField(choices = Language_CHOICES, default= None)
 
+    banned = MultiSelectField(default= None)
+
     class Meta:
         '''
         to set table name in database

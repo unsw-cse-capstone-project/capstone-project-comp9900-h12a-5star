@@ -80,6 +80,58 @@ export default class SearchPage extends Component {
         if (movieLength>0 || genreLength>0 || descLength>0){
             flag=1;
         }
+            
+       
+        
+        // this.state.items.name_result[0].title
+        if (this.state.items.name_result || this.state.items.genre_result || this.state.items.description_result){
+            if (this.state.items.name_result) {
+                columnsMovie = _.times(4, (i) => (
+                    <Grid.Column key={i}>
+                        <MovieTile 
+                            title={this.state.items.name_result[i].title} 
+                            poster={this.state.items.name_result[i].poster} 
+                            release={this.state.items.name_result[i].release_date} 
+                            rating={this.state.items.name_result[i].rating} 
+                            description={this.state.items.name_result[i].description} 
+                            movieId={this.state.items.name_result[i].id} 
+                        />
+                    </Grid.Column>
+                ))
+            }
+            if (this.state.items.genre_result){
+                columnsGenre = _.times(4, (i) => (
+
+                    <Grid.Column key={i}>
+                        <MovieTile 
+                            title={this.state.items.genre_result[i].title} 
+                            poster={this.state.items.genre_result[i].poster} 
+                            release={this.state.items.genre_result[i].release_date} 
+                            rating={this.state.items.genre_result[i].rating} 
+                            description={this.state.items.genre_result[i].description} 
+                            movieId={this.state.items.genre_result[i].id}
+                        />
+                    </Grid.Column>
+
+                ))
+            }  
+            if (this.state.items.description_result){
+                columnsDesc = _.times(4, (i) => (
+                    <Grid.Column key={i}>
+                        <MovieTile 
+                            title={this.state.items.description_result[i].title} 
+                            poster={this.state.items.description_result[i].poster} 
+                            release={this.state.items.description_result[i].release_date} 
+                            rating={this.state.items.description_result[i].rating} 
+                            description={this.state.items.description_result[i].description} 
+                            movieId={this.state.items.description_result[i].id}
+                        />
+                    </Grid.Column>
+                ))
+            }
+        }
+        else{
+
             columnsMovie = _.times(4, (i) => (
                 <Grid.Column key={i}>
                     <Card.Group>
@@ -148,55 +200,8 @@ export default class SearchPage extends Component {
                     </Card.Group>
                 </Grid.Column>
             ))
-       
-        
-        // this.state.items.name_result[0].title
-        if (this.state.items.name_result || this.state.items.genre_result || this.state.items.description_result){
-            if (this.state.items.name_result) {
-                columnsMovie = _.times(4, (i) => (
-                    <Grid.Column key={i}>
-                        <MovieTile 
-                            title={this.state.items.name_result[i].title} 
-                            poster={this.state.items.name_result[i].poster} 
-                            release={this.state.items.name_result[i].release_date} 
-                            rating={this.state.items.name_result[i].rating} 
-                            description={this.state.items.name_result[i].description} 
-                            movieId={this.state.items.name_result[i].id} 
-                        />
-                    </Grid.Column>
-                ))
-            }
-            if (this.state.items.genre_result){
-                columnsGenre = _.times(4, (i) => (
 
-                    <Grid.Column key={i}>
-                        <MovieTile 
-                            title={this.state.items.genre_result[i].title} 
-                            poster={this.state.items.genre_result[i].poster} 
-                            release={this.state.items.genre_result[i].release_date} 
-                            rating={this.state.items.genre_result[i].rating} 
-                            description={this.state.items.genre_result[i].description} 
-                            movieId={this.state.items.genre_result[i].id}
-                        />
-                    </Grid.Column>
-
-                ))
-            }  
-            if (this.state.items.description_result){
-                columnsDesc = _.times(4, (i) => (
-                    <Grid.Column key={i}>
-                        <MovieTile 
-                            title={this.state.items.description_result[i].title} 
-                            poster={this.state.items.description_result[i].poster} 
-                            release={this.state.items.description_result[i].release_date} 
-                            rating={this.state.items.description_result[i].rating} 
-                            description={this.state.items.description_result[i].description} 
-                            movieId={this.state.items.description_result[i].id}
-                        />
-                    </Grid.Column>
-                ))
-                }
-            }
+        }
         
         return (
             <React.Fragment>
@@ -206,7 +211,7 @@ export default class SearchPage extends Component {
                 { flag == 1  && 
                     <Grid.Column>
                         <Header as='h1'>Search Results: "action"</Header>
-                        <br></br>
+                        <Divider section />
                     </Grid.Column>
                 }
                 { movieLength > 0  &&
@@ -215,7 +220,7 @@ export default class SearchPage extends Component {
                             <Header as='h1'>Movie Title</Header>
                         </Grid.Column>
                         <Grid.Column>
-                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = '/topRated'}>
+                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = '/searchMovieTitle'}>
                                 see more
                             </Label>
                         </Grid.Column>

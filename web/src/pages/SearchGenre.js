@@ -4,7 +4,7 @@ import { Container, Header, Divider, Grid, Label, Card, Placeholder} from 'seman
 import NavBar from '../components/NavBar';
 import MovieTile from '../components/MovieTile';
 
-export default class SearchMovieTitle extends Component {
+export default class SearchGenre extends Component {
 
     constructor() {
         super();

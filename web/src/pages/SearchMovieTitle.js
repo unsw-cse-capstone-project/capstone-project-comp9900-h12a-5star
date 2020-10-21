@@ -40,9 +40,15 @@ export default class SearchMovieTitle extends Component {
     render() {
 
         var columnsMovie = null
+        var movieLength=0;
+        if (this.state.items.name_result){
+            movieLength=this.state.items.name_result.length;
+        }
+        var x = Math.floor(movieLength/4);
+
 
         if (this.state.items.name_result) {
-            columnsMovie = _.times(12, (i) => (
+            columnsMovie = _.times(x, (i) => (
                 <Grid.Row key={i}>{
                     _.times(4, (j) => (
                         <Grid.Column>
@@ -95,7 +101,9 @@ export default class SearchMovieTitle extends Component {
                 <NavBar />
 
                 <Container style={{ margin: 20 }}>
+
                     <Header as='h1'>Search Results by Movie Title</Header>
+                    <Divider section />
                     <Grid columns='equal'>{columnsMovie}</Grid>
                 </Container>
             </>

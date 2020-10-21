@@ -102,12 +102,20 @@ class BanView(RetrieveAPIView):
 class watchlistView(RetrieveAPIView):
     def put(self, request, *args, **kwargs):
         user_profile = UserProfile.objects.get(username=request.data['username'])
-        if str(request.data['movieID']) not in user_profile.watched:
+        if request.data['movieStatus'] and str(request.data['movieID']) not in user_profile.watched:
             user_profile.watched.append(request.data['movieID'])
             message = 'movie watched'
-        else:
+        elif request.data['movieStatus']==False and str(request.data['movieID']) in user_profile.watched:
             user_profile.watched.remove(str(request.data['movieID']))
             message = 'Movie unwatched'
+        else:
+            response = {
+            'success': 'true',
+            'statusCode': status.HTTP_200_OK,
+            'message': 'doubled request',
+            'data': {
+                'wishlist':list(map(int, list(user_profile.watched)))}}
+            return Response(response, status=status.HTTP_200_OK)
         user_profile.save()
         statusCode = status.HTTP_200_OK
         response = {
@@ -115,7 +123,7 @@ class watchlistView(RetrieveAPIView):
             'statusCode': statusCode,
             'message': message,
             'data': {
-                'banned':list(map(int, list(user_profile.watched)))}}
+                'wishlist':list(map(int, list(user_profile.watched)))}}
         return Response(response, status=status.HTTP_200_OK)
 
     def get(self, request, *args, **kwargs):
@@ -123,5 +131,5 @@ class watchlistView(RetrieveAPIView):
         response = {
             'success': 'true',
             'data': {
-                'banned':list(map(int, list(user_profile.watched)))}}
+                'wishlist':list(map(int, list(user_profile.watched)))}}
         return Response(response, status=status.HTTP_200_OK)

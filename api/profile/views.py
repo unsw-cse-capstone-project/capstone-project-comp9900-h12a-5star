@@ -63,3 +63,30 @@ class UserProfileView(RetrieveAPIView):
             RESPONSE['error']= str(e)
             return Response(RESPONSE, status=STATUS_CODE)
         return Response(response, status=status_code)
+
+class BanView(RetrieveAPIView):
+    def put(self, request, *args, **kwargs):
+        user_profile = UserProfile.objects.get(username=request.data['username'])
+        if request.data['bannedUsername'] not in user_profile.banned:
+            user_profile.banned.append(request.data['bannedUsername'])
+            message = 'user banned'
+        else:
+            user_profile.banned.remove(request.data['bannedUsername'])
+            message = 'user unbanned'
+        user_profile.save()
+        status_code = status.HTTP_200_OK
+        response = {
+            'success': 'true',
+            'status code': status_code,
+            'message': message,
+            'data': {
+                'banned':user_profile.banned}}
+        return Response(response, status=status.HTTP_200_OK)
+
+    def get(self, request, *args, **kwargs):
+        user_profile = UserProfile.objects.get(username=request.data['username'])
+        response = {
+            'success': 'true',
+            'data': {
+                'banned':user_profile.banned}}
+        return Response(response, status=status.HTTP_200_OK)

@@ -1,22 +1,79 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
-import { Button, Container, Grid, Header, Icon, Item, Segment, Image, List , Divider} from 'semantic-ui-react';
+import { Button, Container, Grid, Header, Icon, Image, Divider} from 'semantic-ui-react';
 import NavBar from '../components/NavBar';
-import MovieTile from '../components/MovieTile';
 import {
     Link,
   } from "react-router-dom";
 
 export default class WishListPage extends Component {
 
+    constructor() {
+        super();
+        this.state = {
+            error: null,
+            isLoaded: false,
+            items: []
+        };
+        if (window.sessionStorage.getItem('username') === null){
+            window.sessionStorage.setItem('username', 'guest');
+        }
+        this.user = window.sessionStorage.getItem('username')
+    }
+
+    componentDidMount() {
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: this.user, reviewerUsername: this.props.match.params.userId })
+        };
+
+        fetch("http://127.0.0.1:8000/api/viewWishlist/", requestOptions)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        items: result
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+    }
+
+    removeFromWishlist = (val) => {
+        window.location.href=`/movieDetails/${val}`
+    }
     
+    addToMyWishlist = (val) => {
+        this.setState((prevState) => ({ active_wishlist: !prevState.active_wishlist }))
+
+        // this.state.active_wishlist = !this.state.active_wishlist
+
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
+            body: JSON.stringify({ movieId: val, username: this.user, wishlist: !this.state.items.wishlist})
+        };
+
+        // fetch("http://127.0.0.1:8000/api/addWishlist/", requestOptions)
+            
+            // this.state.items.wishlist = !this.state.items.wishlist
+    }
 
     render() {
 
         if (this.props.match.params.userId === "guest"){
             window.location.href='/login'
         }
-
+        const { active_wishlist } = this.state
         return (
             <>
                 <NavBar />
@@ -24,74 +81,47 @@ export default class WishListPage extends Component {
                     {/* <Header as='h1'>{this.props.match.params.userId}'s Wishlist</Header> */}
                     <Divider horizontal></Divider>
                     <Divider horizontal>
-      <Header as='h1'>
-        {this.props.match.params.userId.charAt(0).toUpperCase() + this.props.match.params.userId.slice(1)}'s Wishlist
-      </Header>
-    </Divider>
+                    <Header as='h1'>
+                        {this.props.match.params.userId.charAt(0).toUpperCase() + this.props.match.params.userId.slice(1)}'s Wishlist
+                    </Header>
+                    </Divider>
                     <Grid columns='equal' divided={'vertically'}>
-                        <Grid.Row>
-                            <Grid.Column width={2}>
-                            <Image src='https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg' size='tiny'  />
-                            </Grid.Column>
-                            <Grid.Column width={2}>
-                            <br/>
-                            <Icon name='star' color={"yellow"}/> 4.7 <br/><br/>
-                            <Icon name='calendar alternate outline' /> 2012
-                            </Grid.Column>
-                            <Grid.Column width={8}>
-                            <br/><br/>
-                                <Link style={{ color: 'black', fontSize:30}} className="MovieDetails" key={this.props.movieId} to= {`/movieDetails/${this.props.movieId}`}>
-                                    <b>The Avengers</b>
-                                </Link>
-                            </Grid.Column>
-                            <Grid.Column>
+                        {
+                            this.state.items.map((item)=>
+                            <Grid.Row>
+                                <Grid.Column width={2}>
+                                    <Image src={item.poster} size='tiny'  />
+                                </Grid.Column>
+                                <Grid.Column width={2}>
+                                <br/>
+                                    <Icon name='star' color={"yellow"}/> {item.rating} <br/><br/>
+                                    <Icon name='calendar alternate outline' /> {item.release_date.substring(0,4)}
+                                </Grid.Column>
+                                <Grid.Column width={8}>
                                 <br/><br/>
-                                <Button primary floated='right'>View Details<Icon name='right chevron' />
-                                </Button>
+                                
+                                    <Link style={{ color: 'black', fontSize:24}} className="MovieDetails" key={item.movieID} to= {`/movieDetails/${item.movieID}`}>
+                                        {item.title}
+                                    </Link>
+                               
+                                    
+                                </Grid.Column>
+                                <Grid.Column>
+                                    <br/><br/>
+                                    {
+                                        (this.props.match.params.userId === window.sessionStorage.getItem('username'))?
+                                            <Button circular floated='right' color='red' icon='close' onClick={()=>this.removeFromWishlist(item.movieID)} />
+                                            :
+                                            <Button primary floated='right'><Link style={{ color: '#FFF'}} className="MovieDetails" key={item.movieID} to= {`/movieDetails/${item.movieID}`}>
+                                            View Details
+                                        </Link><Icon name='right chevron' />  </Button> 
+                                    }
+                                    
                             </Grid.Column>
                         </Grid.Row>
-                        <Grid.Row>
-                            <Grid.Column width={2}>
-                            <Image src='https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg' size='tiny'  />
-                            </Grid.Column>
-                            <Grid.Column width={2}>
-                            <br/>
-                            <Icon name='star' color={"yellow"}/> 4.7 <br/><br/>
-                            <Icon name='calendar alternate outline' /> 2012
-                            </Grid.Column>
-                            <Grid.Column width={8}>
-                            <br/><br/>
-                                <Link style={{ color: 'black', fontSize:30}} className="MovieDetails" key={this.props.movieId} to= {`/movieDetails/${this.props.movieId}`}>
-                                    <b>The Avengers</b>
-                                </Link>
-                            </Grid.Column>
-                            <Grid.Column>
-                                <br/><br/>
-                                <Button primary floated='right'>View Details<Icon name='right chevron' />
-                                </Button>
-                            </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row>
-                            <Grid.Column width={2}>
-                            <Image src='https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg' size='tiny'  />
-                            </Grid.Column>
-                            <Grid.Column width={2}>
-                            <br/>
-                            <Icon name='star' color={"yellow"}/> 4.7 <br/><br/>
-                            <Icon name='calendar alternate outline' /> 2012
-                            </Grid.Column>
-                            <Grid.Column width={8}>
-                            <br/><br/>
-                                <Link style={{ color: 'black', fontSize:30}} className="MovieDetails" key={this.props.movieId} to= {`/movieDetails/${this.props.movieId}`}>
-                                    <b>The Avengers</b>
-                                </Link>
-                            </Grid.Column>
-                            <Grid.Column>
-                                <br/><br/>
-                                <Button primary floated='right'>View Details<Icon name='right chevron' />
-                                </Button>
-                            </Grid.Column>
-                        </Grid.Row>
+                            )
+                        }
+                        
                     </Grid>
                 </Container>
                 

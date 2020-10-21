@@ -15,6 +15,9 @@ import TopRated from './pages/TopRated';
 import PopularMovies from './pages/PopularMovies';
 import WishListPage from './pages/WishListPage';
 import SearchPage from './pages/SearchPage';
+import SearchMovieTitle from './pages/SearchMovieTitle';
+import SearchGenre from './pages/SearchGenre';
+import SearchDescription from './pages/SearchDescription';
 
 function App() {
   return (
@@ -31,6 +34,9 @@ function App() {
         <Route path="/login" component = {Login} />
         <Route path="/signup" component = {SignUpPage} />
         <Route path="/search" component = {SearchPage} />
+        <Route path="/searchMovieTitle" component = {SearchMovieTitle} />
+        <Route path="/searchGenre" component = {SearchGenre} />
+        <Route path="/searchDescription" component = {SearchDescription} />
         <Route path="/movieDetails/:movieId" component = {MovieDetails} />
         <Route component = {NotFoundPage} />
       </Switch>

@@ -28,7 +28,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     )
     watched = serializers.ListField(
         child = serializers.IntegerField()
-    )'''
+    )'''#
 
     class Meta:
         model = User

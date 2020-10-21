@@ -73,6 +73,14 @@ class BanView(RetrieveAPIView):
         elif request.data['banStatus']==False and request.data['bannedUsername'] in user_profile.banned:
             user_profile.banned.remove(request.data['bannedUsername'])
             message = 'user unbanned'
+        else:
+            response = {
+            'success': 'true',
+            'statusCode': status.HTTP_200_OK,
+            'message': 'doubled request',
+            'data': {
+                'banned':user_profile.banned}}
+            return Response(response, status=status.HTTP_200_OK)
         user_profile.save()
         statusCode = status.HTTP_200_OK
         response = {

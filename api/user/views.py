@@ -55,21 +55,21 @@ def UserRegistrationView(request):
         serializer.save()
         response = {
             'success' : 'True',
-            'status_code' : status.HTTP_200_OK,
+            'statusCode' : status.HTTP_200_OK,
             'message': 'User registered  successfully',
             }
-        status_code = status.HTTP_200_OK
-        print(response)
-        return Response(response, status=status_code)
+        statusCode = status.HTTP_200_OK
+        #print(response)
+        return Response(response, status=statusCode)
 
 
 @api_view(['POST', ])
 def UserLoginView(request):
-    print(request.data)
+    #print(request.data)
     context = {}
     email = request.data['email']
     password = request.data['password']
-    print(email,password)
+    #print(email,password)
     user = authenticate(request,email=email, password=password)
     if user is None:
             context['response'] = 'A user with this email and password is not found.'
@@ -79,7 +79,7 @@ def UserLoginView(request):
         user_profile = UserProfile.objects.get(user=user)
         context['response'] = {
                 'success' : 'True',
-                'status_code' : status.HTTP_200_OK,
+                'statusCode' : status.HTTP_200_OK,
                 'message': 'User logged in  successfully',
                 'id':str(user_profile),
 				'email':email,
@@ -87,8 +87,8 @@ def UserLoginView(request):
                 'lastname':user_profile.lastname,
 		'username':user_profile.username
                 }
-    status_code = status.HTTP_200_OK
-    return Response(context, status=status_code)
+    statusCode = status.HTTP_200_OK
+    return Response(context, status=statusCode)
     #return Response(context)
 
 
@@ -144,18 +144,18 @@ def get_review(user,id,final):
            final['downvote'].append(i.downvote_count)
            final['follow'].append(i.follow)
         #final['review_id'].append(i.id)
-    print(final)
+    #print(final)
     if user == 'Guest':
         final['watched']= False
         final['liked']=False
         final['wishlist']=False
     else:
-        print("yup")
+        #print("yup")
         #data=serializers.serialize("json", reviews.objects.all(),indent=4 )
-        print(id)
-        print(user)
+        #print(id)
+        #print(user)
         for i in reviews.objects.filter(movie__movie_id=id , review_user_id=user):
-            print("entered")
+            #print("entered")
             final['watched'] = i.watched
             final['liked'] = i.liked
             final['wishlist'] = i.wishlist
@@ -230,12 +230,12 @@ def simple_get(url):
         header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)\
                                                                 Chrome/77.0.3865.90 Safari/537.36'}
         with closing(get(url,stream = True,headers=header)) as resp:
-            if 'html' in resp.headers['Content-Type'] and resp.status_code == 200:
+            if 'html' in resp.headers['Content-Type'] and resp.statusCode == 200:
                 return resp.content
             else:
                 return None
     except RequestException:
-        print(f'Request for {url} failed')
+        #print(f'Request for {url} failed')
         return None
 
 class MovieSearch(APIView):
@@ -254,12 +254,12 @@ class MovieSearch(APIView):
                 #print("q in",q.lower())
                 #print("name is ",genre['name'].lower())
                     if q.lower() == genre['name'].lower():
-                         print("entrered")
+                         #print("entrered")
                          genre_id.append(genre['id'])
                          break
         #print("genre",genre_id)
             if len(genre_id) >= 1:
-                print("entered")
+                #print("entered")
                 res = requests.get("https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=1" + "&with_genres=" + str(genre_id[0]))
                 if res.json()['total_pages'] > 4:
                     pages = 4

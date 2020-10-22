@@ -185,7 +185,7 @@ export default class HomePage extends Component {
                     <Divider section />
                     <Grid columns="equal">
                         <Grid.Column>
-                            <Header as='h1'>Popular Movies</Header>
+                            <Header as='h1'>Trending Movies</Header>
                         </Grid.Column>
                         <Grid.Column>
                             <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = '/popularMovies'}>

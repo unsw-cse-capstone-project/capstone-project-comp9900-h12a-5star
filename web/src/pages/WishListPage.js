@@ -51,6 +51,14 @@ export default class WishListPage extends Component {
         delete this.state.items[this.state.items.indexOf(val)]
         console.log(this.state.items)
         // this.state.items = this.state.items
+        this.setState({item: this.state.items})
+        var len = 0
+        this.state.items.map(()=>
+            len = len+1
+        )
+        if (len === 0){
+            window.location.reload(false)
+        }
         
     }
     removeFromWishlist = (val) => {
@@ -62,8 +70,8 @@ export default class WishListPage extends Component {
         };
 
         fetch("http://127.0.0.1:8000/api/addWishlist/", requestOptions)
-        // this.revoveElement(val)
-        window.location.reload(false)
+        this.revoveElement(val)
+        // window.location.reload(false)
     }
    
     

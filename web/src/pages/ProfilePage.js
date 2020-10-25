@@ -1,5 +1,5 @@
 import React , { Component } from 'react'
-import { Tab, Container, Grid, Card, Icon, Image, Button, Input } from 'semantic-ui-react'
+import { Tab, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider } from 'semantic-ui-react'
 import NavBar from '../components/NavBar';
 
 
@@ -35,36 +35,23 @@ export default class WishListPage extends Component {
 
     render() {
 
-        const panes = [
-            {
-              menuItem: 'Ban List',
-              render: () => <Tab.Pane attached={false}>Tab 1 Content</Tab.Pane>,
-            },
-            {
-              menuItem: 'Watch List',
-              render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane>,
-            }
-        ]
-
         return(
             <React.Fragment>
+                
                 <NavBar />
+                
                 <Container>
-                    <Grid >
-                        <Grid.Column width={5}>
-                        <Card>
-                            <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} />
-                            <Card.Content>
-                            <Card.Header>
-                                {this.user}
-                                <Button circular floated={"right"} icon='pencil' onClick={this.handleClick_edit}/>
-                            </Card.Header>
-                            <Card.Meta>
-                                <span className='date'>Joined in 2015</span>
-                            </Card.Meta>
-                            <Card.Description>
-                                Matthew is a musician living in Nashville.
-                                <Input transparent={this.state.editTransparent} disabled={this.state.editDisabled} placeholder='Mathew'  />
+                    <div style={{backgroundImage: `url(${require("../images/profileBackground.jpg")})`, height: 300}}>
+                        <br />
+                        <br />
+                        <br /><br /><br /><br />
+                        <center>
+                            <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' circular size={"medium"} spaced={"left"}/>
+
+                            <br />
+                            
+                            <Header as= "h1">Mathew Wade</Header>
+                            <Input transparent={this.state.editTransparent} disabled={this.state.editDisabled} placeholder='Mathew'  />
                                 {
                                     (this.state.edit) &&
                                     <div>
@@ -74,29 +61,32 @@ export default class WishListPage extends Component {
                                             Cancel 
                                         </Button>
                                     </div>
-                                    
                                 }
-                            </Card.Description>
-                            </Card.Content>
-                            <Card.Content extra>
-                            <a>
-                                <Icon name='user' />
-                                22 Friends
-                            </a>
-                            </Card.Content>
-                        </Card>
-                        </Grid.Column>
-                        <Grid.Column width={10}>
-                            <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
-                        </Grid.Column>
-                    </Grid>
-                    
-
-                    
+                                <br />
+                                <br />
+                                <Divider />
+                            <Button color={"purple"} onClick={this.handleClick_edit}>
+                                <center>
+                                    <br />
+                                    <Icon name='pencil' size="big" /> <br /> <br /> Edit Profile
+                                </center>
+                            </Button>
+                            <Button color={"purple"} onClick={this.handleClick_edit}>
+                                <center>
+                                    <br />
+                                    <Icon name='remove user' size="big" /> <br /> <br /> Baned User
+                                </center>
+                            </Button>
+                            <Button color={"purple"} onClick={this.handleClick_edit}>
+                                <center>
+                                    <br />
+                                    <Icon name='eye' size="big" /> <br /> <br /> Watch list
+                                </center>
+                            </Button>
+                            
+                        </center>
+                    </div>
                 </Container>
-                
-
-                
             </React.Fragment>
         );
     }

@@ -36,6 +36,8 @@ class UserProfile(models.Model):
 
     watched = MultiSelectField(default= None)
 
+    profilePic = models.CharField(max_length=100, unique=False)
+
     class Meta:
         '''
         to set table name in database

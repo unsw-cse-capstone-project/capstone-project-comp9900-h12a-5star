@@ -383,8 +383,8 @@ class MovieDetails(APIView):
 class MovieBrowse(APIView):
     def post(self,request):
         #print("request",request.data)
-         genre_given=false
-         director_given=false
+        genre_given=false
+        director_given=false
         if len(request.data.keys()) > 0:
              genre_id=[]
              director=[]

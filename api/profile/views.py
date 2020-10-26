@@ -109,8 +109,16 @@ class BanView(RetrieveAPIView):
         user_profile = UserProfile.objects.get(username=request.data['username'])
         response = {
             'success': 'true',
-            'data': {
-                'banned':user_profile.banned}}
+            'data': []}
+        for i in list(user_profile.banned):
+            user = UserProfile.objects.get(username=i)
+            response['data'].append({
+                    'firstname': user.firstname,
+                    'lastname': user.lastname,
+                    'gender': user.gender,
+                    'profilePic':user.profilePic
+                })
+
         return Response(response, status=status.HTTP_200_OK)
 
 class watchlistView(RetrieveAPIView):

@@ -25,7 +25,7 @@ def get_movie_details(movie):
     url='https://api.themoviedb.org/3/movie/'+str(movie)+'?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&append_to_response=credits,videos'
 
     response=requests.get(url)
-
+    
     if response.json()['poster_path'] is None:
         movie_details['poster'] = 'https://i.stack.imgur.com/Q3vyk.png'
     else:

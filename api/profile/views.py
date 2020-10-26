@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 #from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from profile.models import UserProfile
+from movie_review.helper import get_movie_details
 import random
 
 statusCode = status.HTTP_400_BAD_REQUEST
@@ -127,7 +128,7 @@ class watchlistView(RetrieveAPIView):
             'statusCode': status.HTTP_200_OK,
             'message': 'doubled request',
             'data': {
-                'wishlist':list(map(int, list(user_profile.watched)))}}
+                'watchlist':list(map(int, list(user_profile.watched)))}}
             return Response(response, status=status.HTTP_200_OK)
         user_profile.save()
         statusCode = status.HTTP_200_OK
@@ -136,13 +137,14 @@ class watchlistView(RetrieveAPIView):
             'statusCode': statusCode,
             'message': message,
             'data': {
-                'wishlist':list(map(int, list(user_profile.watched)))}}
+                'watchlist':list(map(int, list(user_profile.watched)))}}
         return Response(response, status=status.HTTP_200_OK)
 
     def get(self, request, *args, **kwargs):
         user_profile = UserProfile.objects.get(username=request.data['username'])
         response = {
             'success': 'true',
-            'data': {
-                'wishlist':list(map(int, list(user_profile.watched)))}}
+            'data': []}
+        for movie in list(map(int, list(user_profile.watched))):
+            response['data'].append(get_movie_details(movie))
         return Response(response, status=status.HTTP_200_OK)

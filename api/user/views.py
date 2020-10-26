@@ -85,7 +85,8 @@ def UserLoginView(request):
 				'email':email,
                 'firstname':user_profile.firstname,
                 'lastname':user_profile.lastname,
-		'username':user_profile.username
+		        'username':user_profile.username,
+                'profilePic':user_profile.profilePic
                 }
     statusCode = status.HTTP_200_OK
     return Response(context, status=statusCode)

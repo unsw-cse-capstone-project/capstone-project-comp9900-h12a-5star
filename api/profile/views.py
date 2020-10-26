@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 #from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from profile.models import UserProfile
+import random
 
 statusCode = status.HTTP_400_BAD_REQUEST
 RESPONSE = {
@@ -11,6 +12,10 @@ RESPONSE = {
     'status code': status.HTTP_400_BAD_REQUEST,
     'message': 'User does not exists',
     }
+pictures = ['https://react.semantic-ui.com/images/avatar/small/matt.jpg',
+'https://react.semantic-ui.com/images/avatar/small/elliot.jpg',
+'https://react.semantic-ui.com/images/avatar/small/jenny.jpg',
+'https://react.semantic-ui.com/images/avatar/small/joe.jpg']
 
 class UserProfileView(RetrieveAPIView):
     def get(self, request, *args, **kwargs):
@@ -26,7 +31,9 @@ class UserProfileView(RetrieveAPIView):
                     'lastname': user_profile.lastname,
                     'gender': user_profile.gender,
                     'genres':user_profile.genres,
-                    'languages':user_profile.languages}}
+                    'languages':user_profile.languages,
+                    'profilePic':user_profile.profilePic
+                }}
         except Exception as e:
             RESPONSE['error']= str(e)
             return Response(RESPONSE, status=statusCode)
@@ -47,6 +54,11 @@ class UserProfileView(RetrieveAPIView):
                 user_profile.genres = request.data['genres']
             if 'languages' in request.data.keys():
                 user_profile.languages = request.data['languages']
+            if request.data['profilePic']:
+                new = random.choice(pictures)
+                while new == user_profile.profilePic:
+                    new = random.choice(pictures)
+                user_profile.profilePic = new
             user_profile.save()
             statusCode = status.HTTP_200_OK
             response = {
@@ -58,10 +70,11 @@ class UserProfileView(RetrieveAPIView):
                     'lastname': user_profile.lastname,
                     'gender': user_profile.gender,
                     'genres':user_profile.genres,
-                    'languages':user_profile.languages,}}
+                    'languages':user_profile.languages,
+                    'profilePic':user_profile.profilePic}}
         except Exception as e:
             RESPONSE['error']= str(e)
-            return Response(RESPONSE, status=statusCode)
+            return Response(RESPONSE, status=status.HTTP_400_BAD_REQUEST)
         return Response(response, status=statusCode)
 
 class BanView(RetrieveAPIView):

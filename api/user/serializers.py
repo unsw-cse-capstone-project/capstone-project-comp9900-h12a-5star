@@ -5,6 +5,12 @@ from rest_framework import serializers, fields
 from profile.models import UserProfile
 from user.models import User
 from django_select2.forms import Select2MultipleWidget
+import random
+
+pictures = ['https://react.semantic-ui.com/images/avatar/small/matt.jpg',
+'https://react.semantic-ui.com/images/avatar/small/elliot.jpg',
+'https://react.semantic-ui.com/images/avatar/small/jenny.jpg',
+'https://react.semantic-ui.com/images/avatar/small/joe.jpg']
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -48,7 +54,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             gender=profile_data['gender'],
             languages=validated_data['language'],
             genres=validated_data['genre'],
-
+            profilePic = random.choice(pictures)
         )
         return user
 

@@ -13,10 +13,11 @@ RESPONSE = {
     'status code': status.HTTP_400_BAD_REQUEST,
     'message': 'User does not exists',
     }
-pictures = ['https://react.semantic-ui.com/images/avatar/small/matt.jpg',
-'https://react.semantic-ui.com/images/avatar/small/elliot.jpg',
-'https://react.semantic-ui.com/images/avatar/small/jenny.jpg',
-'https://react.semantic-ui.com/images/avatar/small/joe.jpg']
+
+pictures = {'Female': ['https://react.semantic-ui.com/images/avatar/small/elliot.jpg',
+'https://react.semantic-ui.com/images/avatar/small/jenny.jpg'],
+'Male': ['https://react.semantic-ui.com/images/avatar/small/matt.jpg',
+'https://react.semantic-ui.com/images/avatar/small/joe.jpg']}
 
 class UserProfileView(RetrieveAPIView):
     def get(self, request, *args, **kwargs):
@@ -56,9 +57,9 @@ class UserProfileView(RetrieveAPIView):
             if 'languages' in request.data.keys():
                 user_profile.languages = request.data['languages']
             if request.data['profilePic']:
-                new = random.choice(pictures)
+                new = random.choice(pictures[user_profile.gender])
                 while new == user_profile.profilePic:
-                    new = random.choice(pictures)
+                    new = random.choice(pictures[user_profile.gender])
                 user_profile.profilePic = new
             user_profile.save()
             statusCode = status.HTTP_200_OK

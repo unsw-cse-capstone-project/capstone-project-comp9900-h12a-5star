@@ -1,7 +1,5 @@
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import update_last_login
 from rest_framework import serializers, fields
-#from rest_framework_jwt.settings import api_settings
 from profile.models import UserProfile
 from user.models import User
 from django_select2.forms import Select2MultipleWidget

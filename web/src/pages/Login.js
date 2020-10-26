@@ -24,7 +24,7 @@ const Login = () => {
             });
             const body = await result.json();
 
-            if (body.response.status_code === 200){
+            if (body.response.statusCode === 200){
                 window.sessionStorage.setItem('username', body.response.username);
 
                 window.location.href='/welcome';

@@ -73,9 +73,9 @@ export default class MenuExampleInvertedSegment extends Component {
 
     return (
       <Segment inverted>
-        <Menu inverted secondary >
+        <Menu inverted secondary size='large'>
           <Menu.Item>
-            <Image src={require('../images/logo192.png')} size='mini'  />
+            <Image src={require('../images/logo5.png')} size='tiny'  />
           </Menu.Item>
           <Menu.Item
             name='home'

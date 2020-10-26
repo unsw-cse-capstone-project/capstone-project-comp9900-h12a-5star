@@ -383,6 +383,8 @@ class MovieDetails(APIView):
 class MovieBrowse(APIView):
     def post(self,request):
         #print("request",request.data)
+        genre_given=False
+        director_given=False
         if len(request.data.keys()) > 0:
              genre_id=[]
              director=[]
@@ -404,6 +406,8 @@ class MovieBrowse(APIView):
              #print("dir is",dir)
              browse_resp = defaultdict(list)
              if len(genre)>0 and len(dir)>0:
+                director_given=True
+                genre_given=True
                 res=requests.get('https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=vote_average.desc&include_adult=false&include_video=false&page=1&with_crew='+dir+'&with_genres='+genre)
                 for i in range(1,res.json()['total_pages']+1):
                     #print(i)
@@ -412,6 +416,7 @@ class MovieBrowse(APIView):
                     res=requests.get('https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=vote_average.desc&include_adult=false&include_video=false&page='+str(i)+'&with_crew='+dir+'&with_genres='+genre)
                     browse_resp['result'].extend(res.json()['results'])
              elif len(genre)>0 :
+                genre_given=True
                 res=requests.get('https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=vote_average.desc&include_adult=false&include_video=false&page=1&with_genres='+genre)
                 for i in range(1,res.json()['total_pages']+1):
                     #print(i)
@@ -422,6 +427,7 @@ class MovieBrowse(APIView):
                     
                 #browse_search = search_func(browse_resp,'browse')
              else:
+                director_given=True
                 res=requests.get('https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_crew='+dir)
                 for i in range(1,res.json()['total_pages']+1):
                     if i>10:
@@ -430,7 +436,16 @@ class MovieBrowse(APIView):
                     browse_resp['result'].extend(res.json()['results'])
 
              browse_search = search_func(browse_resp,'browse')
-             browse_search['browse_result'] = sorted(browse_search['browse_result'], key=lambda k: ( -k['rating'],k['title'].lower()))
+             if genre_given and director_given:
+                     browse_search['browse_result'] = sorted(browse_search['browse_result'], key=lambda k: ( -k['rating'],k['title'].lower()))
+             elif genre_given :
+                     browse_search['browse_result'] = sorted(browse_search['browse_result'], key=lambda k: ( -k['rating'],k['title'].lower()))
+                     browse_search['genre_result']=browse_search['browse_result']
+                     del browse_search['browse_result']
+             else:
+                browse_search['browse_result'] = sorted(browse_search['browse_result'], key=lambda k: ( -k['rating'],k['title'].lower()))
+                browse_search['director_result']=browse_search['browse_result']
+                del browse_search['browse_result']
              browse_search=json.dumps(browse_search)
              return JsonResponse(json.loads(browse_search), safe=False)
         else:

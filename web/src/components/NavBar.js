@@ -112,7 +112,7 @@ export default class MenuExampleInvertedSegment extends Component {
             <Menu.Item>
 
             </Menu.Item>
-            {(window.sessionStorage.getItem('username') === null || window.sessionStorage.getItem('username') === "guest") &&
+            {(window.sessionStorage.getItem('username') !== null || window.sessionStorage.getItem('username') !== "guest") &&
               <Menu.Item
                 name='notification'
                 active={activeItem === 'notification'}
@@ -121,7 +121,7 @@ export default class MenuExampleInvertedSegment extends Component {
                 <Icon name='bell' size='large'/>
               </Menu.Item>
             }
-            {(window.sessionStorage.getItem('username') === null || window.sessionStorage.getItem('username') === "guest") &&
+            {(window.sessionStorage.getItem('username') !== null || window.sessionStorage.getItem('username') !== "guest") &&
               <Menu.Item
                 name='my profile'
                 active={activeItem === 'my profile'}
@@ -130,7 +130,7 @@ export default class MenuExampleInvertedSegment extends Component {
                 <Icon name='user circle' size='large'/>
               </Menu.Item>
             }
-            {(window.sessionStorage.getItem('username') === null || window.sessionStorage.getItem('username') === "guest") ?
+            {(window.sessionStorage.getItem('username') == null || window.sessionStorage.getItem('username') === "guest") ?
               <Menu.Item>
                 <Button primary onClick={event =>  window.location.href='/login'}>Sign In</Button>
               </Menu.Item>

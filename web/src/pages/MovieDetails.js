@@ -19,12 +19,17 @@ export default class MovieDetails extends Component {
         this.handleReview = this.handleReview.bind(this);
         if (window.sessionStorage.getItem('username') === null){
             window.sessionStorage.setItem('username', 'guest');
+            
         }
         this.user = window.sessionStorage.getItem('username')
         
     }
 
     componentDidMount() {
+        if(window.sessionStorage.getItem('username')==="guest"){
+
+            alert("You are not Signed in! Sign up to tell us what do you think about this movie.")
+        }
 
         const requestOptions = {
             method: 'POST',
@@ -70,6 +75,18 @@ export default class MovieDetails extends Component {
     }
     handleClick_seen = () =>{
         this.setState((prevState) => ({ active_seen: !prevState.active_seen }))
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
+            body: JSON.stringify({ username: this.user, movieID: this.props.match.params.movieId, movieStatus: !this.state.items.watched})
+        };
+        fetch("http://127.0.0.1:8000/api/watchMovie/", requestOptions)
+
+        this.state.items.watched = !this.state.items.watched
+
+
+
     }
     handleClick_wishlist = () =>{
         this.setState((prevState) => ({ active_wishlist: !prevState.active_wishlist }))
@@ -119,7 +136,7 @@ export default class MovieDetails extends Component {
             if (body.response.status_code === 200){
             
 
-                window.location.href='/welcome';
+                window.location.href='/movieDetails';
             }
         }
         else{
@@ -139,6 +156,8 @@ export default class MovieDetails extends Component {
 
     render() {
 
+
+
         const { active_like } = this.state
         const { active_seen } = this.state
         const { active_wishlist } = this.state
@@ -150,9 +169,11 @@ export default class MovieDetails extends Component {
           }
 
         return (
+            
             <React.Fragment>
                 < NavBar />
                 <Container >
+                
                     <Segment > 
                         <Grid columns='equal'   divided={'vertically'} padded style={{margin : 20}}>
                             <Grid.Row >
@@ -342,14 +363,16 @@ export default class MovieDetails extends Component {
                             }
 
 <Form reply>
-                                How was this Movie?  <Rating  onRate={this.handleRate} icon='star' defaultRating={0} maxRating={5}/>
+                                How was this Movie?  <Rating  disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} onRate={this.handleRate} icon='star' defaultRating={0} maxRating={5}/>
                                 <Form> 
-                                    <textarea  onChange={(event) => this.handleReview(event)}  placeholder='What do you think about the movie?' />
+                                    <textarea  onChange={(event) => this.handleReview(event)}  placeholder='What do you think about the movie?' disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>
                                 <input  value={this.state.review}/>
+                            
                             </Form>
 
-                                <Button onClick={this.handle_adding_review} content='Add Reply' labelPosition='left' icon='edit' primary />
+                                <Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} onClick={this.handle_adding_review} content='Add Reply' labelPosition='left' icon='edit' primary />
                             </Form>
+                            
                         </Comment.Group>
                                 </Grid.Column>
                             </Grid.Row>

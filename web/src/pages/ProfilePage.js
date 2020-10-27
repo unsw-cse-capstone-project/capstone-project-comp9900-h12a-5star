@@ -1,11 +1,45 @@
 import React , { Component, createRef } from 'react'
-import { Tab, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Sticky, Label, Ref } from 'semantic-ui-react'
+import { Tab, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Form, Label, Ref, Dropdown } from 'semantic-ui-react'
 import NavBar from '../components/NavBar';
+import SignUpPage from '../pages/SignUpPage';
 
 
+export default class ProfilePage extends Component {
 
-export default class WishListPage extends Component {
+    genderOptions = [
+        { key: 'm', text: 'Male', value: 'male' },
+        { key: 'f', text: 'Female', value: 'female' },
+    ]
+    
+    genreOptions = [
+        { key: 'action', text: 'Action', value: 'action' },
+        { key: 'adventure', text: 'Adventure', value: 'adventure' },
+        { key: 'comedy', text: 'Comedy', value: 'comedy' },
+        { key: 'crime', text: 'Crime', value: 'crime' },
+        { key: 'drama', text: 'Drama', value: 'drama' },
+        { key: 'family', text: 'Family', value: 'family' },
+        { key: 'fantasy', text: 'Fantasy', value: 'fantasy' },
+        { key: 'horror', text: 'Horror', value: 'horror' },
+        { key: 'mystery', text: 'Mystery', value: 'mystery' },
+        { key: 'romance', text: 'Romance', value: 'romance' },
+        { key: 'sciencefiction', text: 'Science Fiction', value: 'sciencefiction' },
+        { key: 'thriller', text: 'Thriller', value: 'thriller' },
+        
+    ]
 
+    languageOptions = [
+        { key: 'english', text: 'English', value: 'english' },
+        { key: 'gujrati', text: 'Gujrati', value: 'gujrati' },
+        { key: 'hindi', text: 'Hindi', value: 'hindi' },
+        { key: 'kannada', text: 'Kannada', value: 'kannada' },
+        { key: 'marathi', text: 'Marathi', value: 'marathi' },
+        { key: 'chinese', text: 'Mandarin Chinese', value: 'chinese' },
+        { key: 'punjabi', text: 'Punjabi', value: 'punjabi' },
+        { key: 'spanish', text: 'Spanish', value: 'spanish' },
+        { key: 'telugu', text: 'Telugu', value: 'telegu' },
+        { key: 'urdu', text: 'Urdu', value: 'urdu' },
+        
+      ]
     constructor() {
         super();
         this.state = {
@@ -22,6 +56,34 @@ export default class WishListPage extends Component {
         this.user = window.sessionStorage.getItem('username')
     }
 
+    componentDidMount() {
+
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: this.user, reviewerUsername: this.props.match.params.userId })
+        };
+
+        // const username = "roko1234"
+
+        fetch("http://127.0.0.1:8000/api/profile/"+{"username":this.user}, requestOptions)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        items: result
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+    }
+
     handleClick_edit = () =>{
         this.setState({edit: true})
         this.setState({editTransparent: false})
@@ -33,7 +95,7 @@ export default class WishListPage extends Component {
         this.setState({editDisabled: true})
     }
 
-    contextRef = createRef()
+    // contextRef = createRef()
 
     render() {
 
@@ -53,7 +115,12 @@ export default class WishListPage extends Component {
 
                             <br />
                             
+                            {
+                            
+                            (!this.state.edit) ?
+                            <div>
                             <Header as= "h1">Mathew Wade</Header>
+                            
                             <Label as='a' color='teal' >
                                 Gender
                                 <Label.Detail>
@@ -88,11 +155,64 @@ export default class WishListPage extends Component {
                                 <Label.Detail>English</Label.Detail>
                             </Label>
                             <br />
-                            {/* <Input transparent={this.state.editTransparent} disabled={this.state.editDisabled} placeholder='Mathew'  />
-                            <br />
+                                </div>
+                                :
+                                <div>
+                                    <br />
+
+                                    {/* <Grid centered>
+                                        <Grid.Row>
+                                            <Grid.Column>
+                                                First Name:
+                                            </Grid.Column>
+                                            <Grid.Column>
+                                                <Input transparent={this.state.editTransparent} disabled={this.state.editDisabled} placeholder='Mathew'  />
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                    </Grid> */}
+
+                                    <Form>
+                                    <Form.Field width={5}>
+                                        <label>Username</label>
+                                        <input defaultValue='roko1234' disabled required/>
+                                        </Form.Field>
+                                        <Form.Field width={5}>
+                                        <label>Email</label>
+                                        <input defaultValue='mathew@gmail.com' disabled required/>
+                                        </Form.Field>
+                                        <Form.Field width={5}>
+                                        <label>First Name</label>
+                                        <input defaultValue='Mathew' required />
+                                        </Form.Field>
+                                        <Form.Field width={5}>
+                                        <label>Last Name</label>
+                                        <input defaultValue='Wade' required/>
+                                        </Form.Field>
+                                        
+                                        <Form.Field width={5}>
+                                        <label>Gender</label>
+                                            <Dropdown defaultValue={this.genderOptions[0]} placeholder={this.genderOptions[0].text} fluid selection options={this.genderOptions} required/>
+                                        </Form.Field>
+                                        <Form.Field width={5}>
+                                        <label>Favorite Languages</label>
+                                        <Dropdown  defaultValue={[this.languageOptions[1].value, this.languageOptions[0].value]} placeholder='Favorite Languages' fluid selection multiple options={this.languageOptions} required/>
+                                        </Form.Field>
+                                        <Form.Field width={5}>
+                                        <label>Favorite Genere</label>
+                                        <Dropdown  defaultValue={[this.genreOptions[1].value, this.genreOptions[0].value]} placeholder='Favorite Languages' fluid selection multiple options={this.genreOptions} required/>
+                                        </Form.Field>
+                                        
+                                        <Button primary type='submit'><Icon name="save" />Save Changes</Button>
+                                    </Form>
+                                     
+                            {/* <br />
                             <Input transparent={this.state.editTransparent} disabled={this.state.editDisabled} placeholder='Mathew'  />
                             <br />
-                            <Input transparent={this.state.editTransparent} disabled={this.state.editDisabled} placeholder='Mathew'  /> */}
+                            <Input transparent={this.state.editTransparent} disabled={this.state.editDisabled} placeholder='Mathew'  />
+                                 */}
+                                 </div>
+                        }
+                        
                                 
                                 <br />
                                 <br />
@@ -128,7 +248,6 @@ export default class WishListPage extends Component {
                             </Button>
                             <br />
                             <br />
-                                
                         </center>
                     </div>
                     

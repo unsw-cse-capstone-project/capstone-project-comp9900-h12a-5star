@@ -1,5 +1,5 @@
 import React , { Component, createRef } from 'react'
-import { Tab, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Sticky, Rail, Ref } from 'semantic-ui-react'
+import { Tab, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Sticky, Label, Ref } from 'semantic-ui-react'
 import NavBar from '../components/NavBar';
 
 
@@ -54,11 +54,77 @@ export default class WishListPage extends Component {
                             <br />
                             
                             <Header as= "h1">Mathew Wade</Header>
-                            <Input transparent={this.state.editTransparent} disabled={this.state.editDisabled} placeholder='Mathew'  />
+                            {/* <Label as='a' color='teal'>
+                            <Icon name='man'  />
+                                Male
+                            </Label> 
+                            <br />
+                            <br />*/}
+                            <Label as='a' color='teal' >
+                                Gender
+                                <Label.Detail>
+                                    <Icon name='man'  />
+                                    Male
+                                </Label.Detail>
+                            </Label>
+                            <br />
+                            <br />
+                            <Label as='a' color='red' >
+                                <Icon name="hashtag" />
+                                Username
+                                <Label.Detail>roko@1234</Label.Detail>
+                            </Label>
+                            <Label as='a' color='red' >
+                                <Icon name="at" />
+                                Email
+                                <Label.Detail>mathew@gmail.com</Label.Detail>
+                            </Label>
+                            <br />
+                            <br />
+                            <Label as='a' color='blue' >
+                                <Icon name="globe" />
+                                Genere Preference
+                                <Label.Detail>Horror</Label.Detail>
+                                <Label.Detail>Action</Label.Detail>
+                            </Label>
+                            {/* <Label as='a' color='blue'>
+                                <Icon name='smile outline'  />
+                                Genere
+                            </Label>
+                            <Label as='a' color='blue'>
+                                
+                                Action
+                            </Label>
+                            <Label as='a' color='blue'>
+                            
+                                Horror
+                            </Label>
+                            <br />
+                            <br /> */}
+                            <Label as='a' color='blue' >
+                                <Icon name="language" />
+                                Language Preference
+                                <Label.Detail>Hindi</Label.Detail>
+                                <Label.Detail>English</Label.Detail>
+                            </Label>
+                            {/* <Label as='a' color='yellow'>
+                                <Icon name='language'  />
+                                Language Preference
+                            </Label>
+                            <Label as='a' color='yellow'>
+                                
+                                Hindi
+                            </Label>
+                            <Label as='a' color='yellow'>
+                            
+                                English
+                            </Label> */}
+                            <br />
+                            {/* <Input transparent={this.state.editTransparent} disabled={this.state.editDisabled} placeholder='Mathew'  />
                             <br />
                             <Input transparent={this.state.editTransparent} disabled={this.state.editDisabled} placeholder='Mathew'  />
                             <br />
-                            <Input transparent={this.state.editTransparent} disabled={this.state.editDisabled} placeholder='Mathew'  />
+                            <Input transparent={this.state.editTransparent} disabled={this.state.editDisabled} placeholder='Mathew'  /> */}
                                 
                                 <br />
                                 <br />
@@ -93,52 +159,34 @@ export default class WishListPage extends Component {
                                 </center>
                             </Button>
                             <br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br /><br />
-                                <br />
+                            <br />
+                                
                         </center>
                     </div>
                     
-                                <Sticky context={this.contextRef} >
-                                    <Button color={"purple"} onClick={this.handleClick_edit}>
-                                        <center>
-                                            <br />
-                                            <Icon name='remove user' size="big" /> <br /> <br /> Baned User
-                                        </center>
-                                    </Button>
-                                    <Button color={"purple"} onClick={this.handleClick_edit}>
-                                        <center>
-                                            <br />
-                                            <Icon name='eye' size="big" /> <br /> <br /> Watch list
-                                        </center>
-                                    </Button>
-                                </Sticky>
+                                {/* <Sticky context={this.contextRef} >
+                                    <Grid  >
+                                        <Grid.Column width={2}>
+                                            <Grid.Row padded>
+                                                <Button color={"purple"} onClick={this.handleClick_edit} fluid>
+                                                    <center>
+                                                        <br />
+                                                        <Icon name='remove user' size="big" /> <br /> <br /> Baned User
+                                                    </center>
+                                                </Button>
+                                                <br></br>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <Button color={"purple"} onClick={this.handleClick_edit} fluid>
+                                                    <center>
+                                                        <br />
+                                                        <Icon name='eye' size="big" /> <br /> <br /> Watch list
+                                                    </center>
+                                                </Button>
+                                            </Grid.Row>
+                                        </Grid.Column>
+                                    </Grid>
+                                </Sticky> */}
                             
                     
                 </Container>

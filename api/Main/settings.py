@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'Main.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'sampleDB',
+        'NAME': 'sampleDB2',
         'HOST':'sampleuser:samplepassword@cluster5star.u9xgg.mongodb.net/sampleDB?retryWrites=true&w=majority',
         'USER':'sampleuser',
         'PASSWORD':'samplepassword',

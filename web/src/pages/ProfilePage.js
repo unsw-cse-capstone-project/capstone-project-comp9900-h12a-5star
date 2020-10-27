@@ -54,12 +54,6 @@ export default class WishListPage extends Component {
                             <br />
                             
                             <Header as= "h1">Mathew Wade</Header>
-                            {/* <Label as='a' color='teal'>
-                            <Icon name='man'  />
-                                Male
-                            </Label> 
-                            <br />
-                            <br />*/}
                             <Label as='a' color='teal' >
                                 Gender
                                 <Label.Detail>
@@ -87,38 +81,12 @@ export default class WishListPage extends Component {
                                 <Label.Detail>Horror</Label.Detail>
                                 <Label.Detail>Action</Label.Detail>
                             </Label>
-                            {/* <Label as='a' color='blue'>
-                                <Icon name='smile outline'  />
-                                Genere
-                            </Label>
-                            <Label as='a' color='blue'>
-                                
-                                Action
-                            </Label>
-                            <Label as='a' color='blue'>
-                            
-                                Horror
-                            </Label>
-                            <br />
-                            <br /> */}
                             <Label as='a' color='blue' >
                                 <Icon name="language" />
                                 Language Preference
                                 <Label.Detail>Hindi</Label.Detail>
                                 <Label.Detail>English</Label.Detail>
                             </Label>
-                            {/* <Label as='a' color='yellow'>
-                                <Icon name='language'  />
-                                Language Preference
-                            </Label>
-                            <Label as='a' color='yellow'>
-                                
-                                Hindi
-                            </Label>
-                            <Label as='a' color='yellow'>
-                            
-                                English
-                            </Label> */}
                             <br />
                             {/* <Input transparent={this.state.editTransparent} disabled={this.state.editDisabled} placeholder='Mathew'  />
                             <br />
@@ -163,31 +131,6 @@ export default class WishListPage extends Component {
                                 
                         </center>
                     </div>
-                    
-                                {/* <Sticky context={this.contextRef} >
-                                    <Grid  >
-                                        <Grid.Column width={2}>
-                                            <Grid.Row padded>
-                                                <Button color={"purple"} onClick={this.handleClick_edit} fluid>
-                                                    <center>
-                                                        <br />
-                                                        <Icon name='remove user' size="big" /> <br /> <br /> Baned User
-                                                    </center>
-                                                </Button>
-                                                <br></br>
-                                            </Grid.Row>
-                                            <Grid.Row>
-                                                <Button color={"purple"} onClick={this.handleClick_edit} fluid>
-                                                    <center>
-                                                        <br />
-                                                        <Icon name='eye' size="big" /> <br /> <br /> Watch list
-                                                    </center>
-                                                </Button>
-                                            </Grid.Row>
-                                        </Grid.Column>
-                                    </Grid>
-                                </Sticky> */}
-                            
                     
                 </Container>
                 </Ref>

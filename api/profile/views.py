@@ -20,7 +20,7 @@ pictures = {'Female': ['https://react.semantic-ui.com/images/avatar/small/elliot
 'https://react.semantic-ui.com/images/avatar/small/joe.jpg']}
 
 class UserProfileView(RetrieveAPIView):
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         try:
             user_profile = UserProfile.objects.get(username=request.data['username'])
             statusCode = status.HTTP_200_OK
@@ -106,7 +106,7 @@ class BanView(RetrieveAPIView):
                 'banned':user_profile.banned}}
         return Response(response, status=status.HTTP_200_OK)
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         user_profile = UserProfile.objects.get(username=request.data['username'])
         response = {
             'success': 'true',
@@ -149,7 +149,7 @@ class watchlistView(RetrieveAPIView):
                 'watchlist':list(map(int, list(user_profile.watched)))}}
         return Response(response, status=status.HTTP_200_OK)
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         user_profile = UserProfile.objects.get(username=request.data['username'])
         response = {
             'success': 'true',

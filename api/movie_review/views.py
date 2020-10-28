@@ -38,7 +38,7 @@ def add_review(request):
                 }
     return Response(response)
 
-@api_view(['GET', ])
+@api_view(['POST', ])
 def get_review(request):
     #print(request.data.keys())
     #print(request.data)

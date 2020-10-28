@@ -105,6 +105,31 @@ export default class MovieDetails extends Component {
            
             this.state.items.wishlist = !this.state.items.wishlist
     }
+
+    handle_click_ban_user = (val) =>{
+
+  
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
+            body: JSON.stringify({ bannedUsername : val, username:this.user , banStatus : true})
+        };
+
+        fetch("http://127.0.0.1:8000/api/banUsername", requestOptions)
+
+       // window.location.href=`/bannedlist/${window.sessionStorage.getItem('username')}`;
+       alert("User Banned Successfully");
+       window.location.reload(false);
+       
+
+
+   
+
+
+        
+
+    }
     handleReview = (event) => {   
        this.state.review = event.target.value;
 
@@ -142,6 +167,8 @@ export default class MovieDetails extends Component {
         else{
             window.location.href='/movieDetails';
         }
+
+        
 
 
     
@@ -337,7 +364,7 @@ export default class MovieDetails extends Component {
                                                         <Button primary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` }>View Wishlist</Button>
                                                     </Grid.Column>
                                                     <Grid.Column textAlign='center'>
-                                                        <Button primary>Ban </Button>
+                                                        <Button value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])}primary>Ban</Button>
                                                     </Grid.Column>
                                                     <Grid.Column textAlign='center'>
                                                         <Button primary>Follow</Button>

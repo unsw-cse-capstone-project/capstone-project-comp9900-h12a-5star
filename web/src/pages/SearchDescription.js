@@ -102,7 +102,7 @@ export default class SearchDescription extends Component {
 
                 <Container style={{ margin: 20 }}>
 
-                    <Header as='h1'>Search Results by Description</Header>
+                    <Header as='h1'>Search Results by Movie Description</Header>
                     <Divider section />
                     <Grid columns='equal'>{columnsDesc}</Grid>
                 </Container>

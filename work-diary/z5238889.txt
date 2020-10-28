@@ -23,10 +23,15 @@ Started learning and developing system UI in react.js for user stories in Jira
 Week 4
 Completed the front end development for login page
 Completed integrating API calls to mongo DB backend
+started working on handling reviews from users.
 
+Week 5
+Created front end interface to add reviews to any movie
+Created restrictions for guest users to add movies.
+created edge conditions for login page and user reviews.
 
-
-
-
-
-
+Week 6
+Attended Our first Demo and presented the progress of the project.
+Attended our first retrospective meeting and scrutionized on pending tasks
+Talked about increasing the sprint velocity and pushing project progress.
+Started working on creating movie Watch list for Users.

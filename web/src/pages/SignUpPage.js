@@ -1,29 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Grid, Form, Segment,  Button, Dropdown} from 'semantic-ui-react'
 import NavBar from '../components/NavBar';
 import {useState} from 'react';
+import { Multiselect } from 'multiselect-react-dropdown';
+import makeAnimated from 'react-select/animated';
+import Select from 'react-select';
 
 const SignUpPage = () => {
-  const [email, setemail] = useState('');
-  const [password, setpassword] = useState('');
-  const [genre, setgenre] = useState('');
-  const [language, setlanguage] = useState('');
-  const [firstname, setfirstname] = useState('');
-  const [lastname, setlastname] = useState('');
-  const [username, setusername] = useState('');
-  const [gender, setgender] = useState('');
-  const [error, setError] = useState('');
+  
 
 
   const genderOptions = [
-      { key: 'm', text: 'Male', value: 'male' },
-      { key: 'f', text: 'Female', value: 'female' },
+      {  label:'Male' ,value: 'Male'},
+      { label:'Female', value: 'Female'},
     ]
   
   
-  var obj = {"email": email, "password": password, "genre": ["Horror"], "language": ["English"],
-              "profile": {"firstname": firstname, "lastname": lastname, "username": username,
-            "gender": "Male", "genres": "", "languages":"English"}};
+  
 
   // var obj = {
   //   "email":"kar@gmail.com",
@@ -42,36 +35,75 @@ const SignUpPage = () => {
   //     };
 
   const languageOptions = [
-    { key: 'english', text: 'English', value: 'english' },
-    { key: 'gujrati', text: 'Gujrati', value: 'gujrati' },
-    { key: 'hindi', text: 'Hindi', value: 'hindi' },
-    { key: 'kannada', text: 'Kannada', value: 'kannada' },
-    { key: 'marathi', text: 'Marathi', value: 'marathi' },
-    { key: 'chinese', text: 'Mandarin Chinese', value: 'chinese' },
-    { key: 'punjabi', text: 'Punjabi', value: 'punjabi' },
-    { key: 'spanish', text: 'Spanish', value: 'spanish' },
-    { key: 'telugu', text: 'Telugu', value: 'telegu' },
-    { key: 'urdu', text: 'Urdu', value: 'urdu' },
+    {  label: 'English', value: 'english' },
+    {  label: 'Gujrati', value: 'gujrati' },
+    { label: 'Hindi', value: 'hindi' },
+    {  label: 'Kannada', value: 'kannada' },
+    { label: 'Marathi', value: 'marathi' },
+    { label: 'Mandarin Chinese', value: 'chinese' },
+    {  label: 'Punjabi', value: 'punjabi' },
+    {  label: 'Spanish', value: 'spanish' },
+    {  label: 'Telugu', value: 'telegu' },
+    { label: 'Urdu', value: 'urdu' },
     
   ]
 
   const genreOptions = [
-    { key: 'action', text: 'Action', value: 'action' },
-    { key: 'adventure', text: 'Adventure', value: 'adventure' },
-    { key: 'comedy', text: 'Comedy', value: 'comedy' },
-    { key: 'crime', text: 'Crime', value: 'crime' },
-    { key: 'drama', text: 'Drama', value: 'drama' },
-    { key: 'family', text: 'Family', value: 'family' },
-    { key: 'fantasy', text: 'Fantasy', value: 'fantasy' },
-    { key: 'horror', text: 'Horror', value: 'horror' },
-    { key: 'mystery', text: 'Mystery', value: 'mystery' },
-    { key: 'romance', text: 'Romance', value: 'romance' },
-    { key: 'sciencefiction', text: 'Science Fiction', value: 'sciencefiction' },
-    { key: 'thriller', text: 'Thriller', value: 'thriller' },
+    {  label: 'Action', value: 'action' },
+    {  label: 'Adventure', value: 'adventure' },
+    { label: 'Comedy', value: 'comedy' },
+    {  label: 'Crime', value: 'crime' },
+    { label: 'Drama', value: 'drama' },
+    { label: 'Family', value: 'family' },
+    {  label: 'Fantasy', value: 'fantasy' },
+    { label: 'Horror', value: 'horror' },
+    { label: 'Mystery', value: 'mystery' },
+    { label: 'Romance', value: 'romance' },
+    { label: 'Science Fiction', value: 'sciencefiction' },
+    { label: 'Thriller', value: 'thriller' },
     
   ]
+  const [email, setemail] = useState('');
+  const [password, setpassword] = useState('');
+  const [firstname, setfirstname] = useState('');
+  const [lastname, setlastname] = useState('');
+  const [username, setusername] = useState('');
+  const [gender, setgender] = useState({});
+  const [genre, setgenre] = useState([]);
+  const [language, setlanguage] = useState([]);
+  const [error, setError] = useState('');
 
+  // gender=setgender
+  
+
+  
+
+  // handleDropdownChange = (event) => {
+  //   this.setState({
+  //     [event.target.name]: event.target.value
+  //   })
+  // }
+  
   const checkSignUp = async () => {
+    
+    const genreSelected=[]
+    const languageSelected=[]
+    for (var i=0; i<genre.length;i++){
+     
+      genreSelected.push(genre[i].value)
+    }
+    console.log(genreSelected)
+    for (var i=0; i<language.length;i++){
+      // console.log(language[i].value)
+      languageSelected.push(language[i].value)
+    }
+    console.log(languageSelected)
+    const genderSelected=gender.value
+    console.log(genderSelected)
+    var obj = {"email": email, "password": password, "genre": genreSelected, "language": languageSelected,
+              "profile": {"firstname": firstname, "lastname": lastname, "username": username,
+            "gender": genderSelected, "genres": "", "languages":"English"}};
+    console.log(obj)
     if (email !== '' & password !== ''){
 
         const result = await fetch(`http://127.0.0.1:8000/api/signup`, {
@@ -139,7 +171,14 @@ return(
           <Form.Group >
             <Form.Field width={16}>
               <label>Gender</label>
-              <Dropdown value = {gender} onChange= {(event) => setgender(event.target.value)} placeholder='Gender' fluid selection options={genderOptions} required/>
+              <Select 
+                options = {genderOptions} 
+                onChange= {setgender}
+                placeholder='Gender' 
+                isSearchable 
+                required
+                />
+                
             </Form.Field>
           </Form.Group>
 
@@ -170,14 +209,30 @@ return(
           <Form.Group >
             <Form.Field width={16}>
               <label>Favorite Languages</label>
-              <Dropdown value = {language} onChange= {(event) => setlanguage(event.target.value)} placeholder='Favorite Languages' fluid selection multiple options={languageOptions} required/>
+              <Select 
+              options = {languageOptions} 
+              onChange= {setlanguage} 
+              placeholder='Favorite Languages' 
+              isMulti
+              autoFocus
+              isSearchable 
+              required
+              />
             </Form.Field>
           </Form.Group>
 
           <Form.Group >
             <Form.Field width={16}>
               <label>Favorite Genres</label>
-              <Dropdown value = {genre} onChange= {(event) => setgenre(event.target.value)} placeholder='Favorite Genres' fluid selection multiple options={genreOptions} required/>
+              <Select 
+              options = {genreOptions} 
+              onChange= {setgenre} 
+              placeholder='Favorite Genres' 
+              isMulti
+              autoFocus
+              isSearchable 
+              required
+              />
             </Form.Field>
           </Form.Group>
 

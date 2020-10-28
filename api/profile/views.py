@@ -118,7 +118,7 @@ class BanView(RetrieveAPIView):
 
         return Response(response, status=status.HTTP_200_OK)
 
-class watchlistView(RetrieveAPIView): 
+class watchlistView(RetrieveAPIView):
     def put(self, request, *args, **kwargs):
         user_profile = UserProfile.objects.get(username=request.data['username'])
         try:

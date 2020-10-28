@@ -193,7 +193,7 @@ def get_review(user,id,final,gender,from_date,to_date):
 
 
 class Homepage(APIView):
-    def post(self, request):
+    def get(self, request):
             required=['popular','top_rated','now_playing']
             #Tmdb provides maximum of 20 results for each page and we can't send Multiple page requests in single Query so using For loop
             intial_homepage=defaultdict(list)
@@ -268,7 +268,7 @@ def simple_get(url):
         return None
 
 class MovieSearch(APIView):
-    def post(self, request):
+    def get(self, request):
         query=request.GET.get('query', '')
         if len(query) !=0:
             query_list = query.split()

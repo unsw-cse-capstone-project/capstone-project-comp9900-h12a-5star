@@ -3,6 +3,7 @@ from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 from profile.models import UserProfile
 from movie_review.helper import get_movie_details
+from movie_review.models import reviews
 import random
 
 statusCode = status.HTTP_400_BAD_REQUEST
@@ -120,11 +121,23 @@ class BanView(RetrieveAPIView):
 class watchlistView(RetrieveAPIView):
     def put(self, request, *args, **kwargs):
         user_profile = UserProfile.objects.get(username=request.data['username'])
+        try:
+            movie_review = reviews.objects.get(movie__movie_id=request.data['movieID'] , review_user_id=request.data['username'])
+        except Exception:
+            movie_review = reviews()
+            movie_review.movie_id = request.data['movieID']
+            movie_review.review_user_id = request.data['username']
+        print('-----------------########',movie_review)
         if request.data['movieStatus'] and str(request.data['movieID']) not in user_profile.watched:
+            print('yes')
             user_profile.watched.append(request.data['movieID'])
+            movie_review.watched = True
+            movie_review.save()
             message = 'movie watched'
         elif request.data['movieStatus']==False and str(request.data['movieID']) in user_profile.watched:
             user_profile.watched.remove(str(request.data['movieID']))
+            movie_review.watched = False
+            movie_review.save()
             message = 'Movie unwatched'
         else:
             response = {

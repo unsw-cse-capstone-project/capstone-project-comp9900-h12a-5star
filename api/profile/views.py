@@ -102,7 +102,7 @@ class BanView(RetrieveAPIView):
                 'banned':user_profile.banned}}
         return Response(response, status=status.HTTP_200_OK)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs): 
         user_profile = UserProfile.objects.get(username=request.data['username'])
         response = {
             'success': 'true',

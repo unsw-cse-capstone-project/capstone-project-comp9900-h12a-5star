@@ -155,6 +155,7 @@ def get_review(user,id,final,gender,from_date,to_date):
                 final['upvote'].append(i.upvote_count)
                 final['downvote'].append(i.downvote_count)
                 final['follow'].append(i.follow)
+                final['watched'] = i.watched
     else:
         user=[]
         for i in UserProfile.objects.filter(gender=gender):
@@ -172,6 +173,7 @@ def get_review(user,id,final,gender,from_date,to_date):
                     final['upvote'].append(i.upvote_count)
                     final['downvote'].append(i.downvote_count)
                     final['follow'].append(i.follow)
+                    final['watched'] = i.watched
         #final['review_id'].append(i.id)
     #print(final)
     if user == 'Guest':

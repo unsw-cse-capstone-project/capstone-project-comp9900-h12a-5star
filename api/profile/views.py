@@ -54,11 +54,8 @@ class UserProfileView(RetrieveAPIView):
                 user_profile.genres = request.data['genres']
             if 'languages' in request.data.keys():
                 user_profile.languages = request.data['languages']
-            if request.data['profilePic']:
-                new = random.choice(pictures[user_profile.gender])
-                while new == user_profile.profilePic:
-                    new = random.choice(pictures[user_profile.gender])
-                user_profile.profilePic = new
+            if 'profilePic' in request.data.keys():
+                user_profile.profilePic = request.data['profilePic']
             user_profile.save()
             statusCode = status.HTTP_200_OK
             response = {

@@ -113,7 +113,8 @@ class BanView(RetrieveAPIView):
                     'firstname': user.firstname,
                     'lastname': user.lastname,
                     'gender': user.gender,
-                    'profilePic':user.profilePic
+                    'profilePic':user.profilePic,
+                    'username':i
                 })
 
         return Response(response, status=status.HTTP_200_OK)

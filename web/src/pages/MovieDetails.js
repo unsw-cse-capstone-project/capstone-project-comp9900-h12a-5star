@@ -337,7 +337,7 @@ export default class MovieDetails extends Component {
                                                         <Button primary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` }>View Wishlist</Button>
                                                     </Grid.Column>
                                                     <Grid.Column textAlign='center'>
-                                                        <Button primary>Ban</Button>
+                                                        <Button primary>Ban </Button>
                                                     </Grid.Column>
                                                     <Grid.Column textAlign='center'>
                                                         <Button primary>Follow</Button>

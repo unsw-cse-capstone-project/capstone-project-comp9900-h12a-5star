@@ -1,8 +1,6 @@
 from rest_framework import status
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-#from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from profile.models import UserProfile
 from movie_review.helper import get_movie_details
 import random

@@ -102,7 +102,7 @@ export default class SearchGenre extends Component {
 
                 <Container style={{ margin: 20 }}>
 
-                    <Header as='h1'>Search Results by Genre</Header>
+                    <Header as='h1'>Search Results by Movie Genre</Header>
                     <Divider section />
                     <Grid columns='equal'>{columnsGenre}</Grid>
                 </Container>

@@ -158,7 +158,7 @@ export default class MovieDetails extends Component {
             });
             const body = await result.json();
 
-            if (body.response.status_code === 200){
+            if (body.response.statusCode === 200){
             
 
                 window.location.href='/movieDetails';

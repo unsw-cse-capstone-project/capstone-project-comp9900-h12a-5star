@@ -228,13 +228,13 @@ export default class ProfilePage extends Component {
                                     </center>
                                 </Button>
                             }
-                            <Button color={"purple"} onClick={this.handleClick_edit}>
+                            <Button color={"purple"} onClick={event => window.location.href = `/bannedlist/${this.user}`}>
                                 <center>
                                     <br />
                                     <Icon name='remove user' size="big" /> <br /> <br /> Baned User
                                 </center>
                             </Button>
-                            <Button color={"purple"} onClick={this.handleClick_edit}>
+                            <Button color={"purple"} onClick={event => window.location.href = `/watchlist/${this.user}`}>
                                 <center>
                                     <br />
                                     <Icon name='eye' size="big" /> <br /> <br /> Watch list

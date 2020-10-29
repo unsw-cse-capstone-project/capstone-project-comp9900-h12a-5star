@@ -59,7 +59,7 @@ export default class ProfilePage extends Component {
     componentDidMount() {
 
         const requestOptions = {
-            method: 'GET',
+            method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: this.user, reviewerUsername: this.props.match.params.userId })
         };
@@ -103,118 +103,112 @@ export default class ProfilePage extends Component {
             <React.Fragment>
                 
                 <NavBar />
-                <Ref innerRef={this.contextRef}>
                 <Container>
-                
                     <div style={{backgroundImage: `url(${require("../images/profileBackground.jpg")})`, height: 300}}>
                         <br />
                         <br />
                         <br /><br /><br /><br />
                         <center>
                             <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' circular size={"medium"} spaced={"left"}/>
-
                             <br />
-                            
+                            <br />
                             {
-                            
                             (!this.state.edit) ?
-                            <div>
-                            <Header as= "h1">Mathew Wade</Header>
-                            
-                            <Label as='a' color='teal' >
-                                Gender
-                                <Label.Detail>
-                                    <Icon name='man'  />
-                                    Male
-                                </Label.Detail>
-                            </Label>
-                            <br />
-                            <br />
-                            <Label as='a' color='red' >
-                                <Icon name="hashtag" />
-                                Username
-                                <Label.Detail>roko@1234</Label.Detail>
-                            </Label>
-                            <Label as='a' color='red' >
-                                <Icon name="at" />
-                                Email
-                                <Label.Detail>mathew@gmail.com</Label.Detail>
-                            </Label>
-                            <br />
-                            <br />
-                            <Label as='a' color='blue' >
-                                <Icon name="globe" />
-                                Genere Preference
-                                <Label.Detail>Horror</Label.Detail>
-                                <Label.Detail>Action</Label.Detail>
-                            </Label>
-                            <Label as='a' color='blue' >
-                                <Icon name="language" />
-                                Language Preference
-                                <Label.Detail>Hindi</Label.Detail>
-                                <Label.Detail>English</Label.Detail>
-                            </Label>
-                            <br />
+                                (this.state.items.data) &&
+                                <div>
+                                    <Header as= "h1">
+                                        {this.state.items.data.firstname.charAt(0).toUpperCase()+this.state.items.data.firstname.slice(1)+" "+this.state.items.data.lastname.charAt(0).toUpperCase()+this.state.items.data.lastname.slice(1)}
+                                    </Header>
+                                    
+                                    <Label as='a' color='teal' >
+                                        Gender
+                                        <Label.Detail>
+                                            {
+                                                (this.state.items.data.gender === "Male")?
+                                                <Icon name='man'  />
+                                                :
+                                                <Icon name='woman'  />
+                                            }
+                                            {this.state.items.data.gender}
+                                        </Label.Detail>
+                                    </Label>
+                                    <br />
+                                    <br />
+                                    <Label as='a' color='red' >
+                                        <Icon name="hashtag" />
+                                        Username
+                                        <Label.Detail>{this.user}</Label.Detail>
+                                    </Label>
+                                    <Label as='a' color='red' >
+                                        <Icon name="at" />
+                                        Email
+                                        <Label.Detail>placeholder@gmail.com</Label.Detail>
+                                    </Label>
+                                    <br />
+                                    <br />
+                                    <Label as='a' color='blue' >
+                                        <Icon name="globe" />
+                                        Genere Preference
+                                        {
+                                            this.state.items.data.genres.map((item)=>
+                                            <Label.Detail>{item}</Label.Detail>
+                                            )
+                                        }
+                                    </Label>
+                                    <Label as='a' color='blue' >
+                                        <Icon name="language" />
+                                        Language Preference
+                                        {
+                                            this.state.items.data.languages.map((item)=>
+                                            <Label.Detail>{item}</Label.Detail>
+                                            )
+                                        }
+                                    </Label>
+                                    <br />
                                 </div>
                                 :
                                 <div>
                                     <br />
 
-                                    {/* <Grid centered>
-                                        <Grid.Row>
-                                            <Grid.Column>
-                                                First Name:
-                                            </Grid.Column>
-                                            <Grid.Column>
-                                                <Input transparent={this.state.editTransparent} disabled={this.state.editDisabled} placeholder='Mathew'  />
-                                            </Grid.Column>
-                                        </Grid.Row>
-                                    </Grid> */}
-
+                                    {
                                     <Form>
-                                    <Form.Field width={5}>
-                                        <label>Username</label>
-                                        <input defaultValue='roko1234' disabled required/>
+                                        <Form.Field width={5}>
+                                            <label>Username</label>
+                                            <input defaultValue='roko1234' disabled required/>
                                         </Form.Field>
                                         <Form.Field width={5}>
-                                        <label>Email</label>
-                                        <input defaultValue='mathew@gmail.com' disabled required/>
+                                            <label>Email</label>
+                                            <input defaultValue='mathew@gmail.com' disabled required/>
                                         </Form.Field>
                                         <Form.Field width={5}>
-                                        <label>First Name</label>
-                                        <input defaultValue='Mathew' required />
+                                            <label>First Name</label>
+                                            <input defaultValue='Mathew' required />
                                         </Form.Field>
                                         <Form.Field width={5}>
-                                        <label>Last Name</label>
-                                        <input defaultValue='Wade' required/>
+                                            <label>Last Name</label>
+                                            <input defaultValue='Wade' required/>
                                         </Form.Field>
                                         
                                         <Form.Field width={5}>
-                                        <label>Gender</label>
+                                            <label>Gender</label>
                                             <Dropdown defaultValue={this.genderOptions[0]} placeholder={this.genderOptions[0].text} fluid selection options={this.genderOptions} required/>
                                         </Form.Field>
                                         <Form.Field width={5}>
-                                        <label>Favorite Languages</label>
-                                        <Dropdown  defaultValue={[this.languageOptions[1].value, this.languageOptions[0].value]} placeholder='Favorite Languages' fluid selection multiple options={this.languageOptions} required/>
+                                            <label>Favorite Languages</label>
+                                            <Dropdown  defaultValue={[this.languageOptions[1].value, this.languageOptions[0].value]} placeholder='Favorite Languages' fluid selection multiple options={this.languageOptions} required/>
                                         </Form.Field>
                                         <Form.Field width={5}>
-                                        <label>Favorite Genere</label>
-                                        <Dropdown  defaultValue={[this.genreOptions[1].value, this.genreOptions[0].value]} placeholder='Favorite Languages' fluid selection multiple options={this.genreOptions} required/>
+                                            <label>Favorite Genere</label>
+                                            <Dropdown  defaultValue={[this.genreOptions[1].value, this.genreOptions[0].value]} placeholder='Favorite Languages' fluid selection multiple options={this.genreOptions} required/>
                                         </Form.Field>
                                         
                                         <Button primary type='submit'><Icon name="save" />Save Changes</Button>
                                     </Form>
-                                     
-                            {/* <br />
-                            <Input transparent={this.state.editTransparent} disabled={this.state.editDisabled} placeholder='Mathew'  />
-                            <br />
-                            <Input transparent={this.state.editTransparent} disabled={this.state.editDisabled} placeholder='Mathew'  />
-                                 */}
-                                 </div>
+                                    }
+                                </div>
                         }
                         
                                 
-                                <br />
                                 <br />
                                 <Divider />
                             {
@@ -252,7 +246,6 @@ export default class ProfilePage extends Component {
                     </div>
                     
                 </Container>
-                </Ref>
                 
             </React.Fragment>
         );

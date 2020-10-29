@@ -12,28 +12,28 @@ export default class ProfilePage extends Component {
     ]
     
     genreOptions = [
-        { key: 'action', text: 'Action', value: 'action' },
-        { key: 'adventure', text: 'Adventure', value: 'adventure' },
-        { key: 'comedy', text: 'Comedy', value: 'comedy' },
-        { key: 'crime', text: 'Crime', value: 'crime' },
-        { key: 'drama', text: 'Drama', value: 'drama' },
-        { key: 'family', text: 'Family', value: 'family' },
-        { key: 'fantasy', text: 'Fantasy', value: 'fantasy' },
-        { key: 'horror', text: 'Horror', value: 'horror' },
-        { key: 'mystery', text: 'Mystery', value: 'mystery' },
-        { key: 'romance', text: 'Romance', value: 'romance' },
-        { key: 'sciencefiction', text: 'Science Fiction', value: 'sciencefiction' },
-        { key: 'thriller', text: 'Thriller', value: 'thriller' },
+        { key: 'Action', text: 'Action', value: 'Action' },
+        { key: 'Adventure', text: 'Adventure', value: 'Adventure' },
+        { key: 'Comedy', text: 'Comedy', value: 'Comedy' },
+        { key: 'Crime', text: 'Crime', value: 'Crime' },
+        { key: 'Crama', text: 'Drama', value: 'Drama' },
+        { key: 'Family', text: 'Family', value: 'Family' },
+        { key: 'Fantasy', text: 'Fantasy', value: 'Fantasy' },
+        { key: 'Horror', text: 'Horror', value: 'Horror' },
+        { key: 'Mystery', text: 'Mystery', value: 'Mystery' },
+        { key: 'Romance', text: 'Romance', value: 'Romance' },
+        { key: 'Sciencefiction', text: 'Science Fiction', value: 'Sciencefiction' },
+        { key: 'Thriller', text: 'Thriller', value: 'Thriller' },
         
     ]
 
     languageOptions = [
-        { key: 'english', text: 'English', value: 'english' },
-        { key: 'gujrati', text: 'Gujrati', value: 'gujrati' },
-        { key: 'hindi', text: 'Hindi', value: 'hindi' },
-        { key: 'kannada', text: 'Kannada', value: 'kannada' },
-        { key: 'marathi', text: 'Marathi', value: 'marathi' },
-        { key: 'chinese', text: 'Mandarin Chinese', value: 'chinese' },
+        { key: 'English', text: 'English', value: 'English' },
+        { key: 'Gujrati', text: 'Gujrati', value: 'Gujrati' },
+        { key: 'Hindi', text: 'Hindi', value: 'Hindi' },
+        { key: 'Kannada', text: 'Kannada', value: 'Kannada' },
+        { key: 'Marathi', text: 'Marathi', value: 'Marathi' },
+        { key: 'Mandarin Chinese', text: 'Mandarin Chinese', value: 'Mandarin Chinese' },
         { key: 'punjabi', text: 'Punjabi', value: 'punjabi' },
         { key: 'spanish', text: 'Spanish', value: 'spanish' },
         { key: 'telugu', text: 'Telugu', value: 'telegu' },
@@ -174,32 +174,32 @@ export default class ProfilePage extends Component {
                                     <Form>
                                         <Form.Field width={5}>
                                             <label>Username</label>
-                                            <input defaultValue='roko1234' disabled required/>
+                                            <input defaultValue={this.user} disabled required/>
                                         </Form.Field>
                                         <Form.Field width={5}>
                                             <label>Email</label>
-                                            <input defaultValue='mathew@gmail.com' disabled required/>
+                                            <input defaultValue='placeholder@gmail.com' disabled required/>
                                         </Form.Field>
                                         <Form.Field width={5}>
                                             <label>First Name</label>
-                                            <input defaultValue='Mathew' required />
+                                            <input defaultValue={this.state.items.data.firstname} required />
                                         </Form.Field>
                                         <Form.Field width={5}>
                                             <label>Last Name</label>
-                                            <input defaultValue='Wade' required/>
+                                            <input defaultValue={this.state.items.data.lastname} required/>
                                         </Form.Field>
                                         
                                         <Form.Field width={5}>
                                             <label>Gender</label>
-                                            <Dropdown defaultValue={this.genderOptions[0]} placeholder={this.genderOptions[0].text} fluid selection options={this.genderOptions} required/>
+                                            <Dropdown defaultValue={this.state.items.data.gender} placeholder={this.state.items.data.gender} fluid selection options={this.genderOptions} required/>
                                         </Form.Field>
                                         <Form.Field width={5}>
                                             <label>Favorite Languages</label>
-                                            <Dropdown  defaultValue={[this.languageOptions[1].value, this.languageOptions[0].value]} placeholder='Favorite Languages' fluid selection multiple options={this.languageOptions} required/>
+                                            <Dropdown  defaultValue={this.state.items.data.languages} placeholder='Favorite Languages' fluid selection multiple options={this.languageOptions} required/>
                                         </Form.Field>
                                         <Form.Field width={5}>
-                                            <label>Favorite Genere</label>
-                                            <Dropdown  defaultValue={[this.genreOptions[1].value, this.genreOptions[0].value]} placeholder='Favorite Languages' fluid selection multiple options={this.genreOptions} required/>
+                                            <label>Favorite Genere </label>
+                                            <Dropdown  defaultValue={this.state.items.data.genres} placeholder='Favorite Genres' fluid selection multiple options={this.genreOptions} required/>
                                         </Form.Field>
                                         
                                         <Button primary type='submit'><Icon name="save" />Save Changes</Button>

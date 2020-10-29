@@ -48,7 +48,13 @@ export default class ProfilePage extends Component {
             items: [],
             editTransparent: true,
             editDisabled: true,
-            edit: false
+            edit: false,
+            firstName: "",
+            lastName: "",
+            gender : "",
+            languages : [],
+            generes : [],
+            profilePic : "" 
         };
         if (window.sessionStorage.getItem('username') === null){
             window.sessionStorage.setItem('username', 'guest');
@@ -61,7 +67,7 @@ export default class ProfilePage extends Component {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: this.user, reviewerUsername: this.props.match.params.userId })
+            body: JSON.stringify({ username: this.user })
         };
 
         // const username = "roko1234"
@@ -72,7 +78,13 @@ export default class ProfilePage extends Component {
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        items: result
+                        items: result,
+                        firstName: result.data.firstname,
+                        lastName: result.data.lastname,
+                        gender : result.data.gender,
+                        languages: result.data.languages,
+                        generes: result.data.genres,
+                        profilePic: result.data.profilePic
                     });
                 },
                 (error) => {
@@ -95,7 +107,43 @@ export default class ProfilePage extends Component {
         this.setState({editDisabled: true})
     }
 
-    // contextRef = createRef()
+    handle_edit_profile= () =>{
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: this.user, 
+                                    firstname: this.state.firstName, 
+                                    lastname: this.state.lastName, 
+                                    gender: this.state.gender,
+                                    genres: this.state.generes,
+                                    languages: this.state.languages })
+        }
+
+        fetch("http://127.0.0.1:8000/api/profile/"+{"username":this.user}, requestOptions)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        items: result,
+                        firstName: result.data.firstname,
+                        lastName: result.data.lastname,
+                        gender : result.data.gender,
+                        languages: result.data.languages,
+                        generes: result.data.genres,
+                        profilePic: result.data.profilePic
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+
+            window.location.reload(false)
+    }
 
     render() {
 
@@ -109,7 +157,7 @@ export default class ProfilePage extends Component {
                         <br />
                         <br /><br /><br /><br />
                         <center>
-                            <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' circular size={"medium"} spaced={"left"}/>
+                            <Image src={this.state.profilePic} circular size={"medium"} spaced={"left"}/>
                             <br />
                             <br />
                             {
@@ -124,12 +172,12 @@ export default class ProfilePage extends Component {
                                         Gender
                                         <Label.Detail>
                                             {
-                                                (this.state.items.data.gender === "Male")?
+                                                (this.state.items.data.gender === "male")?
                                                 <Icon name='man'  />
                                                 :
                                                 <Icon name='woman'  />
                                             }
-                                            {this.state.items.data.gender}
+                                            {this.state.items.data.gender.charAt(0).toUpperCase()+this.state.items.data.gender.slice(1)}
                                         </Label.Detail>
                                     </Label>
                                     <br />
@@ -182,27 +230,27 @@ export default class ProfilePage extends Component {
                                         </Form.Field>
                                         <Form.Field width={5}>
                                             <label>First Name</label>
-                                            <input defaultValue={this.state.items.data.firstname} required />
+                                            <input defaultValue={this.state.items.data.firstname} onChange={(event) =>  this.setState({firstName : event.target.value})} required />
                                         </Form.Field>
                                         <Form.Field width={5}>
                                             <label>Last Name</label>
-                                            <input defaultValue={this.state.items.data.lastname} required/>
+                                            <input defaultValue={this.state.items.data.lastname} onChange={(event) =>  this.setState({lastName : event.target.value})} required/>
                                         </Form.Field>
                                         
                                         <Form.Field width={5}>
                                             <label>Gender</label>
-                                            <Dropdown defaultValue={this.state.items.data.gender} placeholder={this.state.items.data.gender} fluid selection options={this.genderOptions} required/>
+                                            <Dropdown defaultValue={this.state.items.data.gender} onChange={(event, {value}) =>  this.setState({gender : value})} placeholder={this.state.items.data.gender} fluid selection options={this.genderOptions} required/>
                                         </Form.Field>
                                         <Form.Field width={5}>
                                             <label>Favorite Languages</label>
-                                            <Dropdown  defaultValue={this.state.items.data.languages} placeholder='Favorite Languages' fluid selection multiple options={this.languageOptions} required/>
+                                            <Dropdown  defaultValue={this.state.items.data.languages} onChange={(event, {value}) =>  this.setState({languages : value})} placeholder='Favorite Languages' fluid selection multiple options={this.languageOptions} required/>
                                         </Form.Field>
                                         <Form.Field width={5}>
-                                            <label>Favorite Genere </label>
-                                            <Dropdown  defaultValue={this.state.items.data.genres} placeholder='Favorite Genres' fluid selection multiple options={this.genreOptions} required/>
+                                            <label>Favorite Genere</label>
+                                            <Dropdown  defaultValue={this.state.items.data.genres} onChange={(event, {value}) =>  this.setState({generes : value})} placeholder='Favorite Genres' fluid selection multiple options={this.genreOptions} required/>
                                         </Form.Field>
                                         
-                                        <Button primary type='submit'><Icon name="save" />Save Changes</Button>
+                                        <Button primary type='submit' onClick={this.handle_edit_profile}><Icon name="save" />Save Changes</Button>
                                     </Form>
                                     }
                                 </div>

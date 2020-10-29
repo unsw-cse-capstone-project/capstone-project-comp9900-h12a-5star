@@ -22,7 +22,6 @@ import {
     }
 
     render() {
-      console.log('I was triggered during render')
       const { active } = this.state
       
       const content = (

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
-import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message} from 'semantic-ui-react'
+import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed} from 'semantic-ui-react'
 import NavBar from '../components/NavBar';
 
 export default class MovieDetails extends Component {
@@ -12,6 +12,7 @@ export default class MovieDetails extends Component {
             error: null,
             isLoaded: false,
             items: [],
+            open: false,
             review: "",
             rating: "0"
             
@@ -106,6 +107,9 @@ export default class MovieDetails extends Component {
             this.state.items.wishlist = !this.state.items.wishlist
     }
 
+    setOpen(val){
+        this.setState({open: val})
+    }
     handle_click_ban_user = (val) =>{
 
   
@@ -206,9 +210,10 @@ export default class MovieDetails extends Component {
                             <Grid.Row >
                                 <Grid.Column >
                                     <Header as='h1'>
-                                        {this.state.items.title} 
+                                        {this.state.items.title+"  "}
                                 </Header>
                                 <Icon name='star' color={"yellow"}/> {this.state.items.imdb_rating} 
+                                
                                 </Grid.Column>
                                     
                                 <Grid.Column textAlign={"right"} >
@@ -222,8 +227,34 @@ export default class MovieDetails extends Component {
 
                                 
                                 <Grid.Column >
+                                <Modal
+                                            basic
+                                            onClose={() => this.setOpen(false)}
+                                            onOpen={() => this.setOpen(true)}
+                                            open={this.state.open}
+                                            size='small'
+                                            trigger={<Button color="youtube" icon="youtube" ><Icon name= "youtube" />Watch Trailer</Button> }
+                                            >
+                                            <Modal.Content>
+                                            {
+                                            (this.state.items.trailers) &&
+                                            <Embed
+                                                active={this.state.open}
+                                                id={this.state.items.trailers[0].split("=")[1]}
+                                                placeholder='https://react.semantic-ui.com/images/image-16by9.png'
+                                                source='youtube'
+                                            />
+                                            }
+                                            </Modal.Content>
+                                            <Modal.Actions>
+                                                <Button  color='red' inverted onClick={() => this.setOpen(false)}>
+                                                <Icon name='remove' /> Close
+                                                </Button>
+                                            </Modal.Actions>
+                                            </Modal>
                                     <List >
-                                        
+                                    
+                                            
                                         <List.Item as='a'>
                                             <Icon name='calendar alternate outline' />
                                             <List.Content>
@@ -308,12 +339,40 @@ export default class MovieDetails extends Component {
                                                 </List.Description>
                                             </List.Content>
                                         </List.Item>
+                                        <List.Item>
+                                            
+                                        {/* <Modal
+                                            basic
+                                            onClose={() => this.setOpen(false)}
+                                            onOpen={() => this.setOpen(true)}
+                                            open={this.state.open}
+                                            size='small'
+                                            trigger={<Button primary><Icon name= "video camera" />Watch Trailer</Button>}
+                                            >
+                                            <Modal.Content>
+                                            {
+                                            (this.state.items.trailers) &&
+                                            <Embed
+                                                active={this.state.open}
+                                                id={this.state.items.trailers[0].split("=")[1]}
+                                                placeholder='https://react.semantic-ui.com/images/image-16by9.png'
+                                                source='youtube'
+                                            />
+                                            }
+                                            </Modal.Content>
+                                            <Modal.Actions>
+                                                <Button  color='red' inverted onClick={() => this.setOpen(false)}>
+                                                <Icon name='remove' /> Close
+                                                </Button>
+                                            </Modal.Actions>
+                                            </Modal> */}
+                                        </List.Item>
                                     </List>
                                     
                                 </Grid.Column>
                                 <Grid.Column width={4}>
-                                    {}
                                     <Image src={`${this.state.items.poster}`} />
+                                    
                                 </Grid.Column>
                             </Grid.Row>
                             <Grid.Row>

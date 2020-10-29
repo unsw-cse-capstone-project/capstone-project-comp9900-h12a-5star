@@ -1,10 +1,9 @@
 from rest_framework import status
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-#from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from profile.models import UserProfile
 from movie_review.helper import get_movie_details
+from movie_review.models import reviews
 import random
 
 statusCode = status.HTTP_400_BAD_REQUEST
@@ -13,13 +12,14 @@ RESPONSE = {
     'status code': status.HTTP_400_BAD_REQUEST,
     'message': 'User does not exists',
     }
-pictures = ['https://react.semantic-ui.com/images/avatar/small/matt.jpg',
-'https://react.semantic-ui.com/images/avatar/small/elliot.jpg',
-'https://react.semantic-ui.com/images/avatar/small/jenny.jpg',
-'https://react.semantic-ui.com/images/avatar/small/joe.jpg']
+
+pictures = {'Female': ['https://react.semantic-ui.com/images/avatar/small/elliot.jpg',
+'https://react.semantic-ui.com/images/avatar/small/jenny.jpg'],
+'Male': ['https://react.semantic-ui.com/images/avatar/small/matt.jpg',
+'https://react.semantic-ui.com/images/avatar/small/joe.jpg']}
 
 class UserProfileView(RetrieveAPIView):
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         try:
             user_profile = UserProfile.objects.get(username=request.data['username'])
             statusCode = status.HTTP_200_OK
@@ -55,11 +55,8 @@ class UserProfileView(RetrieveAPIView):
                 user_profile.genres = request.data['genres']
             if 'languages' in request.data.keys():
                 user_profile.languages = request.data['languages']
-            if request.data['profilePic']:
-                new = random.choice(pictures)
-                while new == user_profile.profilePic:
-                    new = random.choice(pictures)
-                user_profile.profilePic = new
+            if 'profilePic' in request.data.keys():
+                user_profile.profilePic = request.data['profilePic']
             user_profile.save()
             statusCode = status.HTTP_200_OK
             response = {
@@ -105,7 +102,7 @@ class BanView(RetrieveAPIView):
                 'banned':user_profile.banned}}
         return Response(response, status=status.HTTP_200_OK)
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs): 
         user_profile = UserProfile.objects.get(username=request.data['username'])
         response = {
             'success': 'true',
@@ -116,7 +113,8 @@ class BanView(RetrieveAPIView):
                     'firstname': user.firstname,
                     'lastname': user.lastname,
                     'gender': user.gender,
-                    'profilePic':user.profilePic
+                    'profilePic':user.profilePic,
+                    'username':i
                 })
 
         return Response(response, status=status.HTTP_200_OK)
@@ -124,11 +122,23 @@ class BanView(RetrieveAPIView):
 class watchlistView(RetrieveAPIView):
     def put(self, request, *args, **kwargs):
         user_profile = UserProfile.objects.get(username=request.data['username'])
+        try:
+            movie_review = reviews.objects.get(movie__movie_id=request.data['movieID'] , review_user_id=request.data['username'])
+        except Exception:
+            movie_review = reviews()
+            movie_review.movie_id = request.data['movieID']
+            movie_review.review_user_id = request.data['username']
+        print('-----------------########',movie_review)
         if request.data['movieStatus'] and str(request.data['movieID']) not in user_profile.watched:
+            print('yes')
             user_profile.watched.append(request.data['movieID'])
+            movie_review.watched = True
+            movie_review.save()
             message = 'movie watched'
         elif request.data['movieStatus']==False and str(request.data['movieID']) in user_profile.watched:
             user_profile.watched.remove(str(request.data['movieID']))
+            movie_review.watched = False
+            movie_review.save()
             message = 'Movie unwatched'
         else:
             response = {
@@ -148,7 +158,7 @@ class watchlistView(RetrieveAPIView):
                 'watchlist':list(map(int, list(user_profile.watched)))}}
         return Response(response, status=status.HTTP_200_OK)
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         user_profile = UserProfile.objects.get(username=request.data['username'])
         response = {
             'success': 'true',

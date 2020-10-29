@@ -30,11 +30,11 @@ const Login = () => {
                 window.location.href='/welcome';
             }
             else{
-                setError(body.error);
+                alert(body.response);
             }
         }
         else{
-            setError('Either username or password not filled');
+            alert('Either username or password not filled');
         }
 
 

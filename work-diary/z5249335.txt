@@ -15,4 +15,7 @@ Week 5:
      
 Week 6:
     Attended Retrospective A meeting and Completed Sprint taks and Updated JIRA with tasks completed . Added Browse API , which allows user to browse movies based on Genre , Director . Result obtained is Sorted with Increasing order of Rating and If any Discrepancy exists (Having Same Rating) then Title based Sorting is used. Search results consists of Genre , Name and Description Search.
+    
+ Week 7 :
+     Started working on api to sort user reviews based on Gender of User and specific time period (Review  Created)
      

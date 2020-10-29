@@ -7,19 +7,30 @@ export default class MovieDetails extends Component {
 
     constructor() {
         super();
+        
         this.state = {
             error: null,
             isLoaded: false,
             items: [],
-            open: false
+            open: false,
+            review: "",
+            rating: "0"
+            
         };
+        this.handleReview = this.handleReview.bind(this);
         if (window.sessionStorage.getItem('username') === null){
             window.sessionStorage.setItem('username', 'guest');
+            
         }
         this.user = window.sessionStorage.getItem('username')
+        
     }
 
     componentDidMount() {
+        if(window.sessionStorage.getItem('username')==="guest"){
+
+            alert("You are not Signed in! Sign up to tell us what do you think about this movie.")
+        }
 
         const requestOptions = {
             method: 'POST',
@@ -65,6 +76,18 @@ export default class MovieDetails extends Component {
     }
     handleClick_seen = () =>{
         this.setState((prevState) => ({ active_seen: !prevState.active_seen }))
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
+            body: JSON.stringify({ username: this.user, movieID: this.props.match.params.movieId, movieStatus: !this.state.items.watched})
+        };
+        fetch("http://127.0.0.1:8000/api/watchMovie/", requestOptions)
+
+        this.state.items.watched = !this.state.items.watched
+
+
+
     }
     handleClick_wishlist = () =>{
         this.setState((prevState) => ({ active_wishlist: !prevState.active_wishlist }))
@@ -80,13 +103,91 @@ export default class MovieDetails extends Component {
 
         fetch("http://127.0.0.1:8000/api/addWishlist/", requestOptions)
             
+           
             this.state.items.wishlist = !this.state.items.wishlist
     }
 
     setOpen(val){
         this.setState({open: val})
     }
+    handle_click_ban_user = (val) =>{
+
+  
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
+            body: JSON.stringify({ bannedUsername : val, username:this.user , banStatus : true})
+        };
+
+        fetch("http://127.0.0.1:8000/api/banUsername", requestOptions)
+
+       // window.location.href=`/bannedlist/${window.sessionStorage.getItem('username')}`;
+       alert("User Banned Successfully");
+       window.location.reload(false);
+       
+
+
+   
+
+
+        
+
+    }
+    handleReview = (event) => {   
+       this.state.review = event.target.value;
+
+       console.log("Review: "+this.state.review);
+       }
+     handleRate = (e, { rating, maxRating }) => {
+     this.state.rating = rating;
+    }
+    handle_adding_review = async() => {
+        const movie = this.props.match.params.movieId;
+        const user = this.user
+        const review = this.state.review;
+        const rating = this.state.rating;
+        if (user!=="guest"){
+
+            const result = await fetch(`http://127.0.0.1:8000/api/addreview`, {
+                method: 'post',
+                body: JSON.stringify({movie,user,review,rating}),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+
+
+
+            });
+            const body = await result.json();
+
+            if (body.response.statusCode === 200){
+            
+
+                window.location.href='/movieDetails';
+            }
+        }
+        else{
+            window.location.href='/movieDetails';
+        }
+
+        
+
+
+    
+
+        
+
+        /*console.log("EMail: " + this.state.review);
+        console.log("Password: " + this.state.password);*/
+
+    }
+
+
     render() {
+
+
 
         const { active_like } = this.state
         const { active_seen } = this.state
@@ -99,9 +200,11 @@ export default class MovieDetails extends Component {
           }
 
         return (
+            
             <React.Fragment>
                 < NavBar />
                 <Container >
+                
                     <Segment > 
                         <Grid columns='equal'   divided={'vertically'} padded style={{margin : 20}}>
                             <Grid.Row >
@@ -293,7 +396,7 @@ export default class MovieDetails extends Component {
                                                         <Button primary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` }>View Wishlist</Button>
                                                     </Grid.Column>
                                                     <Grid.Column textAlign='center'>
-                                                        <Button primary>Ban</Button>
+                                                        <Button value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])}primary>Ban</Button>
                                                     </Grid.Column>
                                                     <Grid.Column textAlign='center'>
                                                         <Button primary>Follow</Button>
@@ -318,12 +421,17 @@ export default class MovieDetails extends Component {
                                 <div></div>
                             }
 
-                            <Form reply>
-                                How was this Movie?  <Rating icon='star' defaultRating={0} maxRating={5}/>
-                                <Form.TextArea />
-
-                                <Button content='Add Reply' labelPosition='left' icon='edit' primary />
+<Form reply>
+                                How was this Movie?  <Rating  disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} onRate={this.handleRate} icon='star' defaultRating={0} maxRating={5}/>
+                                <Form> 
+                                    <textarea  onChange={(event) => this.handleReview(event)}  placeholder='What do you think about the movie?' disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>
+                                <input  value={this.state.review}/>
+                            
                             </Form>
+
+                                <Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} onClick={this.handle_adding_review} content='Add Reply' labelPosition='left' icon='edit' primary />
+                            </Form>
+                            
                         </Comment.Group>
                                 </Grid.Column>
                             </Grid.Row>

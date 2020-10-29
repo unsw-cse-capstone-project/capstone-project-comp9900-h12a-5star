@@ -20,6 +20,7 @@ from requests.exceptions import RequestException
 from contextlib import closing
 from bs4 import BeautifulSoup
 from datetime import datetime
+from datetime import date
 
 '''
 Json input format for user registration. Do not change genres and languages inside profile
@@ -119,7 +120,7 @@ def searchpage(b):
                  #return JsonResponse(json.loads(search_static),safe=False)
 
 
-def get_review(user,id,final):
+def get_review(user,id,final,gender,from_date,to_date):
     final['review_id']=[]
     final['review']=[]
     final['user']=[]
@@ -133,17 +134,46 @@ def get_review(user,id,final):
     final['downvote']=[]
     final['follow']=[]
     #final['review_id']=[]
-    for i in reviews.objects.filter(movie__movie_id=id):
-        if i.review != "":
-           final['review_id'].append(i.id)
-           final['review'].append(i.review)
-           final['user'].append(i.review_user_id)
-           final['rating'].append(i.rating)
-           final['time'].append(i.review_time)
-           final['date'].append(i.review_date)
-           final['upvote'].append(i.upvote_count)
-           final['downvote'].append(i.downvote_count)
-           final['follow'].append(i.follow)
+    if from_date == '' and to_date == '':
+        from_date='1900-03-01'
+        to_date=date.today().strftime("%Y-%m-%d")
+    elif from_date == '':
+        from_date='1900-03-01'
+    elif to_date == '':
+        to_date=date.today().strftime("%Y-%m-%d")
+    else:
+        pass
+    if len(gender) == 0:
+        for i in reviews.objects.filter(movie__movie_id=id,review_date__lte=to_date,review_date__gt=from_date):
+            if i.review != "":
+                final['review_id'].append(i.id)
+                final['review'].append(i.review)
+                final['user'].append(i.review_user_id)
+                final['rating'].append(i.rating)
+                final['time'].append(i.review_time)
+                final['date'].append(i.review_date)
+                final['upvote'].append(i.upvote_count)
+                final['downvote'].append(i.downvote_count)
+                final['follow'].append(i.follow)
+                final['watched'] = i.watched
+    else:
+        user=[]
+        for i in UserProfile.objects.filter(gender=gender):
+            if i.username != '':
+                user.append(i.username)
+        for j in user:
+            for i in reviews.objects.filter( movie__movie_id=id,review_user_id=j,review_date__lte=to_date,review_date__gt=from_date):
+                if i.review != "":
+                    final['review_id'].append(i.id)
+                    final['review'].append(i.review)
+                    final['user'].append(i.review_user_id)
+                    final['rating'].append(i.rating)
+                    final['time'].append(i.review_time)
+                    final['date'].append(i.review_date)
+                    final['upvote'].append(i.upvote_count)
+                    final['downvote'].append(i.downvote_count)
+                    final['follow'].append(i.follow)
+                    final['watched'] = i.watched
         #final['review_id'].append(i.id)
     #print(final)
     if user == 'Guest':
@@ -372,7 +402,19 @@ class MovieDetails(APIView):
                         movie_details['trailers'].append(None)
             if not(movie_details['teasers']):
                         movie_details['teasers'].append(None)
-            reviews = get_review(user, id,movie_details)
+            review_gender=''
+            from_date=''
+            to_date=''
+            for i in request.data.keys():
+                if i == 'gender_sort':
+                        review_gender +=request.data['gender_sort']
+                elif i == 'from_date':
+                       from_date += request.data['from_date']
+                elif i == 'to_date':
+                       to_date += request.data['to_date']
+                else:
+                    continue
+            reviews = get_review(user, id,movie_details,review_gender,from_date,to_date)
             #if user == 'Guest':
             details_page = json.dumps(reviews,default=str)
             return JsonResponse(json.loads(details_page), safe=False)

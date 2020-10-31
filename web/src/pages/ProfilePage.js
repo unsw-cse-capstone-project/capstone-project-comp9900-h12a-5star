@@ -190,7 +190,7 @@ export default class ProfilePage extends Component {
                                     <Label as='a' color='red' >
                                         <Icon name="at" />
                                         Email
-                                        <Label.Detail>placeholder@gmail.com</Label.Detail>
+                                        <Label.Detail>{this.state.items.data.email}</Label.Detail>
                                     </Label>
                                     <br />
                                     <br />

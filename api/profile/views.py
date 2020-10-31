@@ -40,7 +40,7 @@ class UserProfileView(RetrieveAPIView):
                 }}
         except Exception as e:
             RESPONSE['error']= str(e)
-            return Response(RESPONSE, status=statusCode)
+            return Response(RESPONSE, status=status.HTTP_400_BAD_REQUEST)
         return Response(response, status=statusCode)
 
     def put(self, request, *args, **kwargs):
@@ -131,9 +131,9 @@ class watchlistView(RetrieveAPIView):
             movie_review = reviews()
             movie_review.movie_id = request.data['movieID']
             movie_review.review_user_id = request.data['username']
-        print('-----------------########',movie_review)
+        #print('-----------------########',movie_review)
         if request.data['movieStatus'] and str(request.data['movieID']) not in user_profile.watched:
-            print('yes')
+            #print('yes')
             user_profile.watched.append(request.data['movieID'])
             movie_review.watched = True
             movie_review.save()

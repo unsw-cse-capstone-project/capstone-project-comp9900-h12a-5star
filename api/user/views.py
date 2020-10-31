@@ -6,7 +6,6 @@ from user.serializers import UserRegistrationSerializer
 from user.serializers import UserLoginSerializer
 from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
-from profile.models import UserProfile
 from movie_review.models import movies,reviews
 import requests
 from collections import defaultdict

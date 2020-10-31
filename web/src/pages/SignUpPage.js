@@ -2,38 +2,14 @@ import React, { Component } from 'react';
 import { Grid, Form, Segment,  Button, Dropdown} from 'semantic-ui-react'
 import NavBar from '../components/NavBar';
 import {useState} from 'react';
-import { Multiselect } from 'multiselect-react-dropdown';
-import makeAnimated from 'react-select/animated';
 import Select from 'react-select';
 
+
 const SignUpPage = () => {
-  
-
-
   const genderOptions = [
       {  label:'Male' ,value: 'Male'},
       { label:'Female', value: 'Female'},
     ]
-  
-  
-  
-
-  // var obj = {
-  //   "email":"kar@gmail.com",
-  //   "password":"karan",
-  //   "genre":["Horror"],
-  //   "language":["Chinlish"],
-  //   "profile": 
-  //       {
-  //           "firstname":"kar",
-  //           "lastname":"sin",
-  //           "username":"kar",
-  //           "gender":"Male",
-  //           "genres":"",
-  //           "languages":"English"
-  //       }
-  //     };
-
   const languageOptions = [
     {  label: 'English', value: 'english' },
     {  label: 'Gujrati', value: 'gujrati' },
@@ -72,39 +48,34 @@ const SignUpPage = () => {
   const [genre, setgenre] = useState([]);
   const [language, setlanguage] = useState([]);
   const [error, setError] = useState('');
-
-  // gender=setgender
+  const genreSelected=[]
+  const languageSelected=[]
   
+  if (genre){
 
-  
-
-  // handleDropdownChange = (event) => {
-  //   this.setState({
-  //     [event.target.name]: event.target.value
-  //   })
-  // }
-  
-  const checkSignUp = async () => {
-    
-    const genreSelected=[]
-    const languageSelected=[]
     for (var i=0; i<genre.length;i++){
      
       genreSelected.push(genre[i].value)
     }
-    console.log(genreSelected)
+    
+  }
+  if (language){
     for (var i=0; i<language.length;i++){
-      // console.log(language[i].value)
+      
       languageSelected.push(language[i].value)
     }
-    console.log(languageSelected)
-    const genderSelected=gender.value
-    console.log(genderSelected)
-    var obj = {"email": email, "password": password, "genre": genreSelected, "language": languageSelected,
+  }
+  
+  const genderSelected=gender.value
+  
+  var obj = {"email": email, "password": password, "genre": genreSelected, "language": languageSelected,
               "profile": {"firstname": firstname, "lastname": lastname, "username": username,
             "gender": genderSelected, "genres": "", "languages":"English"}};
-    console.log(obj)
-    if (email !== '' & password !== ''){
+  
+  const checkSignUp = async () => {
+    
+    if (email !== '' & password !== '' & genderSelected !== '' & languageSelected !== [] &
+    firstname !== '' & lastname !== '' & username !== '' & genreSelected !== []){
 
         const result = await fetch(`http://127.0.0.1:8000/api/signup`, {
             method: 'post',
@@ -113,33 +84,23 @@ const SignUpPage = () => {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             }
-
-
-
         });
         const body = await result.json();
 
         if (body.status_code === 200){
-            // window.sessionStorage.setItem('username', email);
 
             window.location.href='/login';
         }
         else{
-            window.location.href='/login'
+            setError(body.error);
         }
     }
     else{
-        setError('Either username or password not filled');
+        setError('Check all fields are filled');
     }
-
-
 };
 
 return(
-
-
-
-  
   <>
   <NavBar/>
   <div style={{ backgroundImage: `url(${require("../images/loginsignup.jpg")})` }}>
@@ -148,36 +109,32 @@ return(
       <Grid.Column width={5}></Grid.Column>
       <Grid.Column width={5} stretched>
 
-      <Segment  inverted style={{margin: 15 }}>
+      <Segment  style={{backgroundColor:'black', margin: 15 }}>
       
-
-
-        <h1 style={{textAlign:"center"}}>Sign Up</h1>
-        <Form inverted>
+        <h1 style={{textAlign:"center", color:"white"}}>Sign Up</h1>
+        <Form >
           <Form.Group >
             <Form.Field width={16}>
-              <label>First Name</label>
-              <input value = {firstname} onChange= {(event) => setfirstname(event.target.value)} placeholder='First Name' required />
+              <label style={{color:"white"}}>First Name</label>
+              <input value = {firstname} onChange= {(event) => setfirstname(event.target.value)}  required />
             </Form.Field>
           </Form.Group>
 
           <Form.Group >
             <Form.Field width={16}>
-              <label>Last Name</label>
-              <input value = {lastname} onChange= {(event) => setlastname(event.target.value)} placeholder='Last Name' required/>
+              <label style={{color:"white"}}>Last Name</label>
+              <input value = {lastname} onChange= {(event) => setlastname(event.target.value)}  required/>
             </Form.Field>
           </Form.Group>
 
           <Form.Group >
             <Form.Field width={16}>
-              <label>Gender</label>
+              <label style={{color:"white"}}>Gender</label>
               <Select 
                 options = {genderOptions} 
                 onChange= {setgender}
-                placeholder='Gender' 
                 isSearchable 
-                required
-                />
+                required/>
                 
             </Form.Field>
           </Form.Group>
@@ -185,34 +142,34 @@ return(
           <Form.Group >
           
             <Form.Field width={16}>
-              <label> Username</label>
-              <input value = {username} onChange= {(event) => setusername(event.target.value)} placeholder='Username' required/>
+              <label style={{color:"white"}}> Username</label>
+              <input value = {username} onChange= {(event) => setusername(event.target.value)}  required/>
             </Form.Field>
           </Form.Group>
       
           <Form.Group >
             <Form.Field width={16}>
-              <label>Email</label>
-              <input type='email' value = {email} onChange= {(event) => setemail(event.target.value)} placeholder='joe@schmoe.com' required/>
+              <label style={{color:"white"}}>Email</label>
+              <input type='email' value = {email} onChange= {(event) => setemail(event.target.value)}  required/>
             </Form.Field>
           </Form.Group>
 
           <Form.Group >
             <Form.Field width={16}>
-              <label>Password</label>
-              <input type='password' value = {password} onChange= {(event) => setpassword(event.target.value)} placeholder='Password' required/>
+              <label style={{color:"white"}}>Password</label>
+              <input type='password' value = {password} onChange= {(event) => setpassword(event.target.value)}  required/>
             </Form.Field>
           </Form.Group>
 
           
 
           <Form.Group >
-            <Form.Field width={16}>
-              <label>Favorite Languages</label>
-              <Select 
+            <Form.Field inverted width={16}>
+              <label style={{color:"white"}}>Favorite Languages</label>
+             
+              <Select
               options = {languageOptions} 
               onChange= {setlanguage} 
-              placeholder='Favorite Languages' 
               isMulti
               autoFocus
               isSearchable 
@@ -223,11 +180,11 @@ return(
 
           <Form.Group >
             <Form.Field width={16}>
-              <label>Favorite Genres</label>
+              <label style={{color:"white"}}>Favorite Genres</label>
               <Select 
+              
               options = {genreOptions} 
               onChange= {setgenre} 
-              placeholder='Favorite Genres' 
               isMulti
               autoFocus
               isSearchable 
@@ -235,9 +192,6 @@ return(
               />
             </Form.Field>
           </Form.Group>
-
-            
-      
           <br></br>
 
           <Button onClick={checkSignUp} color={"blue"} fluid type='submit' floated='left'>Join Now</Button>
@@ -249,9 +203,7 @@ return(
       </Grid>
       </div>
     </>
-  );
-    
-    
+  );  
 };
 
 export default SignUpPage;

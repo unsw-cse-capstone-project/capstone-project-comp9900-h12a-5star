@@ -38,11 +38,14 @@ export default class WishListPage extends Component {
         const panes = [
             {
               menuItem: 'Ban List',
-              render: () => <Tab.Pane attached={false}>Tab 1 Content</Tab.Pane>,
+              render: () => <Button primary onClick={event =>  window.location.href=`/bannedlist/${this.user}` }>View your Banned list</Button>
             },
             {
               menuItem: 'Watch List',
-              render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane>,
+              render: () => 
+              <Button primary onClick={event =>  window.location.href=`/Watchlist/${this.user}` }>View your Watch list</Button>
+              
+              ,
             }
         ]
 

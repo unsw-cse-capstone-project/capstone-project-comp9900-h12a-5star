@@ -26,10 +26,10 @@ export default class WishListPage extends Component {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: this.user, reviewerUsername: this.props.match.params.userId })
+            body: JSON.stringify({username: this.user})
         };
 
-        fetch("http://127.0.0.1:8000/api/viewWishlist/", requestOptions)
+        fetch("http://127.0.0.1:8000/api/banUsername/", requestOptions)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -48,12 +48,12 @@ export default class WishListPage extends Component {
     }
 
     revoveElement = (val) => {
-        delete this.state.items[this.state.items.indexOf(val)]
-        console.log(this.state.items)
+        delete this.state.items.data[this.state.items.data.indexOf(val)]
+        //console.log(this.state.items.data)
         // this.state.items = this.state.items
-        this.setState({item: this.state.items})
+        this.setState({item: this.state.items.data})
         var len = 0
-        this.state.items.map(()=>
+        this.state.items.data.map(()=>
             len = len+1
         )
         if (len === 0){
@@ -66,12 +66,12 @@ export default class WishListPage extends Component {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
-            body: JSON.stringify({ movieId: val.movieID, username: this.user, wishlist: false})
+            body: JSON.stringify({ username: this.user, bannedUsername:val.username, banStatus: false})
         };
 
-        fetch("http://127.0.0.1:8000/api/addWishlist/", requestOptions)
+        fetch("http://127.0.0.1:8000/api/banUsername/", requestOptions)
         this.revoveElement(val)
-        // window.location.reload(false)
+        // window.location.reload(false
     }
    
     
@@ -106,29 +106,30 @@ export default class WishListPage extends Component {
                     <Divider horizontal></Divider>
                     <Divider horizontal>
                     <Header as='h1'>
-                        {this.props.match.params.userId.charAt(0).toUpperCase() + this.props.match.params.userId.slice(1)}'s Wishlist
+                        {this.props.match.params.userId.charAt(0).toUpperCase() + this.props.match.params.userId.slice(1)}'s List of banned users
                     </Header>
                     </Divider>
                     {
                     (this.state.items.length !== 0)?
                     <Grid columns='equal' divided={'vertically'}>
                         {
-                            this.state.items.map((item)=>
+                            this.state.items.data.map((item)=>
                             <Grid.Row>
                                 <Grid.Column width={2}>
-                                    <Image src={item.poster} size='tiny'  />
+                                    <Image src={item.profilePic} size='tiny'  />
                                 </Grid.Column>
                                 <Grid.Column width={2}>
                                 <br/>
-                                    <Icon name='star' color={"yellow"}/> {item.rating} <br/><br/>
-                                    <Icon name='calendar alternate outline' /> {item.release_date.substring(0,4)}
+                                
+                        <p>{item.firstname.toUpperCase()}</p>
+                        <p>{item.lastname.toUpperCase()}</p>
+
+                                    
                                 </Grid.Column>
                                 <Grid.Column width={8}>
                                 <br/><br/>
                                 
-                                    <Link style={{ color: 'black', fontSize:24}} className="MovieDetails" key={item.movieID} to= {`/movieDetails/${item.movieID}`}>
-                                        {item.title}
-                                    </Link>
+                     
                                
                                     
                                 </Grid.Column>
@@ -136,7 +137,7 @@ export default class WishListPage extends Component {
                                     <br/><br/>
                                     {
                                         (this.props.match.params.userId === window.sessionStorage.getItem('username'))?
-                                            <Button circular floated='right' color='red' icon='close' onClick={()=>this.removeFromWishlist(item)} />
+                                            <Button circular floated='center' color='red' icon='close' onClick={()=>this.removeFromWishlist(item)} />
                                             :
                                             <Button primary floated='right'><Link style={{ color: '#FFF'}} className="MovieDetails" key={item.movieID} to= {`/movieDetails/${item.movieID}`}>
                                             View Details
@@ -151,9 +152,9 @@ export default class WishListPage extends Component {
                     </Grid>
                     :
                     <Message>
-                        <Message.Header>Opps...It's time to create a wishlist!</Message.Header>
+                        <Message.Header>Your Banned List is Empty</Message.Header>
                         <p>
-                            Go ahead and add items to your wishlist.
+                            
                         </p>
                     </Message>
                 }

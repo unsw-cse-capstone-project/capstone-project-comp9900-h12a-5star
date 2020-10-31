@@ -14,10 +14,16 @@ import RecentReleased from './pages/RecentReleased';
 import TopRated from './pages/TopRated';
 import PopularMovies from './pages/PopularMovies';
 import WishListPage from './pages/WishListPage';
+<<<<<<< HEAD
 import SearchPage from './pages/SearchPage';
 import SearchMovieTitle from './pages/SearchMovieTitle';
 import SearchGenre from './pages/SearchGenre';
 import SearchDescription from './pages/SearchDescription';
+=======
+import ProfilePage from './pages/ProfilePage';
+import WatchListPage from './pages/WatchListPage';
+import BannedUsers from './pages/BannedUsers';
+>>>>>>> 8e48315a5f5273ea0f4d8e3051bce89b42884552
 
 function App() {
   return (
@@ -30,7 +36,9 @@ function App() {
         <Route path="/welcome" component={HomePage} />
         <Route path="/browse" component = {NotFoundPage} />
         <Route path="/wishlist/:userId" component={WishListPage} />
-        <Route path="/myprofile" component = {NotFoundPage} />
+        <Route path="/watchlist/:userId" component={WatchListPage} />
+        <Route path="/bannedlist/:userId" component={BannedUsers} />
+        <Route path="/myprofile" component = {ProfilePage} />
         <Route path="/login" component = {Login} />
         <Route path="/signup" component = {SignUpPage} />
         <Route path="/search" component = {SearchPage} />

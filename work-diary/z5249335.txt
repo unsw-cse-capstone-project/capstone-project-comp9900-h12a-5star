@@ -11,4 +11,11 @@ Week 4:
    Completed User stories assigned in this week.Testing from both Front end and Back end is done. Few changes to code is done . Connections issues are fixed for Login, Registration pages . Home Page API is developed with Popular , Most rated and Latest release movies.
    
 Week 5:
-     We need to have end to end flow for our first demo presentation . Added Movie search api which takes Query(Movie name or Keyword) as input and returns the similar movies with same name .Working on User Stories assigned in this week.
+     We need to have end to end flow for our first demo presentation . Added Movie search api which takes Query(Movie name or Keyword) as input and returns the similar movies with same name .Working on User Stories assigned in this week.Movie Details API is added which takes movie Id and sends the details of particular movie.
+     
+Week 6:
+    Attended Retrospective A meeting and Completed Sprint taks and Updated JIRA with tasks completed . Added Browse API , which allows user to browse movies based on Genre , Director . Result obtained is Sorted with Increasing order of Rating and If any Discrepancy exists (Having Same Rating) then Title based Sorting is used. Search results consists of Genre , Name and Description Search.
+    
+ Week 7 :
+     Started working on api to sort user reviews based on Gender of User and specific time period (Review  Created)
+     

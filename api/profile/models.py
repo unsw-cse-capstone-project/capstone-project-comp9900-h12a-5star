@@ -3,7 +3,6 @@ from django.db import models
 from user.models import User
 from multiselectfield import MultiSelectField
 
-
 class UserProfile(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -32,6 +31,12 @@ class UserProfile(models.Model):
         ('Hindhi', 'Hindhi'),
      )
     languages = MultiSelectField(choices = Language_CHOICES, default= None)
+
+    banned = MultiSelectField(default= None)
+
+    watched = MultiSelectField(default= None)
+
+    profilePic = models.CharField(max_length=100, unique=False)
 
     class Meta:
         '''

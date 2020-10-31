@@ -9,3 +9,9 @@ Completed the user stories and background section of the proposal document. Star
 
 Week 4
 Completed the user story for the development of logout functionality. Developed the user interface for home page and movie details page using static data. Added the functionality for capturing the data using rest api. 
+
+Week 5
+Completed the rest api integration of the home page and the see more pages for top rating, popular and recent movies. Created the user interface for the Wishlist page using static data.
+
+Week 6
+Completed teh API integration of the Wishlist page and movie details page. Implemented the functionality of like/unlike, add/remove to wishlist. Implemented the functionality to view reviews. Started working on the profile page. 

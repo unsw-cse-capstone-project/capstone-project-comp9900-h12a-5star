@@ -1,10 +1,14 @@
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import update_last_login
 from rest_framework import serializers, fields
-#from rest_framework_jwt.settings import api_settings
 from profile.models import UserProfile
 from user.models import User
 from django_select2.forms import Select2MultipleWidget
+import random
+
+pictures = {'Female': ['https://react.semantic-ui.com/images/avatar/small/elliot.jpg',
+'https://react.semantic-ui.com/images/avatar/small/jenny.jpg'],
+'Male': ['https://react.semantic-ui.com/images/avatar/small/matt.jpg',
+'https://react.semantic-ui.com/images/avatar/small/joe.jpg']}
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,6 +27,12 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     language = serializers.ListField(
         child = serializers.CharField()
     )
+    '''banned = serializers.ListField(
+        child = serializers.CharField()
+    )
+    watched = serializers.ListField(
+        child = serializers.IntegerField()
+    )'''#
 
     class Meta:
         model = User
@@ -30,7 +40,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        print('yes!!!!',validated_data)
+#        print('yes!!!!',validated_data)
         profile_data = validated_data.pop('profile')
         print(profile_data)
         user = User.objects.create_user(validated_data['email'],validated_data['password'])
@@ -41,9 +51,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             lastname=profile_data['lastname'],
             gender=profile_data['gender'],
             languages=validated_data['language'],
-            genres=validated_data['genre']
-            #age=validated_data['age'],
-            #gender=validated_data['gender']
+            genres=validated_data['genre'],
+            profilePic = random.choice(pictures[profile_data['gender']])
         )
         return user
 

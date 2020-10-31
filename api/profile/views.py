@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from profile.models import UserProfile
 from movie_review.helper import get_movie_details
 from movie_review.models import reviews
+from user.models import User
 import random
 
 statusCode = status.HTTP_400_BAD_REQUEST
@@ -23,6 +24,7 @@ class UserProfileView(RetrieveAPIView):
         try:
             user_profile = UserProfile.objects.get(username=request.data['username'])
             statusCode = status.HTTP_200_OK
+            User1=User.objects.get(id=user_profile.user_id)
             response = {
                 'success': 'true',
                 'status code': statusCode,
@@ -33,7 +35,8 @@ class UserProfileView(RetrieveAPIView):
                     'gender': user_profile.gender,
                     'genres':user_profile.genres,
                     'languages':user_profile.languages,
-                    'profilePic':user_profile.profilePic
+                    'profilePic':user_profile.profilePic,
+                    'email': User1.email
                 }}
         except Exception as e:
             RESPONSE['error']= str(e)
@@ -102,7 +105,7 @@ class BanView(RetrieveAPIView):
                 'banned':user_profile.banned}}
         return Response(response, status=status.HTTP_200_OK)
 
-    def post(self, request, *args, **kwargs): 
+    def post(self, request, *args, **kwargs):
         user_profile = UserProfile.objects.get(username=request.data['username'])
         response = {
             'success': 'true',

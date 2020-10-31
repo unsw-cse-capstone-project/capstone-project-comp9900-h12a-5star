@@ -162,10 +162,10 @@ export default class MovieDetails extends Component {
             });
             const body = await result.json();
 
-            if (body.response.statusCode === 200){
+            if (body.statusCode === 200){
             
-
-                window.location.href='/movieDetails';
+                console.log("loop entered")
+                window.location.reload(false);
             }
         }
         else{
@@ -423,7 +423,7 @@ export default class MovieDetails extends Component {
                                                         <Button primary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` }>View Wishlist</Button>
                                                     </Grid.Column>
                                                     <Grid.Column textAlign='center'>
-                                                        <Button value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])}primary>Ban</Button>
+                                                        <Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])}primary>Ban</Button>
                                                     </Grid.Column>
                                                     <Grid.Column textAlign='center'>
                                                         <Button primary>Follow</Button>
@@ -452,11 +452,15 @@ export default class MovieDetails extends Component {
                                 How was this Movie?  <Rating  disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} onRate={this.handleRate} icon='star' defaultRating={0} maxRating={5}/>
                                 <Form> 
                                     <textarea  onChange={(event) => this.handleReview(event)}  placeholder='What do you think about the movie?' disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>
-                                <input  value={this.state.review}/>
+                                <input  type="hidden" value={this.state.review}/>
                             
                             </Form>
 
-                                <Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} onClick={this.handle_adding_review} content='Add Reply' labelPosition='left' icon='edit' primary />
+                            <br></br>
+
+                            <br></br>
+
+                                <Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} onClick={this.handle_adding_review} content='Add Review' labelPosition='left' icon='edit' primary />
                             </Form>
                             
                         </Comment.Group>

@@ -151,7 +151,7 @@ export default class WishListPage extends Component {
                     </Grid>
                     :
                     <Message>
-                        <Message.Header>There are items in your wishlist yet!</Message.Header>
+                        <Message.Header>Opps...It's time to create a wishlist!</Message.Header>
                         <p>
                             Go ahead and add items to your wishlist.
                         </p>

@@ -14,10 +14,13 @@ import RecentReleased from './pages/RecentReleased';
 import TopRated from './pages/TopRated';
 import PopularMovies from './pages/PopularMovies';
 import WishListPage from './pages/WishListPage';
+import SearchPage from './pages/SearchPage';
+import SearchMovieTitle from './pages/SearchMovieTitle';
+import SearchGenre from './pages/SearchGenre';
+import SearchDescription from './pages/SearchDescription';
 import ProfilePage from './pages/ProfilePage';
 import WatchListPage from './pages/WatchListPage';
 import BannedUsers from './pages/BannedUsers';
-
 function App() {
   return (
     <Router>
@@ -34,6 +37,10 @@ function App() {
         <Route path="/myprofile" component = {ProfilePage} />
         <Route path="/login" component = {Login} />
         <Route path="/signup" component = {SignUpPage} />
+        <Route path="/search" component = {SearchPage} />
+        <Route path="/searchMovieTitle" component = {SearchMovieTitle} />
+        <Route path="/searchGenre" component = {SearchGenre} />
+        <Route path="/searchDescription" component = {SearchDescription} />
         <Route path="/movieDetails/:movieId" component = {MovieDetails} />
         <Route component = {NotFoundPage} />
       </Switch>

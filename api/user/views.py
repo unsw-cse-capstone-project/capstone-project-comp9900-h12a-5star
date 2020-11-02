@@ -6,7 +6,6 @@ from user.serializers import UserRegistrationSerializer
 from user.serializers import UserLoginSerializer
 from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
-from profile.models import UserProfile
 from movie_review.models import movies,reviews
 import requests
 from collections import defaultdict
@@ -133,7 +132,7 @@ def get_review(user,id,final,gender,from_date,to_date):
     final['upvote']=[]
     final['downvote']=[]
     final['follow']=[]
-    #final['review_id']=[]
+    user_profile = UserProfile.objects.get(username=user)
     if from_date == '' and to_date == '':
         from_date='1900-03-01'
         to_date=date.today().strftime("%Y-%m-%d")
@@ -145,7 +144,7 @@ def get_review(user,id,final,gender,from_date,to_date):
         pass
     if len(gender) == 0:
         for i in reviews.objects.filter(movie__movie_id=id,review_date__lte=to_date,review_date__gt=from_date):
-            if i.review != "":
+            if i.review != "" and i.review_user_id not in user_profile.banned:
                 final['review_id'].append(i.id)
                 final['review'].append(i.review)
                 final['user'].append(i.review_user_id)
@@ -163,7 +162,7 @@ def get_review(user,id,final,gender,from_date,to_date):
                 user.append(i.username)
         for j in user:
             for i in reviews.objects.filter( movie__movie_id=id,review_user_id=j,review_date__lte=to_date,review_date__gt=from_date):
-                if i.review != "":
+                if i.review != "" and i.review_user_id not in user_profile.banned:
                     final['review_id'].append(i.id)
                     final['review'].append(i.review)
                     final['user'].append(i.review_user_id)
@@ -174,17 +173,11 @@ def get_review(user,id,final,gender,from_date,to_date):
                     final['downvote'].append(i.downvote_count)
                     final['follow'].append(i.follow)
                     final['watched'] = i.watched
-        #final['review_id'].append(i.id)
-    #print(final)
     if user == 'Guest':
         final['watched']= False
         final['liked']=False
         final['wishlist']=False
     else:
-        #print("yup")
-        #data=serializers.serialize("json", reviews.objects.all(),indent=4 )
-        #print(id)
-        #print(user)
         for i in reviews.objects.filter(movie__movie_id=id , review_user_id=user):
             #print("entered")
             final['watched'] = i.watched

@@ -76,6 +76,10 @@ export default class MenuExampleInvertedSegment extends Component {
     const summary = 'roku1234 added a new review on Gabriels Inferno Part II'
     const extraText = "Have you seen what's going on in Israel? Can you believe it."
 
+    const style = {
+      width: 450
+    }
+
     return (
       <Segment inverted>
         <Menu inverted secondary size='large'>
@@ -127,7 +131,9 @@ export default class MenuExampleInvertedSegment extends Component {
                 <Icon name='bell' size='large'/>
               </Menu.Item>
               }
+              style={style}
               position='top center'
+              flowing
               on={['click']}>
                 <Feed>
                   <Feed.Event

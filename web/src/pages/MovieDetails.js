@@ -274,7 +274,7 @@ export default class MovieDetails extends Component {
                                                         <Label as='a'>{item}</Label>
                                                         )
                                                         :
-                                                        <div></div>
+                                                        <div><br /></div>
                                                     }
                                                     </Label.Group>
                                                 </List.Description>
@@ -292,7 +292,7 @@ export default class MovieDetails extends Component {
                                                         <Label as='a'>{item}</Label>
                                                         )
                                                         :
-                                                        <div></div>
+                                                        <div><br /></div>
                                                     }
                                                     </Label.Group>
                                                 </List.Description>
@@ -310,7 +310,7 @@ export default class MovieDetails extends Component {
                                                         <Label as='a'>{item}</Label>
                                                         )
                                                         :
-                                                        <div></div>
+                                                        <div><br /></div>
                                                         
                                                     }
                                                     </Label.Group>
@@ -330,7 +330,7 @@ export default class MovieDetails extends Component {
                                                         <Label as='a'>{item}</Label>
                                                         )
                                                         :
-                                                        <div></div>
+                                                        <div><br /></div>
                                                     
                                                     }
                                                     </Label.Group>

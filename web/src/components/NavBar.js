@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Icon, Button, Menu, Segment, Search, Image, Popup } from 'semantic-ui-react'
+import { Icon, Button, Menu, Segment, Search, Image, Popup, Feed } from 'semantic-ui-react'
 import _ from 'lodash'
 import faker from 'faker'
 
@@ -71,6 +71,11 @@ export default class MenuExampleInvertedSegment extends Component {
   render() {
     const { activeItem, isLoading, value, results } = this.state
 
+    const image = 'https://react.semantic-ui.com/images/avatar/large/laura.jpg'
+    const date = '3 days ago'
+    const summary = 'roku1234 added a new review on Gabriels Inferno Part II'
+    const extraText = "Have you seen what's going on in Israel? Can you believe it."
+
     return (
       <Segment inverted>
         <Menu inverted secondary size='large'>
@@ -122,13 +127,30 @@ export default class MenuExampleInvertedSegment extends Component {
                 <Icon name='bell' size='large'/>
               </Menu.Item>
               }
-              flowing 
-              hoverable 
               position='top center'
               on={['click']}>
-                <p>
-                  Notifications will appear here
-                </p>
+                <Feed>
+                  <Feed.Event
+                    image={image}
+                    date={date}
+                    summary={summary}
+                    extraText={extraText}
+                  />
+
+                  <Feed.Event>
+                    <Feed.Label image={image} />
+                    <Feed.Content date={date} summary={summary} extraText={extraText} />
+                  </Feed.Event>
+
+                  <Feed.Event>
+                    <Feed.Label image={image} />
+                    <Feed.Content>
+                      <Feed.Date content={date} />
+                      <Feed.Summary content={summary} />
+                      <Feed.Extra text content={extraText} />
+                    </Feed.Content>
+                  </Feed.Event>
+                </Feed>
               </Popup>
               
               

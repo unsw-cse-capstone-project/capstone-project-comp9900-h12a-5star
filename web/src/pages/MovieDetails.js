@@ -416,23 +416,15 @@ export default class MovieDetails extends Component {
                                                     inverted 
                                                     position='top center'
                                                     on={['hover', 'click']}>
-                                                <Grid columns={3} centered >
-                                                    <Grid.Column textAlign='center' >
                                                         <Popup trigger={<Button secondary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` } icon="eye" size={'big'} />}>
                                                             View Watchlist
                                                         </Popup>
-                                                    </Grid.Column>
-                                                    <Grid.Column textAlign='center'>
                                                         <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])} secondary icon='user close' size={'big'} />}>
                                                             Ban User
                                                         </Popup>
-                                                        </Grid.Column>
-                                                    <Grid.Column textAlign='center'>
                                                         <Popup trigger={<Button secondary icon='add user' size={'big'} />}>
                                                             Follow User
                                                         </Popup>
-                                                    </Grid.Column>
-                                                </Grid>
                                             </Popup>
                                             <Comment.Metadata>
                                                 <div>{this.state.items.date[j]} {this.state.items.time[j]}</div>

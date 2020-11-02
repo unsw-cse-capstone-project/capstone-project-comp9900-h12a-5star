@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Icon, Button, Menu, Segment, Search, Image } from 'semantic-ui-react'
+import { Icon, Button, Menu, Segment, Search, Image, Popup } from 'semantic-ui-react'
 import _ from 'lodash'
 import faker from 'faker'
 
@@ -113,13 +113,27 @@ export default class MenuExampleInvertedSegment extends Component {
 
             </Menu.Item>
             {(window.sessionStorage.getItem('username') !== null || window.sessionStorage.getItem('username') !== "guest") &&
-              <Menu.Item
+              <Popup trigger={
+                <Menu.Item
                 name='notification'
                 active={activeItem === 'notification'}
                 onClick={this.handleItemClick}
-              >
+                >
                 <Icon name='bell' size='large'/>
               </Menu.Item>
+              }
+              flowing 
+              hoverable 
+              position='top center'
+              on={['click']}>
+                <p>
+                  Notifications will appear here
+                </p>
+              </Popup>
+              
+              
+              
+              
             }
             {(window.sessionStorage.getItem('username') !== null || window.sessionStorage.getItem('username') !== "guest") &&
               <Menu.Item

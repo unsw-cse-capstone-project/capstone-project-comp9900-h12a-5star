@@ -194,9 +194,7 @@ export default class MovieDetails extends Component {
         const { active_wishlist } = this.state
 
         const style = {
-            borderRadius: 0,
-            opacity: 0.9,
-            padding: '2em',
+            opacity: 1
           }
 
         return (
@@ -418,15 +416,15 @@ export default class MovieDetails extends Component {
                                                     inverted 
                                                     position='top center'
                                                     on={['hover', 'click']}>
-                                                <Grid columns={3} >
+                                                <Grid columns={3} centered >
                                                     <Grid.Column textAlign='center' >
-                                                        <Button primary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` }>View Wishlist</Button>
+                                                        <Button primary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` } icon="eye" size={'big'} />
                                                     </Grid.Column>
                                                     <Grid.Column textAlign='center'>
-                                                        <Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])}primary>Ban</Button>
+                                                        <Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])} primary icon='user close' size={'big'} />
                                                     </Grid.Column>
                                                     <Grid.Column textAlign='center'>
-                                                        <Button primary>Follow</Button>
+                                                        <Button primary icon='add user' size={'big'} />
                                                     </Grid.Column>
                                                 </Grid>
                                             </Popup>

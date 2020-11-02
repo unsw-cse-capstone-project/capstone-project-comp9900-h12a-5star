@@ -418,13 +418,19 @@ export default class MovieDetails extends Component {
                                                     on={['hover', 'click']}>
                                                 <Grid columns={3} centered >
                                                     <Grid.Column textAlign='center' >
-                                                        <Button primary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` } icon="eye" size={'big'} />
+                                                        <Popup trigger={<Button secondary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` } icon="eye" size={'big'} />}>
+                                                            View Watchlist
+                                                        </Popup>
                                                     </Grid.Column>
                                                     <Grid.Column textAlign='center'>
-                                                        <Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])} primary icon='user close' size={'big'} />
-                                                    </Grid.Column>
+                                                        <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])} secondary icon='user close' size={'big'} />}>
+                                                            Ban User
+                                                        </Popup>
+                                                        </Grid.Column>
                                                     <Grid.Column textAlign='center'>
-                                                        <Button primary icon='add user' size={'big'} />
+                                                        <Popup trigger={<Button secondary icon='add user' size={'big'} />}>
+                                                            Follow User
+                                                        </Popup>
                                                     </Grid.Column>
                                                 </Grid>
                                             </Popup>

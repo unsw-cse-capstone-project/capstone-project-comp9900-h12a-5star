@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 import { Icon, Button, Menu, Segment, Search, Image, Popup, Feed } from 'semantic-ui-react'
 
-import { Icon, Button, Menu, Segment, Search, Image, Input } from 'semantic-ui-react'
 
 import _ from 'lodash'
 import faker from 'faker'

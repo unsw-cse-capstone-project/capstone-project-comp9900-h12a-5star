@@ -1,13 +1,52 @@
 import React, { Component } from 'react'
+
 import { Icon, Button, Menu, Segment, Search, Image, Popup, Feed } from 'semantic-ui-react'
+
+import { Icon, Button, Menu, Segment, Search, Image, Input } from 'semantic-ui-react'
+
 import _ from 'lodash'
 import faker from 'faker'
 
-const source = _.times(6, () => ({
-  title: faker.company.companyName(),
-  description: faker.company.catchPhrase(),
-  image: faker.internet.avatar(),
-}))
+
+const source=[
+  {
+    "title": "Gabriel's Inferno Part I",
+    "description": "Professor Gabriel Emerson finally learns the truth",
+    "image": "https://s3.amazonaws.com/uifaces/faces/twitter/_kkga/128.jpg",
+    "price": "4.5"
+  },
+  {
+    "title": "The Shawshank Redemption",
+    "description": "Framed in the 1940s for the double",
+    "image": "https://s3.amazonaws.com/uifaces/faces/twitter/saschadroste/128.jpg",
+    "price": "4.3"
+  },
+  {
+    "title": "The Craft: Legacy",
+    "description": "Ameliorated asymmetric open system",
+    "image": "https://s3.amazonaws.com/uifaces/faces/twitter/salleedesign/128.jpg",
+    "price": "3.4"
+  },
+  {
+    "title": "Hard Kill",
+    "description": "User-centric motivating process improvement",
+    "image": "https://s3.amazonaws.com/uifaces/faces/twitter/madebyvadim/128.jpg",
+    "price": "2.1"
+  },
+  {
+    "title": "Once Upon a Snowman",
+    "description": "The previously untold origins of Olaf,",
+    "image": "https://s3.amazonaws.com/uifaces/faces/twitter/alevizio/128.jpg",
+    "price": "3.9"
+  }
+]
+
+
+// const source = _.times(3, () => ({
+//   title: faker.company.companyName(),
+//   description: faker.company.catchPhrase(),
+//   image: faker.internet.avatar(),
+// }))
 
 const initialState = { isLoading: false, results: [], value: '' }
 
@@ -67,9 +106,15 @@ export default class MenuExampleInvertedSegment extends Component {
       })
     }, 300)
   }
+  // handleSubmit = (e, { value }) => {
+  //   this.setState({ isLoading: true, value })
+  //   window.location.href=`/search/${value}`
+    
+  // }
 
   render() {
     const { activeItem, isLoading, value, results } = this.state
+    console.log(value)
 
     const image = 'https://react.semantic-ui.com/images/avatar/large/laura.jpg'
     const date = '3 days ago'
@@ -104,8 +149,10 @@ export default class MenuExampleInvertedSegment extends Component {
           
           <Menu.Menu position='right'>
           <Menu.Item>
+            
             <Search
-              input={{ icon: 'search', iconPosition: 'left' }}
+              input={{ icon: 'film', iconPosition: 'left' }}
+              placeholder='Search...'
               loading={isLoading}
               onResultSelect={this.handleResultSelect}
               onSearchChange={_.debounce(this.handleSearchChange, 500, {
@@ -116,7 +163,14 @@ export default class MenuExampleInvertedSegment extends Component {
               minCharacters={1}
               noResultsMessage="No movie title found."
               noResultsDescription="Don't worry! We will check other parameters once you press enter!"
+            
             />
+          
+            <Button  secondary circular onClick={event =>  window.location.href=`/search/${this.state.value}` } icon>
+              <Icon name="search"  fitted="true"/>
+              
+            </Button>
+            
             </Menu.Item>
             <Menu.Item>
 

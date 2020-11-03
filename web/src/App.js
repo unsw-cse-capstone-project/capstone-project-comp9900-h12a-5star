@@ -21,6 +21,7 @@ import SearchDescription from './pages/SearchDescription';
 import ProfilePage from './pages/ProfilePage';
 import WatchListPage from './pages/WatchListPage';
 import BannedUsers from './pages/BannedUsers';
+import Browse from './pages/Browse';
 function App() {
   return (
     <Router>
@@ -30,7 +31,7 @@ function App() {
         <Route path="/topRated" component={TopRated} exact/>
         <Route path="/popularMovies" component={PopularMovies} exact/>
         <Route path="/welcome" component={HomePage} />
-        <Route path="/browse" component = {NotFoundPage} />
+        <Route path="/browse" component = {Browse} />
         <Route path="/wishlist/:userId" component={WishListPage} />
         <Route path="/watchlist/:userId" component={WatchListPage} />
         <Route path="/bannedlist/:userId" component={BannedUsers} />

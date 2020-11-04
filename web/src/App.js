@@ -21,7 +21,7 @@ import SearchDescription from './pages/SearchDescription';
 import ProfilePage from './pages/ProfilePage';
 import WatchListPage from './pages/WatchListPage';
 import BannedUsers from './pages/BannedUsers';
-import Browse from './pages/Browse';
+// import Browse from './pages/Browse';
 import SignUp from './pages/SignUp';
 import BrowsePage from './pages/BrowsePage';
 function App() {

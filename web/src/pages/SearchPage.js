@@ -40,7 +40,7 @@ export default class SearchPage extends Component {
     }
     
     render() {
-        console.log(this.props.match.params.searchText)
+        
         var movieLength=1;
         var genreLength=1;
         var descLength=1;

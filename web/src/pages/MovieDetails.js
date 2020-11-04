@@ -29,7 +29,7 @@ export default class MovieDetails extends Component {
     componentDidMount() {
         if(window.sessionStorage.getItem('username')==="guest"){
 
-            alert("You are not Signed in! Sign up to tell us what do you think about this movie.")
+            // alert("You are not Signed in! Sign up to tell us what do you think about this movie.")
         }
 
         const requestOptions = {
@@ -59,7 +59,6 @@ export default class MovieDetails extends Component {
             )
     }
 
-    // state = {}
     handleClick_like = () =>{
         this.setState((prevState) => ({ active_like: !prevState.active_like }))
 
@@ -85,8 +84,6 @@ export default class MovieDetails extends Component {
         fetch("http://127.0.0.1:8000/api/watchMovie/", requestOptions)
 
         this.state.items.watched = !this.state.items.watched
-
-
 
     }
     handleClick_wishlist = () =>{
@@ -125,14 +122,6 @@ export default class MovieDetails extends Component {
        // window.location.href=`/bannedlist/${window.sessionStorage.getItem('username')}`;
        alert("User Banned Successfully");
        window.location.reload(false);
-       
-
-
-   
-
-
-        
-
     }
     handleReview = (event) => {   
        this.state.review = event.target.value;
@@ -156,9 +145,6 @@ export default class MovieDetails extends Component {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 }
-
-
-
             });
             const body = await result.json();
 
@@ -172,23 +158,10 @@ export default class MovieDetails extends Component {
             window.location.href='/movieDetails';
         }
 
-        
-
-
-    
-
-        
-
-        /*console.log("EMail: " + this.state.review);
-        console.log("Password: " + this.state.password);*/
-
     }
 
 
     render() {
-
-
-
         const { active_like } = this.state
         const { active_seen } = this.state
         const { active_wishlist } = this.state
@@ -235,13 +208,18 @@ export default class MovieDetails extends Component {
                                             >
                                             <Modal.Content>
                                             {
-                                            (this.state.items.trailers) &&
-                                            <Embed
-                                                active={this.state.open}
-                                                id={this.state.items.trailers[0].split("=")[1]}
-                                                placeholder='https://react.semantic-ui.com/images/image-16by9.png'
-                                                source='youtube'
-                                            />
+                                            (this.state.items.trailers) ?
+                                                (!this.state.items.trailers[0])?
+                                                    <Header as='h1' inverted>There are no trailers to show at the moment!</Header>
+                                                    :
+                                                    <Embed
+                                                        active={this.state.open}
+                                                        id={this.state.items.trailers[0].split("=")[1]}
+                                                        placeholder='https://react.semantic-ui.com/images/image-16by9.png'
+                                                        source='youtube'
+                                                    />
+                                                :
+                                                <Header as='h1' inverted>There are no trailers to show at the moment!</Header>
                                             }
                                             </Modal.Content>
                                             <Modal.Actions>
@@ -258,7 +236,16 @@ export default class MovieDetails extends Component {
                                             <List.Content>
                                                 <List.Header>Release Date</List.Header>
                                                 <List.Description>
-                                                {this.state.items.release_date} <br /><br />
+                                                    {
+                                                        (this.state.items.release_date)?
+                                                        <div>
+                                                            {this.state.items.release_date} <br /><br />
+                                                        </div>
+                                                        :
+                                                        <p>Release date not available</p>
+                                                    }
+                                                    
+                                                
                                                 </List.Description>
                                             </List.Content>
                                         </List.Item>
@@ -274,7 +261,7 @@ export default class MovieDetails extends Component {
                                                         <Label as='a'>{item}</Label>
                                                         )
                                                         :
-                                                        <div><br /></div>
+                                                        <div><p>Director information not available</p></div>
                                                     }
                                                     </Label.Group>
                                                 </List.Description>
@@ -292,7 +279,7 @@ export default class MovieDetails extends Component {
                                                         <Label as='a'>{item}</Label>
                                                         )
                                                         :
-                                                        <div><br /></div>
+                                                        <div><p>Producer information not available</p></div>
                                                     }
                                                     </Label.Group>
                                                 </List.Description>
@@ -310,7 +297,7 @@ export default class MovieDetails extends Component {
                                                         <Label as='a'>{item}</Label>
                                                         )
                                                         :
-                                                        <div><br /></div>
+                                                        <div><p>Genre information not available</p></div>
                                                         
                                                     }
                                                     </Label.Group>
@@ -330,7 +317,7 @@ export default class MovieDetails extends Component {
                                                         <Label as='a'>{item}</Label>
                                                         )
                                                         :
-                                                        <div><br /></div>
+                                                        <div><p>Cast information not available</p></div>
                                                     
                                                     }
                                                     </Label.Group>
@@ -444,7 +431,7 @@ export default class MovieDetails extends Component {
                                 <div></div>
                             }
 
-<Form reply>
+                            <Form reply>
                                 How was this Movie?  <Rating  disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} onRate={this.handleRate} icon='star' defaultRating={0} maxRating={5}/>
                                 <Form> 
                                     <textarea  onChange={(event) => this.handleReview(event)}  placeholder='What do you think about the movie?' disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>
@@ -463,18 +450,8 @@ export default class MovieDetails extends Component {
                                 </Grid.Column>
                             </Grid.Row>
                         </Grid>
-
-
-
-                        
-
-                       
-
-
                     </Segment>
                 </Container>
-
-
             </React.Fragment>
         )
     }

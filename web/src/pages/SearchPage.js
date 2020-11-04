@@ -69,7 +69,7 @@ export default class SearchPage extends Component {
         }
         if (this.state.isLoaded === true){
             if (this.state.items.name_result || this.state.items.genre_result || this.state.items.description_result ){
-                console.warn('abc')
+                
             }
             else{
                 movieLength=0

@@ -134,7 +134,8 @@ def get_review(user,id,final,gender,from_date,to_date):
     final['upvote']=[]
     final['downvote']=[]
     final['follow']=[]
-    user_profile = UserProfile.objects.get(username=user)
+    if user.lower() != "guest":
+        user_profile = UserProfile.objects.get(username=user)
     if from_date == '' and to_date == '':
         from_date='1900-03-01'
         to_date=date.today().strftime("%Y-%m-%d")
@@ -189,7 +190,7 @@ def get_review(user,id,final,gender,from_date,to_date):
                     final['downvote'].append(i.downvote_count)
                     final['follow'].append(i.follow)
                     final['watched'] = i.watched
-    if user == 'Guest':
+    if user.lower() == 'guest':
         final['watched']= False
         final['liked']=False
         final['wishlist']=False

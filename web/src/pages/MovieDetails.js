@@ -403,8 +403,8 @@ export default class MovieDetails extends Component {
                                                     inverted 
                                                     position='top center'
                                                     on={['hover', 'click']}>
-                                                        <Popup trigger={<Button secondary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` } icon="eye" size={'big'} />}>
-                                                            View Watchlist
+                                                        <Popup trigger={<Button secondary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` } icon="bookmark" size={'big'} />}>
+                                                            View Wishlist
                                                         </Popup>
                                                         <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])} secondary icon='user close' size={'big'} />}>
                                                             Ban User

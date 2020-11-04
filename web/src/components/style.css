@@ -5,6 +5,6 @@
     height: -webkit-fill-available!important;
 }
 .movie_card .description{
-    max-height: 55px!important;
+    height: 55px!important;
     overflow: hidden;
 }

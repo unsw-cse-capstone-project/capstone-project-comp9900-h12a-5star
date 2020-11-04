@@ -40,7 +40,8 @@ Json input format for user registration. Do not change genres and languages insi
 }
 '''
 
-
+class Ban:
+  banned = []
 #global search_static
 
 @api_view(['POST', ])
@@ -137,7 +138,7 @@ def get_review(user,id,final,gender,from_date,to_date):
     if user.lower() != "guest":
         user_profile = UserProfile.objects.get(username=user)
     else:
-        user_profile = {'banned':[]}
+        user_profile = Ban()
     if from_date == '' and to_date == '':
         from_date='1900-03-01'
         to_date=date.today().strftime("%Y-%m-%d")
@@ -148,7 +149,11 @@ def get_review(user,id,final,gender,from_date,to_date):
     else:
         pass
     if len(gender) == 0:
+        #print(user_profile)
+        #print(type(user_profile))
+        #print(user_profile.banned)
         for i in reviews.objects.filter(movie__movie_id=id,review_date__lte=to_date,review_date__gt=from_date):
+            #print(user_profile.banned)
             if i.review != "" and i.review_user_id not in user_profile.banned:
                 final['review_id'].append(i.id)
                 final['review'].append(i.review)

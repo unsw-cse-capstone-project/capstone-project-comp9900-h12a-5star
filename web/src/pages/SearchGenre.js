@@ -16,7 +16,7 @@ export default class SearchGenre extends Component {
     }
 
     componentDidMount() {
-        fetch("http://127.0.0.1:8000/api/search/?query=action")
+        fetch(`http://127.0.0.1:8000/api/search/?query=${this.props.match.params.searchText}`)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -47,7 +47,7 @@ export default class SearchGenre extends Component {
         var x = Math.floor(genreLength/4);
 
 
-        if (this.state.items.genre_result) {
+        if ( genreLength >=4 ) {
             columnsGenre = _.times(x, (i) => (
                 <Grid.Row key={i}>{
                     _.times(4, (j) => (
@@ -66,7 +66,22 @@ export default class SearchGenre extends Component {
                 </Grid.Row>
                 ))
         }
-        else{
+        else if(genreLength>0 & genreLength<4){
+            columnsGenre = _.times(genreLength, (i) => (
+
+                <Grid.Column key={i}>
+                    <MovieTile 
+                        title={this.state.items.genre_result[i].title} 
+                        poster={this.state.items.genre_result[i].poster} 
+                        release={this.state.items.genre_result[i].release_date} 
+                        rating={this.state.items.genre_result[i].rating} 
+                        description={this.state.items.genre_result[i].description} 
+                        movieId={this.state.items.genre_result[i].id}
+                    />
+                </Grid.Column>
+            ))
+        }
+        else if(genreLength === 0){
 
             columnsGenre = _.times(12, (i) => (
                 <Grid.Row key={i}>{
@@ -102,7 +117,7 @@ export default class SearchGenre extends Component {
 
                 <Container style={{ margin: 20 }}>
 
-                    <Header as='h1'>Search Results by Movie Genre</Header>
+            <Header as='h1'>Search Results by Movie Genre: {this.props.match.params.searchText}</Header>
                     <Divider section />
                     <Grid columns='equal'>{columnsGenre}</Grid>
                 </Container>

@@ -131,7 +131,7 @@ def get_review(user,id,final,gender,from_date,to_date):
     final['wishlist'] = False
     final['time']=[]
     final['date']=[]
-    final['date_modified']=[]
+    #final['date_modified']=[]
     final['upvote']=[]
     final['downvote']=[]
     final['follow']=[]
@@ -161,14 +161,14 @@ def get_review(user,id,final,gender,from_date,to_date):
                 final['rating'].append(i.rating)
                 final['time'].append(i.review_time)
                 final['date'].append(i.review_date)
-                review_diff=date.today()-i.review_date
-                review_diff=str(review_diff).split(' ')
-                if int(review_diff[0]) == 0:
-                        final['date_modified'].append('Today')
-                elif int(review_diff[0])== 1:
-                        final['date_modified'].append('Yesterday')
-                else:
-                        final['date_modified'].append(str(review_diff[0])+' Days Ago')
+                #review_diff=date.today()-i.review_date
+                #review_diff=str(review_diff).split(' ')
+                #if int(review_diff[0]) == 0:
+                        #final['date_modified'].append('Today')
+                #elif int(review_diff[0])== 1:
+                        #final['date_modified'].append('Yesterday')
+                #else:
+                        #final['date_modified'].append(str(review_diff[0])+' Days Ago')
                 final['upvote'].append(i.upvote_count)
                 final['downvote'].append(i.downvote_count)
                 final['follow'].append(i.follow)
@@ -187,14 +187,14 @@ def get_review(user,id,final,gender,from_date,to_date):
                     final['rating'].append(i.rating)
                     final['time'].append(i.review_time)
                     final['date'].append(i.review_date)
-                    review_diff=date.today()-i.review_date
-                    review_diff=str(review_diff).split(' ')
-                    if int(review_diff[0]) == 0:
-                        final['date_modified'].append('Today')
-                    elif int(review_diff[0])== 1:
-                        final['date_modified'].append('Yesterday')
-                    else:
-                        final['date_modified'].append(str(review_diff[0])+' Days Ago')
+                    #review_diff=date.today()-i.review_date
+                    #review_diff=str(review_diff).split(' ')
+                    #if int(review_diff[0]) == 0:
+                        #final['date_modified'].append('Today')
+                    #elif int(review_diff[0])== 1:
+                        #final['date_modified'].append('Yesterday')
+                    #else:
+                        #final['date_modified'].append(str(review_diff[0])+' Days Ago')
                     final['upvote'].append(i.upvote_count)
                     final['downvote'].append(i.downvote_count)
                     final['follow'].append(i.follow)

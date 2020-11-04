@@ -16,7 +16,7 @@ export default class SearchPage extends Component {
             url: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg"
         };
     }
-
+    
     componentDidMount() {
         fetch("http://127.0.0.1:8000/api/search/?query=action")
             .then(res => res.json())
@@ -40,6 +40,7 @@ export default class SearchPage extends Component {
     }
     
     render() {
+        console.log(this.props.match.params.searchText)
         var movieLength=1;
         var genreLength=1;
         var descLength=1;

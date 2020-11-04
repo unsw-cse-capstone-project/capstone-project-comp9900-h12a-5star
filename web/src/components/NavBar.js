@@ -161,7 +161,7 @@ export default class MenuExampleInvertedSegment extends Component {
               value={value}
               minCharacters={1}
               noResultsMessage="No movie title found."
-              noResultsDescription="Don't worry! We will check other parameters once you press enter!"
+              noResultsDescription="Don't worry! We will check other parameters once you click search icon!"
             
             />
           

@@ -209,7 +209,7 @@ export default class MovieDetails extends Component {
                                             <Modal.Content>
                                             {
                                             (this.state.items.trailers) ?
-                                                (this.state.items.trailers.length === 0)?
+                                                (!this.state.items.trailers[0])?
                                                     <Header as='h1' inverted>There are no trailers to show at the moment!</Header>
                                                     :
                                                     <Embed

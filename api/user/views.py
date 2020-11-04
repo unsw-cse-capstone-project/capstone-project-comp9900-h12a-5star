@@ -307,7 +307,7 @@ class MovieSearch(APIView):
                 res = requests.get("https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=1" + "&with_genres=" + str(genre_id[0]))
                 if res.json()['total_pages'] > 4:
                     pages = 4
-                elif res.json()['total_pages'] < 4 and res.json()['total_pages'] != 0:
+                elif res.json()['total_pages'] < 4 and res.json()['total_pages'] > 1:
                     pages = res.json()['total_pages']
                 else:
                     pages = 2
@@ -321,19 +321,23 @@ class MovieSearch(APIView):
             else:
                 genre_search = defaultdict(list)
             if len(query) >= 1:
+                print("entered")
                 initial_search = defaultdict(list)
                 res = requests.get('https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query=' + str(query) + '&page=1' +'&sort_by=popularity.desc'+ '&include_adult=false')
                 if res.json()['total_pages'] > 4:
                     pages = 4
-                elif res.json()['total_pages'] < 4 and res.json()['total_pages'] != 0:
+                elif res.json()['total_pages'] < 4 and res.json()['total_pages'] > 1:
                     pages = res.json()['total_pages']
                 else:
                     pages = 2
+                print(pages)
                 for i in range(1, pages):
                      url = 'https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query=' + str(query) + '&page=' + str(i)+'&sort_by=popularity.desc' + '&include_adult=false'
                      response = requests.get(url)
+                     print(response)
                      initial_search['result'].extend(response.json()['results'])
-                     name_search = search_func(initial_search, "name")
+                print(initial_search)
+                name_search = search_func(initial_search, "name")
             else:
                 name_search = defaultdict(list)
             s = BeautifulSoup(simple_get('https://www.imdb.com/search/title-text/?plot='+query), 'html.parser')

@@ -18,7 +18,7 @@ export default class SearchPage extends Component {
     }
     
     componentDidMount() {
-        fetch("http://127.0.0.1:8000/api/search/?query=action")
+        fetch(`http://127.0.0.1:8000/api/search/?query=${this.props.match.params.searchText}`)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -40,7 +40,7 @@ export default class SearchPage extends Component {
     }
     
     render() {
-        console.log(this.props.match.params.searchText)
+        
         var movieLength=1;
         var genreLength=1;
         var descLength=1;
@@ -86,7 +86,7 @@ export default class SearchPage extends Component {
         
         // this.state.items.name_result[0].title
         if (this.state.items.name_result || this.state.items.genre_result || this.state.items.description_result){
-            if (this.state.items.name_result) {
+            if ( movieLength >= 4) {
                 columnsMovie = _.times(4, (i) => (
                     <Grid.Column key={i}>
                         <MovieTile 
@@ -100,7 +100,24 @@ export default class SearchPage extends Component {
                     </Grid.Column>
                 ))
             }
-            if (this.state.items.genre_result){
+            if( movieLength < 4){
+                
+                    columnsMovie = _.times(movieLength, (i) => (
+                        <Grid.Column key={i}>
+                            <MovieTile 
+                                title={this.state.items.name_result[i].title} 
+                                poster={this.state.items.name_result[i].poster} 
+                                release={this.state.items.name_result[i].release_date} 
+                                rating={this.state.items.name_result[i].rating} 
+                                description={this.state.items.name_result[i].description} 
+                                movieId={this.state.items.name_result[i].id} 
+                            />
+                        </Grid.Column>
+                    ))
+
+                
+            }
+            if ( genreLength >= 4 ){
                 columnsGenre = _.times(4, (i) => (
 
                     <Grid.Column key={i}>
@@ -115,9 +132,38 @@ export default class SearchPage extends Component {
                     </Grid.Column>
 
                 ))
-            }  
-            if (this.state.items.description_result){
+            }
+            if ( genreLength < 4){
+                columnsGenre = _.times(genreLength, (i) => (
+
+                    <Grid.Column key={i}>
+                        <MovieTile 
+                            title={this.state.items.genre_result[i].title} 
+                            poster={this.state.items.genre_result[i].poster} 
+                            release={this.state.items.genre_result[i].release_date} 
+                            rating={this.state.items.genre_result[i].rating} 
+                            description={this.state.items.genre_result[i].description} 
+                            movieId={this.state.items.genre_result[i].id}
+                        />
+                    </Grid.Column>
+                ))
+            }
+            if ( descLength >= 4){
                 columnsDesc = _.times(4, (i) => (
+                    <Grid.Column key={i}>
+                        <MovieTile 
+                            title={this.state.items.description_result[i].title} 
+                            poster={this.state.items.description_result[i].poster} 
+                            release={this.state.items.description_result[i].release_date} 
+                            rating={this.state.items.description_result[i].rating} 
+                            description={this.state.items.description_result[i].description} 
+                            movieId={this.state.items.description_result[i].id}
+                        />
+                    </Grid.Column>
+                ))
+            }
+            if ( descLength < 4){
+                columnsDesc = _.times(descLength, (i) => (
                     <Grid.Column key={i}>
                         <MovieTile 
                             title={this.state.items.description_result[i].title} 
@@ -211,7 +257,7 @@ export default class SearchPage extends Component {
                 <Container style={{ margin: 20 }}>
                 { flag == 1  && 
                     <Grid.Column>
-                        <Header as='h1'>Search Results: "action"</Header>
+                        <Header as='h1'>Search Results: {this.props.match.params.searchText}</Header>
                         <Divider section />
                     </Grid.Column>
                 }
@@ -221,7 +267,7 @@ export default class SearchPage extends Component {
                             <Header as='h1'>Movie Title</Header>
                         </Grid.Column>
                         <Grid.Column>
-                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = '/searchMovieTitle'}>
+                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = `/searchMovieTitle/${this.props.match.params.searchText}`}>
                                 see more
                             </Label>
                         </Grid.Column>
@@ -241,7 +287,7 @@ export default class SearchPage extends Component {
                             <Header as='h1'>Genre</Header>
                         </Grid.Column>
                         <Grid.Column>
-                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = '/searchGenre'}>
+                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = `/searchGenre/${this.props.match.params.searchText}`}>
                                 see more
                             </Label>
                         </Grid.Column>
@@ -259,7 +305,7 @@ export default class SearchPage extends Component {
                             <Header as='h1'>Description</Header>
                         </Grid.Column>
                         <Grid.Column>
-                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = '/searchDescription'}>
+                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = `/searchDescription/${this.props.match.params.searchText}`}>
                                 see more
                             </Label>
                         </Grid.Column>

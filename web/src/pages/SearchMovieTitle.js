@@ -16,7 +16,7 @@ export default class SearchMovieTitle extends Component {
     }
 
     componentDidMount() {
-        fetch("http://127.0.0.1:8000/api/search/?query=action")
+        fetch(`http://127.0.0.1:8000/api/search/?query=${this.props.match.params.searchText}`)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -47,7 +47,7 @@ export default class SearchMovieTitle extends Component {
         var x = Math.floor(movieLength/4);
 
 
-        if (this.state.items.name_result) {
+        if ( movieLength >=4 ) {
             columnsMovie = _.times(x, (i) => (
                 <Grid.Row key={i}>{
                     _.times(4, (j) => (
@@ -66,7 +66,21 @@ export default class SearchMovieTitle extends Component {
                 </Grid.Row>
                 ))
         }
-        else{
+        else if(movieLength>0 & movieLength<4){
+            columnsMovie = _.times(movieLength, (i) => (
+                <Grid.Column key={i}>
+                    <MovieTile 
+                        title={this.state.items.name_result[i].title} 
+                        poster={this.state.items.name_result[i].poster} 
+                        release={this.state.items.name_result[i].release_date} 
+                        rating={this.state.items.name_result[i].rating} 
+                        description={this.state.items.name_result[i].description} 
+                        movieId={this.state.items.name_result[i].id} 
+                    />
+                </Grid.Column>
+            ))
+        }
+        else if(movieLength === 0){
 
             columnsMovie = _.times(12, (i) => (
                 <Grid.Row key={i}>{
@@ -102,7 +116,7 @@ export default class SearchMovieTitle extends Component {
 
                 <Container style={{ margin: 20 }}>
 
-                    <Header as='h1'>Search Results by Movie Title</Header>
+                <Header as='h1'>Search Results by Movie Title: {this.props.match.params.searchText}</Header>
                     <Divider section />
                     <Grid columns='equal'>{columnsMovie}</Grid>
                 </Container>

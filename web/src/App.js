@@ -40,9 +40,9 @@ function App() {
         <Route path="/login" component = {Login} />
         <Route path="/signup" component = {SignUp} />
         <Route path="/search/:searchText" component = {SearchPage} />
-        <Route path="/searchMovieTitle" component = {SearchMovieTitle} />
-        <Route path="/searchGenre" component = {SearchGenre} />
-        <Route path="/searchDescription" component = {SearchDescription} />
+        <Route path="/searchMovieTitle/:searchText" component = {SearchMovieTitle} />
+        <Route path="/searchGenre/:searchText" component = {SearchGenre} />
+        <Route path="/searchDescription/:searchText" component = {SearchDescription} />
         <Route path="/movieDetails/:movieId" component = {MovieDetails} />
         <Route component = {NotFoundPage} />
       </Switch>

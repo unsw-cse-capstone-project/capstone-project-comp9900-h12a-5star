@@ -136,6 +136,8 @@ def get_review(user,id,final,gender,from_date,to_date):
     final['follow']=[]
     if user.lower() != "guest":
         user_profile = UserProfile.objects.get(username=user)
+    else:
+        user_profile = {'banned':[]}
     if from_date == '' and to_date == '':
         from_date='1900-03-01'
         to_date=date.today().strftime("%Y-%m-%d")
@@ -156,11 +158,11 @@ def get_review(user,id,final,gender,from_date,to_date):
                 final['date'].append(i.review_date)
                 review_diff=date.today()-i.review_date
                 if review_diff == 0:
-                        final['date_modified'].append('Today')
+                    final['date_modified'].append('Today')
                 elif review_diff== 1:
-                        final['date_modified'].append('Yesterday')
+                    final['date_modified'].append('Yesterday')
                 else:
-                        final['date_modified'].append(str(review_diff)+' Days Ago')
+                    final['date_modified'].append(str(review_diff)+' Days Ago')
                 final['upvote'].append(i.upvote_count)
                 final['downvote'].append(i.downvote_count)
                 final['follow'].append(i.follow)

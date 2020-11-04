@@ -194,9 +194,7 @@ export default class MovieDetails extends Component {
         const { active_wishlist } = this.state
 
         const style = {
-            borderRadius: 0,
-            opacity: 0.9,
-            padding: '2em',
+            opacity: 1
           }
 
         return (
@@ -276,7 +274,7 @@ export default class MovieDetails extends Component {
                                                         <Label as='a'>{item}</Label>
                                                         )
                                                         :
-                                                        <div></div>
+                                                        <div><br /></div>
                                                     }
                                                     </Label.Group>
                                                 </List.Description>
@@ -294,7 +292,7 @@ export default class MovieDetails extends Component {
                                                         <Label as='a'>{item}</Label>
                                                         )
                                                         :
-                                                        <div></div>
+                                                        <div><br /></div>
                                                     }
                                                     </Label.Group>
                                                 </List.Description>
@@ -312,7 +310,7 @@ export default class MovieDetails extends Component {
                                                         <Label as='a'>{item}</Label>
                                                         )
                                                         :
-                                                        <div></div>
+                                                        <div><br /></div>
                                                         
                                                     }
                                                     </Label.Group>
@@ -332,7 +330,7 @@ export default class MovieDetails extends Component {
                                                         <Label as='a'>{item}</Label>
                                                         )
                                                         :
-                                                        <div></div>
+                                                        <div><br /></div>
                                                     
                                                     }
                                                     </Label.Group>
@@ -418,17 +416,15 @@ export default class MovieDetails extends Component {
                                                     inverted 
                                                     position='top center'
                                                     on={['hover', 'click']}>
-                                                <Grid columns={3} >
-                                                    <Grid.Column textAlign='center' >
-                                                        <Button primary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` }>View Wishlist</Button>
-                                                    </Grid.Column>
-                                                    <Grid.Column textAlign='center'>
-                                                        <Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])}primary>Ban</Button>
-                                                    </Grid.Column>
-                                                    <Grid.Column textAlign='center'>
-                                                        <Button primary>Follow</Button>
-                                                    </Grid.Column>
-                                                </Grid>
+                                                        <Popup trigger={<Button secondary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` } icon="eye" size={'big'} />}>
+                                                            View Watchlist
+                                                        </Popup>
+                                                        <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])} secondary icon='user close' size={'big'} />}>
+                                                            Ban User
+                                                        </Popup>
+                                                        <Popup trigger={<Button secondary icon='add user' size={'big'} />}>
+                                                            Follow User
+                                                        </Popup>
                                             </Popup>
                                             <Comment.Metadata>
                                                 <div>{this.state.items.date[j]} {this.state.items.time[j]}</div>

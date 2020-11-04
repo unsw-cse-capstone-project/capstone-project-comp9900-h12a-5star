@@ -16,7 +16,7 @@ export default class SearchDescription extends Component {
     }
 
     componentDidMount() {
-        fetch("http://127.0.0.1:8000/api/search/?query=action")
+        fetch(`http://127.0.0.1:8000/api/search/?query=${this.props.match.params.searchText}`)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -47,7 +47,7 @@ export default class SearchDescription extends Component {
         var x = Math.floor(descLength/4);
 
 
-        if (this.state.items.description_result) {
+        if ( descLength >=4 ) {
             columnsDesc = _.times(x, (i) => (
                 <Grid.Row key={i}>{
                     _.times(4, (j) => (
@@ -66,7 +66,22 @@ export default class SearchDescription extends Component {
                 </Grid.Row>
                 ))
         }
-        else{
+        else if(descLength>0 & descLength<4){
+            columnsDesc = _.times(descLength, (i) => (
+                <Grid.Column key={i}>
+                    <MovieTile 
+                        title={this.state.items.description_result[i].title} 
+                        poster={this.state.items.description_result[i].poster} 
+                        release={this.state.items.description_result[i].release_date} 
+                        rating={this.state.items.description_result[i].rating} 
+                        description={this.state.items.description_result[i].description} 
+                        movieId={this.state.items.description_result[i].id}
+                    />
+                </Grid.Column>
+            ))
+
+        }
+        else if(descLength===0){
 
             columnsDesc = _.times(12, (i) => (
                 <Grid.Row key={i}>{
@@ -102,7 +117,7 @@ export default class SearchDescription extends Component {
 
                 <Container style={{ margin: 20 }}>
 
-                    <Header as='h1'>Search Results by Movie Description</Header>
+                    <Header as='h1'>Search Results by Movie Description: {this.props.match.params.searchText}</Header>
                     <Divider section />
                     <Grid columns='equal'>{columnsDesc}</Grid>
                 </Container>

@@ -14,4 +14,7 @@ Week 5
 Completed the rest api integration of the home page and the see more pages for top rating, popular and recent movies. Created the user interface for the Wishlist page using static data.
 
 Week 6
-Completed teh API integration of the Wishlist page and movie details page. Implemented the functionality of like/unlike, add/remove to wishlist. Implemented the functionality to view reviews. Started working on the profile page. 
+Completed the API integration of the Wishlist page and movie details page. Implemented the functionality of like/unlike, add/remove to wishlist. Implemented the functionality to view reviews. Started working on the profile page. 
+
+Week 7
+Completed the API rendering of the reviews section. Completed the view prodile page and the edit profile page. Started testing the application and reporting issues in the application.

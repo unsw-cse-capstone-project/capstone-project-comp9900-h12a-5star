@@ -39,7 +39,7 @@ function App() {
         <Route path="/myprofile" component = {ProfilePage} />
         <Route path="/login" component = {Login} />
         <Route path="/signup" component = {SignUp} />
-        <Route path="/search" component = {SearchPage} />
+        <Route path="/search/:searchText" component = {SearchPage} />
         <Route path="/searchMovieTitle" component = {SearchMovieTitle} />
         <Route path="/searchGenre" component = {SearchGenre} />
         <Route path="/searchDescription" component = {SearchDescription} />

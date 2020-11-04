@@ -88,7 +88,7 @@ export default class SignUp extends Component {
                 window.location.href='/login';
             }
             else{
-                alert(body.response);
+                alert("Please enter unique Username and Email!");
             }
         }
         else{

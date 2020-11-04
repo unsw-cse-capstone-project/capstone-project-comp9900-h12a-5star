@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Card, Image } from 'semantic-ui-react'
 import { Button, Dimmer, Rating } from 'semantic-ui-react'
+import './style.css'
 
 import {
   Link,
@@ -34,7 +35,7 @@ import {
   
       return (
         <React.Fragment>
-            <Card>
+            <Card className='movie_card'>
       <Dimmer.Dimmable
           as={Image}
           dimmed={active}
@@ -43,6 +44,7 @@ import {
           onMouseLeave={this.handleHide}
           size='medium'
           src= {this.props.poster}
+          className='movie_image'
         />
       <Card.Content>
         <Card.Header>{this.props.title.substring(0,24)}</Card.Header>

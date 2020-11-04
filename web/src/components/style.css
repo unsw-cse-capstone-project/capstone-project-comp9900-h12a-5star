@@ -1,0 +1,10 @@
+.movie_image{
+    max-height: 390px;
+}
+.movie_image>img{
+    height: -webkit-fill-available!important;
+}
+.movie_card .description{
+    max-height: 55px!important;
+    overflow: hidden;
+}

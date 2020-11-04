@@ -16,30 +16,31 @@ export default class ProfilePage extends Component {
         { key: 'Adventure', text: 'Adventure', value: 'Adventure' },
         { key: 'Comedy', text: 'Comedy', value: 'Comedy' },
         { key: 'Crime', text: 'Crime', value: 'Crime' },
-        { key: 'Crama', text: 'Drama', value: 'Drama' },
+        { key: 'Drama', text: 'Drama', value: 'Drama' },
         { key: 'Family', text: 'Family', value: 'Family' },
         { key: 'Fantasy', text: 'Fantasy', value: 'Fantasy' },
         { key: 'Horror', text: 'Horror', value: 'Horror' },
         { key: 'Mystery', text: 'Mystery', value: 'Mystery' },
         { key: 'Romance', text: 'Romance', value: 'Romance' },
-        { key: 'Sciencefiction', text: 'Science Fiction', value: 'Sciencefiction' },
+        { key: 'Science Fiction', text: 'Science Fiction', value: 'Science Fiction' },
         { key: 'Thriller', text: 'Thriller', value: 'Thriller' },
         
     ]
 
     languageOptions = [
         { key: 'English', text: 'English', value: 'English' },
-        { key: 'Gujrati', text: 'Gujrati', value: 'Gujrati' },
-        { key: 'Hindi', text: 'Hindi', value: 'Hindi' },
-        { key: 'Kannada', text: 'Kannada', value: 'Kannada' },
-        { key: 'Marathi', text: 'Marathi', value: 'Marathi' },
         { key: 'Mandarin Chinese', text: 'Mandarin Chinese', value: 'Mandarin Chinese' },
-        { key: 'punjabi', text: 'Punjabi', value: 'punjabi' },
-        { key: 'spanish', text: 'Spanish', value: 'spanish' },
-        { key: 'telugu', text: 'Telugu', value: 'telegu' },
-        { key: 'urdu', text: 'Urdu', value: 'urdu' },
-        
+        { key: 'Hindi', text: 'Hindi', value: 'Hindi' },
+        { key: 'Spanish', text: 'Spanish', value: 'Spanish' },
+        { key: 'French', text: 'French', value: 'French' },
+        { key: 'Standard Arabic', text: 'Standard Arabic', value: 'Standard Arabic' },
+        { key: 'Bengali', text: 'Bengali', value: 'Bengali' },
+        { key: 'Russian', text: 'Russian', value: 'Russian' },
+        { key: 'Portuguese', text: 'Portuguese', value: 'Portuguese' },
+        { key: 'Indonesian', text: 'Indonesian', value: 'Indonesian' },
+        { key: 'Korean', text: 'Korean', value: 'Korean' },
       ]
+    
     constructor() {
         super();
         this.state = {

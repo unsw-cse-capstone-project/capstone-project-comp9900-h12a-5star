@@ -12,33 +12,33 @@ export default class SignUp extends Component {
     ]
     
     genreOptions = [
-        { key: 'action', text: 'Action', value: 'action' },
-        { key: 'adventure', text: 'Adventure', value: 'adventure' },
-        { key: 'comedy', text: 'Comedy', value: 'comedy' },
-        { key: 'crime', text: 'Crime', value: 'crime' },
-        { key: 'drama', text: 'Drama', value: 'drama' },
-        { key: 'family', text: 'Family', value: 'family' },
-        { key: 'fantasy', text: 'Fantasy', value: 'fantasy' },
-        { key: 'horror', text: 'Horror', value: 'horror' },
-        { key: 'mystery', text: 'Mystery', value: 'mystery' },
-        { key: 'romance', text: 'Romance', value: 'romance' },
-        { key: 'sciencefiction', text: 'Science Fiction', value: 'sciencefiction' },
-        { key: 'thriller', text: 'Thriller', value: 'thriller' },
+        { key: 'Action', text: 'Action', value: 'Action' },
+        { key: 'Adventure', text: 'Adventure', value: 'Adventure' },
+        { key: 'Comedy', text: 'Comedy', value: 'Comedy' },
+        { key: 'Crime', text: 'Crime', value: 'Crime' },
+        { key: 'Drama', text: 'Drama', value: 'Drama' },
+        { key: 'Family', text: 'Family', value: 'Family' },
+        { key: 'Fantasy', text: 'Fantasy', value: 'Fantasy' },
+        { key: 'Horror', text: 'Horror', value: 'Horror' },
+        { key: 'Mystery', text: 'Mystery', value: 'Mystery' },
+        { key: 'Romance', text: 'Romance', value: 'Romance' },
+        { key: 'Science Fiction', text: 'Science Fiction', value: 'Science Fiction' },
+        { key: 'Thriller', text: 'Thriller', value: 'Thriller' },
         
     ]
 
     languageOptions = [
-        { key: 'english', text: 'English', value: 'english' },
-        { key: 'gujrati', text: 'Gujrati', value: 'gujrati' },
-        { key: 'hindi', text: 'Hindi', value: 'hindi' },
-        { key: 'kannada', text: 'Kannada', value: 'kannada' },
-        { key: 'marathi', text: 'Marathi', value: 'marathi' },
-        { key: 'mandarinchinese', text: 'Mandarin Chinese', value: 'mandarinchinese' },
-        { key: 'punjabi', text: 'Punjabi', value: 'punjabi' },
-        { key: 'spanish', text: 'Spanish', value: 'spanish' },
-        { key: 'telugu', text: 'Telugu', value: 'telegu' },
-        { key: 'urdu', text: 'Urdu', value: 'urdu' },
-        
+        { key: 'English', text: 'English', value: 'English' },
+        { key: 'Mandarin Chinese', text: 'Mandarin Chinese', value: 'Mandarin Chinese' },
+        { key: 'Hindi', text: 'Hindi', value: 'Hindi' },
+        { key: 'Spanish', text: 'Spanish', value: 'Spanish' },
+        { key: 'French', text: 'French', value: 'French' },
+        { key: 'Standard Arabic', text: 'Standard Arabic', value: 'Standard Arabic' },
+        { key: 'Bengali', text: 'Bengali', value: 'Bengali' },
+        { key: 'Russian', text: 'Russian', value: 'Russian' },
+        { key: 'Portuguese', text: 'Portuguese', value: 'Portuguese' },
+        { key: 'Indonesian', text: 'Indonesian', value: 'Indonesian' },
+        { key: 'Korean', text: 'Korean', value: 'Korean' },
       ]
 
 

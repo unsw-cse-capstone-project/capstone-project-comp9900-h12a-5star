@@ -87,7 +87,7 @@ const SignUpPage = () => {
         });
         const body = await result.json();
 
-        if (body.status_code === 200){
+        if (body.statusCode === 200){
 
             window.location.href='/login';
         }

@@ -190,7 +190,7 @@ def get_review(user,id,final,gender,from_date,to_date):
                     final['downvote'].append(i.downvote_count)
                     final['follow'].append(i.follow)
                     final['watched'] = i.watched
-    if user == 'Guest':
+    if user.lower() == 'guest':
         final['watched']= False
         final['liked']=False
         final['wishlist']=False

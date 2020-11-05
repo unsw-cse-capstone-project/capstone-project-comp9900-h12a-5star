@@ -20,6 +20,7 @@ from contextlib import closing
 from bs4 import BeautifulSoup
 from datetime import datetime
 from datetime import date
+from user.helper import verification_email
 
 '''
 Json input format for user registration. Do not change genres and languages inside profile
@@ -60,7 +61,7 @@ def UserRegistrationView(request):
             'message': 'User registered  successfully',
             }
         statusCode = status.HTTP_200_OK
-        #print(response)
+        verification_email(request.data['email'])
         return Response(response, status=statusCode)
 
 
@@ -162,6 +163,15 @@ def get_review(user,id,final,gender,from_date,to_date):
                 final['time'].append(i.review_time)
                 final['date'].append(i.review_date)
                 review_diff=datetime.now()-datetime.combine(i.review_date, i.review_time)
+<<<<<<< HEAD
+=======
+                print(datetime.combine(i.review_date, i.review_time))
+                print(datetime.now())
+                #print(datetime.combine(i.review_date, i.review_time))
+                #review_diff=str(review_diff).replace(':', ' ')
+                #review_diff=str(review_diff).split(' ')
+                print(review_diff)
+>>>>>>> 8cde2bfa0412b39190fb73ab36d1cd0e4576c091
                 day=review_diff.days
                 if day != 0:
                     final['date_modified'].append(str(day)+' Days Ago')

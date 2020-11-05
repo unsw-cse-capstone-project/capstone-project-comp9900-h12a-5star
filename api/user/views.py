@@ -162,12 +162,7 @@ def get_review(user,id,final,gender,from_date,to_date):
                 final['time'].append(i.review_time)
                 final['date'].append(i.review_date)
                 review_diff=datetime.now()-datetime.combine(i.review_date, i.review_time)
-                #print(datetime.combine(i.review_date, i.review_time))
-                #review_diff=str(review_diff).replace(':', ' ')
-                #review_diff=str(review_diff).split(' ')
-                print(review_diff)
                 day=review_diff.days
-                print(day)
                 if day != 0:
                     final['date_modified'].append(str(day)+' Days Ago')
                 else:
@@ -182,15 +177,6 @@ def get_review(user,id,final,gender,from_date,to_date):
                     else:
                         a=str(sec[-1])
                         final['date_modified'].append(a[:2] +' Seconds Ago')
-                print(final['date_modified'])
-                #print(review_diff.hours)
-                
-                #if int(review_diff[0]) == 0:
-                        #final['date_modified'].append('Today')
-                #elif int(review_diff[0])== 1:
-                        #final['date_modified'].append('Yesterday')
-                #else:
-                        #final['date_modified'].append(str(review_diff[0])+' Days Ago')
                 final['upvote'].append(i.upvote_count)
                 final['downvote'].append(i.downvote_count)
                 final['follow'].append(i.follow)
@@ -209,15 +195,22 @@ def get_review(user,id,final,gender,from_date,to_date):
                     final['rating'].append(i.rating)
                     final['time'].append(i.review_time)
                     final['date'].append(i.review_date)
-                    review_diff=date.today()-i.review_date
-                    review_diff=str(review_diff).replace(':', ' ')
-                    review_diff=str(review_diff).split(' ')
-                    if int(review_diff[0]) == 0:
-                        final['date_modified'].append('Today')
-                    elif int(review_diff[0])== 1:
-                        final['date_modified'].append('Yesterday')
+                    review_diff=datetime.now()-datetime.combine(i.review_date, i.review_time)
+                    day=review_diff.days
+                    if day != 0:
+                        final['date_modified'].append(str(day)+' Days Ago')
                     else:
-                        final['date_modified'].append(str(review_diff[0])+' Days Ago')
+                        x=str(review_diff)
+                        x=x.replace(':', ' ')
+                        x=x.replace(',',' ')
+                        sec=x.split(' ')
+                        if int(sec[-3]) > 0:
+                            final['date_modified'].append(str(sec[-3])+' Hours Ago')
+                        elif int(sec[-2])>0:
+                            final['date_modified'].append(str(sec[-2])+' Minutes Ago')
+                        else:
+                            a=str(sec[-1])
+                            final['date_modified'].append(a[:2] +' Seconds Ago')
                     final['upvote'].append(i.upvote_count)
                     final['downvote'].append(i.downvote_count)
                     final['follow'].append(i.follow)
@@ -442,7 +435,7 @@ class MovieDetails(APIView):
             url='https://api.themoviedb.org/3/movie/'+str(id)+'?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&append_to_response=credits,videos'
             response=requests.get(url)
             movie_details['id']=response.json()['id']
-            movie_details['imdb_rating']=round((response.json()['vote_average'])/2,1)
+            #movie_details['imdb_rating']=round((response.json()['vote_average'])/2,1)
             movie_details['description']=response.json()['overview']
             movie_details['title']=response.json()['title']
             if response.json()['poster_path'] is None:

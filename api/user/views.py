@@ -163,15 +163,6 @@ def get_review(user,id,final,gender,from_date,to_date):
                 final['time'].append(i.review_time)
                 final['date'].append(i.review_date)
                 review_diff=datetime.now()-datetime.combine(i.review_date, i.review_time)
-<<<<<<< HEAD
-=======
-                print(datetime.combine(i.review_date, i.review_time))
-                print(datetime.now())
-                #print(datetime.combine(i.review_date, i.review_time))
-                #review_diff=str(review_diff).replace(':', ' ')
-                #review_diff=str(review_diff).split(' ')
-                print(review_diff)
->>>>>>> 8cde2bfa0412b39190fb73ab36d1cd0e4576c091
                 day=review_diff.days
                 if day != 0:
                     final['date_modified'].append(str(day)+' Days Ago')

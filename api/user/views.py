@@ -125,13 +125,13 @@ def get_review(user,id,final,gender,from_date,to_date):
     final['review']=[]
     final['user']=[]
     final['rating']=[]
-    #final['avg_rating']=0.0
+    final['avg_rating']=0.0
     final['watched'] = False
     final['liked'] = False
     final['wishlist'] = False
     final['time']=[]
     final['date']=[]
-    #final['date_modified']=[]
+    final['date_modified']=[]
     final['upvote']=[]
     final['downvote']=[]
     final['follow']=[]
@@ -161,14 +161,15 @@ def get_review(user,id,final,gender,from_date,to_date):
                 final['rating'].append(i.rating)
                 final['time'].append(i.review_time)
                 final['date'].append(i.review_date)
-                #review_diff=date.today()-i.review_date
-                #review_diff=str(review_diff).split(' ')
-                #if int(review_diff[0]) == 0:
-                        #final['date_modified'].append('Today')
-                #elif int(review_diff[0])== 1:
-                        #final['date_modified'].append('Yesterday')
-                #else:
-                        #final['date_modified'].append(str(review_diff[0])+' Days Ago')
+                review_diff=date.today()-i.review_date
+                review_diff=str(review_diff).replace(':', ' ')
+                review_diff=str(review_diff).split(' ')
+                if int(review_diff[0]) == 0:
+                        final['date_modified'].append('Today')
+                elif int(review_diff[0])== 1:
+                        final['date_modified'].append('Yesterday')
+                else:
+                        final['date_modified'].append(str(review_diff[0])+' Days Ago')
                 final['upvote'].append(i.upvote_count)
                 final['downvote'].append(i.downvote_count)
                 final['follow'].append(i.follow)
@@ -187,14 +188,15 @@ def get_review(user,id,final,gender,from_date,to_date):
                     final['rating'].append(i.rating)
                     final['time'].append(i.review_time)
                     final['date'].append(i.review_date)
-                    #review_diff=date.today()-i.review_date
-                    #review_diff=str(review_diff).split(' ')
-                    #if int(review_diff[0]) == 0:
-                        #final['date_modified'].append('Today')
-                    #elif int(review_diff[0])== 1:
-                        #final['date_modified'].append('Yesterday')
-                    #else:
-                        #final['date_modified'].append(str(review_diff[0])+' Days Ago')
+                    review_diff=date.today()-i.review_date
+                    review_diff=str(review_diff).replace(':', ' ')
+                    review_diff=str(review_diff).split(' ')
+                    if int(review_diff[0]) == 0:
+                        final['date_modified'].append('Today')
+                    elif int(review_diff[0])== 1:
+                        final['date_modified'].append('Yesterday')
+                    else:
+                        final['date_modified'].append(str(review_diff[0])+' Days Ago')
                     final['upvote'].append(i.upvote_count)
                     final['downvote'].append(i.downvote_count)
                     final['follow'].append(i.follow)
@@ -203,16 +205,18 @@ def get_review(user,id,final,gender,from_date,to_date):
         final['watched']= False
         final['liked']=False
         final['wishlist']=False
-        #if len(final['rating'])>0:
-             #final['avg_rating']=round(sum(final['rating'])/len(final['rating']),1)
+        if len(final['rating'])>0:
+             final['rating']=[i if i[0] is not None else 0 for i in final['rating']]
+             final['avg_rating']=round(sum(final['rating'])/len(final['rating']),1)
     else:
         for i in reviews.objects.filter(movie__movie_id=id , review_user_id=user):
             #print("entered")
             final['watched'] = i.watched
             final['liked'] = i.liked
             final['wishlist'] = i.wishlist
-            #if len(final['rating'])>0:
-                 #final['avg_rating']=round(sum(final['rating'])/len(final['rating']),1)
+            if len(final['rating'])>0:
+                 final['rating']=[i if i is not None else 0 for i in final['rating']]
+                 final['avg_rating']=round(sum(final['rating'])/len(final['rating']),1)
     return final
 
 

@@ -20,6 +20,7 @@ from contextlib import closing
 from bs4 import BeautifulSoup
 from datetime import datetime
 from datetime import date
+from user.helper import verification_email
 
 '''
 Json input format for user registration. Do not change genres and languages inside profile
@@ -60,7 +61,8 @@ def UserRegistrationView(request):
             'message': 'User registered  successfully',
             }
         statusCode = status.HTTP_200_OK
-        #print(response)
+        #verification_email(request.data['email'])
+        print(request.data['email'])
         return Response(response, status=statusCode)
 
 

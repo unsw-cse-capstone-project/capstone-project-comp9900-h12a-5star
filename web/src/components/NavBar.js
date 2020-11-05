@@ -50,7 +50,7 @@ const source=[
 const initialState = { isLoading: false, results: [], value: '' }
 
 export default class MenuExampleInvertedSegment extends Component {
-  state = { activeItem: 'home', isLoading: false, results: [], value: '' }
+  state = { activeItem: '', isLoading: false, results: [], value: '' }
 
   handleItemClick = (e, { name }) => {
     this.setState({ activeItem: name })

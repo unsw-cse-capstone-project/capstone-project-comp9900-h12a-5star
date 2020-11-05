@@ -1,6 +1,7 @@
 import React from 'react';
 import {useState} from 'react';
 import { Grid, Form, Segment, Button,Divider} from 'semantic-ui-react';
+import './style.css'
 
 const Login = () => {
     const [email, setUsername] = useState('');
@@ -41,12 +42,15 @@ const Login = () => {
     return(
 
     <React.Fragment>
-        <div style={{backgroundImage: `url(${require("../images/loginsignup.jpg")})`, height: 800}}>
+        <div className='account' >
 
             <Grid>
                 <Grid.Column width={5}></Grid.Column>
                 <Grid.Column width={5} stretched>
-
+                <br />
+                <br />
+                <br />
+                <br />
                     <Segment inverted style={{margin: 15}}>
 
 

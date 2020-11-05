@@ -112,7 +112,7 @@ export default class SignUp extends Component {
                 <Segment  inverted style={{margin: 15 }}>
                 
                   <h1 style={{textAlign:"center", color:"white"}}>Sign Up</h1>
-                  <Form >
+                  <Form className="register">
                     <Form.Group >
                       <Form.Field width={16}>
                         <label style={{color:"white"}}>First Name</label>
@@ -127,8 +127,8 @@ export default class SignUp extends Component {
           
                     <Form.Group >
                       <Form.Field width={16}>
-                        <label style={{color:"white"}}>Gender</label>
-                        <Dropdown onChange={(event, {value}) =>  this.setState({gender : value})} fluid selection options={this.genderOptions} required/>
+                        <label style={{color:"white"}}>Email</label>
+                        <input type='email' value = {this.state.email} onChange={(event) =>  this.setState({email : event.target.value})}  required/>
                       </Form.Field>
                 
                       <Form.Field width={16}>
@@ -139,8 +139,8 @@ export default class SignUp extends Component {
                 
                     <Form.Group >
                       <Form.Field width={16}>
-                        <label style={{color:"white"}}>Email</label>
-                        <input type='email' value = {this.state.email} onChange={(event) =>  this.setState({email : event.target.value})}  required/>
+                        <label style={{color:"white"}}>Gender</label>
+                        <Dropdown onChange={(event, {value}) =>  this.setState({gender : value})} fluid selection options={this.genderOptions} required/>
                       </Form.Field>
                     
                       <Form.Field width={16}>

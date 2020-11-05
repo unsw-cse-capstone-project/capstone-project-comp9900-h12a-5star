@@ -10,3 +10,10 @@
 .profileEdit{
     width: 130px;
 }
+
+.register{
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 6%;
+    opacity: 1!important;
+}

@@ -61,8 +61,7 @@ def UserRegistrationView(request):
             'message': 'User registered  successfully',
             }
         statusCode = status.HTTP_200_OK
-        #verification_email(request.data['email'])
-        print(request.data['email'])
+        verification_email(request.data['email'])
         return Response(response, status=statusCode)
 
 
@@ -164,6 +163,8 @@ def get_review(user,id,final,gender,from_date,to_date):
                 final['time'].append(i.review_time)
                 final['date'].append(i.review_date)
                 review_diff=datetime.now()-datetime.combine(i.review_date, i.review_time)
+                print(datetime.combine(i.review_date, i.review_time))
+                print(datetime.now())
                 #print(datetime.combine(i.review_date, i.review_time))
                 #review_diff=str(review_diff).replace(':', ' ')
                 #review_diff=str(review_diff).split(' ')

@@ -1,8 +1,5 @@
 import React , { Component, createRef } from 'react'
-import { Tab, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Form, Label, Ref, Dropdown } from 'semantic-ui-react'
-import NavBar from '../components/NavBar';
-import SignUpPage from '../pages/SignUpPage';
-
+import { Tab, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Form, Label, Ref, Dropdown, List } from 'semantic-ui-react'
 
 export default class ProfilePage extends Component {
 
@@ -150,8 +147,6 @@ export default class ProfilePage extends Component {
 
         return(
             <React.Fragment>
-                
-                <NavBar />
                 <Container>
                     <div style={{backgroundImage: `url(${require("../images/profileBackground.jpg")})`, height: 300}}>
                         <br />
@@ -193,27 +188,41 @@ export default class ProfilePage extends Component {
                                         Email
                                         <Label.Detail>{this.state.items.data.email}</Label.Detail>
                                     </Label>
-                                    <br />
-                                    <br />
-                                    <Label as='a' color='blue' >
-                                        <Icon name="globe" />
-                                        Genere Preference
-                                        {
-                                            this.state.items.data.genres.map((item)=>
-                                            <Label.Detail>{item}</Label.Detail>
-                                            )
-                                        }
-                                    </Label>
-                                    <Label as='a' color='blue' >
-                                        <Icon name="language" />
-                                        Language Preference
-                                        {
-                                            this.state.items.data.languages.map((item)=>
-                                            <Label.Detail>{item}</Label.Detail>
-                                            )
-                                        }
-                                    </Label>
-                                    <br />
+                                   
+
+                                    <List className='profile'>
+                                            <List.Item>
+                                                <List.Content>
+                                                    <List.Header><Icon name='globe' />Genre Preference</List.Header>
+                                                    <List.Description>
+                                                        <Label.Group>
+                                                            {
+                                                                this.state.items.data.genres.map((item)=>
+                                                                <Label as='a' color='blue'>{item}</Label>
+                                                                )
+                                                            }
+                                                        </Label.Group>
+                                                    </List.Description>
+                                                </List.Content>
+                                            </List.Item>
+                                        </List>
+
+                                        <List className='profile'>
+                                            <List.Item>
+                                                <List.Content>
+                                                    <List.Header><Icon name='language' />Language Preference</List.Header>
+                                                    <List.Description>
+                                                        <Label.Group>
+                                                            {
+                                                                this.state.items.data.languages.map((item)=>
+                                                                <Label as='a' color='blue'>{item}</Label>
+                                                                )
+                                                            }
+                                                        </Label.Group>
+                                                    </List.Description>
+                                                </List.Content>
+                                            </List.Item>
+                                        </List>
                                 </div>
                                 :
                                 <div>
@@ -262,7 +271,7 @@ export default class ProfilePage extends Component {
                                 <Divider />
                             {
                                 (!this.state.edit)?
-                            <Button color={"purple"} onClick={this.handleClick_edit}>
+                            <Button className="profileEdit" color={"purple"} onClick={this.handleClick_edit}>
                                 <center>
                                     <br />
                                     <Icon name='pencil' size="big" /> <br /> <br /> Edit Profile
@@ -270,23 +279,23 @@ export default class ProfilePage extends Component {
                             </Button>
                             
                                  :
-                                <Button color={"red"} onClick={this.handleClick_cancelEdit}>
+                                <Button className="profileEdit" color={"red"} onClick={this.handleClick_cancelEdit}>
                                     <center>
                                         <br />
                                         <Icon name='pencil square' size="big" /> <br /> <br /> Cancel Edit
                                     </center>
                                 </Button>
                             }
-                            <Button color={"purple"} onClick={event => window.location.href = `/bannedlist/${this.user}`}>
+                            <Button className="profileEdit" color={"purple"} onClick={event => window.location.href = `/bannedlist/${this.user}`}>
                                 <center>
                                     <br />
-                                    <Icon name='remove user' size="big" /> <br /> <br /> Baned User
+                                    <Icon name='remove user' size="big" /> <br /> <br /> Banned Users
                                 </center>
                             </Button>
-                            <Button color={"purple"} onClick={event => window.location.href = `/watchlist/${this.user}`}>
+                            <Button className="profileEdit" color={"purple"} onClick={event => window.location.href = `/watchlist/${this.user}`}>
                                 <center>
                                     <br />
-                                    <Icon name='eye' size="big" /> <br /> <br /> Watch list
+                                    <Icon name='eye' size="big" /> <br /> <br /> Watch List
                                 </center>
                             </Button>
                             <br />

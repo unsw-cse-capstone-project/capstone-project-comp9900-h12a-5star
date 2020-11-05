@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
 import { Container, Header, Divider, Grid, Label, Card, Placeholder} from 'semantic-ui-react';
-import NavBar from '../components/NavBar';
 import MovieTile from '../components/MovieTile';
 
 export default class SearchMovieTitle extends Component {
@@ -112,8 +111,6 @@ export default class SearchMovieTitle extends Component {
         }
         return (
             <>
-                <NavBar />
-
                 <Container style={{ margin: 20 }}>
 
                 <Header as='h1'>Search Results by Movie Title: {this.props.match.params.searchText}</Header>

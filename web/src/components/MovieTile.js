@@ -48,7 +48,7 @@ import {
                 {
                   (this.props.description)?
                   <p>
-                    {this.props.description.substring(0,100)} ... 
+                    {this.props.description} ... 
                   </p>
                   :
                   <p>

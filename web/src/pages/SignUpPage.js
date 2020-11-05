@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Grid, Form, Segment,  Button, Dropdown} from 'semantic-ui-react'
-import NavBar from '../components/NavBar';
 import {useState} from 'react';
 import Select from 'react-select';
 
@@ -102,7 +101,6 @@ const SignUpPage = () => {
 
 return(
   <>
-  <NavBar/>
   <div style={{ backgroundImage: `url(${require("../images/loginsignup.jpg")})` }}>
   
     <Grid>

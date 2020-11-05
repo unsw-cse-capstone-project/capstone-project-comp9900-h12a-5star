@@ -1,6 +1,6 @@
 import smtplib
 from email.message import EmailMessage
-import time.time
+from time import time
 
 gmail_id = 'korupalli87122@gmail.com'
 password = ''

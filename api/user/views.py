@@ -43,15 +43,12 @@ Json input format for user registration. Do not change genres and languages insi
 
 class Ban:
   banned = []
-#global search_static
 
 @api_view(['POST', ])
 def UserRegistrationView(request):
     if request.method == 'POST':
         serializer_class = UserRegistrationSerializer
         permission_classes = (AllowAny,)
-
-        #print(request.data)
         serializer = serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -92,33 +89,22 @@ def UserLoginView(request):
                 }
     statusCode = status.HTTP_200_OK
     return Response(context, status=statusCode)
-    #return Response(context)
-
 
 def searchpage(b):
-            #if len(search_static) == 0:
                 search_page = defaultdict(list)
                 for i in range(1,11):
                     nav_search=defaultdict(list)
                     res=requests.get('https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=vote_average.desc&include_adult=false&include_video=false&page='+str(i)+'&release_date.gte=2014-01-01')
-                #try:
                     nav_search['result'].extend(res.json()['results'])
                     y_search=search_func(nav_search,'search_bar')
                     if len(y_search) !=0:
                             search_page['name_results'].extend(y_search['navbar_result'])
-                #except KeyError:
-                        #continue
                 search_page['name_results'].sort(key=lambda x: datetime.strptime(x['release_date'], '%Y-%m-%d'), reverse=True)
-            #print(len(search_page['name_results']))
-                #search_static=search_page
                 print(search_page)
                 if b == 'browse':
                     search_page['name_results'] = sorted(search_page['name_results'], key=lambda k: ( -k['rating'],k['title'].lower()))
                 search_page=json.dumps(search_page)
                 return JsonResponse(json.loads(search_page),safe=False)
-            #else:
-                 #search_static=json.dumps(search_static)
-                 #return JsonResponse(json.loads(search_static),safe=False)
 
 
 def get_review(user,id,final,gender,from_date,to_date):
@@ -136,6 +122,7 @@ def get_review(user,id,final,gender,from_date,to_date):
     final['upvote']=[]
     final['downvote']=[]
     final['follow']=[]
+    final['profilePics'] = []
     if user.lower() != "guest":
         user_profile = UserProfile.objects.get(username=user)
     else:
@@ -150,12 +137,10 @@ def get_review(user,id,final,gender,from_date,to_date):
     else:
         pass
     if len(gender) == 0:
-        #print(user_profile)
-        #print(type(user_profile))
-        #print(user_profile.banned)
         for i in reviews.objects.filter(movie__movie_id=id,review_date__lte=to_date,review_date__gt=from_date):
-            #print(user_profile.banned)
             if i.review != "" and i.review_user_id not in user_profile.banned:
+                a = UserProfile.objects.get(username=i.review_user_id)
+                final['profilePics'].append(a.profilePic)
                 final['review_id'].append(i.id)
                 final['review'].append(i.review)
                 final['user'].append(i.review_user_id)
@@ -163,14 +148,7 @@ def get_review(user,id,final,gender,from_date,to_date):
                 final['time'].append(i.review_time)
                 final['date'].append(i.review_date)
                 review_diff=datetime.now()-datetime.combine(i.review_date, i.review_time)
-                print(datetime.combine(i.review_date, i.review_time))
-                print(datetime.now())
-                #print(datetime.combine(i.review_date, i.review_time))
-                #review_diff=str(review_diff).replace(':', ' ')
-                #review_diff=str(review_diff).split(' ')
-                print(review_diff)
                 day=review_diff.days
-                print(day)
                 if day != 0:
                     final['date_modified'].append(str(day)+' Days Ago')
                 else:
@@ -185,15 +163,6 @@ def get_review(user,id,final,gender,from_date,to_date):
                     else:
                         a=str(sec[-1])
                         final['date_modified'].append(a[:2] +' Seconds Ago')
-                print(final['date_modified'])
-                #print(review_diff.hours)
-                
-                #if int(review_diff[0]) == 0:
-                        #final['date_modified'].append('Today')
-                #elif int(review_diff[0])== 1:
-                        #final['date_modified'].append('Yesterday')
-                #else:
-                        #final['date_modified'].append(str(review_diff[0])+' Days Ago')
                 final['upvote'].append(i.upvote_count)
                 final['downvote'].append(i.downvote_count)
                 final['follow'].append(i.follow)
@@ -206,6 +175,8 @@ def get_review(user,id,final,gender,from_date,to_date):
         for j in user:
             for i in reviews.objects.filter( movie__movie_id=id,review_user_id=j,review_date__lte=to_date,review_date__gt=from_date):
                 if i.review != "" and i.review_user_id not in user_profile.banned:
+                    a = UserProfile.objects.get(username=i.review_user_id)
+                    final['profilePics'].append(a.profilePic)
                     final['review_id'].append(i.id)
                     final['review'].append(i.review)
                     final['user'].append(i.review_user_id)
@@ -234,7 +205,6 @@ def get_review(user,id,final,gender,from_date,to_date):
              final['avg_rating']=round(sum(final['rating'])/len(final['rating']),1)
     else:
         for i in reviews.objects.filter(movie__movie_id=id , review_user_id=user):
-            #print("entered")
             final['watched'] = i.watched
             final['liked'] = i.liked
             final['wishlist'] = i.wishlist

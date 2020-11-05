@@ -171,10 +171,7 @@ export default class MenuExampleInvertedSegment extends Component {
             </Button>
             
             </Menu.Item>
-            <Menu.Item>
-
-            </Menu.Item>
-            {(window.sessionStorage.getItem('username') !== null || window.sessionStorage.getItem('username') !== "guest") &&
+            {(window.sessionStorage.getItem('username') !== null && window.sessionStorage.getItem('username') !== "guest") &&
               <Popup trigger={
                 <Menu.Item
                 name='notification'
@@ -216,7 +213,7 @@ export default class MenuExampleInvertedSegment extends Component {
               
               
             }
-            {(window.sessionStorage.getItem('username') !== null || window.sessionStorage.getItem('username') !== "guest") &&
+            {(window.sessionStorage.getItem('username') !== null && window.sessionStorage.getItem('username') !== "guest") &&
               <Menu.Item
                 name='my profile'
                 active={activeItem === 'my profile'}

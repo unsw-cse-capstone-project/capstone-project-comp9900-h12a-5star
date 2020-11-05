@@ -42,7 +42,7 @@ import {
                 className='movie_image'
               />
             <Card.Content>
-              <Card.Header>{this.props.title.substring(0,24)}</Card.Header>
+              <Card.Header>{this.props.title}</Card.Header>
               <Card.Meta><Rating icon='star' defaultRating={1} maxRating={1} disabled/> {this.props.rating}  </Card.Meta>
               <Card.Description>
                 {

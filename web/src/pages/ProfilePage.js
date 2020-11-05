@@ -271,7 +271,7 @@ export default class ProfilePage extends Component {
                                 <Divider />
                             {
                                 (!this.state.edit)?
-                            <Button color={"purple"} onClick={this.handleClick_edit}>
+                            <Button className="profileEdit" color={"purple"} onClick={this.handleClick_edit}>
                                 <center>
                                     <br />
                                     <Icon name='pencil' size="big" /> <br /> <br /> Edit Profile
@@ -279,23 +279,23 @@ export default class ProfilePage extends Component {
                             </Button>
                             
                                  :
-                                <Button color={"red"} onClick={this.handleClick_cancelEdit}>
+                                <Button className="profileEdit" color={"red"} onClick={this.handleClick_cancelEdit}>
                                     <center>
                                         <br />
                                         <Icon name='pencil square' size="big" /> <br /> <br /> Cancel Edit
                                     </center>
                                 </Button>
                             }
-                            <Button color={"purple"} onClick={event => window.location.href = `/bannedlist/${this.user}`}>
+                            <Button className="profileEdit" color={"purple"} onClick={event => window.location.href = `/bannedlist/${this.user}`}>
                                 <center>
                                     <br />
-                                    <Icon name='remove user' size="big" /> <br /> <br /> Baned User
+                                    <Icon name='remove user' size="big" /> <br /> <br /> Banned Users
                                 </center>
                             </Button>
-                            <Button color={"purple"} onClick={event => window.location.href = `/watchlist/${this.user}`}>
+                            <Button className="profileEdit" color={"purple"} onClick={event => window.location.href = `/watchlist/${this.user}`}>
                                 <center>
                                     <br />
-                                    <Icon name='eye' size="big" /> <br /> <br /> Watch list
+                                    <Icon name='eye' size="big" /> <br /> <br /> Watch List
                                 </center>
                             </Button>
                             <br />

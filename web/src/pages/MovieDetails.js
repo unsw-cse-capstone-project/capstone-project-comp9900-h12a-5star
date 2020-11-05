@@ -187,19 +187,19 @@ export default class MovieDetails extends Component {
                                     
                                 <Grid.Column textAlign={"right"} >
                                         <Popup 
-                                            trigger={<Button circular icon='thumbs up'  size={'big'} toggle active={active_like} onClick={this.handleClick_like}/>}>
+                                            trigger={<Button circular icon='thumbs up'  size={'big'} toggle active={active_like} onClick={this.handleClick_like} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>}>
                                             Like the movie?
                                         </Popup>
                                         <Popup 
-                                            trigger={<Button circular icon='eye'  size={'big'} toggle active={active_seen} onClick={this.handleClick_seen}/>}>
+                                            trigger={<Button circular icon='eye'  size={'big'} toggle active={active_seen} onClick={this.handleClick_seen} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>}>
                                             Watched the movie?
                                         </Popup>
                                         <Popup 
-                                            trigger={<Button circular icon='bookmark'  size={'big'} toggle active={active_wishlist} onClick={this.handleClick_wishlist}/>}>
+                                            trigger={<Button circular icon='bookmark'  size={'big'} toggle active={active_wishlist} onClick={this.handleClick_wishlist} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>}>
                                             Add to wishlist?
                                         </Popup>
                                         <Popup 
-                                            trigger={<Button circular icon='share alternate'  size={'big'}/>}>
+                                            trigger={<Button circular icon='share alternate'  size={'big'} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>}>
                                             Share with a user?
                                         </Popup>
                                 </Grid.Column>

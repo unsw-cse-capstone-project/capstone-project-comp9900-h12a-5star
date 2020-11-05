@@ -251,11 +251,23 @@ class Homepage(APIView):
 
 #request should be "https://127.0.0.1:8000/api/search/?query='movie name'
 
-def search_func(resp, n):
+def search_func(resp, n,m,director_given=False):
+    print(m)
     final_resp = defaultdict(list)
     poster_url = 'http://image.tmdb.org/t/p/original/'
     for i in resp['result']:
+        if n == 'browse' and director_given:
+            print("entered")
+            g=False
+            t=requests.get('https://api.themoviedb.org/3/movie/'+str(i['id'])+'/credits?api_key=c8b243a9c923fff8227feadbf8e4294e')
+            for j in range(len(t.json()['crew'])):
+                if t.json()['crew'][j]['job'] == 'Director' and str(t.json()['crew'][j]['id']) == str(m):
+                        g=True
+                        break
+            if not (g):
+                continue
         d = {}
+        print(i['id'])
         d['id'] = i['id']
         d['title'] = i['title']
         d['rating'] = round(i['vote_average'] / 2, 1)
@@ -329,7 +341,7 @@ class MovieSearch(APIView):
                 i) + "&with_genres=" + str(genre_id[0])
                       response = requests.get(url)
                       genre_resp['result'].extend(response.json()['results'])
-                genre_search = search_func(genre_resp, "genre")
+                genre_search = search_func(genre_resp, "genre",0)
             else:
                 genre_search = defaultdict(list)
             if len(query) >= 1:
@@ -349,7 +361,7 @@ class MovieSearch(APIView):
                      print(response)
                      initial_search['result'].extend(response.json()['results'])
                 print(initial_search)
-                name_search = search_func(initial_search, "name")
+                name_search = search_func(initial_search, "name",0)
             else:
                 name_search = defaultdict(list)
             s = BeautifulSoup(simple_get('https://www.imdb.com/search/title-text/?plot='+query), 'html.parser')
@@ -380,7 +392,7 @@ class MovieSearch(APIView):
                         pages = 2
                     for i in range(1, pages):
                          initial_search['result'].extend(res.json()['results'])
-                    x_search = search_func(initial_search, "desc")
+                    x_search = search_func(initial_search, "desc",0)
                 #print(x_search)
                     if len(x_search) !=0:
                         description_search['description_result'].extend(x_search['description_result'])
@@ -501,7 +513,7 @@ class MovieBrowse(APIView):
                     res=requests.get('https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page='+str(i)+'&with_genres='+genre)
                     browse_resp['result'].extend(res.json()['results'])
                     
-                #browse_search = search_func(browse_resp,'browse')
+                #browse_search = search_func(browse_resp,'browse',dir)
              else:
                 director_given=True
                 res=requests.get('https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_crew='+dir)
@@ -511,7 +523,7 @@ class MovieBrowse(APIView):
                     res=requests.get('https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page='+str(i)+'&with_crew='+dir)
                     browse_resp['result'].extend(res.json()['results'])
 
-             browse_search = search_func(browse_resp,'browse')
+             browse_search = search_func(browse_resp,'browse',dir,director_given)
              if genre_given and director_given:
                      browse_search['browse_result'] = sorted(browse_search['browse_result'], key=lambda k: ( -k['rating'],k['title'].lower()))
              elif genre_given :

@@ -11,4 +11,13 @@ Week 3
 Prepared the final draft of the interface and flow diagrams. Included the user boards in the proposal document. Reviewed format of proposal document before submission. Completed the setup of front end environment on local machine. Tested the same environment on VLAB machine. Further, I will be working on assigned JIRA tasks i.e sign up form.
 
 Week 4
-Installed mongodb, compass and other backend requirements. Finished the UI of sign up form. Integrated the UI with the backend. Tested the sign up flow. Updated the JIRA stories accordingly.
+Installed mongodb, compass and other backend requirements. Finished the UI of sign up form. Integrated the UI with the backend. Tested the sign up flow. Updated the JIRA stories accordingly. Started UI and api/backend integration of sign up page.
+
+Week 5
+Completed api integration of sign up form with UI. Added error messages for sign up page. Created UI for search by movie title, movie genre and movie description. I I will be working on UI and api/backend integration of search pages.
+
+Week 6
+Attended first demo and Presented the project progress by going through the website. Attended the retrospective meeting and contributed in preparing the retrospective document by suggesting points on what went well and wrong till now. Completed api integration of search pages with UI. Completed dynamic search by user from the navigation bar. Created generic file for exporting commonly used variables. I will be working on browse page and on the fly search based on movie name.
+
+Week 7
+Completed the UI of browse pages. Added multiselect feature for genres and directors. Completed backend/api integration of browse pages. Completed on the fly search based on movie name. Removing redundant lines of code. Testing the application and reporting issues. I will be working on filtering reviews and upvote a review. 

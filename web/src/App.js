@@ -10,9 +10,6 @@ import SignUpPage from './pages/SignUpPage';
 import MovieDetails from './pages/MovieDetails'
 import HomePage from './pages/HomePage';
 import Login from './pages/Login';
-import RecentReleased from './pages/RecentReleased';
-import TopRated from './pages/TopRated';
-import PopularMovies from './pages/PopularMovies';
 import WishListPage from './pages/WishListPage';
 import SearchPage from './pages/SearchPage';
 import SearchMovieTitle from './pages/SearchMovieTitle';
@@ -25,6 +22,7 @@ import BannedUsers from './pages/BannedUsers';
 import SignUp from './pages/SignUp';
 import BrowsePage from './pages/BrowsePage';
 import NavBar from './components/NavBar';
+import WelcomeCategory from './pages/WelcomeCategory';
 
 function App() {
   return (
@@ -33,10 +31,8 @@ function App() {
     <Router>
       <Switch>
         <Route path="/" component={HomePage} exact/>
-        <Route path="/recentReleased" component={RecentReleased} exact/>
-        <Route path="/topRated" component={TopRated} exact/>
-        <Route path="/popularMovies" component={PopularMovies} exact/>
-        <Route path="/welcome" component={HomePage} />
+        <Route path="/welcome" component={HomePage} exact/>
+        <Route path="/welcome/:category" component={WelcomeCategory} exact/>
         <Route path="/browse" component = {BrowsePage} />
         <Route path="/wishlist/:userId" component={WishListPage} />
         <Route path="/watchlist/:userId" component={WatchListPage} />

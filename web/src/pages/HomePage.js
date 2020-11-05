@@ -199,7 +199,7 @@ export default class HomePage extends Component {
                             <Header as='h1'>Top Rated Movies</Header>
                         </Grid.Column>
                         <Grid.Column>
-                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = '/topRated'}>
+                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = 'welcome/TopRated'}>
                                 see more
                             </Label>
                         </Grid.Column>
@@ -211,7 +211,7 @@ export default class HomePage extends Component {
                             <Header as='h1'>Recently Released Movies</Header>
                         </Grid.Column>
                         <Grid.Column>
-                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = '/recentReleased'}>
+                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = 'welcome/RecentlyReleased'}>
                                 see more
                             </Label>
                         </Grid.Column>
@@ -223,7 +223,7 @@ export default class HomePage extends Component {
                             <Header as='h1'>Trending Movies</Header>
                         </Grid.Column>
                         <Grid.Column>
-                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = '/popularMovies'}>
+                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = 'welcome/TrendingNow'}>
                                 see more
                             </Label>
                         </Grid.Column>

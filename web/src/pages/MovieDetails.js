@@ -186,10 +186,22 @@ export default class MovieDetails extends Component {
                                 </Grid.Column>
                                     
                                 <Grid.Column textAlign={"right"} >
-                                        <Button circular icon='thumbs up'  size={'big'} toggle active={active_like} onClick={this.handleClick_like}/>
-                                        <Button circular icon='eye'  size={'big'} toggle active={active_seen} onClick={this.handleClick_seen}/>
-                                        <Button circular icon='bookmark'  size={'big'} toggle active={active_wishlist} onClick={this.handleClick_wishlist}/>
-                                        <Button circular icon='share alternate'  size={'big'}/>
+                                        <Popup 
+                                            trigger={<Button circular icon='thumbs up'  size={'big'} toggle active={active_like} onClick={this.handleClick_like}/>}>
+                                            Like the movie?
+                                        </Popup>
+                                        <Popup 
+                                            trigger={<Button circular icon='eye'  size={'big'} toggle active={active_seen} onClick={this.handleClick_seen}/>}>
+                                            Watched the movie?
+                                        </Popup>
+                                        <Popup 
+                                            trigger={<Button circular icon='bookmark'  size={'big'} toggle active={active_wishlist} onClick={this.handleClick_wishlist}/>}>
+                                            Add to wishlist?
+                                        </Popup>
+                                        <Popup 
+                                            trigger={<Button circular icon='share alternate'  size={'big'}/>}>
+                                            Share with a user?
+                                        </Popup>
                                 </Grid.Column>
                             </Grid.Row>
                             <Grid.Row>

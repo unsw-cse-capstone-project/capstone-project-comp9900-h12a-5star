@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import _ from 'lodash'
 import {  Form, Segment,  Button, Dropdown} from 'semantic-ui-react';
 import { Container, Header, Divider, Grid, Label, Card, Placeholder} from 'semantic-ui-react';
-import NavBar from '../components/NavBar';
 import MovieTile from '../components/MovieTile';
 import {directorList,genreList} from './DirectorsGenres'
 
@@ -213,7 +212,6 @@ export default class BrowsePage extends Component {
         }
         return (
             <>
-                <NavBar />
     
                 <Container style={{ margin: 20 }}>
     

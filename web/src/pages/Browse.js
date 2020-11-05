@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import _ from 'lodash'
 import {  Form, Segment,  Button, Dropdown} from 'semantic-ui-react';
 import { Container, Header, Divider, Grid, Label, Card, Placeholder} from 'semantic-ui-react';
-import NavBar from '../components/NavBar';
 import MovieTile from '../components/MovieTile';
 import {useState, useEffect} from 'react';
 import Select from 'react-select';
@@ -204,7 +203,6 @@ const Browse = () => {
         // }
         return (
         <>
-            <NavBar />
 
             <Container style={{ margin: 20 }}>
 

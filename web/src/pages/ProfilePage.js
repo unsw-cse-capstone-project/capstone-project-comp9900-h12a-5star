@@ -1,8 +1,5 @@
 import React , { Component, createRef } from 'react'
 import { Tab, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Form, Label, Ref, Dropdown } from 'semantic-ui-react'
-import NavBar from '../components/NavBar';
-import SignUpPage from '../pages/SignUpPage';
-
 
 export default class ProfilePage extends Component {
 
@@ -150,8 +147,6 @@ export default class ProfilePage extends Component {
 
         return(
             <React.Fragment>
-                
-                <NavBar />
                 <Container>
                     <div style={{backgroundImage: `url(${require("../images/profileBackground.jpg")})`, height: 300}}>
                         <br />

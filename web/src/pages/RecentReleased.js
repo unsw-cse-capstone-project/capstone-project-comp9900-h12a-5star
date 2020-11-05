@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
 import { Container, Header,Grid} from 'semantic-ui-react';
-import NavBar from '../components/NavBar';
 import MovieTile from '../components/MovieTile';
 
 export default class RecentReleased extends Component {
@@ -62,8 +61,6 @@ export default class RecentReleased extends Component {
         }
         return (
             <>
-                <NavBar />
-
                 <Container style={{ margin: 20 }}>
                     <Header as='h1'>Recently Released Movies</Header>
                     <Grid columns='equal'>{columnsRecentlyReleased}</Grid>

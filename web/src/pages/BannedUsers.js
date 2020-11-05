@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
 import { Button, Container, Grid, Header, Icon, Image, Divider, Message} from 'semantic-ui-react';
-import NavBar from '../components/NavBar';
 import {
     Link,
   } from "react-router-dom";
@@ -100,7 +99,6 @@ export default class WishListPage extends Component {
 
         return (
             <>
-                <NavBar />
                 <Container>
                     {/* <Header as='h1'>{this.props.match.params.userId}'s Wishlist</Header> */}
                     <Divider horizontal></Divider>

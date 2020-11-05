@@ -1,7 +1,5 @@
 import React , { Component, createRef } from 'react'
 import { Tab, Segment, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Form, Label, Ref, Dropdown } from 'semantic-ui-react'
-import NavBar from '../components/NavBar';
-
 
 export default class SignUp extends Component {
 
@@ -102,7 +100,6 @@ export default class SignUp extends Component {
 
         return(
             <>
-            <NavBar/>
             <div style={{ backgroundImage: `url(${require("../images/loginsignup.jpg")})` }}>
             
               <Grid>

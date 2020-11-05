@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
 import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed} from 'semantic-ui-react'
-import NavBar from '../components/NavBar';
 
 export default class MovieDetails extends Component {
 
@@ -173,7 +172,6 @@ export default class MovieDetails extends Component {
         return (
             
             <React.Fragment>
-                < NavBar />
                 <Container >
                 
                     <Segment > 

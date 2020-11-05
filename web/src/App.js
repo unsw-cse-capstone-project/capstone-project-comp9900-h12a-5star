@@ -24,8 +24,12 @@ import BannedUsers from './pages/BannedUsers';
 // import Browse from './pages/Browse';
 import SignUp from './pages/SignUp';
 import BrowsePage from './pages/BrowsePage';
+import NavBar from './components/NavBar';
+
 function App() {
   return (
+    <>
+    <NavBar />
     <Router>
       <Switch>
         <Route path="/" component={HomePage} exact/>
@@ -48,6 +52,7 @@ function App() {
         <Route component = {NotFoundPage} />
       </Switch>
     </Router>
+    </>
   );
 }
 

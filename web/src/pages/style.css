@@ -11,9 +11,15 @@
     width: 130px;
 }
 
-.register{
+.account .form{
     margin-left: 5%;
     margin-right: 5%;
     margin-bottom: 6%;
     opacity: 1!important;
+}
+
+.errorMessage{
+    margin-left: 5%!important;
+    margin-right: 5%!important;
+    color: red;
 }

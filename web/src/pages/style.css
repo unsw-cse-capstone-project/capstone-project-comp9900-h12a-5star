@@ -2,3 +2,7 @@
     background-image: url(/static/media/loginsignup.de2e7249.jpg);
     height: 640px;
 }
+
+.profile .header{
+    height: 25px;
+}

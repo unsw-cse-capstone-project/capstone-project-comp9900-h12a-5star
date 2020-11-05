@@ -1,5 +1,5 @@
 import React , { Component, createRef } from 'react'
-import { Tab, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Form, Label, Ref, Dropdown } from 'semantic-ui-react'
+import { Tab, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Form, Label, Ref, Dropdown, List } from 'semantic-ui-react'
 
 export default class ProfilePage extends Component {
 
@@ -188,27 +188,41 @@ export default class ProfilePage extends Component {
                                         Email
                                         <Label.Detail>{this.state.items.data.email}</Label.Detail>
                                     </Label>
-                                    <br />
-                                    <br />
-                                    <Label as='a' color='blue' >
-                                        <Icon name="globe" />
-                                        Genere Preference
-                                        {
-                                            this.state.items.data.genres.map((item)=>
-                                            <Label.Detail>{item}</Label.Detail>
-                                            )
-                                        }
-                                    </Label>
-                                    <Label as='a' color='blue' >
-                                        <Icon name="language" />
-                                        Language Preference
-                                        {
-                                            this.state.items.data.languages.map((item)=>
-                                            <Label.Detail>{item}</Label.Detail>
-                                            )
-                                        }
-                                    </Label>
-                                    <br />
+                                   
+
+                                    <List className='profile'>
+                                            <List.Item>
+                                                <List.Content>
+                                                    <List.Header><Icon name='globe' />Genre Preference</List.Header>
+                                                    <List.Description>
+                                                        <Label.Group>
+                                                            {
+                                                                this.state.items.data.genres.map((item)=>
+                                                                <Label as='a' color='blue'>{item}</Label>
+                                                                )
+                                                            }
+                                                        </Label.Group>
+                                                    </List.Description>
+                                                </List.Content>
+                                            </List.Item>
+                                        </List>
+
+                                        <List className='profile'>
+                                            <List.Item>
+                                                <List.Content>
+                                                    <List.Header><Icon name='language' />Language Preference</List.Header>
+                                                    <List.Description>
+                                                        <Label.Group>
+                                                            {
+                                                                this.state.items.data.languages.map((item)=>
+                                                                <Label as='a' color='blue'>{item}</Label>
+                                                                )
+                                                            }
+                                                        </Label.Group>
+                                                    </List.Description>
+                                                </List.Content>
+                                            </List.Item>
+                                        </List>
                                 </div>
                                 :
                                 <div>

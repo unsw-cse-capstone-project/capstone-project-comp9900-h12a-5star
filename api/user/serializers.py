@@ -35,12 +35,6 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     language = serializers.ListField(
         child = serializers.CharField()
     )
-    '''banned = serializers.ListField(
-        child = serializers.CharField()
-    )
-    watched = serializers.ListField(
-        child = serializers.IntegerField()
-    )'''#
 
     class Meta:
         model = User

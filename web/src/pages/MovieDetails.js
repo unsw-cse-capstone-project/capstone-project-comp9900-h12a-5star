@@ -406,7 +406,9 @@ export default class MovieDetails extends Component {
                                     <Comment>
                                         <Comment.Avatar src={this.state.items.profilePics[j]} />
                                         <Comment.Content>
-                                            <Popup trigger={<Comment.Author as='a'>{this.state.items.user[j]}</Comment.Author>} 
+                                            {
+                                                (this.state.items.user[j] !== this.user) ?
+                                                <Popup trigger={<Comment.Author as='a'>{this.state.items.user[j]}</Comment.Author>} 
                                                     flowing 
                                                     hoverable 
                                                     style={style} 
@@ -422,7 +424,11 @@ export default class MovieDetails extends Component {
                                                         <Popup trigger={<Button secondary icon='add user' size={'big'} />}>
                                                             Follow User
                                                         </Popup>
-                                            </Popup>
+                                                </Popup>
+                                                :
+                                                <Comment.Author as='a'>{this.state.items.user[j]}</Comment.Author>
+                                            }
+                                            
                                             <Comment.Metadata>
                                                 <div>{this.state.items.date[j]} {this.state.items.time[j]}</div>
                                             </Comment.Metadata>

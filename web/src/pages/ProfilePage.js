@@ -236,7 +236,7 @@ export default class ProfilePage extends Component {
                                         </Form.Field>
                                         <Form.Field width={5}>
                                             <label>Email</label>
-                                            <input defaultValue='placeholder@gmail.com' disabled required/>
+                                            <input defaultValue={this.state.items.data.email} disabled required/>
                                         </Form.Field>
                                         <Form.Field width={5}>
                                             <label>First Name</label>

@@ -254,7 +254,7 @@ class Homepage(APIView):
 
 #request should be "https://127.0.0.1:8000/api/search/?query='movie name'
 
-def search_func(resp, n,m,director_given=False):
+def search_func(resp, n,m='',director_given=False):
     print(m)
     final_resp = defaultdict(list)
     poster_url = 'http://image.tmdb.org/t/p/original/'

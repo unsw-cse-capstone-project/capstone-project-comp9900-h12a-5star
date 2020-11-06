@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
 import { Container, Header, Divider, Grid, Label, Card, Placeholder } from 'semantic-ui-react';
-import NavBar from '../components/NavBar';
 import MovieTile from '../components/MovieTile';
 
 
@@ -252,8 +251,6 @@ export default class SearchPage extends Component {
         
         return (
             <React.Fragment>
-                <NavBar />
-                
                 <Container style={{ margin: 20 }}>
                 { flag == 1  && 
                     <Grid.Column>

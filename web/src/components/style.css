@@ -5,6 +5,10 @@
     height: -webkit-fill-available!important;
 }
 .movie_card .description{
-    height: 55px!important;
+    height: 60px!important;
+    overflow: hidden;
+}
+.movie_card .header{
+    height: 25px!important;
     overflow: hidden;
 }

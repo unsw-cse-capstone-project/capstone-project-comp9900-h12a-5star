@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
 import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed} from 'semantic-ui-react'
-import NavBar from '../components/NavBar';
 
 export default class MovieDetails extends Component {
 
@@ -173,7 +172,6 @@ export default class MovieDetails extends Component {
         return (
             
             <React.Fragment>
-                < NavBar />
                 <Container >
                 
                     <Segment > 
@@ -188,10 +186,22 @@ export default class MovieDetails extends Component {
                                 </Grid.Column>
                                     
                                 <Grid.Column textAlign={"right"} >
-                                        <Button circular icon='thumbs up'  size={'big'} toggle active={active_like} onClick={this.handleClick_like}/>
-                                        <Button circular icon='eye'  size={'big'} toggle active={active_seen} onClick={this.handleClick_seen}/>
-                                        <Button circular icon='bookmark'  size={'big'} toggle active={active_wishlist} onClick={this.handleClick_wishlist}/>
-                                        <Button circular icon='share alternate'  size={'big'}/>
+                                        <Popup 
+                                            trigger={<Button circular icon='thumbs up'  size={'big'} toggle active={active_like} onClick={this.handleClick_like}/>}>
+                                            Like the movie?
+                                        </Popup>
+                                        <Popup 
+                                            trigger={<Button circular icon='eye'  size={'big'} toggle active={active_seen} onClick={this.handleClick_seen}/>}>
+                                            Watched the movie?
+                                        </Popup>
+                                        <Popup 
+                                            trigger={<Button circular icon='bookmark'  size={'big'} toggle active={active_wishlist} onClick={this.handleClick_wishlist}/>}>
+                                            Add to wishlist?
+                                        </Popup>
+                                        <Popup 
+                                            trigger={<Button circular icon='share alternate'  size={'big'}/>}>
+                                            Share with a user?
+                                        </Popup>
                                 </Grid.Column>
                             </Grid.Row>
                             <Grid.Row>
@@ -403,8 +413,8 @@ export default class MovieDetails extends Component {
                                                     inverted 
                                                     position='top center'
                                                     on={['hover', 'click']}>
-                                                        <Popup trigger={<Button secondary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` } icon="eye" size={'big'} />}>
-                                                            View Watchlist
+                                                        <Popup trigger={<Button secondary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` } icon="bookmark" size={'big'} />}>
+                                                            View Wishlist
                                                         </Popup>
                                                         <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])} secondary icon='user close' size={'big'} />}>
                                                             Ban User

@@ -1,8 +1,5 @@
 import React , { Component, createRef } from 'react'
-import { Tab, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Form, Label, Ref, Dropdown } from 'semantic-ui-react'
-import NavBar from '../components/NavBar';
-import SignUpPage from '../pages/SignUpPage';
-
+import { Tab, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Form, Label, Ref, Dropdown, List } from 'semantic-ui-react'
 
 export default class ProfilePage extends Component {
 
@@ -16,30 +13,31 @@ export default class ProfilePage extends Component {
         { key: 'Adventure', text: 'Adventure', value: 'Adventure' },
         { key: 'Comedy', text: 'Comedy', value: 'Comedy' },
         { key: 'Crime', text: 'Crime', value: 'Crime' },
-        { key: 'Crama', text: 'Drama', value: 'Drama' },
+        { key: 'Drama', text: 'Drama', value: 'Drama' },
         { key: 'Family', text: 'Family', value: 'Family' },
         { key: 'Fantasy', text: 'Fantasy', value: 'Fantasy' },
         { key: 'Horror', text: 'Horror', value: 'Horror' },
         { key: 'Mystery', text: 'Mystery', value: 'Mystery' },
         { key: 'Romance', text: 'Romance', value: 'Romance' },
-        { key: 'Sciencefiction', text: 'Science Fiction', value: 'Sciencefiction' },
+        { key: 'Science Fiction', text: 'Science Fiction', value: 'Science Fiction' },
         { key: 'Thriller', text: 'Thriller', value: 'Thriller' },
         
     ]
 
     languageOptions = [
         { key: 'English', text: 'English', value: 'English' },
-        { key: 'Gujrati', text: 'Gujrati', value: 'Gujrati' },
-        { key: 'Hindi', text: 'Hindi', value: 'Hindi' },
-        { key: 'Kannada', text: 'Kannada', value: 'Kannada' },
-        { key: 'Marathi', text: 'Marathi', value: 'Marathi' },
         { key: 'Mandarin Chinese', text: 'Mandarin Chinese', value: 'Mandarin Chinese' },
-        { key: 'punjabi', text: 'Punjabi', value: 'punjabi' },
-        { key: 'spanish', text: 'Spanish', value: 'spanish' },
-        { key: 'telugu', text: 'Telugu', value: 'telegu' },
-        { key: 'urdu', text: 'Urdu', value: 'urdu' },
-        
+        { key: 'Hindi', text: 'Hindi', value: 'Hindi' },
+        { key: 'Spanish', text: 'Spanish', value: 'Spanish' },
+        { key: 'French', text: 'French', value: 'French' },
+        { key: 'Standard Arabic', text: 'Standard Arabic', value: 'Standard Arabic' },
+        { key: 'Bengali', text: 'Bengali', value: 'Bengali' },
+        { key: 'Russian', text: 'Russian', value: 'Russian' },
+        { key: 'Portuguese', text: 'Portuguese', value: 'Portuguese' },
+        { key: 'Indonesian', text: 'Indonesian', value: 'Indonesian' },
+        { key: 'Korean', text: 'Korean', value: 'Korean' },
       ]
+    
     constructor() {
         super();
         this.state = {
@@ -149,8 +147,6 @@ export default class ProfilePage extends Component {
 
         return(
             <React.Fragment>
-                
-                <NavBar />
                 <Container>
                     <div style={{backgroundImage: `url(${require("../images/profileBackground.jpg")})`, height: 300}}>
                         <br />
@@ -192,27 +188,41 @@ export default class ProfilePage extends Component {
                                         Email
                                         <Label.Detail>{this.state.items.data.email}</Label.Detail>
                                     </Label>
-                                    <br />
-                                    <br />
-                                    <Label as='a' color='blue' >
-                                        <Icon name="globe" />
-                                        Genere Preference
-                                        {
-                                            this.state.items.data.genres.map((item)=>
-                                            <Label.Detail>{item}</Label.Detail>
-                                            )
-                                        }
-                                    </Label>
-                                    <Label as='a' color='blue' >
-                                        <Icon name="language" />
-                                        Language Preference
-                                        {
-                                            this.state.items.data.languages.map((item)=>
-                                            <Label.Detail>{item}</Label.Detail>
-                                            )
-                                        }
-                                    </Label>
-                                    <br />
+                                   
+
+                                    <List className='profile'>
+                                            <List.Item>
+                                                <List.Content>
+                                                    <List.Header><Icon name='globe' />Genre Preference</List.Header>
+                                                    <List.Description>
+                                                        <Label.Group>
+                                                            {
+                                                                this.state.items.data.genres.map((item)=>
+                                                                <Label as='a' color='blue'>{item}</Label>
+                                                                )
+                                                            }
+                                                        </Label.Group>
+                                                    </List.Description>
+                                                </List.Content>
+                                            </List.Item>
+                                        </List>
+
+                                        <List className='profile'>
+                                            <List.Item>
+                                                <List.Content>
+                                                    <List.Header><Icon name='language' />Language Preference</List.Header>
+                                                    <List.Description>
+                                                        <Label.Group>
+                                                            {
+                                                                this.state.items.data.languages.map((item)=>
+                                                                <Label as='a' color='blue'>{item}</Label>
+                                                                )
+                                                            }
+                                                        </Label.Group>
+                                                    </List.Description>
+                                                </List.Content>
+                                            </List.Item>
+                                        </List>
                                 </div>
                                 :
                                 <div>
@@ -261,7 +271,7 @@ export default class ProfilePage extends Component {
                                 <Divider />
                             {
                                 (!this.state.edit)?
-                            <Button color={"purple"} onClick={this.handleClick_edit}>
+                            <Button className="profileEdit" color={"purple"} onClick={this.handleClick_edit}>
                                 <center>
                                     <br />
                                     <Icon name='pencil' size="big" /> <br /> <br /> Edit Profile
@@ -269,23 +279,23 @@ export default class ProfilePage extends Component {
                             </Button>
                             
                                  :
-                                <Button color={"red"} onClick={this.handleClick_cancelEdit}>
+                                <Button className="profileEdit" color={"red"} onClick={this.handleClick_cancelEdit}>
                                     <center>
                                         <br />
                                         <Icon name='pencil square' size="big" /> <br /> <br /> Cancel Edit
                                     </center>
                                 </Button>
                             }
-                            <Button color={"purple"} onClick={event => window.location.href = `/bannedlist/${this.user}`}>
+                            <Button className="profileEdit" color={"purple"} onClick={event => window.location.href = `/bannedlist/${this.user}`}>
                                 <center>
                                     <br />
-                                    <Icon name='remove user' size="big" /> <br /> <br /> Baned User
+                                    <Icon name='remove user' size="big" /> <br /> <br /> Banned Users
                                 </center>
                             </Button>
-                            <Button color={"purple"} onClick={event => window.location.href = `/watchlist/${this.user}`}>
+                            <Button className="profileEdit" color={"purple"} onClick={event => window.location.href = `/watchlist/${this.user}`}>
                                 <center>
                                     <br />
-                                    <Icon name='eye' size="big" /> <br /> <br /> Watch list
+                                    <Icon name='eye' size="big" /> <br /> <br /> Watch List
                                 </center>
                             </Button>
                             <br />

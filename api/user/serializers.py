@@ -5,10 +5,18 @@ from user.models import User
 from django_select2.forms import Select2MultipleWidget
 import random
 
-pictures = {'Female': ['https://react.semantic-ui.com/images/avatar/small/elliot.jpg',
-'https://react.semantic-ui.com/images/avatar/small/jenny.jpg'],
-'Male': ['https://react.semantic-ui.com/images/avatar/small/matt.jpg',
-'https://react.semantic-ui.com/images/avatar/small/joe.jpg']}
+pictures = {'Female': ['https://react.semantic-ui.com/images/avatar/large/molly.png',
+'https://react.semantic-ui.com/images/avatar/large/jenny.jpg',
+'https://react.semantic-ui.com/images/avatar/large/stevie.jpg',
+'https://react.semantic-ui.com/images/avatar/large/helen.jpg',
+'https://react.semantic-ui.com/images/avatar/large/laura.jpg'],
+'Male': ['https://react.semantic-ui.com/images/avatar/large/elliot.jpg',
+'https://react.semantic-ui.com/images/avatar/large/matthew.png',
+'https://react.semantic-ui.com/images/avatar/large/steve.jpg',
+'https://react.semantic-ui.com/images/avatar/large/daniel.jpg',
+'https://react.semantic-ui.com/images/avatar/large/joe.jpg',
+'https://react.semantic-ui.com/images/avatar/large/christian.jpg',
+'https://react.semantic-ui.com/images/avatar/large/matt.jpg']}
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,12 +35,6 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     language = serializers.ListField(
         child = serializers.CharField()
     )
-    '''banned = serializers.ListField(
-        child = serializers.CharField()
-    )
-    watched = serializers.ListField(
-        child = serializers.IntegerField()
-    )'''#
 
     class Meta:
         model = User

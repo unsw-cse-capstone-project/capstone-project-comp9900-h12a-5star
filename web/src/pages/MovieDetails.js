@@ -430,7 +430,7 @@ export default class MovieDetails extends Component {
                                             }
                                             
                                             <Comment.Metadata>
-                                                <div>{this.state.items.date[j]} {this.state.items.time[j]}</div>
+                                                <div>{this.state.items.date_modified[j]}</div>
                                             </Comment.Metadata>
                                             <Comment.Text>
                                                 <Rating icon='star' defaultRating={this.state.items.rating[j]} maxRating={5} disabled /><br />

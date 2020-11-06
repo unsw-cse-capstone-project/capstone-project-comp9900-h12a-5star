@@ -6,6 +6,14 @@ import _ from 'lodash'
 
 const source = moviesList
 
+// const source =  _.times(10, (i) => ({
+  
+//           title: moviesList[i].title,
+//           description: moviesList[i].description,
+//           image: moviesList[i].image,
+//           price: moviesList[i].price,
+// }       
+// ))
 
 // const source = _.times(3, () => ({
 //   title: faker.company.companyName(),

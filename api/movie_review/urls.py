@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from movie_review.views import add_review, get_review, add_rating, add_to_wishlist, get_wishlist, liked
+from movie_review.views import add_review, get_review, add_rating, add_to_wishlist, get_wishlist, liked, upvote
 
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^addWishlist/', add_to_wishlist, name='add_wishlist'),
     url(r'^viewWishlist/', get_wishlist, name='get_wishlist'),
     url(r'^likeMovie/', liked, name='like'),
+    url(r'^upvote', upvote, name='upvote'),
     ]

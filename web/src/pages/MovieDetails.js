@@ -181,25 +181,25 @@ export default class MovieDetails extends Component {
                                     <Header as='h1'>
                                         {this.state.items.title+"  "}
                                 </Header>
-                                <Icon name='star' color={"yellow"}/> {this.state.items.imdb_rating} 
+                                <Icon name='star' color={"yellow"}/> {this.state.items.avg_rating} 
                                 
                                 </Grid.Column>
                                     
                                 <Grid.Column textAlign={"right"} >
                                         <Popup 
-                                            trigger={<Button circular icon='thumbs up'  size={'big'} toggle active={active_like} onClick={this.handleClick_like}/>}>
+                                            trigger={<Button circular icon='thumbs up'  size={'big'} toggle active={active_like} onClick={this.handleClick_like} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>}>
                                             Like the movie?
                                         </Popup>
                                         <Popup 
-                                            trigger={<Button circular icon='eye'  size={'big'} toggle active={active_seen} onClick={this.handleClick_seen}/>}>
+                                            trigger={<Button circular icon='eye'  size={'big'} toggle active={active_seen} onClick={this.handleClick_seen} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>}>
                                             Watched the movie?
                                         </Popup>
                                         <Popup 
-                                            trigger={<Button circular icon='bookmark'  size={'big'} toggle active={active_wishlist} onClick={this.handleClick_wishlist}/>}>
+                                            trigger={<Button circular icon='bookmark'  size={'big'} toggle active={active_wishlist} onClick={this.handleClick_wishlist} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>}>
                                             Add to wishlist?
                                         </Popup>
                                         <Popup 
-                                            trigger={<Button circular icon='share alternate'  size={'big'}/>}>
+                                            trigger={<Button circular icon='share alternate'  size={'big'} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>}>
                                             Share with a user?
                                         </Popup>
                                 </Grid.Column>
@@ -404,9 +404,11 @@ export default class MovieDetails extends Component {
                                 (this.state.items.review)?
                                 _.times(this.state.items.review.length, (j) => (
                                     <Comment>
-                                        <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg' />
+                                        <Comment.Avatar src={this.state.items.profilePics[j]} />
                                         <Comment.Content>
-                                            <Popup trigger={<Comment.Author as='a'>{this.state.items.user[j]}</Comment.Author>} 
+                                            {
+                                                (this.state.items.user[j] !== this.user) ?
+                                                <Popup trigger={<Comment.Author as='a'>{this.state.items.user[j]}</Comment.Author>} 
                                                     flowing 
                                                     hoverable 
                                                     style={style} 
@@ -422,9 +424,13 @@ export default class MovieDetails extends Component {
                                                         <Popup trigger={<Button secondary icon='add user' size={'big'} />}>
                                                             Follow User
                                                         </Popup>
-                                            </Popup>
+                                                </Popup>
+                                                :
+                                                <Comment.Author as='a'>{this.state.items.user[j]}</Comment.Author>
+                                            }
+                                            
                                             <Comment.Metadata>
-                                                <div>{this.state.items.date[j]} {this.state.items.time[j]}</div>
+                                                <div>{this.state.items.date_modified[j]}</div>
                                             </Comment.Metadata>
                                             <Comment.Text>
                                                 <Rating icon='star' defaultRating={this.state.items.rating[j]} maxRating={5} disabled /><br />

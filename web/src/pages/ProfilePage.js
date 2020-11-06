@@ -1,11 +1,12 @@
 import React , { Component, createRef } from 'react'
-import { Tab, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Form, Label, Ref, Dropdown, List } from 'semantic-ui-react'
+import { Tab, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Form, Label, Modal, Dropdown, List } from 'semantic-ui-react'
+import './style.css'
 
 export default class ProfilePage extends Component {
 
     genderOptions = [
-        { key: 'm', text: 'Male', value: 'male' },
-        { key: 'f', text: 'Female', value: 'female' },
+        { key: 'Male', text: 'Male', value: 'Male' },
+        { key: 'Female', text: 'Female', value: 'Female' },
     ]
     
     genreOptions = [
@@ -37,6 +38,25 @@ export default class ProfilePage extends Component {
         { key: 'Indonesian', text: 'Indonesian', value: 'Indonesian' },
         { key: 'Korean', text: 'Korean', value: 'Korean' },
       ]
+
+    maleProfile = [
+        "https://react.semantic-ui.com/images/avatar/large/elliot.jpg",
+        "https://react.semantic-ui.com/images/avatar/large/matthew.png",
+        "https://react.semantic-ui.com/images/avatar/large/steve.jpg",
+        "https://react.semantic-ui.com/images/avatar/large/daniel.jpg",
+        "https://react.semantic-ui.com/images/avatar/large/joe.jpg",
+        "https://react.semantic-ui.com/images/avatar/large/christian.jpg",
+        "https://react.semantic-ui.com/images/avatar/large/matt.jpg"
+    ]
+
+    femaleProfile = [
+        "https://react.semantic-ui.com/images/avatar/large/molly.png",
+        "https://react.semantic-ui.com/images/avatar/large/jenny.jpg",
+        "https://react.semantic-ui.com/images/avatar/large/stevie.jpg",
+        "https://react.semantic-ui.com/images/avatar/large/helen.jpg",
+        "https://react.semantic-ui.com/images/avatar/large/laura.jpg",
+        "https://react.semantic-ui.com/images/avatar/large/veronika.jpg"
+    ]
     
     constructor() {
         super();
@@ -52,12 +72,17 @@ export default class ProfilePage extends Component {
             gender : "",
             languages : [],
             generes : [],
-            profilePic : "" 
+            profilePic : "",
+            open: false 
         };
         if (window.sessionStorage.getItem('username') === null){
             window.sessionStorage.setItem('username', 'guest');
         }
         this.user = window.sessionStorage.getItem('username')
+    }
+
+    setOpen(val){
+        this.setState({open: val})
     }
 
     componentDidMount() {
@@ -114,7 +139,8 @@ export default class ProfilePage extends Component {
                                     lastname: this.state.lastName, 
                                     gender: this.state.gender,
                                     genres: this.state.generes,
-                                    languages: this.state.languages })
+                                    languages: this.state.languages,
+                                    profilePic: this.state.profilePic })
         }
 
         fetch("http://127.0.0.1:8000/api/profile/"+{"username":this.user}, requestOptions)
@@ -143,6 +169,11 @@ export default class ProfilePage extends Component {
             window.location.reload(false)
     }
 
+    handleClick_editAvatar = (val) => {
+        this.setState({profilePic: val})
+        this.setOpen(false)
+    }
+
     render() {
 
         return(
@@ -153,13 +184,14 @@ export default class ProfilePage extends Component {
                         <br />
                         <br /><br /><br /><br />
                         <center>
-                            <Image src={this.state.profilePic} circular size={"medium"} spaced={"left"}/>
-                            <br />
-                            <br />
-                            {
+                        {
                             (!this.state.edit) ?
                                 (this.state.items.data) &&
                                 <div>
+                                    <Image src={this.state.items.data.profilePic} circular size={"medium"} spaced={"left"}/>
+                                    <br />
+                                    <br />
+                            
                                     <Header as= "h1">
                                         {this.state.items.data.firstname.charAt(0).toUpperCase()+this.state.items.data.firstname.slice(1)+" "+this.state.items.data.lastname.charAt(0).toUpperCase()+this.state.items.data.lastname.slice(1)}
                                     </Header>
@@ -226,8 +258,40 @@ export default class ProfilePage extends Component {
                                 </div>
                                 :
                                 <div>
+                                    <Image src={this.state.profilePic} circular size={"medium"} spaced={"left"}/>
                                     <br />
+                                    <Modal
+                                        basic
+                                        onClose={() => this.setOpen(false)}
+                                        onOpen={() => this.setOpen(true)}
+                                        open={this.state.open}
+                                        size='small'
+                                        trigger={<Button className="avatarEdit" >Change Avatar</Button>}
+                                    >
+                                        <Modal.Content>
+                                            {
+                                                (this.state.gender === "Male")?
+                                                    this.maleProfile.map((item) =>
+                                                        (item !== this.state.profilePic) &&
+                                                        <Button className="avatarEdit" onClick={()=> this.handleClick_editAvatar(item)}><Image src={item} size="small"/></Button>
+                                                )
 
+                                                :
+                                                this.femaleProfile.map((item) =>
+                                                    (item !== this.state.profilePic) &&
+                                                    <Button className="avatarEdit" onClick={()=> this.handleClick_editAvatar(item)}><Image src={item} size="small"/></Button>
+                                                )
+                                            }
+                                            
+                                        </Modal.Content>
+                                        <Modal.Actions>
+                                            <Button color='red' inverted onClick={() => this.setOpen(false)}>
+                                                <Icon name='remove' /> Cancel
+                                            </Button>
+                                        </Modal.Actions>
+                                    </Modal>
+                                    <br />
+                                    <br />
                                     {
                                     <Form>
                                         <Form.Field width={5}>
@@ -236,7 +300,7 @@ export default class ProfilePage extends Component {
                                         </Form.Field>
                                         <Form.Field width={5}>
                                             <label>Email</label>
-                                            <input defaultValue='placeholder@gmail.com' disabled required/>
+                                            <input defaultValue={this.state.items.data.email} disabled required/>
                                         </Form.Field>
                                         <Form.Field width={5}>
                                             <label>First Name</label>

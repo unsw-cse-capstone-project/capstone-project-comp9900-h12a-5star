@@ -404,7 +404,7 @@ export default class MovieDetails extends Component {
                                 (this.state.items.review)?
                                 _.times(this.state.items.review.length, (j) => (
                                     <Comment>
-                                        <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg' />
+                                        <Comment.Avatar src={this.state.items.profilePics[j]} />
                                         <Comment.Content>
                                             <Popup trigger={<Comment.Author as='a'>{this.state.items.user[j]}</Comment.Author>} 
                                                     flowing 

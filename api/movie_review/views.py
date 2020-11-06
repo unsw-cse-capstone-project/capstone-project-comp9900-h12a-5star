@@ -198,3 +198,19 @@ def liked(request):
                 'message': 'like added for a new user and movie',
                 }
     return Response(response)
+
+@api_view(['POST', ])
+def upvote(request):
+    a,b = verify_user(request.data['reviewerUsername'])
+    if a==False:
+        return Response(b)
+    for i in reviews.objects.filter(review_user_id=request.data['reviewerUsername'], movie__movie_id=request.data['movieId']):
+        i.upvote_count += int(request.data['upvote'])
+        votes = i.upvote_count
+        i.save()
+    response = {
+                'success': 'True',
+                'statusCode': status.HTTP_200_OK,
+                'count':votes
+                }
+    return Response(response)

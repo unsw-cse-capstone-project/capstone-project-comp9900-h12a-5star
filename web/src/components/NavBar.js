@@ -1,45 +1,19 @@
 import React, { Component } from 'react'
-
+import {moviesList} from '../pages/MovieData';
 import { Icon, Button, Menu, Segment, Search, Image, Popup, Feed } from 'semantic-ui-react'
-
-
 import _ from 'lodash'
-import faker from 'faker'
 
 
-const source=[
-  {
-    "title": "Gabriel's Inferno Part I",
-    "description": "Professor Gabriel Emerson finally learns the truth",
-    "image": "https://s3.amazonaws.com/uifaces/faces/twitter/_kkga/128.jpg",
-    "price": "4.5"
-  },
-  {
-    "title": "The Shawshank Redemption",
-    "description": "Framed in the 1940s for the double",
-    "image": "https://s3.amazonaws.com/uifaces/faces/twitter/saschadroste/128.jpg",
-    "price": "4.3"
-  },
-  {
-    "title": "The Craft: Legacy",
-    "description": "Ameliorated asymmetric open system",
-    "image": "https://s3.amazonaws.com/uifaces/faces/twitter/salleedesign/128.jpg",
-    "price": "3.4"
-  },
-  {
-    "title": "Hard Kill",
-    "description": "User-centric motivating process improvement",
-    "image": "https://s3.amazonaws.com/uifaces/faces/twitter/madebyvadim/128.jpg",
-    "price": "2.1"
-  },
-  {
-    "title": "Once Upon a Snowman",
-    "description": "The previously untold origins of Olaf,",
-    "image": "https://s3.amazonaws.com/uifaces/faces/twitter/alevizio/128.jpg",
-    "price": "3.9"
-  }
-]
+const source = moviesList
 
+// const source =  _.times(10, (i) => ({
+  
+//           title: moviesList[i].title,
+//           description: moviesList[i].description,
+//           image: moviesList[i].image,
+//           price: moviesList[i].price,
+// }       
+// ))
 
 // const source = _.times(3, () => ({
 //   title: faker.company.companyName(),

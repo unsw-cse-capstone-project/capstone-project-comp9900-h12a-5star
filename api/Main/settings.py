@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'multiselectfield',
     'user',
     'profile',
-    'movie_review'
+    'movie_review',
+    'notifications'
 ]
 
 MIDDLEWARE = [

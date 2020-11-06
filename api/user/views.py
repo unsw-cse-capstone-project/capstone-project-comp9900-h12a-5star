@@ -1,6 +1,4 @@
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, RetrieveAPIView
-from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from user.serializers import UserRegistrationSerializer
 from user.serializers import UserLoginSerializer
@@ -20,6 +18,7 @@ from contextlib import closing
 from bs4 import BeautifulSoup
 from datetime import datetime
 from datetime import date
+from user.helper import verification_email
 
 '''
 Json input format for user registration. Do not change genres and languages inside profile
@@ -42,15 +41,12 @@ Json input format for user registration. Do not change genres and languages insi
 
 class Ban:
   banned = []
-#global search_static
 
 @api_view(['POST', ])
 def UserRegistrationView(request):
     if request.method == 'POST':
         serializer_class = UserRegistrationSerializer
         permission_classes = (AllowAny,)
-
-        #print(request.data)
         serializer = serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -60,7 +56,7 @@ def UserRegistrationView(request):
             'message': 'User registered  successfully',
             }
         statusCode = status.HTTP_200_OK
-        #print(response)
+        verification_email(request.data['email'])
         return Response(response, status=statusCode)
 
 
@@ -91,33 +87,22 @@ def UserLoginView(request):
                 }
     statusCode = status.HTTP_200_OK
     return Response(context, status=statusCode)
-    #return Response(context)
-
 
 def searchpage(b):
-            #if len(search_static) == 0:
                 search_page = defaultdict(list)
                 for i in range(1,11):
                     nav_search=defaultdict(list)
                     res=requests.get('https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=vote_average.desc&include_adult=false&include_video=false&page='+str(i)+'&release_date.gte=2014-01-01')
-                #try:
                     nav_search['result'].extend(res.json()['results'])
                     y_search=search_func(nav_search,'search_bar')
                     if len(y_search) !=0:
                             search_page['name_results'].extend(y_search['navbar_result'])
-                #except KeyError:
-                        #continue
                 search_page['name_results'].sort(key=lambda x: datetime.strptime(x['release_date'], '%Y-%m-%d'), reverse=True)
-            #print(len(search_page['name_results']))
-                #search_static=search_page
                 print(search_page)
                 if b == 'browse':
                     search_page['name_results'] = sorted(search_page['name_results'], key=lambda k: ( -k['rating'],k['title'].lower()))
                 search_page=json.dumps(search_page)
                 return JsonResponse(json.loads(search_page),safe=False)
-            #else:
-                 #search_static=json.dumps(search_static)
-                 #return JsonResponse(json.loads(search_static),safe=False)
 
 
 def get_review(user,id,final,gender,from_date,to_date):
@@ -125,16 +110,17 @@ def get_review(user,id,final,gender,from_date,to_date):
     final['review']=[]
     final['user']=[]
     final['rating']=[]
-    #final['avg_rating']=0.0
+    final['avg_rating']=0.0
     final['watched'] = False
     final['liked'] = False
     final['wishlist'] = False
     final['time']=[]
     final['date']=[]
-    #final['date_modified']=[]
+    final['date_modified']=[]
     final['upvote']=[]
     final['downvote']=[]
     final['follow']=[]
+    final['profilePics'] = []
     if user.lower() != "guest":
         user_profile = UserProfile.objects.get(username=user)
     else:
@@ -149,26 +135,32 @@ def get_review(user,id,final,gender,from_date,to_date):
     else:
         pass
     if len(gender) == 0:
-        #print(user_profile)
-        #print(type(user_profile))
-        #print(user_profile.banned)
         for i in reviews.objects.filter(movie__movie_id=id,review_date__lte=to_date,review_date__gt=from_date):
-            #print(user_profile.banned)
             if i.review != "" and i.review_user_id not in user_profile.banned:
+                a = UserProfile.objects.get(username=i.review_user_id)
+                final['profilePics'].append(a.profilePic)
                 final['review_id'].append(i.id)
                 final['review'].append(i.review)
                 final['user'].append(i.review_user_id)
                 final['rating'].append(i.rating)
                 final['time'].append(i.review_time)
                 final['date'].append(i.review_date)
-                #review_diff=date.today()-i.review_date
-                #review_diff=str(review_diff).split(' ')
-                #if int(review_diff[0]) == 0:
-                        #final['date_modified'].append('Today')
-                #elif int(review_diff[0])== 1:
-                        #final['date_modified'].append('Yesterday')
-                #else:
-                        #final['date_modified'].append(str(review_diff[0])+' Days Ago')
+                review_diff=datetime.now()-datetime.combine(i.review_date, i.review_time)
+                day=review_diff.days
+                if day != 0:
+                    final['date_modified'].append(str(day)+' Days Ago')
+                else:
+                    x=str(review_diff)
+                    x=x.replace(':', ' ')
+                    x=x.replace(',',' ')
+                    sec=x.split(' ')
+                    if int(sec[-3]) > 0:
+                            final['date_modified'].append(str(sec[-3])+' Hours Ago')
+                    elif int(sec[-2])>0:
+                            final['date_modified'].append(str(sec[-2])+' Minutes Ago')
+                    else:
+                        a=str(sec[-1])
+                        final['date_modified'].append(a[:2] +' Seconds Ago')
                 final['upvote'].append(i.upvote_count)
                 final['downvote'].append(i.downvote_count)
                 final['follow'].append(i.follow)
@@ -181,20 +173,30 @@ def get_review(user,id,final,gender,from_date,to_date):
         for j in user:
             for i in reviews.objects.filter( movie__movie_id=id,review_user_id=j,review_date__lte=to_date,review_date__gt=from_date):
                 if i.review != "" and i.review_user_id not in user_profile.banned:
+                    a = UserProfile.objects.get(username=i.review_user_id)
+                    final['profilePics'].append(a.profilePic)
                     final['review_id'].append(i.id)
                     final['review'].append(i.review)
                     final['user'].append(i.review_user_id)
                     final['rating'].append(i.rating)
                     final['time'].append(i.review_time)
                     final['date'].append(i.review_date)
-                    #review_diff=date.today()-i.review_date
-                    #review_diff=str(review_diff).split(' ')
-                    #if int(review_diff[0]) == 0:
-                        #final['date_modified'].append('Today')
-                    #elif int(review_diff[0])== 1:
-                        #final['date_modified'].append('Yesterday')
-                    #else:
-                        #final['date_modified'].append(str(review_diff[0])+' Days Ago')
+                    review_diff=datetime.now()-datetime.combine(i.review_date, i.review_time)
+                    day=review_diff.days
+                    if day != 0:
+                        final['date_modified'].append(str(day)+' Days Ago')
+                    else:
+                        x=str(review_diff)
+                        x=x.replace(':', ' ')
+                        x=x.replace(',',' ')
+                        sec=x.split(' ')
+                        if int(sec[-3]) > 0:
+                            final['date_modified'].append(str(sec[-3])+' Hours Ago')
+                        elif int(sec[-2])>0:
+                            final['date_modified'].append(str(sec[-2])+' Minutes Ago')
+                        else:
+                            a=str(sec[-1])
+                            final['date_modified'].append(a[:2] +' Seconds Ago')
                     final['upvote'].append(i.upvote_count)
                     final['downvote'].append(i.downvote_count)
                     final['follow'].append(i.follow)
@@ -203,16 +205,17 @@ def get_review(user,id,final,gender,from_date,to_date):
         final['watched']= False
         final['liked']=False
         final['wishlist']=False
-        #if len(final['rating'])>0:
-             #final['avg_rating']=round(sum(final['rating'])/len(final['rating']),1)
+        if len(final['rating'])>0:
+             final['rating']=[i if i[0] is not None else 0 for i in final['rating']]
+             final['avg_rating']=round(sum(final['rating'])/len(final['rating']),1)
     else:
         for i in reviews.objects.filter(movie__movie_id=id , review_user_id=user):
-            #print("entered")
             final['watched'] = i.watched
             final['liked'] = i.liked
             final['wishlist'] = i.wishlist
-            #if len(final['rating'])>0:
-                 #final['avg_rating']=round(sum(final['rating'])/len(final['rating']),1)
+            if len(final['rating'])>0:
+                 final['rating']=[i if i is not None else 0 for i in final['rating']]
+                 final['avg_rating']=round(sum(final['rating'])/len(final['rating']),1)
     return final
 
 
@@ -251,7 +254,7 @@ class Homepage(APIView):
 
 #request should be "https://127.0.0.1:8000/api/search/?query='movie name'
 
-def search_func(resp, n,m,director_given=False):
+def search_func(resp, n,m='',director_given=False):
     print(m)
     final_resp = defaultdict(list)
     poster_url = 'http://image.tmdb.org/t/p/original/'
@@ -417,7 +420,7 @@ class MovieDetails(APIView):
             url='https://api.themoviedb.org/3/movie/'+str(id)+'?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&append_to_response=credits,videos'
             response=requests.get(url)
             movie_details['id']=response.json()['id']
-            movie_details['imdb_rating']=round((response.json()['vote_average'])/2,1)
+            #movie_details['imdb_rating']=round((response.json()['vote_average'])/2,1)
             movie_details['description']=response.json()['overview']
             movie_details['title']=response.json()['title']
             if response.json()['poster_path'] is None:

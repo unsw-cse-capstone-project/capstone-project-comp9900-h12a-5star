@@ -181,7 +181,7 @@ export default class MovieDetails extends Component {
                                     <Header as='h1'>
                                         {this.state.items.title+"  "}
                                 </Header>
-                                <Icon name='star' color={"yellow"}/> {this.state.items.imdb_rating} 
+                                <Icon name='star' color={"yellow"}/> {this.state.items.avg_rating} 
                                 
                                 </Grid.Column>
                                     

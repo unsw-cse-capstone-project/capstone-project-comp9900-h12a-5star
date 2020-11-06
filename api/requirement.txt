@@ -17,3 +17,4 @@ sqlparse==0.2.4
 asgiref==3.2.10
 bs4
 secure-smtplib
+python-memcached

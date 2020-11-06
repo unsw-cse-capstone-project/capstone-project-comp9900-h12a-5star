@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
-import { Container, Header, Divider, Grid, Label, Card, Placeholder} from 'semantic-ui-react';
+import { Container, Header, Divider, Grid, Label, Card, Placeholder,GridColumn} from 'semantic-ui-react';
 import MovieTile from '../components/MovieTile';
 
 export default class SearchMovieTitle extends Component {
@@ -44,6 +44,11 @@ export default class SearchMovieTitle extends Component {
             movieLength=this.state.items.name_result.length;
         }
         var x = Math.floor(movieLength/4);
+
+        var y= x*4;
+        if (movieLength>0 && movieLength<4){
+            y=movieLength
+        }
 
 
         if ( movieLength >=4 ) {
@@ -115,7 +120,16 @@ export default class SearchMovieTitle extends Component {
 
                 <Header as='h1'>Search Results by Movie Title: {this.props.match.params.searchText}</Header>
                     <Divider section />
-                    <Grid columns='equal'>{columnsMovie}</Grid>
+                    {/* <Grid columns='equal'>{columnsMovie}</Grid> */}
+
+                    {   y >= 4 
+
+                            ? <Grid columns='equal'>{columnsMovie}</Grid>
+                            : <Grid columns='equal'>{columnsMovie}
+                                <GridColumn></GridColumn>
+
+                                </Grid>
+                    }
                 </Container>
             </>
         )

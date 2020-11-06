@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
-import {  Form, Segment,  Button, Dropdown} from 'semantic-ui-react';
+import {  Form, Segment,  Button, Dropdown, GridColumn} from 'semantic-ui-react';
 import { Container, Header, Divider, Grid, Label, Card, Placeholder} from 'semantic-ui-react';
 import MovieTile from '../components/MovieTile';
 import {directorList,genreList} from './DirectorsGenres'
@@ -124,7 +124,6 @@ export default class BrowsePage extends Component {
         }
 
 
-
     }
 
     render() {
@@ -144,7 +143,9 @@ export default class BrowsePage extends Component {
             y=movieLength
         }
 
+        
         if ( movieLength >=4 ) {
+            console.log('inside movie length >= 4')
             columnsMovie = _.times(x, (i) => (
                 <Grid.Row key={i}>{
                     _.times(4, (j) => (
@@ -164,6 +165,7 @@ export default class BrowsePage extends Component {
                 ))
         }
         else if(movieLength>0 & movieLength<4){
+            console.log('inside movie length < 4')
             columnsMovie = _.times(movieLength, (i) => (
                 <Grid.Column key={i}>
                     <MovieTile 
@@ -175,13 +177,16 @@ export default class BrowsePage extends Component {
                         movieId={this.state.items[i].id} 
                     />
                 </Grid.Column>
+                
             ))
         }
         else if(movieLength ===0 & this.state.flag!==0){
+            console.log('inside movie length is 0 and flag not 0')
             columnsMovie=null
         }
         else if(movieLength === 0){
-
+            
+            console.log('inside movie length 0')
             columnsMovie = _.times(12, (i) => (
                 <Grid.Row key={i}>{
                     _.times(4, (j) => (
@@ -212,6 +217,7 @@ export default class BrowsePage extends Component {
         }
         return (
             <>
+                
     
                 <Container style={{ margin: 20 }}>
     
@@ -266,10 +272,18 @@ export default class BrowsePage extends Component {
                     </Grid.Column>
                 }
             
-            
+                {   y >= 4 
+
+                   ? <Grid columns='equal'>{columnsMovie}</Grid>
+                   : <Grid columns='equal'>{columnsMovie}
+                   <GridColumn></GridColumn>
+                   
+
+                   </Grid>
+                }
                     
             
-                <Grid columns='equal'>{columnsMovie}</Grid>
+                {/* <Grid columns='equal'>{columnsMovie}</Grid> */}
                 </Container>
             </>
             )

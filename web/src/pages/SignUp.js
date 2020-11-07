@@ -1,44 +1,15 @@
 import React , { Component, createRef } from 'react'
 import { Tab, Segment, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Form, Label, Ref, Dropdown } from 'semantic-ui-react'
 import './style.css'
-
+import {gender,genres,languages} from '../components/genericLists';
 export default class SignUp extends Component {
 
     
-    genderOptions = [
-        { key: 'Male', text: 'Male', value: 'Male' },
-        { key: 'Female', text: 'Female', value: 'Female' },
-    ]
+    genderOptions = gender
     
-    genreOptions = [
-        { key: 'Action', text: 'Action', value: 'Action' },
-        { key: 'Adventure', text: 'Adventure', value: 'Adventure' },
-        { key: 'Comedy', text: 'Comedy', value: 'Comedy' },
-        { key: 'Crime', text: 'Crime', value: 'Crime' },
-        { key: 'Drama', text: 'Drama', value: 'Drama' },
-        { key: 'Family', text: 'Family', value: 'Family' },
-        { key: 'Fantasy', text: 'Fantasy', value: 'Fantasy' },
-        { key: 'Horror', text: 'Horror', value: 'Horror' },
-        { key: 'Mystery', text: 'Mystery', value: 'Mystery' },
-        { key: 'Romance', text: 'Romance', value: 'Romance' },
-        { key: 'Science Fiction', text: 'Science Fiction', value: 'Science Fiction' },
-        { key: 'Thriller', text: 'Thriller', value: 'Thriller' },
-        
-    ]
+    genreOptions = genres
 
-    languageOptions = [
-        { key: 'English', text: 'English', value: 'English' },
-        { key: 'Mandarin Chinese', text: 'Mandarin Chinese', value: 'Mandarin Chinese' },
-        { key: 'Hindi', text: 'Hindi', value: 'Hindi' },
-        { key: 'Spanish', text: 'Spanish', value: 'Spanish' },
-        { key: 'French', text: 'French', value: 'French' },
-        { key: 'Standard Arabic', text: 'Standard Arabic', value: 'Standard Arabic' },
-        { key: 'Bengali', text: 'Bengali', value: 'Bengali' },
-        { key: 'Russian', text: 'Russian', value: 'Russian' },
-        { key: 'Portuguese', text: 'Portuguese', value: 'Portuguese' },
-        { key: 'Indonesian', text: 'Indonesian', value: 'Indonesian' },
-        { key: 'Korean', text: 'Korean', value: 'Korean' },
-      ]
+    languageOptions = languages
 
 
     constructor() {

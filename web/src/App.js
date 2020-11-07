@@ -6,7 +6,6 @@ import{
 } from 'react-router-dom';
 import './App.css';
 import NotFoundPage from './pages/NotFoundPage';
-import SignUpPage from './pages/SignUpPage';
 import MovieDetails from './pages/MovieDetails'
 import HomePage from './pages/HomePage';
 import Login from './pages/Login';
@@ -18,7 +17,6 @@ import SearchDescription from './pages/SearchDescription';
 import ProfilePage from './pages/ProfilePage';
 import WatchListPage from './pages/WatchListPage';
 import BannedUsers from './pages/BannedUsers';
-// import Browse from './pages/Browse';
 import SignUp from './pages/SignUp';
 import BrowsePage from './pages/BrowsePage';
 import NavBar from './components/NavBar';

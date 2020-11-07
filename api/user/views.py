@@ -270,22 +270,27 @@ class Homepage(APIView):
 #request should be "https://127.0.0.1:8000/api/search/?query='movie name'
 
 def search_func(resp, n,m=[],director_given=False):
-    print(m)
+
+    #print(m)
     final_resp = defaultdict(list)
     poster_url = 'http://image.tmdb.org/t/p/original/'
     for i in resp['result']:
         if n == 'browse' and director_given:
-            print("entered")
+            #print("entered")
             g=False
+            #print(i['id'])
             t=requests.get('https://api.themoviedb.org/3/movie/'+str(i['id'])+'/credits?api_key=c8b243a9c923fff8227feadbf8e4294e')
-            for j in range(len(t.json()['crew'])):
-                if t.json()['crew'][j]['job'] == 'Director' and t.json()['crew'][j]['id'] in m:
-                        g=True
-                        break
-            if not (g):
-                continue
+            try:
+                for j in range(len(t.json()['crew'])):
+                    if t.json()['crew'][j]['job'] == 'Director' and t.json()['crew'][j]['id'] in m:
+                            g=True
+                            break
+                if not (g):
+                    continue
+            except KeyError:
+                pass
         d = {}
-        print(i['id'])
+        #print(i['id'])
         d['id'] = i['id']
         d['title'] = i['title']
         d['rating'] = round(i['vote_average'] / 2, 1)

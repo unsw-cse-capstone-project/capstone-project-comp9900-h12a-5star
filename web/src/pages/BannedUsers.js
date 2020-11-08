@@ -108,7 +108,7 @@ export default class WishListPage extends Component {
                     </Header>
                     </Divider>
                     {
-                    (this.state.items.length !== 0)?
+                    (this.state.items.data && this.state.items.data.length !== 0)?
                     <Grid columns='equal' divided={'vertically'}>
                         {
                             this.state.items.data.map((item)=>

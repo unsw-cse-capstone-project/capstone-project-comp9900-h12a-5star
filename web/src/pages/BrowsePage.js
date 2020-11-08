@@ -4,13 +4,13 @@ import {  Form, Segment,  Button, Dropdown, GridColumn} from 'semantic-ui-react'
 import { Container, Header, Divider, Grid, Label, Card, Placeholder} from 'semantic-ui-react';
 import MovieTile from '../components/MovieTile';
 import {directorList,genreList} from '../components/genericLists';
+import { Loader } from 'semantic-ui-react'
 
 export default class BrowsePage extends Component {
 
     genreOptions=genreList
     directorOptions=directorList
   
-
     constructor() {
         super();
         this.state = {
@@ -49,9 +49,10 @@ export default class BrowsePage extends Component {
                 }
             )
     }
-    checkGenreDirector = () =>{
+    checkGenreDirector = () => {
         
-       
+        this.setState({ isLoaded: true })
+        console.log(this.state.isLoaded)
         var obj = {"genre_id":this.state.genres,"director_id":this.state.directors};
    
         const requestOptions = {
@@ -79,6 +80,7 @@ export default class BrowsePage extends Component {
                     });
                 }
             )
+            this.setState({isLoaded:false})
         }
         else if (this.state.genres.length >0){
             this.state.flag=2
@@ -100,6 +102,7 @@ export default class BrowsePage extends Component {
                     });
                 }
             )
+            this.setState({isLoaded:false})
         }
         else if (this.state.directors.length > 0){
             this.state.flag=3
@@ -121,6 +124,7 @@ export default class BrowsePage extends Component {
                     });
                 }
             )
+            this.setState({isLoaded:false})
         }
 
 
@@ -184,7 +188,7 @@ export default class BrowsePage extends Component {
             console.log('inside movie length is 0 and flag not 0')
             columnsMovie=null
         }
-        else if(movieLength === 0){
+        if(this.state.isLoaded === false){
             
             console.log('inside movie length 0')
             columnsMovie = _.times(12, (i) => (
@@ -248,7 +252,7 @@ export default class BrowsePage extends Component {
              
           
                         <Form.Field width={4}>
-                            <Button onClick={this.checkGenreDirector} color={"blue"} fluid type='submit' floated='left'>Browse</Button>
+                            <Button  onClick={this.checkGenreDirector} color={"blue"} fluid type='submit' floated='left'>Browse </Button>
                         </Form.Field>
                     </Form.Group >
                 </Form> 

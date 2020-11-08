@@ -1,6 +1,10 @@
 .account{
-    background-image: url(/static/media/loginsignup.de2e7249.jpg);
+    background-image: url("../images/loginsignup.jpg");
     height: 640px;
+}
+
+#inputField{
+    padding-right: 3%;
 }
 
 .profile .header{
@@ -14,7 +18,7 @@
 .account .form{
     margin-left: 5%;
     margin-right: 5%;
-    margin-bottom: 6%;
+    margin-bottom: 1%;
     opacity: 1!important;
 }
 
@@ -27,3 +31,8 @@
 .avatarEdit{
     background-color: Transparent!important;
 }
+
+.signup{
+    width: 250px!important;
+}
+

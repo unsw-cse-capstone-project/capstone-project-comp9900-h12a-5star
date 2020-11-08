@@ -85,7 +85,7 @@ export default class SignUp extends Component {
                   <h1 style={{textAlign:"center", color:"white"}}>Sign Up</h1>
                   <Form className="register">
                     <Form.Group >
-                      <Form.Field width={16}>
+                      <Form.Field width={16} id="inputField">
                         <label style={{color:"white"}}>First Name</label>
                         <input value = {this.state.firstName} onChange={(event) =>  this.setState({firstName : event.target.value})}  required />
                       </Form.Field>
@@ -97,7 +97,7 @@ export default class SignUp extends Component {
                     </Form.Group>
           
                     <Form.Group >
-                      <Form.Field width={16}>
+                      <Form.Field width={16} id="inputField">
                         <label style={{color:"white"}}>Email</label>
                         <input type='email' value = {this.state.email} onChange={(event) =>  this.setState({email : event.target.value})}  required/>
                       </Form.Field>
@@ -109,7 +109,7 @@ export default class SignUp extends Component {
                     </Form.Group>
                 
                     <Form.Group >
-                      <Form.Field width={16}>
+                      <Form.Field width={16} id="inputField">
                         <label style={{color:"white"}}>Gender</label>
                         <Dropdown onChange={(event, {value}) =>  this.setState({gender : value})} fluid selection options={this.genderOptions} required/>
                       </Form.Field>
@@ -121,7 +121,7 @@ export default class SignUp extends Component {
                     </Form.Group>
 
                     <Form.Group >
-                      <Form.Field inverted width={16}>
+                      <Form.Field inverted width={16} id="inputField">
                         <label style={{color:"white"}}>Favorite Languages</label>
                         <Dropdown  onChange={(event, {value}) =>  this.setState({languages : value})}  fluid selection multiple options={this.languageOptions} required/>
                       </Form.Field>
@@ -132,9 +132,10 @@ export default class SignUp extends Component {
                       </Form.Field>
                     </Form.Group>
                     <br></br>
-          
-                    <Button primary type='submit' onClick={this.checkSignUp} color={"blue"} fluid type='submit' floated='left'>Join Now</Button>
-                  </Form>
+                    <center>
+                      <Button className="signup" primary type='submit' onClick={this.checkSignUp} color={"blue"} fluid type='submit'>Join Now</Button>
+                    </center>
+                    </Form>
                 
                 </Segment>
                 </Grid.Column>

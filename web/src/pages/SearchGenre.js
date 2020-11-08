@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
-import { Container, Header, Divider, Grid, Label, Card, Placeholder} from 'semantic-ui-react';
-import NavBar from '../components/NavBar';
+import { Container, Header, Divider, Grid, Label, Card, Placeholder,GridColumn} from 'semantic-ui-react';
 import MovieTile from '../components/MovieTile';
 
 export default class SearchGenre extends Component {
@@ -45,7 +44,10 @@ export default class SearchGenre extends Component {
             genreLength=this.state.items.genre_result.length;
         }
         var x = Math.floor(genreLength/4);
-
+        var y= x*4;
+        if (genreLength>0 && genreLength<4){
+            y=genreLength
+        }
 
         if ( genreLength >=4 ) {
             columnsGenre = _.times(x, (i) => (
@@ -113,13 +115,19 @@ export default class SearchGenre extends Component {
         }
         return (
             <>
-                <NavBar />
-
                 <Container style={{ margin: 20 }}>
 
-            <Header as='h1'>Search Results by Movie Genre: {this.props.match.params.searchText}</Header>
+                    <Header as='h1'>Search Results by Movie Genre: {this.props.match.params.searchText}</Header>
                     <Divider section />
-                    <Grid columns='equal'>{columnsGenre}</Grid>
+                    {/* <Grid columns='equal'>{columnsGenre}</Grid> */}
+                    {   y >= 4 
+
+                        ? <Grid columns='equal'>{columnsGenre}</Grid>
+                        : <Grid columns='equal'>{columnsGenre}
+                            <GridColumn></GridColumn>
+
+                            </Grid>
+                    }
                 </Container>
             </>
         )

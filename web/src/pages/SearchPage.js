@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
-import { Container, Header, Divider, Grid, Label, Card, Placeholder } from 'semantic-ui-react';
-import NavBar from '../components/NavBar';
+import { Container, Header, Divider, Grid, Label, Card, Placeholder,GridColumn } from 'semantic-ui-react';
 import MovieTile from '../components/MovieTile';
 
 
@@ -75,11 +74,32 @@ export default class SearchPage extends Component {
                 movieLength=0
                 genreLength=0
                 descLength=0
+                
             }
         }
         var flag=0;
         if (movieLength>0 || genreLength>0 || descLength>0){
             flag=1;
+        }
+        var x = Math.floor(movieLength/4);
+
+        var y= x*4;
+        if (movieLength>0 && movieLength<4){
+            y=movieLength
+        }
+
+        var a = Math.floor(genreLength/4);
+
+        var b= a*4;
+        if (genreLength>0 && genreLength<4){
+            b=genreLength
+        }
+
+        var m = Math.floor(descLength/4);
+
+        var n= m*4;
+        if (descLength>0 && descLength<4){
+            n=descLength
         }
             
        
@@ -176,9 +196,13 @@ export default class SearchPage extends Component {
                     </Grid.Column>
                 ))
             }
-        }
-        else{
 
+
+        }
+        else if (movieLength===1 & genreLength===1 & descLength ===1){
+            b=5
+            y=5
+            n=5
             columnsMovie = _.times(4, (i) => (
                 <Grid.Column key={i}>
                     <Card.Group>
@@ -252,8 +276,6 @@ export default class SearchPage extends Component {
         
         return (
             <React.Fragment>
-                <NavBar />
-                
                 <Container style={{ margin: 20 }}>
                 { flag == 1  && 
                     <Grid.Column>
@@ -274,8 +296,18 @@ export default class SearchPage extends Component {
                     </Grid>
 
                 }
-                { movieLength > 0 &&
+                {/* { movieLength > 0 &&
+                    
                     <Grid columns='equal'>{columnsMovie}</Grid>
+                } */}
+
+                { movieLength > 0 && y >= 4
+                    ? <Grid columns='equal'>{columnsMovie}</Grid>
+                    : <Grid columns='equal'>{columnsMovie}
+                        <GridColumn></GridColumn>
+
+                        </Grid>
+                    // <Grid columns='equal'>{columnsMovie}</Grid>
                 }
                 { movieLength > 0 &&
                     <Divider section />
@@ -293,8 +325,14 @@ export default class SearchPage extends Component {
                         </Grid.Column>
                     </Grid>
                 } 
-                {  genreLength > 0 &&
-                    <Grid columns='equal'>{columnsGenre}</Grid>
+                {  genreLength > 0 && b >= 4
+                    // <Grid columns='equal'>{columnsGenre}</Grid>
+                    ? <Grid columns='equal'>{columnsGenre}</Grid>
+                    : <Grid columns='equal'>{columnsGenre}
+                        <GridColumn></GridColumn>
+
+                        </Grid>
+
                 }
                 {   genreLength > 0 &&
                     <Divider section />
@@ -311,8 +349,12 @@ export default class SearchPage extends Component {
                         </Grid.Column>
                     </Grid>
                 }
-                { descLength > 0 &&
-                    <Grid columns='equal'>{columnsDesc}</Grid>
+                { descLength > 0 && n >= 4
+                    // <Grid columns='equal'>{columnsDesc}</Grid>
+                    ? <Grid columns='equal'>{columnsDesc}</Grid>
+                        : <Grid columns='equal'>{columnsDesc}
+                            <GridColumn></GridColumn>
+                        </Grid>
                 }
                 {movieLength == 0 && genreLength == 0 && descLength == 0 &&
               

@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState} from 'react';
 import { Grid, Form, Segment, Button,Divider} from 'semantic-ui-react';
-import NavBar from '../components/NavBar';
+import './style.css'
 
 const Login = () => {
     const [email, setUsername] = useState('');
@@ -9,7 +9,7 @@ const Login = () => {
     const [error, setError] = useState('');
 
     const checkLogin = async () => {
-        if (email !== '' || password !== ''){
+        if (email !== '' && password !== ''){
 
             const result = await fetch(`http://127.0.0.1:8000/api/signin`, {
                 method: 'post',
@@ -18,9 +18,6 @@ const Login = () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 }
-
-
-
             });
             const body = await result.json();
 
@@ -30,11 +27,8 @@ const Login = () => {
                 window.location.href='/welcome';
             }
             else{
-                alert(body.response);
+                setError(body.response)
             }
-        }
-        else{
-            alert('Either username or password not filled');
         }
 
 
@@ -42,33 +36,37 @@ const Login = () => {
     return(
 
     <React.Fragment>
-        <NavBar/>
-
-
-        <div style={{backgroundImage: `url(${require("../images/loginsignup.jpg")})`, height: 800}}>
+        <div className='account' >
 
             <Grid>
                 <Grid.Column width={5}></Grid.Column>
                 <Grid.Column width={5} stretched>
-
+                <br />
+                <br />
+                <br />
+                <br />
                     <Segment inverted style={{margin: 15}}>
-
-
                         <h1 style={{textAlign: "center"}}>Log In</h1>
+                        {
+                        (error) &&
+
+                        <p className="errorMessage">
+                            {error}
+                        </p>
+                        
+                        }
                         <Form inverted>
-
-
                             <Form.Group>
                                 <Form.Field width={16}>
                                     <label>Email</label>
-                                    <input type='email' value = {email} onChange= {(event) => setUsername(event.target.value)} placeholder='joe@schmoe.com'/>
+                                    <input type='email' value = {email} onChange= {(event) => setUsername(event.target.value)} placeholder='joe@schmoe.com' required/>
                                 </Form.Field>
                             </Form.Group>
 
                             <Form.Group>
                                 <Form.Field width={16}>
                                     <label>Password</label>
-                                    <input value = {password} onChange= {(event) => setpassword(event.target.value)} type='password' placeholder='Password'/>
+                                    <input value = {password} onChange= {(event) => setpassword(event.target.value)} type='password' placeholder='Password' required/>
                                 </Form.Field>
                             </Form.Group>
 

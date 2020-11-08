@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
 import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed} from 'semantic-ui-react'
-import NavBar from '../components/NavBar';
 
 export default class MovieDetails extends Component {
 
@@ -173,7 +172,6 @@ export default class MovieDetails extends Component {
         return (
             
             <React.Fragment>
-                < NavBar />
                 <Container >
                 
                     <Segment > 
@@ -183,15 +181,27 @@ export default class MovieDetails extends Component {
                                     <Header as='h1'>
                                         {this.state.items.title+"  "}
                                 </Header>
-                                <Icon name='star' color={"yellow"}/> {this.state.items.imdb_rating} 
+                                <Icon name='star' color={"yellow"}/> {this.state.items.avg_rating} 
                                 
                                 </Grid.Column>
                                     
                                 <Grid.Column textAlign={"right"} >
-                                        <Button circular icon='thumbs up'  size={'big'} toggle active={active_like} onClick={this.handleClick_like}/>
-                                        <Button circular icon='eye'  size={'big'} toggle active={active_seen} onClick={this.handleClick_seen}/>
-                                        <Button circular icon='bookmark'  size={'big'} toggle active={active_wishlist} onClick={this.handleClick_wishlist}/>
-                                        <Button circular icon='share alternate'  size={'big'}/>
+                                        <Popup 
+                                            trigger={<Button circular icon='thumbs up'  size={'big'} toggle active={active_like} onClick={this.handleClick_like} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>}>
+                                            Like the movie?
+                                        </Popup>
+                                        <Popup 
+                                            trigger={<Button circular icon='eye'  size={'big'} toggle active={active_seen} onClick={this.handleClick_seen} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>}>
+                                            Watched the movie?
+                                        </Popup>
+                                        <Popup 
+                                            trigger={<Button circular icon='bookmark'  size={'big'} toggle active={active_wishlist} onClick={this.handleClick_wishlist} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>}>
+                                            Add to wishlist?
+                                        </Popup>
+                                        <Popup 
+                                            trigger={<Button circular icon='share alternate'  size={'big'} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>}>
+                                            Share with a user?
+                                        </Popup>
                                 </Grid.Column>
                             </Grid.Row>
                             <Grid.Row>
@@ -394,17 +404,19 @@ export default class MovieDetails extends Component {
                                 (this.state.items.review)?
                                 _.times(this.state.items.review.length, (j) => (
                                     <Comment>
-                                        <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg' />
+                                        <Comment.Avatar src={this.state.items.profilePics[j]} />
                                         <Comment.Content>
-                                            <Popup trigger={<Comment.Author as='a'>{this.state.items.user[j]}</Comment.Author>} 
+                                            {
+                                                (this.state.items.user[j] !== this.user) ?
+                                                <Popup trigger={<Comment.Author as='a'>{this.state.items.user[j]}</Comment.Author>} 
                                                     flowing 
                                                     hoverable 
                                                     style={style} 
                                                     inverted 
                                                     position='top center'
                                                     on={['hover', 'click']}>
-                                                        <Popup trigger={<Button secondary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` } icon="eye" size={'big'} />}>
-                                                            View Watchlist
+                                                        <Popup trigger={<Button secondary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` } icon="bookmark" size={'big'} />}>
+                                                            View Wishlist
                                                         </Popup>
                                                         <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])} secondary icon='user close' size={'big'} />}>
                                                             Ban User
@@ -412,9 +424,13 @@ export default class MovieDetails extends Component {
                                                         <Popup trigger={<Button secondary icon='add user' size={'big'} />}>
                                                             Follow User
                                                         </Popup>
-                                            </Popup>
+                                                </Popup>
+                                                :
+                                                <Comment.Author as='a'>{this.state.items.user[j]}</Comment.Author>
+                                            }
+                                            
                                             <Comment.Metadata>
-                                                <div>{this.state.items.date[j]} {this.state.items.time[j]}</div>
+                                                <div>{this.state.items.date_modified[j]}</div>
                                             </Comment.Metadata>
                                             <Comment.Text>
                                                 <Rating icon='star' defaultRating={this.state.items.rating[j]} maxRating={5} disabled /><br />

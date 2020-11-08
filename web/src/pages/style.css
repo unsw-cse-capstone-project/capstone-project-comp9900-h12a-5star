@@ -1,0 +1,29 @@
+.account{
+    background-image: url(/static/media/loginsignup.de2e7249.jpg);
+    height: 640px;
+}
+
+.profile .header{
+    height: 25px;
+}
+
+.profileEdit{
+    width: 130px;
+}
+
+.account .form{
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 6%;
+    opacity: 1!important;
+}
+
+.errorMessage{
+    margin-left: 5%!important;
+    margin-right: 5%!important;
+    color: red;
+}
+
+.avatarEdit{
+    background-color: Transparent!important;
+}

@@ -6,13 +6,9 @@ import{
 } from 'react-router-dom';
 import './App.css';
 import NotFoundPage from './pages/NotFoundPage';
-import SignUpPage from './pages/SignUpPage';
 import MovieDetails from './pages/MovieDetails'
 import HomePage from './pages/HomePage';
 import Login from './pages/Login';
-import RecentReleased from './pages/RecentReleased';
-import TopRated from './pages/TopRated';
-import PopularMovies from './pages/PopularMovies';
 import WishListPage from './pages/WishListPage';
 import SearchPage from './pages/SearchPage';
 import SearchMovieTitle from './pages/SearchMovieTitle';
@@ -21,18 +17,21 @@ import SearchDescription from './pages/SearchDescription';
 import ProfilePage from './pages/ProfilePage';
 import WatchListPage from './pages/WatchListPage';
 import BannedUsers from './pages/BannedUsers';
-import Browse from './pages/Browse';
 import SignUp from './pages/SignUp';
+import BrowsePage from './pages/BrowsePage';
+import NavBar from './components/NavBar';
+import WelcomeCategory from './pages/WelcomeCategory';
+
 function App() {
   return (
+    <>
+    <NavBar />
     <Router>
       <Switch>
         <Route path="/" component={HomePage} exact/>
-        <Route path="/recentReleased" component={RecentReleased} exact/>
-        <Route path="/topRated" component={TopRated} exact/>
-        <Route path="/popularMovies" component={PopularMovies} exact/>
-        <Route path="/welcome" component={HomePage} />
-        <Route path="/browse" component = {Browse} />
+        <Route path="/welcome" component={HomePage} exact/>
+        <Route path="/welcome/:category" component={WelcomeCategory} exact/>
+        <Route path="/browse" component = {BrowsePage} />
         <Route path="/wishlist/:userId" component={WishListPage} />
         <Route path="/watchlist/:userId" component={WatchListPage} />
         <Route path="/bannedlist/:userId" component={BannedUsers} />
@@ -47,6 +46,7 @@ function App() {
         <Route component = {NotFoundPage} />
       </Switch>
     </Router>
+    </>
   );
 }
 

@@ -1,14 +1,12 @@
 import React , { Component, createRef } from 'react'
-import { Tab, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Form, Label, Ref, Dropdown } from 'semantic-ui-react'
-import NavBar from '../components/NavBar';
-import SignUpPage from '../pages/SignUpPage';
-
+import { Tab, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Form, Label, Modal, Dropdown, List } from 'semantic-ui-react'
+import './style.css'
 
 export default class ProfilePage extends Component {
 
     genderOptions = [
-        { key: 'm', text: 'Male', value: 'male' },
-        { key: 'f', text: 'Female', value: 'female' },
+        { key: 'Male', text: 'Male', value: 'Male' },
+        { key: 'Female', text: 'Female', value: 'Female' },
     ]
     
     genreOptions = [
@@ -16,30 +14,50 @@ export default class ProfilePage extends Component {
         { key: 'Adventure', text: 'Adventure', value: 'Adventure' },
         { key: 'Comedy', text: 'Comedy', value: 'Comedy' },
         { key: 'Crime', text: 'Crime', value: 'Crime' },
-        { key: 'Crama', text: 'Drama', value: 'Drama' },
+        { key: 'Drama', text: 'Drama', value: 'Drama' },
         { key: 'Family', text: 'Family', value: 'Family' },
         { key: 'Fantasy', text: 'Fantasy', value: 'Fantasy' },
         { key: 'Horror', text: 'Horror', value: 'Horror' },
         { key: 'Mystery', text: 'Mystery', value: 'Mystery' },
         { key: 'Romance', text: 'Romance', value: 'Romance' },
-        { key: 'Sciencefiction', text: 'Science Fiction', value: 'Sciencefiction' },
+        { key: 'Science Fiction', text: 'Science Fiction', value: 'Science Fiction' },
         { key: 'Thriller', text: 'Thriller', value: 'Thriller' },
         
     ]
 
     languageOptions = [
         { key: 'English', text: 'English', value: 'English' },
-        { key: 'Gujrati', text: 'Gujrati', value: 'Gujrati' },
-        { key: 'Hindi', text: 'Hindi', value: 'Hindi' },
-        { key: 'Kannada', text: 'Kannada', value: 'Kannada' },
-        { key: 'Marathi', text: 'Marathi', value: 'Marathi' },
         { key: 'Mandarin Chinese', text: 'Mandarin Chinese', value: 'Mandarin Chinese' },
-        { key: 'punjabi', text: 'Punjabi', value: 'punjabi' },
-        { key: 'spanish', text: 'Spanish', value: 'spanish' },
-        { key: 'telugu', text: 'Telugu', value: 'telegu' },
-        { key: 'urdu', text: 'Urdu', value: 'urdu' },
-        
+        { key: 'Hindi', text: 'Hindi', value: 'Hindi' },
+        { key: 'Spanish', text: 'Spanish', value: 'Spanish' },
+        { key: 'French', text: 'French', value: 'French' },
+        { key: 'Standard Arabic', text: 'Standard Arabic', value: 'Standard Arabic' },
+        { key: 'Bengali', text: 'Bengali', value: 'Bengali' },
+        { key: 'Russian', text: 'Russian', value: 'Russian' },
+        { key: 'Portuguese', text: 'Portuguese', value: 'Portuguese' },
+        { key: 'Indonesian', text: 'Indonesian', value: 'Indonesian' },
+        { key: 'Korean', text: 'Korean', value: 'Korean' },
       ]
+
+    maleProfile = [
+        "https://react.semantic-ui.com/images/avatar/large/elliot.jpg",
+        "https://react.semantic-ui.com/images/avatar/large/matthew.png",
+        "https://react.semantic-ui.com/images/avatar/large/steve.jpg",
+        "https://react.semantic-ui.com/images/avatar/large/daniel.jpg",
+        "https://react.semantic-ui.com/images/avatar/large/joe.jpg",
+        "https://react.semantic-ui.com/images/avatar/large/christian.jpg",
+        "https://react.semantic-ui.com/images/avatar/large/matt.jpg"
+    ]
+
+    femaleProfile = [
+        "https://react.semantic-ui.com/images/avatar/large/molly.png",
+        "https://react.semantic-ui.com/images/avatar/large/jenny.jpg",
+        "https://react.semantic-ui.com/images/avatar/large/stevie.jpg",
+        "https://react.semantic-ui.com/images/avatar/large/helen.jpg",
+        "https://react.semantic-ui.com/images/avatar/large/laura.jpg",
+        "https://react.semantic-ui.com/images/avatar/large/veronika.jpg"
+    ]
+    
     constructor() {
         super();
         this.state = {
@@ -54,12 +72,17 @@ export default class ProfilePage extends Component {
             gender : "",
             languages : [],
             generes : [],
-            profilePic : "" 
+            profilePic : "",
+            open: false 
         };
         if (window.sessionStorage.getItem('username') === null){
             window.sessionStorage.setItem('username', 'guest');
         }
         this.user = window.sessionStorage.getItem('username')
+    }
+
+    setOpen(val){
+        this.setState({open: val})
     }
 
     componentDidMount() {
@@ -116,7 +139,8 @@ export default class ProfilePage extends Component {
                                     lastname: this.state.lastName, 
                                     gender: this.state.gender,
                                     genres: this.state.generes,
-                                    languages: this.state.languages })
+                                    languages: this.state.languages,
+                                    profilePic: this.state.profilePic })
         }
 
         fetch("http://127.0.0.1:8000/api/profile/"+{"username":this.user}, requestOptions)
@@ -145,25 +169,29 @@ export default class ProfilePage extends Component {
             window.location.reload(false)
     }
 
+    handleClick_editAvatar = (val) => {
+        this.setState({profilePic: val})
+        this.setOpen(false)
+    }
+
     render() {
 
         return(
             <React.Fragment>
-                
-                <NavBar />
                 <Container>
                     <div style={{backgroundImage: `url(${require("../images/profileBackground.jpg")})`, height: 300}}>
                         <br />
                         <br />
                         <br /><br /><br /><br />
                         <center>
-                            <Image src={this.state.profilePic} circular size={"medium"} spaced={"left"}/>
-                            <br />
-                            <br />
-                            {
+                        {
                             (!this.state.edit) ?
                                 (this.state.items.data) &&
                                 <div>
+                                    <Image src={this.state.items.data.profilePic} circular size={"medium"} spaced={"left"}/>
+                                    <br />
+                                    <br />
+                            
                                     <Header as= "h1">
                                         {this.state.items.data.firstname.charAt(0).toUpperCase()+this.state.items.data.firstname.slice(1)+" "+this.state.items.data.lastname.charAt(0).toUpperCase()+this.state.items.data.lastname.slice(1)}
                                     </Header>
@@ -192,32 +220,78 @@ export default class ProfilePage extends Component {
                                         Email
                                         <Label.Detail>{this.state.items.data.email}</Label.Detail>
                                     </Label>
-                                    <br />
-                                    <br />
-                                    <Label as='a' color='blue' >
-                                        <Icon name="globe" />
-                                        Genere Preference
-                                        {
-                                            this.state.items.data.genres.map((item)=>
-                                            <Label.Detail>{item}</Label.Detail>
-                                            )
-                                        }
-                                    </Label>
-                                    <Label as='a' color='blue' >
-                                        <Icon name="language" />
-                                        Language Preference
-                                        {
-                                            this.state.items.data.languages.map((item)=>
-                                            <Label.Detail>{item}</Label.Detail>
-                                            )
-                                        }
-                                    </Label>
-                                    <br />
+                                   
+
+                                    <List className='profile'>
+                                            <List.Item>
+                                                <List.Content>
+                                                    <List.Header><Icon name='globe' />Genre Preference</List.Header>
+                                                    <List.Description>
+                                                        <Label.Group>
+                                                            {
+                                                                this.state.items.data.genres.map((item)=>
+                                                                <Label as='a' color='blue'>{item}</Label>
+                                                                )
+                                                            }
+                                                        </Label.Group>
+                                                    </List.Description>
+                                                </List.Content>
+                                            </List.Item>
+                                        </List>
+
+                                        <List className='profile'>
+                                            <List.Item>
+                                                <List.Content>
+                                                    <List.Header><Icon name='language' />Language Preference</List.Header>
+                                                    <List.Description>
+                                                        <Label.Group>
+                                                            {
+                                                                this.state.items.data.languages.map((item)=>
+                                                                <Label as='a' color='blue'>{item}</Label>
+                                                                )
+                                                            }
+                                                        </Label.Group>
+                                                    </List.Description>
+                                                </List.Content>
+                                            </List.Item>
+                                        </List>
                                 </div>
                                 :
                                 <div>
+                                    <Image src={this.state.profilePic} circular size={"medium"} spaced={"left"}/>
                                     <br />
+                                    <Modal
+                                        basic
+                                        onClose={() => this.setOpen(false)}
+                                        onOpen={() => this.setOpen(true)}
+                                        open={this.state.open}
+                                        size='small'
+                                        trigger={<Button className="avatarEdit" >Change Avatar</Button>}
+                                    >
+                                        <Modal.Content>
+                                            {
+                                                (this.state.gender === "Male")?
+                                                    this.maleProfile.map((item) =>
+                                                        (item !== this.state.profilePic) &&
+                                                        <Button className="avatarEdit" onClick={()=> this.handleClick_editAvatar(item)}><Image src={item} size="small"/></Button>
+                                                )
 
+                                                :
+                                                this.femaleProfile.map((item) =>
+                                                    (item !== this.state.profilePic) &&
+                                                    <Button className="avatarEdit" onClick={()=> this.handleClick_editAvatar(item)}><Image src={item} size="small"/></Button>
+                                                )
+                                            }
+                                            
+                                        </Modal.Content>
+                                        <Modal.Actions>
+                                            <Button color='red' inverted onClick={() => this.setOpen(false)}>
+                                                <Icon name='remove' /> Cancel
+                                            </Button>
+                                        </Modal.Actions>
+                                    </Modal>
+                                    <br />
+                                    <br />
                                     {
                                     <Form>
                                         <Form.Field width={5}>
@@ -226,7 +300,7 @@ export default class ProfilePage extends Component {
                                         </Form.Field>
                                         <Form.Field width={5}>
                                             <label>Email</label>
-                                            <input defaultValue='placeholder@gmail.com' disabled required/>
+                                            <input defaultValue={this.state.items.data.email} disabled required/>
                                         </Form.Field>
                                         <Form.Field width={5}>
                                             <label>First Name</label>
@@ -261,7 +335,7 @@ export default class ProfilePage extends Component {
                                 <Divider />
                             {
                                 (!this.state.edit)?
-                            <Button color={"purple"} onClick={this.handleClick_edit}>
+                            <Button className="profileEdit" color={"purple"} onClick={this.handleClick_edit}>
                                 <center>
                                     <br />
                                     <Icon name='pencil' size="big" /> <br /> <br /> Edit Profile
@@ -269,23 +343,23 @@ export default class ProfilePage extends Component {
                             </Button>
                             
                                  :
-                                <Button color={"red"} onClick={this.handleClick_cancelEdit}>
+                                <Button className="profileEdit" color={"red"} onClick={this.handleClick_cancelEdit}>
                                     <center>
                                         <br />
                                         <Icon name='pencil square' size="big" /> <br /> <br /> Cancel Edit
                                     </center>
                                 </Button>
                             }
-                            <Button color={"purple"} onClick={event => window.location.href = `/bannedlist/${this.user}`}>
+                            <Button className="profileEdit" color={"purple"} onClick={event => window.location.href = `/bannedlist/${this.user}`}>
                                 <center>
                                     <br />
-                                    <Icon name='remove user' size="big" /> <br /> <br /> Baned User
+                                    <Icon name='remove user' size="big" /> <br /> <br /> Banned Users
                                 </center>
                             </Button>
-                            <Button color={"purple"} onClick={event => window.location.href = `/watchlist/${this.user}`}>
+                            <Button className="profileEdit" color={"purple"} onClick={event => window.location.href = `/watchlist/${this.user}`}>
                                 <center>
                                     <br />
-                                    <Icon name='eye' size="big" /> <br /> <br /> Watch list
+                                    <Icon name='eye' size="big" /> <br /> <br /> Watch List
                                 </center>
                             </Button>
                             <br />

@@ -36,7 +36,7 @@ class UserProfile(models.Model):
 
     watched = MultiSelectField(default= None)
 
-    profilePic = models.CharField(max_length=100, unique=False)
+    profilePic = models.CharField(max_length=100, unique=False, default = None)
 
     class Meta:
         '''

@@ -22,21 +22,32 @@ def file_creation():
     df1['description']=df1['description'].astype(str)
     df1['description']=df1['description'].apply(rate1)
     #df1['price']=df1['price'].astype(str)
-    x=df1.T.to_dict().values()
+    x=list(df1.T.to_dict().values())
     #os.chdir("C:/Users/HP/project/capstone-project-comp9900-h12a-5star/web/src/")
     #path = Path(os.getcwd())
     #print(path.parents[0])
-    data_folder = Path("web/src/searchdetails.js")
+    data_folder = Path("web/src/components/moviedetails.js")
     if os.path.exists(path.parents[0]/data_folder):
         #print("now")
         os.remove(path.parents[0]/data_folder)
-        with open(path.parents[0]/data_folder, "w") as f:
-            json.dump(list(x),f)
+        with open(path.parents[0]/data_folder, "w", encoding='utf-8') as f:
+            f.write("export const moviesList=[\n")
+            for i in x:
+                #y=str(i).encode('utf-8')
+                f.write(str(i)+'\n')
+                #f.write('\n')
+            f.write("];")
         #f = open(str(path.parents[1])+"/web/src/searchdetails.js", "r")
         #print(f.read())
         f.close()
     else:
         #print("enter")
-        with open(path.parents[0]/data_folder, "w") as f:
-            json.dump(list(x),f)
+        with open(path.parents[0]/data_folder, "w", encoding='utf-8') as f:
+            #print("export const moviesList=[\n", file=f)
+            f.write("export const moviesList=[\n")
+            for i in x:
+                #y=str(i).encode('utf-8')
+                f.write(str(i)+'\n')
+                #f.write('\n')
+            f.write("];")
         f.close()

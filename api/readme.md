@@ -13,7 +13,7 @@ Python , Django and Memcache
  For Windows 64, download zip from this link :
 http://downloads.northscale.com/memcached-1.4.5-amd64.zip
 
-Unzip the downloaded file and run the memcached.exe application before you runserver.This should be everytime
+Unzip the downloaded file and run the memcached.exe application before you runserver.This should run everytime
 
 - Install Mongo Compass community version and connect to localhost
 

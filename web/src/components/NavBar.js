@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {moviesList} from './genericLists'
+import {moviesList} from './MovieData'
 import { Icon, Button, Menu, Segment, Search, Image, Popup, Feed } from 'semantic-ui-react'
 import _ from 'lodash'
 

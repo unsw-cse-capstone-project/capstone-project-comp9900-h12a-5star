@@ -38,6 +38,9 @@ class UserProfile(models.Model):
 
     profilePic = models.CharField(max_length=100, unique=False, default = None)
 
+    followed_by = MultiSelectField(default= None)
+    following = MultiSelectField(default= None)
+
     class Meta:
         '''
         to set table name in database

@@ -5,6 +5,7 @@ from profile.models import UserProfile
 from movie_review.helper import get_movie_details
 from movie_review.models import reviews
 from user.models import User
+from notifications.models import notifications
 import random
 
 statusCode = status.HTTP_400_BAD_REQUEST
@@ -169,3 +170,41 @@ class watchlistView(RetrieveAPIView):
         for movie in list(map(int, list(user_profile.watched))):
             response['data'].append(get_movie_details(movie))
         return Response(response, status=status.HTTP_200_OK)
+
+class followUser(RetrieveAPIView):
+    def put(self, request, *args, **kwargs):
+        follower = UserProfile.objects.get(username=request.data['follower'])
+        followee = UserProfile.objects.get(username=request.data['followee'])
+
+        if str(request.data['follower']) not in followee.followed_by:
+            followee.followed_by.append(str(request.data['follower']))
+            followee.save()
+            message1 = 'follower added'
+        else:
+            response = {
+            'success': 'true',
+            'statusCode': status.HTTP_200_OK,
+            'message': 'Already added'}
+            return Response(response, status=status.HTTP_200_OK)
+        if str(request.data['followee']) not in follower.following:
+            follower.following.append(str(request.data['followee']))
+            follower.save()
+            message2 = 'followee added'
+        else:
+            response = {
+            'success': 'true',
+            'statusCode': status.HTTP_200_OK,
+            'message': 'Already added'}
+            return Response(response, status=status.HTTP_200_OK)
+
+        new = notifications()
+        new.toUsername = request.data['followee']
+        new.fromUsername = request.data['follower']
+        new.type = 'FOLLOW'
+        new.save()
+        response = {
+            'success': 'true',
+            'statusCode': statusCode,
+            'message': message1 + ' & ' + message2}
+        return Response(response, status=status.HTTP_200_OK)
+

@@ -2,7 +2,7 @@ import pandas as pd
 import os
 import json
 from pathlib import Path
-#basedir = os.path.dirname("C:/Users/HP/project/capstone-project-comp9900-h12a-5star/web/src/searchdetails.js")
+#basedir = os.path.dirname("C:/Users/HP/project/capstone-project-comp9900-h12a-5star/web/src/movieData.js")
 def rate(price):
     return round(price/2,1)
 def rate1(description):
@@ -26,7 +26,7 @@ def file_creation():
     #os.chdir("C:/Users/HP/project/capstone-project-comp9900-h12a-5star/web/src/")
     #path = Path(os.getcwd())
     #print(path.parents[0])
-    data_folder = Path("web/src/components/moviedetails.js")
+    data_folder = Path("web/src/components/movieData.js")
     if os.path.exists(path.parents[0]/data_folder):
         #print("now")
         os.remove(path.parents[0]/data_folder)

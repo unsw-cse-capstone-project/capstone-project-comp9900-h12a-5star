@@ -208,3 +208,12 @@ class followUser(RetrieveAPIView):
             'message': message1 + ' & ' + message2}
         return Response(response, status=status.HTTP_200_OK)
 
+    def post(self, request, *args, **kwargs):
+        userprofile = UserProfile.objects.get(username=request.data['userID'])
+
+        response = {
+            'success': 'true',
+            'statusCode': statusCode,
+            'following':userprofile.following
+        }
+        return Response(response, status=status.HTTP_200_OK)

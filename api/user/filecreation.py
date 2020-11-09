@@ -26,7 +26,7 @@ def file_creation():
     #os.chdir("C:/Users/HP/project/capstone-project-comp9900-h12a-5star/web/src/")
     #path = Path(os.getcwd())
     #print(path.parents[0])
-    data_folder = Path("web/src/components/movieData.js")
+    data_folder = Path("web/src/components/MovieData.js")
     if os.path.exists(path.parents[0]/data_folder):
         #print("now")
         os.remove(path.parents[0]/data_folder)

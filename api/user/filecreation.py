@@ -12,8 +12,8 @@ def rate1(description):
 def file_creation():
     path = Path(os.getcwd())
     #os.chdir("C:/Users/HP/Desktop")
-    df = pd.read_csv(str(path.parents[0])+'\\tmdb_5000_movies.csv')
-    df1 = pd.read_csv(str(path.parents[0])+'\\movies.csv')
+    df = pd.read_csv(path.parents[0]/'tmdb_5000_movies.csv')
+    df1 = pd.read_csv(path.parents[0]/'movies.csv')
     df1= df1.drop(df1.columns[[0,2]], axis=1)
     df1 = df1.rename(columns={'overview': 'description', 'poster_path': 'image'})
     #df1['price']=df['vote_average']
@@ -26,16 +26,17 @@ def file_creation():
     #os.chdir("C:/Users/HP/project/capstone-project-comp9900-h12a-5star/web/src/")
     #path = Path(os.getcwd())
     #print(path.parents[0])
-    if os.path.exists(str(path.parents[0])+"\\web\\src\\searchdetails.js"):
+    data_folder = Path("web/src/searchdetails.js")
+    if os.path.exists(path.parents[0]/data_folder):
         #print("now")
-        os.remove(str(path.parents[0])+"\\web\\src\\searchdetails.js")
-        with open(str(path.parents[0])+"\\web\\src\\searchdetails.js", "w") as f:
+        os.remove(path.parents[0]/data_folder)
+        with open(path.parents[0]/data_folder, "w") as f:
             json.dump(list(x),f)
         #f = open(str(path.parents[1])+"/web/src/searchdetails.js", "r")
         #print(f.read())
         f.close()
     else:
         #print("enter")
-        with open(str(path.parents[0])+"\\web\\src\\searchdetails.js", "w") as f:
+        with open(path.parents[0]/data_folder, "w") as f:
             json.dump(list(x),f)
         f.close()

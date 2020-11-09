@@ -31,6 +31,9 @@ def getNotifications(request):
 
     for i in notices:
         #print(i.toUsername, i.fromUsername, i.type, i.addDate, i.addTime)
+        i.sent=True
+        i.save()
+
         data = defaultdict(lambda: None)
         data['fromUsername']= i.fromUsername
         data['type'] = i.type
@@ -45,9 +48,7 @@ def getNotifications(request):
             data['time'] = diff[0] + ' hours ago,' + diff[1] + ' minutes ago,' + diff[2]+' seconds ago'
         else:
             data['time'] = str(i.Time).split('.')[0]
-
         new_data.append(data)
-
 
         if i.status == False:
             newNotifications += 1
@@ -57,7 +58,6 @@ def getNotifications(request):
             'notifications': new_data,
             'totNotifications':len(notices),
             'newNotifications':newNotifications,
-
     }
     return Response(response, status=status.HTTP_200_OK)
 
@@ -66,8 +66,9 @@ def NotificationRead(request):
     notices = notifications.objects.filter(toUsername=request.data['userID'])
 
     for i in notices:
-        i.status = True
-        i.save()
+        if i.sent == True:
+            i.status = True
+            i.save()
 
     response = {
             'success': 'true',

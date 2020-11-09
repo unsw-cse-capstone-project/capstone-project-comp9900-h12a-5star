@@ -34,9 +34,10 @@ def file_creation():
             f.write("export const moviesList=[\n")
             for i in x:
                 #y=str(i).encode('utf-8')
-                f.write(str(i)+'\n')
+                f.write(str(i)+','+'\n')
                 #f.write('\n')
-            f.write("];")
+            f.write("];\n")
+            f.write("export default {moviesList};")
         #f = open(str(path.parents[1])+"/web/src/searchdetails.js", "r")
         #print(f.read())
         f.close()
@@ -47,7 +48,8 @@ def file_creation():
             f.write("export const moviesList=[\n")
             for i in x:
                 #y=str(i).encode('utf-8')
-                f.write(str(i)+'\n')
+                f.write(str(i)+','+'\n')
                 #f.write('\n')
-            f.write("];")
+            f.write("];\n")
+            f.write("export default {moviesList};")
         f.close()

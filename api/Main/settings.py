@@ -79,14 +79,20 @@ WSGI_APPLICATION = 'Main.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'sampleDB2',
+#         'HOST':'sampleuser:samplepassword@cluster5star.u9xgg.mongodb.net/sampleDB?retryWrites=true&w=majority',
+#         'USER':'sampleuser',
+#         'PASSWORD':'samplepassword',
+#
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'sampleDB2',
-        'HOST':'sampleuser:samplepassword@cluster5star.u9xgg.mongodb.net/sampleDB?retryWrites=true&w=majority',
-        'USER':'sampleuser',
-        'PASSWORD':'samplepassword',
-
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 

@@ -215,3 +215,21 @@ class followUser(RetrieveAPIView):
             'following':userprofile.following
         }
         return Response(response, status=status.HTTP_200_OK)
+
+class unfollowUser(RetrieveAPIView):
+    def put(self, request, *args, **kwargs):
+        follower = UserProfile.objects.get(username=request.data['follower'])
+        followee = UserProfile.objects.get(username=request.data['followee'])
+
+        if str(request.data['follower']) in followee.followed_by or str(request.data['followee']) in follower.following:
+            followee.followed_by.remove(str(request.data['follower']))
+            followee.save()
+
+            follower.following.remove(str(request.data['followee']))
+            follower.save()
+
+        response = {
+        'success': 'true',
+        'statusCode': status.HTTP_200_OK,
+        'message': 'Unfollowed'}
+        return Response(response, status=status.HTTP_200_OK)

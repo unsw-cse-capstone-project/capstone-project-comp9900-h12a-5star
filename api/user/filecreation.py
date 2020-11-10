@@ -6,9 +6,9 @@ from pathlib import Path
 def rate(price):
     return round(price/2,1)
 def rate1(description):
-    s=description.split(" ")
+    #s=description.split(" ")
     #print(s)
-    return ''.join(s[:8])
+    return description[:70]
 def file_creation():
     path = Path(os.getcwd())
     #os.chdir("C:/Users/HP/Desktop")

@@ -587,3 +587,18 @@ class MovieBrowse(APIView):
                  else:
                      browse_page=json.dumps(data)
                      return JsonResponse(json.loads(browse_page), safe=False)
+
+
+class usersList(APIView):
+    def get(self,request):
+        users = UserProfile.objects.all().order_by('username')
+        data = []
+
+        for user in users:
+            data.append(user.username)
+
+        response = {
+                'success': 'true',
+                'users':data
+        }
+        return Response(response, status=status.HTTP_200_OK)

@@ -179,8 +179,8 @@ class followUser(RetrieveAPIView):
 
         if str(request.data['follower']) in followee.followed_by or str(request.data['followee']) in follower.following:
             response = {
-            'success': 'true',
-            'statusCode': status.HTTP_200_OK,
+            'success': 'false',
+            'statusCode': statusCode,
             'message': 'Already added'}
             return Response(response, status=status.HTTP_200_OK)
         if str(request.data['follower']) not in followee.followed_by:
@@ -202,7 +202,7 @@ class followUser(RetrieveAPIView):
         new.save()
         response = {
             'success': 'true',
-            'statusCode': statusCode,
+            'statusCode': status.HTTP_200_OK,
             'message': message1 + ' & ' + message2}
         return Response(response, status=status.HTTP_200_OK)
 
@@ -211,7 +211,7 @@ class followUser(RetrieveAPIView):
 
         response = {
             'success': 'true',
-            'statusCode': statusCode,
+            'statusCode': status.HTTP_200_OK,
             'following':userprofile.following
         }
         return Response(response, status=status.HTTP_200_OK)

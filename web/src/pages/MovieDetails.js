@@ -13,8 +13,10 @@ export default class MovieDetails extends Component {
             items: [],
             open: false,
             review: "",
-            rating: "0"
-            
+            rating: "0",
+            shareUser: "",
+            firstOpen: false,
+            secondOpen: false
         };
         this.handleReview = this.handleReview.bind(this);
         if (window.sessionStorage.getItem('username') === null){
@@ -106,6 +108,18 @@ export default class MovieDetails extends Component {
     setOpen(val){
         this.setState({open: val})
     }
+
+    setFirstOpen(val){
+        this.setState({firstOpen: val})
+    }
+
+    setSecondOpen(val){
+        this.setState({secondOpen: val})
+        if (!val){
+            this.setState({firstOpen: false})
+        }
+    }
+
     handle_click_ban_user = (val) =>{
 
   
@@ -159,6 +173,22 @@ export default class MovieDetails extends Component {
 
     }
 
+    handle_share_movie = () =>{
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fromUser: this.user, 
+                                    toUser: this.state.shareUser, 
+                                    movieId: this.props.match.params.movieId })
+        }
+
+        fetch("http://127.0.0.1:8000/api/suggestMovie", requestOptions).then(res => res.json())
+
+        // this.setFirstOpen(false)
+        // this.setSecondOpen(true)
+        this.setState({secondOpen: true})
+    }
+
 
     render() {
         const { active_like } = this.state
@@ -198,16 +228,63 @@ export default class MovieDetails extends Component {
                                             trigger={<Button circular icon='bookmark'  size={'big'} toggle active={active_wishlist} onClick={this.handleClick_wishlist} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>}>
                                             Add to wishlist?
                                         </Popup>
-                                        <Popup 
-                                            trigger={<Button circular icon='share alternate'  size={'big'} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>
+                                        <Popup
+                                            trigger={<Button circular icon='share alternate'  size={'big'} onClick={()=> this.setFirstOpen(true)} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>
                                             }
-                                            on={['click']}>
+                                            >
                                             Share with a user? <br />
-                                            <Button>Share</Button>
                                         </Popup>
                                 </Grid.Column>
                             </Grid.Row>
                             <Grid.Row>
+
+
+                                <Modal
+                                    onClose={() => this.setFirstOpen(false)}
+                                    onOpen={() => this.setFirstOpen(true)}
+                                    open={this.state.firstOpen}
+                                    size='small'
+                                >
+                                    <Modal.Header><Icon name="share alternate" />Share with a user</Modal.Header>
+                                    <Modal.Content image>
+                                        <Form>
+                                            <Form.Field >
+                                                <Header as="h1">Please enter the username</Header>
+                                                <input onChange={(event) => this.setState({ shareUser: event.target.value })} required />
+                                            </Form.Field>
+                                        </Form>
+                                        <Modal.Description>
+
+                                        </Modal.Description>
+                                    </Modal.Content>
+                                    <Modal.Actions>
+                                    <Button onClick={()=> this.setSecondOpen(false)} color="red">
+                                        <Icon name='close' /> Cancel 
+                                        </Button>
+                                        <Button onClick={this.handle_share_movie} primary>
+                                            Share <Icon name='right chevron' />
+                                        </Button>
+                                    </Modal.Actions>
+
+                                    <Modal
+                                        onClose={() => this.setSecondOpen(false)}
+                                        onOpen={()=>this.setSecondOpen(true)}
+                                        open={this.state.secondOpen}
+                                        size='small'
+                                    >
+                                        <Modal.Header>Movie Shared!!</Modal.Header>
+                                        <Modal.Content>
+                                            <p>Your friend will be notified about the movie. Happy sharing!!</p>
+                                        </Modal.Content>
+                                        <Modal.Actions>
+                                            <Button
+                                                icon='check'
+                                                content='All Done'
+                                                onClick={() => this.setSecondOpen(false)}
+                                            />
+                                        </Modal.Actions>
+                                    </Modal>
+                                </Modal>
 
                                 
                                 <Grid.Column >

@@ -199,8 +199,11 @@ export default class MovieDetails extends Component {
                                             Add to wishlist?
                                         </Popup>
                                         <Popup 
-                                            trigger={<Button circular icon='share alternate'  size={'big'} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>}>
-                                            Share with a user?
+                                            trigger={<Button circular icon='share alternate'  size={'big'} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>
+                                            }
+                                            on={['click']}>
+                                            Share with a user? <br />
+                                            <Button>Share</Button>
                                         </Popup>
                                 </Grid.Column>
                             </Grid.Row>
@@ -421,7 +424,7 @@ export default class MovieDetails extends Component {
                                                         <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])} secondary icon='user close' size={'big'} />}>
                                                             Ban User
                                                         </Popup>
-                                                        <Popup trigger={<Button secondary icon='add user' size={'big'} />}>
+                                                        <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} secondary icon='add user' size={'big'} />}>
                                                             Follow User
                                                         </Popup>
                                                 </Popup>

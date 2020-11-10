@@ -5,7 +5,7 @@ import {
     Link,
   } from "react-router-dom";
 
-export default class WatchListPage extends Component {
+export default class FollowUserPage extends Component {
 
     constructor() {
         super();
@@ -25,10 +25,10 @@ export default class WatchListPage extends Component {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: this.user})
+            body: JSON.stringify({username: this.user})
         };
 
-        fetch("http://127.0.0.1:8000/api/watchMovie/", requestOptions)
+        fetch("http://127.0.0.1:8000/api/banUsername/", requestOptions)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -48,7 +48,7 @@ export default class WatchListPage extends Component {
 
     revoveElement = (val) => {
         delete this.state.items.data[this.state.items.data.indexOf(val)]
-        console.log(this.state.items.data)
+        //console.log(this.state.items.data)
         // this.state.items = this.state.items
         this.setState({item: this.state.items.data})
         var len = 0
@@ -60,36 +60,17 @@ export default class WatchListPage extends Component {
         }
         
     }
-    removeFromWishlist = (val) => {
+    removeFromFollowlist = (val) => {
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
-            body: JSON.stringify({ username: this.user,movieID: val.movieID, movieStatus: false})
+            body: JSON.stringify({ username: this.user, bannedUsername:val.username, banStatus: false})
         };
 
-        fetch("http://127.0.0.1:8000/api/watchMovie/", requestOptions)
+        fetch("http://127.0.0.1:8000/api/banUsername/", requestOptions)
         this.revoveElement(val)
         // window.location.reload(false
-    }
-   
-    
-    addToMyWishlist = (val) => {
-        this.setState((prevState) => ({ active_wishlist: !prevState.active_wishlist }))
-
-        // this.state.active_wishlist = !this.state.active_wishlist
-
-        const requestOptions = {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
-            body: JSON.stringify({ username: this.user, movieID: val, movieStatus: !this.state.items.watched})
-
-        };
-
-        // fetch("http://127.0.0.1:8000/api/addWishlist/", requestOptions)
-            
-            // this.state.items.wishlist = !this.state.items.wishlist
     }
 
     render() {
@@ -105,7 +86,7 @@ export default class WatchListPage extends Component {
                     <Divider horizontal></Divider>
                     <Divider horizontal>
                     <Header as='h1'>
-                        {this.props.match.params.userId.charAt(0).toUpperCase() + this.props.match.params.userId.slice(1)}'s Watchlist
+                        {this.props.match.params.userId.charAt(0).toUpperCase() + this.props.match.params.userId.slice(1)}'s List of followed users
                     </Header>
                     </Divider>
                     {
@@ -115,19 +96,20 @@ export default class WatchListPage extends Component {
                             this.state.items.data.map((item)=>
                             <Grid.Row>
                                 <Grid.Column width={2}>
-                                    <Image src={item.poster} size='tiny'  />
+                                    <Image src={item.profilePic} size='tiny'  />
                                 </Grid.Column>
                                 <Grid.Column width={2}>
                                 <br/>
-                                    <Icon name='star' color={"yellow"}/> {item.rating} <br/><br/>
-                                    <Icon name='calendar alternate outline' /> {item.release_date.substring(0,4)}
+                                
+                        <p>{item.firstname.toUpperCase()}</p>
+                        <p>{item.lastname.toUpperCase()}</p>
+
+                                    
                                 </Grid.Column>
                                 <Grid.Column width={8}>
                                 <br/><br/>
                                 
-                                    <Link style={{ color: 'black', fontSize:24}} className="MovieDetails" key={item.movieID} to= {`/movieDetails/${item.movieID}`}>
-                                        {item.title}
-                                    </Link>
+                     
                                
                                     
                                 </Grid.Column>
@@ -135,7 +117,7 @@ export default class WatchListPage extends Component {
                                     <br/><br/>
                                     {
                                         (this.props.match.params.userId === window.sessionStorage.getItem('username'))?
-                                            <Button circular floated='right' color='red' icon='close' onClick={()=>this.removeFromWishlist(item)} />
+                                            <Button circular floated='center' color='red' icon='close' onClick={()=>this.removeFromWishlist(item)} />
                                             :
                                             <Button primary floated='right'><Link style={{ color: '#FFF'}} className="MovieDetails" key={item.movieID} to= {`/movieDetails/${item.movieID}`}>
                                             View Details
@@ -150,9 +132,9 @@ export default class WatchListPage extends Component {
                     </Grid>
                     :
                     <Message>
-                        <Message.Header>There are no items in your watchlist yet!</Message.Header>
+                        <Message.Header>Your Follow List is Empty</Message.Header>
                         <p>
-                            Go ahead and add items to your watchlist.
+                            Start following people now!
                         </p>
                     </Message>
                 }

@@ -21,6 +21,7 @@ import SignUp from './pages/SignUp';
 import BrowsePage from './pages/BrowsePage';
 import NavBar from './components/NavBar';
 import WelcomeCategory from './pages/WelcomeCategory';
+import FollowUserPage from './pages/FollowUserPage';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/" component={HomePage} exact/>
         <Route path="/welcome" component={HomePage} exact/>
         <Route path="/welcome/:category" component={WelcomeCategory} exact/>
+        <Route path="/FollowUser/:userId" component={FollowUserPage} exact />
         <Route path="/browse" component = {BrowsePage} />
         <Route path="/wishlist/:userId" component={WishListPage} />
         <Route path="/watchlist/:userId" component={WatchListPage} />

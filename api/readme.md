@@ -18,14 +18,14 @@ Unzip the downloaded file and run the memcached.exe application before you runse
 - Make sure you have sqlite3 installed
 
 - Upgrade pip and create python3 environment and activate the new environment
-'''(bash)
+```(bash)
 python3 -m pip install --upgrade pip
 python3 -m pip install --user --upgrade pip
 
 python3 -m pip install --user virtualenv
 python3 -m venv env
 source env/bin/activate
-'''
+```
 
 - cd to api directory
 

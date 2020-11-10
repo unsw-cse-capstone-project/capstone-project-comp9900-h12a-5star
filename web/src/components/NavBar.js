@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {moviesList} from './genericLists'
-import { Icon, Button, Menu, Segment, Search, Image, Popup, Feed } from 'semantic-ui-react'
+import { Icon, Button, Menu, Segment, Search, Image, Popup, Feed, Label } from 'semantic-ui-react'
 import _ from 'lodash'
 
 
@@ -24,7 +24,49 @@ const source = moviesList
 const initialState = { isLoading: false, results: [], value: '' }
 
 export default class MenuExampleInvertedSegment extends Component {
-  state = { activeItem: '', isLoading: false, results: [], value: '' }
+
+  constructor() {
+    super();
+    this.state = {
+      activeItem: '', 
+      isLoading: false, 
+      results: [], 
+      value: '',
+      newNotifications : 0,
+      error: null,
+      isLoaded: false,
+      items: []
+    }
+  }
+
+  componentDidMount() {
+    if (window.sessionStorage.getItem('username') === null){
+      window.sessionStorage.setItem('username', 'guest');
+    }
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userID: window.sessionStorage.getItem('username') })
+    };
+
+    fetch("http://127.0.0.1:8000/api/getNotifications", requestOptions)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        items: result,
+                        newNotifications: result.newNotifications
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+  }
 
   handleItemClick = (e, { name }) => {
     this.setState({ activeItem: name })
@@ -152,7 +194,16 @@ export default class MenuExampleInvertedSegment extends Component {
                 active={activeItem === 'notification'}
                 onClick={this.handleItemClick}
                 >
-                <Icon name='bell' size='large'/>
+                  <Icon.Group>
+                    <Icon name='bell' size='large'/>
+                    {
+                      // (this.state.newNotifications > 0) &&
+                        <Label circular color="red" floating size="small">
+                          {this.state.newNotifications}
+                      </Label>
+                    }
+                  </Icon.Group>
+                
               </Menu.Item>
               }
               style={style}

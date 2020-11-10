@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from profile.models import UserProfile
 from movie_review.models import movies,reviews
-from movie_review.helper import verify_user, get_movie_details
+from movie_review.helper import verify_user, get_movie_details, send_notifications
 
 @api_view(['POST', ])
 def add_review(request):
@@ -36,6 +36,9 @@ def add_review(request):
                 'statusCode': status.HTTP_200_OK,
                 'message': 'Review updated',
                 }
+
+    send_notifications(request.data['user'], request.data['movie'])
+
     return Response(response)
 
 @api_view(['POST', ])

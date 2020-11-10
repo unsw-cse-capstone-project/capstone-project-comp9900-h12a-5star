@@ -26,6 +26,16 @@ python3 -m pip install -r requirement.txt
 
 - run the following commands
 ```(bash)
+python3 manage.py makemigrations user
+python3 manage.py makemigrations profile
+python3 manage.py makemigrations movie_review
+python3 manage.py makemigrations notifications
+
+python3 manage.py migrate user
+python3 manage.py migrate profile
+python3 manage.py migrate movie_review
+python3 manage.py migrate notifications
+
 python3 manage.py makemigrations
 python3 manage.py migrate
 python3 manage.py runserver

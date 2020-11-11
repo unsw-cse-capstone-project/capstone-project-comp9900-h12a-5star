@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import {moviesList} from './genericLists'
-import { Icon, Button, Menu, Segment, Search, Image, Popup, Feed, Label } from 'semantic-ui-react'
+import { Icon, Button, Menu, Segment, Search, Image, Popup, Feed, Label, Grid } from 'semantic-ui-react'
 import _ from 'lodash'
-
+import {
+  Link,
+} from "react-router-dom";
 
 const source = moviesList
 
@@ -140,6 +142,19 @@ export default class MenuExampleInvertedSegment extends Component {
       width: 450
     }
 
+    var content = (items) => (
+      <div>
+        <Link  key={items.movieID} to= {`/movieDetails/${items.movieID}`}>
+                      <Feed.Event
+                          image={items.profilePic}
+                          date={items.time}
+                          summary={summary}
+                          extraText={extraText}
+                        />
+                      </Link>
+      </div>
+    )
+
     return (
       <Segment inverted>
         <Menu inverted secondary size='large'>
@@ -210,28 +225,29 @@ export default class MenuExampleInvertedSegment extends Component {
               position='top center'
               flowing
               on={['click']}>
-                <Feed>
-                  <Feed.Event
-                    image={image}
-                    date={date}
-                    summary={summary}
-                    extraText={extraText}
-                  />
-
-                  <Feed.Event>
-                    <Feed.Label image={image} />
-                    <Feed.Content date={date} summary={summary} extraText={extraText} />
-                  </Feed.Event>
-
-                  <Feed.Event>
-                    <Feed.Label image={image} />
-                    <Feed.Content>
-                      <Feed.Date content={date} />
-                      <Feed.Summary content={summary} />
-                      <Feed.Extra text content={extraText} />
-                    </Feed.Content>
-                  </Feed.Event>
-                </Feed>
+                <div>
+                  {
+                    (this.state.items.notifications) && 
+                      this.state.items.notifications.map((items) => 
+                      <Link  key={items.movieId} to= {`/movieDetails/${items.movieId}`}>
+                          <Grid>
+                            <Grid.Column width={2}>
+                              <img className="notification" src={items.profilePic} />
+                            </Grid.Column>
+                            <Grid.Column width={10} >
+                              <Grid.Row className="day">
+                                {items.time}
+                              </Grid.Row>
+                              <Grid.Row className="title">
+                                <b>{items.fromUsername.charAt(0).toUpperCase()+items.fromUsername.slice(1)} suggested you to watch {items.movieID}</b>
+                              </Grid.Row>
+                            </Grid.Column>
+                          </Grid>
+                     </Link>
+                      
+                      )
+                  }
+                </div>
               </Popup>
               
               

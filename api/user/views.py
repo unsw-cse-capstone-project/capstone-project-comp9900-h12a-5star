@@ -228,9 +228,9 @@ class Homepage(APIView):
             cache_key="Homepage"
             cache_time = None
             data=cache.get(cache_key)
-            print(data)
+            
             if  not data:
-                print("entered without cache")
+                
                 required=['popular','top_rated','now_playing']
             #Tmdb provides maximum of 20 results for each page and we can't send Multiple page requests in single Query so using For loop
                 intial_homepage=defaultdict(list)
@@ -263,7 +263,7 @@ class Homepage(APIView):
                 home_page=json.dumps(final_homepage)
                 return JsonResponse(json.loads(home_page), safe=False)
             else:
-                print("entered cache")
+                
                 home_page=json.dumps(data)
                 return JsonResponse(json.loads(home_page), safe=False)
 
@@ -374,7 +374,7 @@ class MovieSearch(APIView):
                 else:
                     genre_search = defaultdict(list)
                 if len(query) >= 1:
-                    print("entered")
+                    
                     initial_search = defaultdict(list)
                     res = requests.get('https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query=' + str(query) + '&page=1' +'&sort_by=popularity.desc'+ '&include_adult=false')
                     if res.json()['total_pages'] > 4:
@@ -383,21 +383,21 @@ class MovieSearch(APIView):
                         pages = res.json()['total_pages']
                     else:
                         pages = 2
-                    print(pages)
+                    
                     for i in range(1, pages):
                          url = 'https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query=' + str(query) + '&page=' + str(i)+'&sort_by=popularity.desc' + '&include_adult=false'
                          response = requests.get(url)
-                         print(response)
+                         
                          initial_search['result'].extend(response.json()['results'])
-                    print(initial_search)
+                    
                     name_search = search_func(initial_search, "name",0)
                 else:
                     name_search = defaultdict(list)
                 s = BeautifulSoup(simple_get('https://www.imdb.com/search/title-text/?plot='+query), 'html.parser')
-             #s = BeautifulSoup(simple_get('https://www.whatismymovie.com/results?text='+query), 'html.parser')
+             
                 desc_movies=[]
                 for heading in s.find_all(["h3"]):
-                #print(s)
+                
                     b=heading.text.strip().splitlines()
                     try:
                         if not b[1].endswith(')'):
@@ -405,11 +405,11 @@ class MovieSearch(APIView):
                     except IndexError:
                         pass
                 description_search = defaultdict(list)
-            #print(desc_movies)
+            
                 for i in desc_movies[:30]:
                     initial_search = defaultdict(list)
                     res = requests.get('https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query=' + str(i)+'&sort_by=popularity.desc' + '&page=1' + '&include_adult=false')
-                #print(res.json())
+                
                     try:
                         if res.json()['total_pages'] == 0:
                             continue
@@ -587,3 +587,18 @@ class MovieBrowse(APIView):
                  else:
                      browse_page=json.dumps(data)
                      return JsonResponse(json.loads(browse_page), safe=False)
+
+
+class usersList(APIView):
+    def get(self,request):
+        users = UserProfile.objects.all().order_by('username')
+        data = []
+
+        for user in users:
+            data.append(user.username)
+
+        response = {
+                'success': 'true',
+                'users':data
+        }
+        return Response(response, status=status.HTTP_200_OK)

@@ -106,3 +106,4 @@ dist
 
 *.pyc 
 __pycache__/
+api/db.sqlite3

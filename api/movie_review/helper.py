@@ -1,8 +1,9 @@
 from rest_framework import status
 from profile.models import UserProfile
 from movie_review.models import movies,reviews
-import requests
+from notifications.models import notifications
 from collections import defaultdict
+import requests, datetime
 
 def verify_user(user):
     try:
@@ -37,3 +38,18 @@ def get_movie_details(movie):
     movie_details['release_date']=response.json()['release_date']
     movie_details["myWishlist"] = True
     return movie_details
+
+def send_notifications(userID, movieID):
+    followers = UserProfile.objects.get(username = userID).followed_by
+
+    for follower in followers:
+        new = notifications()
+        new.toUsername = follower
+        new.fromUsername = userID
+        new.movieId = movieID
+        new.type = 'COMMENT'
+        new.Date = datetime.date.today()
+        new.Time = datetime.datetime.now().time()
+        new.save()
+
+    return

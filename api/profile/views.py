@@ -6,6 +6,7 @@ from movie_review.helper import get_movie_details
 from movie_review.models import reviews
 from user.models import User
 from notifications.models import notifications
+import datetime
 import random
 
 statusCode = status.HTTP_400_BAD_REQUEST
@@ -176,35 +177,59 @@ class followUser(RetrieveAPIView):
         follower = UserProfile.objects.get(username=request.data['follower'])
         followee = UserProfile.objects.get(username=request.data['followee'])
 
+        if str(request.data['follower']) in followee.followed_by or str(request.data['followee']) in follower.following:
+            response = {
+            'success': 'false',
+            'statusCode': statusCode,
+            'message': 'Already added'}
+            return Response(response, status=status.HTTP_200_OK)
         if str(request.data['follower']) not in followee.followed_by:
             followee.followed_by.append(str(request.data['follower']))
             followee.save()
             message1 = 'follower added'
-        else:
-            response = {
-            'success': 'true',
-            'statusCode': status.HTTP_200_OK,
-            'message': 'Already added'}
-            return Response(response, status=status.HTTP_200_OK)
+
         if str(request.data['followee']) not in follower.following:
             follower.following.append(str(request.data['followee']))
             follower.save()
             message2 = 'followee added'
-        else:
-            response = {
-            'success': 'true',
-            'statusCode': status.HTTP_200_OK,
-            'message': 'Already added'}
-            return Response(response, status=status.HTTP_200_OK)
 
         new = notifications()
         new.toUsername = request.data['followee']
         new.fromUsername = request.data['follower']
         new.type = 'FOLLOW'
+        new.Date = datetime.date.today()
+        new.Time = datetime.datetime.now().time()
         new.save()
         response = {
             'success': 'true',
-            'statusCode': statusCode,
+            'statusCode': status.HTTP_200_OK,
             'message': message1 + ' & ' + message2}
         return Response(response, status=status.HTTP_200_OK)
 
+    def post(self, request, *args, **kwargs):
+        userprofile = UserProfile.objects.get(username=request.data['userID'])
+
+        response = {
+            'success': 'true',
+            'statusCode': status.HTTP_200_OK,
+            'following':userprofile.following
+        }
+        return Response(response, status=status.HTTP_200_OK)
+
+class unfollowUser(RetrieveAPIView):
+    def put(self, request, *args, **kwargs):
+        follower = UserProfile.objects.get(username=request.data['follower'])
+        followee = UserProfile.objects.get(username=request.data['followee'])
+
+        if str(request.data['follower']) in followee.followed_by or str(request.data['followee']) in follower.following:
+            followee.followed_by.remove(str(request.data['follower']))
+            followee.save()
+
+            follower.following.remove(str(request.data['followee']))
+            follower.save()
+
+        response = {
+        'success': 'true',
+        'statusCode': status.HTTP_200_OK,
+        'message': 'Unfollowed'}
+        return Response(response, status=status.HTTP_200_OK)

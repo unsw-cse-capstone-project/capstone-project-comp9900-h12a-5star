@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
-import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed} from 'semantic-ui-react'
+import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed, Dropdown} from 'semantic-ui-react'
 
 export default class MovieDetails extends Component {
 
@@ -16,7 +16,10 @@ export default class MovieDetails extends Component {
             rating: "0",
             shareUser: "",
             firstOpen: false,
-            secondOpen: false
+            secondOpen: false,
+            isLoadedUser: false,
+            errorUser: false,
+            userList:[]
         };
         this.handleReview = this.handleReview.bind(this);
         if (window.sessionStorage.getItem('username') === null){
@@ -109,8 +112,44 @@ export default class MovieDetails extends Component {
         this.setState({open: val})
     }
 
-    setFirstOpen(val){
+    async setFirstOpen(val){
         this.setState({firstOpen: val})
+
+        if (this.state.userList.length === 0){
+            await fetch("http://127.0.0.1:8000/api/users/")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoadedUser: true,
+                        userList: result.users
+                    });
+                },
+                // Note: it's important to handle errors here
+                // instead of a catch() block so that we don't swallow
+                // exceptions from actual bugs in components.
+                (errorUser) => {
+                    this.setState({
+                        isLoadedUser: true,
+                        errorUser
+                    });
+                }
+            )
+
+            var tmpList = []
+
+            this.state.userList.map((item) =>
+                (item !== this.user)&&
+                tmpList.push({key: item,
+                text: item,
+                value: item})
+            )
+
+
+            this.setState({userList: tmpList})
+        }
+        
+
     }
 
     setSecondOpen(val){
@@ -262,7 +301,8 @@ export default class MovieDetails extends Component {
                                         <Form>
                                             <Form.Field >
                                                 <Header as="h1">Please enter the username</Header>
-                                                <input onChange={(event) => this.setState({ shareUser: event.target.value })} required />
+                                                {/* <input onChange={(event) => this.setState({ shareUser: event.target.value })} required /> */}
+                                                <Dropdown placeholder='Select user' onChange={(event, {value}) =>  this.setState({shareUser : value})} fluid selection options={this.state.userList} search required/>
                                             </Form.Field>
                                         </Form>
                                         <Modal.Description>

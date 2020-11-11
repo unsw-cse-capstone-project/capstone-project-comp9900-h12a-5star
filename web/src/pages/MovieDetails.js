@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
-import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed} from 'semantic-ui-react'
-
+import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed,Dropdown} from 'semantic-ui-react'
+import {gender,genres,languages} from '../components/genericLists';
+import {
+    DateInput,
+    TimeInput,
+    DateTimeInput,
+    DatesRangeInput
+  } from 'semantic-ui-calendar-react';
 export default class MovieDetails extends Component {
+
+    genderOptions = gender
 
     constructor() {
         super();
@@ -13,7 +21,10 @@ export default class MovieDetails extends Component {
             items: [],
             open: false,
             review: "",
-            rating: "0"
+            rating: "0",
+            gender : "",
+            datesRange:""
+
             
         };
         this.handleReview = this.handleReview.bind(this);
@@ -157,6 +168,95 @@ export default class MovieDetails extends Component {
         else{
             window.location.href='/movieDetails';
         }
+
+    }
+    handleChange = (event, {name, value}) => {
+        if (this.state.hasOwnProperty(name)) {
+          this.setState({ [name]: value });
+        }
+      }
+
+    handleFilterReviews = () => {
+        
+        console.log(this.state.gender)
+        console.log(this.state.datesRange)
+        // console.log(this.state.toDate)
+        // this.setState({ isLoaded: true })
+        // console.log(this.state.isLoaded)
+        // var obj = {"genre_id":this.state.genres,"director_id":this.state.directors};
+   
+        // const requestOptions = {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify(obj)
+        // };
+        // if (this.state.genres.length >0 & this.state.directors.length >0){
+        //     this.state.flag=1
+            
+        //     fetch("http://127.0.0.1:8000/api/browse/",requestOptions)
+        //     .then(res => res.json())
+        //     .then(
+        //         (result) => {
+        //             this.setState({
+        //                 isLoaded: true,
+        //                 items: result.browse_result
+        //             });
+        //         },
+                
+        //         (error) => {
+        //             this.setState({
+        //                 isLoaded: true,
+        //                 error
+        //             });
+        //         }
+        //     )
+        //     this.setState({isLoaded:false})
+        // }
+        // else if (this.state.genres.length >0){
+        //     this.state.flag=2
+            
+        //     fetch("http://127.0.0.1:8000/api/browse/",requestOptions)
+        //     .then(res => res.json())
+        //     .then(
+        //         (result) => {
+        //             this.setState({
+        //                 isLoaded: true,
+        //                 items: result.genre_result
+        //             });
+        //         },
+                
+        //         (error) => {
+        //             this.setState({
+        //                 isLoaded: true,
+        //                 error
+        //             });
+        //         }
+        //     )
+        //     this.setState({isLoaded:false})
+        // }
+        // else if (this.state.directors.length > 0){
+        //     this.state.flag=3
+            
+        //     fetch("http://127.0.0.1:8000/api/browse/",requestOptions)
+        //     .then(res => res.json())
+        //     .then(
+        //         (result) => {
+        //             this.setState({
+        //                 isLoaded: true,
+        //                 items: result.director_result
+        //             });
+        //         },
+                
+        //         (error) => {
+        //             this.setState({
+        //                 isLoaded: true,
+        //                 error
+        //             });
+        //         }
+        //     )
+        //     this.setState({isLoaded:false})
+        // }
+
 
     }
 
@@ -391,6 +491,62 @@ export default class MovieDetails extends Component {
                                 <Header as='h3' >
                                     User Reviews
                                 </Header>
+                                <Message>
+                                    <Message.Header>Filter Reviews</Message.Header>
+                                    <br></br>
+                                    <Form>
+                                        <Form.Group >
+                                    
+                                        <Form.Field width={12}>
+                                            
+                                            <Dropdown placeholder="Gender"
+                                            onChange={(event, {value}) =>  this.setState({gender : value})} 
+                                            search 
+                                            fluid selection 
+                                            clearable
+                                            options={this.genderOptions} 
+                                            />
+                                        </Form.Field>
+                                
+                        
+                                
+                                        {/* <Form.Field width={12}>
+                                            
+                                        
+                                            <Dropdown placeholder="From Date" 
+                                            onChange={(event, {value}) =>  this.setState({fromDate : value})} 
+                                            search 
+                                            fluid selection multiple options={this.directorOptions} 
+                                            required/>
+                                        </Form.Field>
+                                        
+                                        <Form.Field width={12}>
+                                        
+                                            <Dropdown placeholder="To Date" 
+                                            onChange={(event, {value}) =>  this.setState({toDate : value})} 
+                                            search 
+                                            fluid selection multiple options={this.directorOptions} 
+                                            required/>
+                                        </Form.Field> */}
+                                        <Form.Field width={12}>
+                                        
+                                        <DatesRangeInput
+                                            name="datesRange"
+                                            placeholder="From - To"
+                                            value={this.state.datesRange}
+                                            iconPosition="left"
+                                            onChange={this.handleChange}
+                                            clearable
+                                            />
+                                        </Form.Field>
+                                
+                            
+                                            <Form.Field width={4}>
+                                                <Button  onClick={this.handleFilterReviews} color={"blue"} fluid type='submit' floated='left'>Filter</Button>
+                                            </Form.Field>
+                                        </Form.Group >
+                                    </Form> 
+                                </Message>
 
                                     {
                                         (this.state.items.review)?

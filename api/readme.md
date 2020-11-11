@@ -2,23 +2,43 @@
 In this section you will find all the APIs which have been created for this project. 
 
 ## Technology Stack
-Python and Django
+Python , Django and Memcache
 
-## Installation Steps
+## Installation Steps for linux interface
 
-- Install Mongo Compass community version and connect to localhost
+- Make sure you have sqlite3 installed
 
-- Create conda environment and install requirements.txt
+- Upgrade pip and create python3 environment and activate the new environment
+```(bash)
+python3 -m pip install --upgrade pip
+python3 -m pip install --user --upgrade pip
+
+python3 -m pip install --user virtualenv
+python3 -m venv env
+source env/bin/activate
+```
+
+- cd to api directory
+
+- pip install requirements.txt
 ```(bash)
 python3 -m pip install -r requirement.txt
 ```
 
-- activate conda environment and cd the api directory
-
 - run the following commands
 ```(bash)
-python manage.py makemigrations
-python manage.py migrate
-python manage.py runserver
+python3 manage.py makemigrations user
+python3 manage.py makemigrations profile
+python3 manage.py makemigrations movie_review
+python3 manage.py makemigrations notifications
+
+python3 manage.py migrate user
+python3 manage.py migrate profile
+python3 manage.py migrate movie_review
+python3 manage.py migrate notifications
+
+python3 manage.py makemigrations
+python3 manage.py migrate
+python3 manage.py runserver
 ```
 =======

@@ -362,6 +362,12 @@ export default class ProfilePage extends Component {
                                     <Icon name='eye' size="big" /> <br /> <br /> Watch List
                                 </center>
                             </Button>
+                            <Button className="profileEdit" color={"purple"} onClick={event => window.location.href = `/FollowUser/${this.user}`}>
+                                <center>
+                                    <br />
+                                    <Icon name='add user' size="big" /> <br /> <br /> Follow List
+                                </center>
+                            </Button>
                             <br />
                             <br />
                         </center>

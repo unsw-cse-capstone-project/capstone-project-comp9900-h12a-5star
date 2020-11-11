@@ -56,6 +56,7 @@ export default class MovieDetails extends Component {
                     });
                 }
             )
+            
     }
 
     handleClick_like = () =>{
@@ -161,6 +162,7 @@ export default class MovieDetails extends Component {
 
 
     render() {
+        console.log(this.state.items)
         const { active_like } = this.state
         const { active_seen } = this.state
         const { active_wishlist } = this.state
@@ -386,86 +388,86 @@ export default class MovieDetails extends Component {
                             <Grid.Row>
                                 <Grid.Column stretched>
                                 <Comment.Group>
-                            <Header as='h3' >
-                                User Reviews
-                        </Header>
+                                <Header as='h3' >
+                                    User Reviews
+                                </Header>
 
-                            {
-                                (this.state.items.review)?
-                                (this.state.items.review.length === 0)?
-                                <Message>
-                                    <Message.Header>There are no reviews to show yet!</Message.Header>
-                                    <p>
-                                    Be the first one to review {this.state.items.title}
-                                    </p>
-                                </Message> : <div></div>
-                                :
-                                <div></div>
-                            }
+                                    {
+                                        (this.state.items.review)?
+                                        (this.state.items.review.length === 0)?
+                                        <Message>
+                                            <Message.Header>There are no reviews to show yet!</Message.Header>
+                                            <p>
+                                            Be the first one to review {this.state.items.title}
+                                            </p>
+                                        </Message> : <div></div>
+                                        :
+                                        <div></div>
+                                    }
 
-                            {
-                                (this.state.items.review)?
-                                _.times(this.state.items.review.length, (j) => (
-                                    <Comment>
-                                        <Comment.Avatar src={this.state.items.profilePics[j]} />
-                                        <Comment.Content>
-                                            {
-                                                (this.state.items.user[j] !== this.user) ?
-                                                <Popup trigger={<Comment.Author as='a'>{this.state.items.user[j]}</Comment.Author>} 
-                                                    flowing 
-                                                    hoverable 
-                                                    style={style} 
-                                                    inverted 
-                                                    position='top center'
-                                                    on={['hover', 'click']}>
-                                                        <Popup trigger={<Button secondary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` } icon="bookmark" size={'big'} />}>
-                                                            View Wishlist
+                                    {
+                                        (this.state.items.review)?
+                                        _.times(this.state.items.review.length, (j) => (
+                                            <Comment>
+                                                <Comment.Avatar src={this.state.items.profilePics[j]} />
+                                                <Comment.Content>
+                                                    {
+                                                        (this.state.items.user[j] !== this.user) ?
+                                                        <Popup trigger={<Comment.Author as='a'>{this.state.items.user[j]}</Comment.Author>} 
+                                                            flowing 
+                                                            hoverable 
+                                                            style={style} 
+                                                            inverted 
+                                                            position='top center'
+                                                            on={['hover', 'click']}>
+                                                                <Popup trigger={<Button secondary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` } icon="bookmark" size={'big'} />}>
+                                                                    View Wishlist
+                                                                </Popup>
+                                                                <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])} secondary icon='user close' size={'big'} />}>
+                                                                    Ban User
+                                                                </Popup>
+                                                                <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} secondary icon='add user' size={'big'} />}>
+                                                                    Follow User
+                                                                </Popup>
                                                         </Popup>
-                                                        <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])} secondary icon='user close' size={'big'} />}>
-                                                            Ban User
-                                                        </Popup>
-                                                        <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} secondary icon='add user' size={'big'} />}>
-                                                            Follow User
-                                                        </Popup>
-                                                </Popup>
-                                                :
-                                                <Comment.Author as='a'>{this.state.items.user[j]}</Comment.Author>
-                                            }
-                                            
-                                            <Comment.Metadata>
-                                                <div>{this.state.items.date_modified[j]}</div>
-                                            </Comment.Metadata>
-                                            <Comment.Text>
-                                                <Rating icon='star' defaultRating={this.state.items.rating[j]} maxRating={5} disabled /><br />
-                                                {this.state.items.review[j]}
-                                            </Comment.Text>
-                                            <Comment.Actions>
-                                                <Comment.Action>upvote</Comment.Action>
-                                                <Comment.Action>downvote</Comment.Action>
-                                            </Comment.Actions>
-                                        </Comment.Content>
-                                    </Comment>
-                                ))
-                                :
-                                <div></div>
-                            }
+                                                        :
+                                                        <Comment.Author as='a'>{this.state.items.user[j]}</Comment.Author>
+                                                    }
+                                                    
+                                                    <Comment.Metadata>
+                                                        <div>{this.state.items.date_modified[j]}</div>
+                                                    </Comment.Metadata>
+                                                    <Comment.Text>
+                                                        <Rating icon='star' defaultRating={this.state.items.rating[j]} maxRating={5} disabled /><br />
+                                                        {this.state.items.review[j]}
+                                                    </Comment.Text>
+                                                    <Comment.Actions>
+                                                        <Comment.Action>upvote</Comment.Action>
+                                                        <Comment.Action>downvote</Comment.Action>
+                                                    </Comment.Actions>
+                                                </Comment.Content>
+                                            </Comment>
+                                        ))
+                                        :
+                                        <div></div>
+                                    }
 
-                            <Form reply>
-                                How was this Movie?  <Rating  disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} onRate={this.handleRate} icon='star' defaultRating={0} maxRating={5}/>
-                                <Form> 
-                                    <textarea  onChange={(event) => this.handleReview(event)}  placeholder='What do you think about the movie?' disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>
-                                <input  type="hidden" value={this.state.review}/>
+                                    <Form reply>
+                                        How was this Movie?  <Rating  disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} onRate={this.handleRate} icon='star' defaultRating={0} maxRating={5}/>
+                                        <Form> 
+                                            <textarea  onChange={(event) => this.handleReview(event)}  placeholder='What do you think about the movie?' disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>
+                                        <input  type="hidden" value={this.state.review}/>
+                                    
+                                        </Form>
+
+                                        <br></br>
+
+                                        <br></br>
+
+                                        <Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} onClick={this.handle_adding_review} content='Add Review' labelPosition='left' icon='edit' primary />
+                                    </Form>
                             
-                            </Form>
-
-                            <br></br>
-
-                            <br></br>
-
-                                <Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} onClick={this.handle_adding_review} content='Add Review' labelPosition='left' icon='edit' primary />
-                            </Form>
-                            
-                        </Comment.Group>
+                                </Comment.Group>
                                 </Grid.Column>
                             </Grid.Row>
                         </Grid>

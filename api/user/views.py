@@ -19,7 +19,7 @@ from datetime import datetime
 from datetime import date
 from user.helper import verification_email
 from django.core.cache import cache
-from recommendation.similiar_movies import get_recommendations
+#from recommendation.similiar_movies import get_recommendations
 
 
 '''

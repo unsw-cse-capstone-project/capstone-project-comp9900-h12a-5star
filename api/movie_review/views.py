@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from profile.models import UserProfile
 from movie_review.models import movies,reviews
 from movie_review.helper import verify_user, get_movie_details, send_notifications
+import datetime
 
 @api_view(['POST', ])
 def add_review(request):
@@ -18,6 +19,8 @@ def add_review(request):
             e.review = request.data['review']
         if 'rating' in request.data.keys():
             e.rating=request.data['rating']
+        e.review_date = datetime.date.today()
+        e.review_time = datetime.datetime.now().time()
         e.save()
         response = {
                 'success': 'True',
@@ -31,6 +34,8 @@ def add_review(request):
                 i.review = request.data['review']
             if 'rating' in request.data.keys():
                 i.rating=request.data['rating']
+            i.review_date = datetime.date.today()
+            i.review_time = datetime.datetime.now().time()
             i.save()
         response = {
                 'success': 'True' ,
@@ -39,7 +44,7 @@ def add_review(request):
                 }
 
     send_notifications(request.data['user'], request.data['movie'])
-    print(response)
+    #print(response)
     return Response(response)
 
 @api_view(['POST', ])

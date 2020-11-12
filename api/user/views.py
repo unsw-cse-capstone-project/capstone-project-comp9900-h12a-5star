@@ -507,7 +507,7 @@ class MovieDetails(APIView):
             if not(movie_details['teasers']):
                         movie_details['teasers'].append(None)
 
-			movie_details['recomendations'] = []
+            movie_details['recomendations'] = []
             data = json.loads(get_recommendations(movie_details['description']))['data']
             poster_url='http://image.tmdb.org/t/p/original/'
 

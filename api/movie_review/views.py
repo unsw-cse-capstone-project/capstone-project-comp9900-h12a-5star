@@ -24,8 +24,9 @@ def add_review(request):
                 'statusCode': status.HTTP_200_OK,
                 'message': 'Review added for a particular user and movie',
                 }
-    except Exception:
-        for i in reviews.objects.filter(movie__movie_id=request.data['movie'] , review_user_id=request.data['user']):
+    except Exception as e:
+        print(e)
+        for i in reviews.objects.filter(movie_id=request.data['movie'] , review_user_id=request.data['user']):
             if 'review' in request.data.keys():
                 i.review = request.data['review']
             if 'rating' in request.data.keys():
@@ -38,7 +39,7 @@ def add_review(request):
                 }
 
     send_notifications(request.data['user'], request.data['movie'])
-
+    print(response)
     return Response(response)
 
 @api_view(['POST', ])
@@ -46,7 +47,7 @@ def get_review(request):
     #print(request.data.keys())
     #print(request.data)
     if 'movie' in request.data.keys() and 'user' in request.data.keys():
-        for i in reviews.objects.filter(movie__movie_id=request.data['movie'] , review_user_id=request.data['user']):
+        for i in reviews.objects.filter(movie_id=request.data['movie'] , review_user_id=request.data['user']):
             response = {
                 'success': 'True',
                 'statusCode': status.HTTP_200_OK,
@@ -64,7 +65,7 @@ def get_review(request):
                 'user':[],
                 'rating':[]
                 }
-        for i in reviews.objects.filter(movie__movie_id=request.data['movie']):
+        for i in reviews.objects.filter(movie_id=request.data['movie']):
             response['review'].append(i.review)
             response['user'].append(i.review_user_id)
             response['rating'].append(i.rating)
@@ -92,7 +93,7 @@ def get_review(request):
 def add_rating(request):
     #print(request.data)
     try:
-        for i in reviews.objects.filter(movie__movie_id=request.data['movie'] , review_user_id=request.data['user']):
+        for i in reviews.objects.filter(movie_id=request.data['movie'] , review_user_id=request.data['user']):
             i.rating = request.data['rating']
             i.save()
         response = {
@@ -123,10 +124,10 @@ def add_to_wishlist(request):
     if a==False:
         return Response(b)
     try:
-        i = reviews.objects.filter(movie__movie_id=request.data['movieId'] , review_user_id=request.data['username'])
+        i = reviews.objects.filter(movie_id=request.data['movieId'] , review_user_id=request.data['username'])
         if len(i) ==0:
             raise Exception
-        for i in reviews.objects.filter(movie__movie_id=request.data['movieId'] , review_user_id=request.data['username']):
+        for i in reviews.objects.filter(movie_id=request.data['movieId'] , review_user_id=request.data['username']):
             i.wishlist = request.data['wishlist']
             i.save()
         response = {
@@ -177,10 +178,10 @@ def liked(request):
     if a==False:
         return Response(b)
     try:
-        i = reviews.objects.filter(movie__movie_id=request.data['movieId'] , review_user_id=request.data['username'])
+        i = reviews.objects.filter(movie_id=request.data['movieId'] , review_user_id=request.data['username'])
         if len(i) ==0:
             raise Exception
-        for i in reviews.objects.filter(movie__movie_id=request.data['movieId'] , review_user_id=request.data['username']):
+        for i in reviews.objects.filter(movie_id=request.data['movieId'] , review_user_id=request.data['username']):
             i.liked = request.data['likeMovie']
             i.save()
         response = {
@@ -207,7 +208,7 @@ def upvote(request):
     a,b = verify_user(request.data['reviewerUsername'])
     if a==False:
         return Response(b)
-    for i in reviews.objects.filter(review_user_id=request.data['reviewerUsername'], movie__movie_id=request.data['movieId']):
+    for i in reviews.objects.filter(review_user_id=request.data['reviewerUsername'], movie_id=request.data['movieId']):
         i.upvote_count += int(request.data['upvote'])
         votes = i.upvote_count
         i.save()

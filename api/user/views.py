@@ -5,9 +5,8 @@ from user.serializers import UserLoginSerializer
 from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
 from movie_review.models import movies,reviews
-import requests
+import requests, json
 from collections import defaultdict
-import json
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -20,6 +19,7 @@ from datetime import datetime
 from datetime import date
 from user.helper import verification_email
 from django.core.cache import cache
+from recommendation.similiar_movies import get_recommendations
 
 
 '''
@@ -58,7 +58,7 @@ def UserRegistrationView(request):
             'message': 'User registered  successfully',
             }
         statusCode = status.HTTP_200_OK
-        verification_email(request.data['email'])
+        #verification_email(request.data['email'])
         return Response(response, status=statusCode)
 
 
@@ -138,7 +138,7 @@ def get_review(user,id,final,gender,from_date,to_date):
     else:
         pass
     if len(gender) == 0:
-        for i in reviews.objects.filter(movie__movie_id=id,review_date__lte=to_date,review_date__gt=from_date):
+        for i in reviews.objects.filter(movie_id=id,review_date__lte=to_date,review_date__gt=from_date):
             if i.review != "" and i.review_user_id not in user_profile.banned:
                 a = UserProfile.objects.get(username=i.review_user_id)
                 final['profilePics'].append(a.profilePic)
@@ -174,7 +174,7 @@ def get_review(user,id,final,gender,from_date,to_date):
             if i.username != '':
                 user.append(i.username)
         for j in user:
-            for i in reviews.objects.filter( movie__movie_id=id,review_user_id=j,review_date__lte=to_date,review_date__gt=from_date):
+            for i in reviews.objects.filter( movie_id=id,review_user_id=j,review_date__lte=to_date,review_date__gt=from_date):
                 if i.review != "" and i.review_user_id not in user_profile.banned:
                     a = UserProfile.objects.get(username=i.review_user_id)
                     final['profilePics'].append(a.profilePic)
@@ -212,7 +212,7 @@ def get_review(user,id,final,gender,from_date,to_date):
              final['rating']=[i if i is not None else 0 for i in final['rating']]
              final['avg_rating']=round(sum(final['rating'])/len(final['rating']),1)
     else:
-        for i in reviews.objects.filter(movie__movie_id=id , review_user_id=user):
+        for i in reviews.objects.filter(movie_id=id , review_user_id=user):
             final['watched'] = i.watched
             final['liked'] = i.liked
             final['wishlist'] = i.wishlist

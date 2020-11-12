@@ -176,10 +176,67 @@ export default class MovieDetails extends Component {
         }
       }
 
+    
     handleFilterReviews = () => {
-        
+
+        this.setState({items: []})
+
+        var fromDate="";
+        var toDate="";
+        if(this.state.datesRange){
+            console.log('inside dates range')
+            var date=this.state.datesRange.split(" - ")
+            console.log(date)
+            var fromDate=date[0].split("-").reverse().join("-");
+            var toDate=date[1].split("-").reverse().join("-");
+            console.log(fromDate)
+            console.log(toDate)
+            // console.log(date2)
+        }
         console.log(this.state.gender)
         console.log(this.state.datesRange)
+        if(this.state.gender && this.state.datesRange){
+            console.log('inside gender and date range')
+        }
+        else if(this.state.gender){
+            console.log('inside gender')
+        }
+        else if (this.state.datesRange){
+            console.log('inside dates range')
+        }
+        else{
+            console.log('both empty')
+        }
+        // var obj = {"genre_id":this.state.genres,"director_id":this.state.directors};
+        var obj= {"user":this.user,"id":this.props.match.params.movieId,"from_date":fromDate, "to_date":toDate, "gender_sort":this.state.gender}
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(obj)
+        };
+
+        fetch("http://127.0.0.1:8000/api/moviedetail/", requestOptions)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        items: result,
+                        // review: result.review,
+                        // rating: result.rating
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+        
+        console.log(this.state.items)
+        // console.log(this.state.rating)
+        
         // console.log(this.state.toDate)
         // this.setState({ isLoaded: true })
         // console.log(this.state.isLoaded)

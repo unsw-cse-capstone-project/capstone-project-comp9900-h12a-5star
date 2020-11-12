@@ -37,7 +37,7 @@ export default class SearchMovieTitle extends Component {
     }
 
     render() {
-
+        console.log(this.props.match.params.searchCategory)
         var columnsMovie = null
         var movieLength=0;
         if (this.state.items.name_result){

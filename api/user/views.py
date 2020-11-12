@@ -108,7 +108,7 @@ def searchpage(b,a):
                 return JsonResponse(json.loads(search_page),safe=False)
 
 
-def get_review(user,id,final,gender,from_date,to_date):
+def get_review(from_user,id,final,gender,from_date,to_date):
     final['review_id']=[]
     final['review']=[]
     final['user']=[]
@@ -124,8 +124,8 @@ def get_review(user,id,final,gender,from_date,to_date):
     final['downvote']=[]
     final['follow']=[]
     final['profilePics'] = []
-    if user.lower() != "guest":
-        user_profile = UserProfile.objects.get(username=user)
+    if from_user.lower() != "guest":
+        user_profile = UserProfile.objects.get(username=from_user)
     else:
         user_profile = Ban()
     if from_date == '' and to_date == '':
@@ -204,7 +204,7 @@ def get_review(user,id,final,gender,from_date,to_date):
                     final['downvote'].append(i.downvote_count)
                     final['follow'].append(i.follow)
                     final['watched'] = i.watched
-    if user.lower() == 'guest':
+    if from_user.lower() == 'guest':
         final['watched']= False
         final['liked']=False
         final['wishlist']=False
@@ -212,7 +212,7 @@ def get_review(user,id,final,gender,from_date,to_date):
              final['rating']=[i if i is not None else 0 for i in final['rating']]
              final['avg_rating']=round(sum(final['rating'])/len(final['rating']),1)
     else:
-        for i in reviews.objects.filter(movie_id=id , review_user_id=user):
+        for i in reviews.objects.filter(movie_id=id , review_user_id=from_user):
             final['watched'] = i.watched
             final['liked'] = i.liked
             final['wishlist'] = i.wishlist

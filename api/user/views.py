@@ -158,12 +158,15 @@ def get_review(from_user,id,final,gender,from_date,to_date):
                     x=x.replace(',',' ')
                     sec=x.split(' ')
                     if int(sec[-3]) > 0:
-                            final['date_modified'].append(str(sec[-3])+' Hours Ago')
+                        final['date_modified'].append(str(int(sec[-3]))+' Hours Ago')
                     elif int(sec[-2])>0:
-                            final['date_modified'].append(str(sec[-2])+' Minutes Ago')
+                        final['date_modified'].append(str(int(sec[-2]))+' Minutes Ago')
                     else:
                         a=str(sec[-1])
-                        final['date_modified'].append(a[:2] +' Seconds Ago')
+                        if int(a) == 0:
+                            final['date_modified'].append('Just Now')
+                        else:
+                            final['date_modified'].append(str(int(a[:2])) +' Seconds Ago')
                 final['upvote'].append(i.upvote_count)
                 final['downvote'].append(i.downvote_count)
                 final['follow'].append(i.follow)
@@ -194,12 +197,15 @@ def get_review(from_user,id,final,gender,from_date,to_date):
                         x=x.replace(',',' ')
                         sec=x.split(' ')
                         if int(sec[-3]) > 0:
-                            final['date_modified'].append(str(sec[-3])+' Hours Ago')
+                            final['date_modified'].append(str(int(sec[-3]))+' Hours Ago')
                         elif int(sec[-2])>0:
-                            final['date_modified'].append(str(sec[-2])+' Minutes Ago')
+                            final['date_modified'].append(str(int(sec[-2]))+' Minutes Ago')
                         else:
                             a=str(sec[-1])
-                            final['date_modified'].append(a[:2] +' Seconds Ago')
+                            if int(a) == 0:
+                                final['date_modified'].append('Just Now')
+                            else:
+                                final['date_modified'].append(str(int(a[:2])) +' Seconds Ago')
                     final['upvote'].append(i.upvote_count)
                     final['downvote'].append(i.downvote_count)
                     final['follow'].append(i.follow)
@@ -406,27 +412,46 @@ class MovieSearch(APIView):
                         pass
                 description_search = defaultdict(list)
             
-                for i in desc_movies[:30]:
+                for i in desc_movies[:len(desc_movies)]:
+                    #print(i)
                     initial_search = defaultdict(list)
                     res = requests.get('https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query=' + str(i)+'&sort_by=popularity.desc' + '&page=1' + '&include_adult=false')
-                
                     try:
+                        #print("entered in try")
+                        #print(res.json()['total_pages'])
                         if res.json()['total_pages'] == 0:
                             continue
                         elif res.json()['total_pages'] > 4:
                             pages = 4
-                        elif res.json()['total_pages'] < 4 and res.json()['total_pages'] != 0:
+                        elif res.json()['total_pages'] < 4 and res.json()['total_pages'] >1:
                             pages = res.json()['total_pages']
                         else:
                             pages = 2
-                        for i in range(1, pages):
-                             initial_search['result'].extend(res.json()['results'])
+                        for j in range(1, pages):
+                            #print("entered")
+                            res = requests.get('https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query=' + str(i)+'&sort_by=popularity.desc' + '&page='+'j' + '&include_adult=false')
+                            #print(res.json()['results'][0]['title'])
+                            initial_search['result'].extend(res.json()['results'])
+                            #print(len(initial_search['result']))
                         x_search = search_func(initial_search, "desc",0)
+                        #print(i)
                     #print(x_search)
                         if len(x_search) !=0:
-                            description_search['description_result'].extend(x_search['description_result'])
+                            #if len(description_search['description_result'])>1:
+                            try:
+                                for k in x_search['description_result']:
+                                    if not any(d['title'] == k['title'] for d in description_search['description_result']):
+                                        #print("yes entered")
+                                        description_search['description_result'].append(k)
+                            except KeyError:
+                                continue
+                            #else:
+                                #description_search['description_result'].extend(x_search['description_result'])
+                            
                     except KeyError:
+                        #print("entered in to")
                         continue
+                
                 search_page = dict(list(genre_search.items()) + list(name_search.items())+ list(description_search.items()))
                 cache.set(cache_key,search_page,None)
                 search_page = json.dumps(search_page)

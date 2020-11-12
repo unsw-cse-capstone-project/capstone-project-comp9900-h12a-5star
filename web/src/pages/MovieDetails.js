@@ -203,6 +203,7 @@ export default class MovieDetails extends Component {
                     this.setState({
                         isLoaded: true,
                         items: result,
+                        
                 
                     });
                 },

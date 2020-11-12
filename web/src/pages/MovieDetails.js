@@ -532,10 +532,9 @@ export default class MovieDetails extends Component {
                                                         <Rating icon='star' defaultRating={this.state.items.rating[j]} maxRating={5} disabled /><br />
                                                         {this.state.items.review[j]}
                                                     </Comment.Text>
-                                                    <Comment.Actions>
-                                                        <Comment.Action>upvote</Comment.Action>
-                                                        <Comment.Action>downvote</Comment.Action>
-                                                    </Comment.Actions>
+                                                    {/* <Comment.Actions> */}
+                                                        <Button icon='like'  size={'mini'} toggle active={active_like} onClick={this.handleClick_like} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>
+                                                    {/* </Comment.Actions> */}
                                                 </Comment.Content>
                                             </Comment>
                                         ))

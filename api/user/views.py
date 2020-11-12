@@ -19,7 +19,7 @@ from datetime import datetime
 from datetime import date
 from user.helper import verification_email
 from django.core.cache import cache
-#from recommendation.similiar_movies import get_recommendations
+from recommendation.similiar_movies import get_recommendations
 
 
 '''
@@ -424,6 +424,7 @@ class MovieSearch(APIView):
                         x_search = search_func(initial_search, "desc",0)
                     #print(x_search)
                         if len(x_search) !=0:
+                            #if x_search['description_result']['id'] not in description_search['description_result']['id']:
                             description_search['description_result'].extend(x_search['description_result'])
                     except KeyError:
                         continue
@@ -481,6 +482,25 @@ class MovieDetails(APIView):
                         movie_details['trailers'].append(None)
             if not(movie_details['teasers']):
                         movie_details['teasers'].append(None)
+
+            #movie_details['recomendations'] = get_recommendations(movie_details['description'])['data']
+            movie_details['recomendations'] = []
+            data = json.loads(get_recommendations(movie_details['description']))['data']
+            poster_url='http://image.tmdb.org/t/p/original/'
+
+            for i in data:
+                recoms = defaultdict(lambda :None)
+                recoms['movieID'] = i[0]
+                recoms['movieTitle'] = i[1]
+                recoms['description'] = i[2]
+                recoms['rating'] = i[3]/2
+                if i[4] is None:
+                    movie_details['poster'] = 'https://i.stack.imgur.com/Q3vyk.png'
+                else:
+                    recoms['poster'] = poster_url + i[4]
+                recoms['releaseDate'] = i[5]
+                movie_details['recomendations'].append(recoms)
+
             review_gender=''
             from_date=''
             to_date=''

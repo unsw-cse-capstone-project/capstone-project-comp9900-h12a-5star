@@ -45,9 +45,15 @@ def getNotifications(request):
         if abs((datetime.date.today() - i.Date).days) ==0:
             date_time_obj = datetime.datetime.strptime(str(i.Date) + ' ' + str(i.Time), '%Y-%m-%d %H:%M:%S.%f')
             diff = str(datetime.datetime.today() - date_time_obj).split('.')[0].split(':')
-            data['time'] = diff[0] + ' hours ago,' + diff[1] + ' minutes ago,' + diff[2]+' seconds ago'
+            if int(diff[0]) > 0:
+                data['time'] = diff[0] + ' hours ago'
+            elif int(diff[1]) > 0:
+                data['time'] = diff[1] + ' minutes ago'
+            elif int(diff[2]) > 0:
+                data['time'] = diff[2] + ' seconds ago'
+            #data['time'] = diff[0] + ' hours ago,' + diff[1] + ' minutes ago,' + diff[2]+' seconds ago'
         else:
-            data['time'] = str(i.Time).split('.')[0]
+            data['time'] = str(abs((datetime.date.today() - i.Date).days)) + ' days ago'
         new_data.append(data)
 
         if i.status == False:

@@ -128,7 +128,7 @@ class watchlistView(RetrieveAPIView):
     def put(self, request, *args, **kwargs):
         user_profile = UserProfile.objects.get(username=request.data['username'])
         try:
-            movie_review = reviews.objects.get(movie__movie_id=request.data['movieID'] , review_user_id=request.data['username'])
+            movie_review = reviews.objects.get(movie_id=request.data['movieID'] , review_user_id=request.data['username'])
         except Exception:
             movie_review = reviews()
             movie_review.movie_id = request.data['movieID']

@@ -321,9 +321,15 @@ export default class MovieDetails extends Component {
                         <Grid columns='equal'   divided={'vertically'} padded style={{margin : 20}}>
                             <Grid.Row >
                                 <Grid.Column >
-                                    <Header as='h1'>
-                                        {this.state.items.title+"  "}
-                                </Header>
+                                    {
+                                        (this.state.items.title)?
+                                        <Header as='h1'>
+                                            {this.state.items.title}
+                                        </Header>
+                                        :
+                                        <Header as='h1'></Header>
+                                    }
+                                    
                                 <Icon name='star' color={"yellow"}/> {this.state.items.avg_rating} 
                                 
                                 </Grid.Column>

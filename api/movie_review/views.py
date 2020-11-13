@@ -43,7 +43,7 @@ def add_review(request):
                 'message': 'Review updated',
                 }
 
-    send_notifications(request.data['user'], request.data['movie'])
+    send_notifications(request.data['user'], request.data['movie'], request.data['movieTitle'])
     #print(response)
     return Response(response)
 

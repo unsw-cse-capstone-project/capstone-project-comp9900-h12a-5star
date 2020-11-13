@@ -45,7 +45,6 @@ export default class HomePage extends Component {
         var columnsTopMovies = null
         var columnsRecentlyReleased = null
         var columnsMostPopular = null
-        var columnsRecommended = null
 
         if (this.state.items.popular) {
             columnsTopMovies = _.times(4, (i) => (
@@ -86,18 +85,7 @@ export default class HomePage extends Component {
                     />
                 </Grid.Column>
             ))
-            columnsRecommended = _.times(4, (i) => (
-                <Grid.Column key={i}>
-                    <MovieTile 
-                        title={this.state.items.popular[i].title} 
-                        poster={this.state.items.popular[i].poster} 
-                        release={this.state.items.popular[i].release_date} 
-                        rating={this.state.items.popular[i].rating} 
-                        description={this.state.items.popular[i].description} 
-                        movieId={this.state.items.popular[i].id}
-                    />
-                </Grid.Column>
-            ))
+            
         }
         else{
             columnsTopMovies = _.times(4, (i) => (
@@ -168,28 +156,6 @@ export default class HomePage extends Component {
                     </Card.Group>
                 </Grid.Column>
             ))
-            columnsRecommended =  _.times(4, (i) => (
-                <Grid.Column key={i}>
-                    <Card.Group>
-                        <Card>
-                            <Placeholder>
-                                <Placeholder.Image square />
-                            </Placeholder>
-                        </Card>
-                        <Card.Content>
-                            <Placeholder>
-                                <Placeholder.Header>
-                                    <Placeholder.Line length='very short' />
-                                    <Placeholder.Line length='medium' />
-                                </Placeholder.Header>
-                                <Placeholder.Paragraph>
-                                    <Placeholder.Line length='short' />
-                                </Placeholder.Paragraph>
-                            </Placeholder>
-                        </Card.Content>
-                    </Card.Group>
-                </Grid.Column>
-            ))
         }
         return (
             <React.Fragment>
@@ -229,21 +195,6 @@ export default class HomePage extends Component {
                         </Grid.Column>
                     </Grid>
                     <Grid columns='equal'>{columnsMostPopular}</Grid>
-                    {
-                        (window.sessionStorage.getItem('username') !== "guest") &&
-                        <div>
-                            <Divider section />
-                            <Grid columns="equal">
-                                <Grid.Column>
-                                    <Header as='h1'>Recommended for you</Header>
-                                </Grid.Column>
-                                <Grid.Column>
-                                
-                                </Grid.Column>
-                            </Grid>
-                            <Grid columns='equal'>{columnsRecommended}</Grid>
-                        </div>
-                    }
                 </Container>
             </React.Fragment>
         )

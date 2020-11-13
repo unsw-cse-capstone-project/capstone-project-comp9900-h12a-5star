@@ -26,8 +26,8 @@ import FollowUserPage from './pages/FollowUserPage';
 function App() {
   return (
     <>
-    <NavBar />
     <Router>
+    <NavBar />
       <Switch>
         <Route path="/" component={HomePage} exact/>
         <Route path="/welcome" component={HomePage} exact/>

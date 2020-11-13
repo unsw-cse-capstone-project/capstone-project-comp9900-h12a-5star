@@ -107,3 +107,4 @@ dist
 *.pyc 
 __pycache__/
 api/db.sqlite3
+web/src/components/MovieData.js

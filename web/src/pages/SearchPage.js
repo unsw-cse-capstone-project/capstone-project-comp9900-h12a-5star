@@ -289,7 +289,7 @@ export default class SearchPage extends Component {
                             <Header as='h1'>Movie Title</Header>
                         </Grid.Column>
                         <Grid.Column>
-                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = `/searchMovieTitle/${this.props.match.params.searchText}`}>
+                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = `/searchDetails/searchMovieTitle/${this.props.match.params.searchText}`}>
                                 see more
                             </Label>
                         </Grid.Column>
@@ -319,7 +319,7 @@ export default class SearchPage extends Component {
                             <Header as='h1'>Genre</Header>
                         </Grid.Column>
                         <Grid.Column>
-                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = `/searchGenre/${this.props.match.params.searchText}`}>
+                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = `/searchDetails/searchGenre/${this.props.match.params.searchText}`}>
                                 see more
                             </Label>
                         </Grid.Column>
@@ -343,7 +343,7 @@ export default class SearchPage extends Component {
                             <Header as='h1'>Description</Header>
                         </Grid.Column>
                         <Grid.Column>
-                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = `/searchDescription/${this.props.match.params.searchText}`}>
+                            <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = `/searchDetails/searchDescription/${this.props.match.params.searchText}`}>
                                 see more
                             </Label>
                         </Grid.Column>

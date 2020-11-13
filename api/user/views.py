@@ -5,9 +5,8 @@ from user.serializers import UserLoginSerializer
 from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
 from movie_review.models import movies,reviews
-import requests
+import requests, json
 from collections import defaultdict
-import json
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -20,6 +19,7 @@ from datetime import datetime
 from datetime import date
 from user.helper import verification_email
 from django.core.cache import cache
+from recommendation.similiar_movies import get_recommendations
 
 
 '''
@@ -58,7 +58,7 @@ def UserRegistrationView(request):
             'message': 'User registered  successfully',
             }
         statusCode = status.HTTP_200_OK
-        verification_email(request.data['email'])
+        #verification_email(request.data['email'])
         return Response(response, status=statusCode)
 
 
@@ -108,7 +108,7 @@ def searchpage(b,a):
                 return JsonResponse(json.loads(search_page),safe=False)
 
 
-def get_review(user,id,final,gender,from_date,to_date):
+def get_review(from_user,id,final,gender,from_date,to_date):
     final['review_id']=[]
     final['review']=[]
     final['user']=[]
@@ -124,8 +124,8 @@ def get_review(user,id,final,gender,from_date,to_date):
     final['downvote']=[]
     final['follow']=[]
     final['profilePics'] = []
-    if user.lower() != "guest":
-        user_profile = UserProfile.objects.get(username=user)
+    if from_user.lower() != "guest":
+        user_profile = UserProfile.objects.get(username=from_user)
     else:
         user_profile = Ban()
     if from_date == '' and to_date == '':
@@ -138,7 +138,7 @@ def get_review(user,id,final,gender,from_date,to_date):
     else:
         pass
     if len(gender) == 0:
-        for i in reviews.objects.filter(movie__movie_id=id,review_date__lte=to_date,review_date__gt=from_date):
+        for i in reviews.objects.filter(movie_id=id,review_date__lte=to_date,review_date__gt=from_date):
             if i.review != "" and i.review_user_id not in user_profile.banned:
                 a = UserProfile.objects.get(username=i.review_user_id)
                 final['profilePics'].append(a.profilePic)
@@ -158,12 +158,15 @@ def get_review(user,id,final,gender,from_date,to_date):
                     x=x.replace(',',' ')
                     sec=x.split(' ')
                     if int(sec[-3]) > 0:
-                            final['date_modified'].append(str(sec[-3])+' Hours Ago')
+                        final['date_modified'].append(str(int(sec[-3]))+' Hours Ago')
                     elif int(sec[-2])>0:
-                            final['date_modified'].append(str(sec[-2])+' Minutes Ago')
+                        final['date_modified'].append(str(int(sec[-2]))+' Minutes Ago')
                     else:
                         a=str(sec[-1])
-                        final['date_modified'].append(a[:2] +' Seconds Ago')
+                        if int(a) == 0:
+                            final['date_modified'].append('Just Now')
+                        else:
+                            final['date_modified'].append(str(int(a[:2])) +' Seconds Ago')
                 final['upvote'].append(i.upvote_count)
                 final['downvote'].append(i.downvote_count)
                 final['follow'].append(i.follow)
@@ -174,7 +177,7 @@ def get_review(user,id,final,gender,from_date,to_date):
             if i.username != '':
                 user.append(i.username)
         for j in user:
-            for i in reviews.objects.filter( movie__movie_id=id,review_user_id=j,review_date__lte=to_date,review_date__gt=from_date):
+            for i in reviews.objects.filter( movie_id=id,review_user_id=j,review_date__lte=to_date,review_date__gt=from_date):
                 if i.review != "" and i.review_user_id not in user_profile.banned:
                     a = UserProfile.objects.get(username=i.review_user_id)
                     final['profilePics'].append(a.profilePic)
@@ -194,17 +197,20 @@ def get_review(user,id,final,gender,from_date,to_date):
                         x=x.replace(',',' ')
                         sec=x.split(' ')
                         if int(sec[-3]) > 0:
-                            final['date_modified'].append(str(sec[-3])+' Hours Ago')
+                            final['date_modified'].append(str(int(sec[-3]))+' Hours Ago')
                         elif int(sec[-2])>0:
-                            final['date_modified'].append(str(sec[-2])+' Minutes Ago')
+                            final['date_modified'].append(str(int(sec[-2]))+' Minutes Ago')
                         else:
                             a=str(sec[-1])
-                            final['date_modified'].append(a[:2] +' Seconds Ago')
+                            if int(a) == 0:
+                                final['date_modified'].append('Just Now')
+                            else:
+                                final['date_modified'].append(str(int(a[:2])) +' Seconds Ago')
                     final['upvote'].append(i.upvote_count)
                     final['downvote'].append(i.downvote_count)
                     final['follow'].append(i.follow)
                     final['watched'] = i.watched
-    if user.lower() == 'guest':
+    if from_user.lower() == 'guest':
         final['watched']= False
         final['liked']=False
         final['wishlist']=False
@@ -212,7 +218,7 @@ def get_review(user,id,final,gender,from_date,to_date):
              final['rating']=[i if i is not None else 0 for i in final['rating']]
              final['avg_rating']=round(sum(final['rating'])/len(final['rating']),1)
     else:
-        for i in reviews.objects.filter(movie__movie_id=id , review_user_id=user):
+        for i in reviews.objects.filter(movie_id=id , review_user_id=from_user):
             final['watched'] = i.watched
             final['liked'] = i.liked
             final['wishlist'] = i.wishlist
@@ -228,9 +234,9 @@ class Homepage(APIView):
             cache_key="Homepage"
             cache_time = None
             data=cache.get(cache_key)
-            
+
             if  not data:
-                
+
                 required=['popular','top_rated','now_playing']
             #Tmdb provides maximum of 20 results for each page and we can't send Multiple page requests in single Query so using For loop
                 intial_homepage=defaultdict(list)
@@ -263,7 +269,7 @@ class Homepage(APIView):
                 home_page=json.dumps(final_homepage)
                 return JsonResponse(json.loads(home_page), safe=False)
             else:
-                
+
                 home_page=json.dumps(data)
                 return JsonResponse(json.loads(home_page), safe=False)
 
@@ -335,7 +341,7 @@ class MovieSearch(APIView):
         if query == '':
             cache_key='search'
         else:
-            cache_key=query 
+            cache_key=query
         data=cache.get(cache_key)
         if not data:
             if len(query) !=0:
@@ -374,7 +380,7 @@ class MovieSearch(APIView):
                 else:
                     genre_search = defaultdict(list)
                 if len(query) >= 1:
-                    
+
                     initial_search = defaultdict(list)
                     res = requests.get('https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query=' + str(query) + '&page=1' +'&sort_by=popularity.desc'+ '&include_adult=false')
                     if res.json()['total_pages'] > 4:
@@ -383,21 +389,21 @@ class MovieSearch(APIView):
                         pages = res.json()['total_pages']
                     else:
                         pages = 2
-                    
+
                     for i in range(1, pages):
                          url = 'https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query=' + str(query) + '&page=' + str(i)+'&sort_by=popularity.desc' + '&include_adult=false'
                          response = requests.get(url)
-                         
+
                          initial_search['result'].extend(response.json()['results'])
-                    
+
                     name_search = search_func(initial_search, "name",0)
                 else:
                     name_search = defaultdict(list)
                 s = BeautifulSoup(simple_get('https://www.imdb.com/search/title-text/?plot='+query), 'html.parser')
-             
+
                 desc_movies=[]
                 for heading in s.find_all(["h3"]):
-                
+
                     b=heading.text.strip().splitlines()
                     try:
                         if not b[1].endswith(')'):
@@ -405,28 +411,47 @@ class MovieSearch(APIView):
                     except IndexError:
                         pass
                 description_search = defaultdict(list)
-            
-                for i in desc_movies[:30]:
+
+                for i in desc_movies[:len(desc_movies)]:
+                    #print(i)
                     initial_search = defaultdict(list)
                     res = requests.get('https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query=' + str(i)+'&sort_by=popularity.desc' + '&page=1' + '&include_adult=false')
-                
                     try:
+                        #print("entered in try")
+                        #print(res.json()['total_pages'])
                         if res.json()['total_pages'] == 0:
                             continue
                         elif res.json()['total_pages'] > 4:
                             pages = 4
-                        elif res.json()['total_pages'] < 4 and res.json()['total_pages'] != 0:
+                        elif res.json()['total_pages'] < 4 and res.json()['total_pages'] >1:
                             pages = res.json()['total_pages']
                         else:
                             pages = 2
-                        for i in range(1, pages):
-                             initial_search['result'].extend(res.json()['results'])
+                        for j in range(1, pages):
+                            #print("entered")
+                            res = requests.get('https://api.themoviedb.org/3/search/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&query=' + str(i)+'&sort_by=popularity.desc' + '&page='+'j' + '&include_adult=false')
+                            #print(res.json()['results'][0]['title'])
+                            initial_search['result'].extend(res.json()['results'])
+                            #print(len(initial_search['result']))
                         x_search = search_func(initial_search, "desc",0)
+                        #print(i)
                     #print(x_search)
                         if len(x_search) !=0:
-                            description_search['description_result'].extend(x_search['description_result'])
+                            #if len(description_search['description_result'])>1:
+                            try:
+                                for k in x_search['description_result']:
+                                    if not any(d['title'] == k['title'] for d in description_search['description_result']):
+                                        #print("yes entered")
+                                        description_search['description_result'].append(k)
+                            except KeyError:
+                                continue
+                            #else:
+                                #description_search['description_result'].extend(x_search['description_result'])
+
                     except KeyError:
+                        #print("entered in to")
                         continue
+
                 search_page = dict(list(genre_search.items()) + list(name_search.items())+ list(description_search.items()))
                 cache.set(cache_key,search_page,None)
                 search_page = json.dumps(search_page)
@@ -481,6 +506,24 @@ class MovieDetails(APIView):
                         movie_details['trailers'].append(None)
             if not(movie_details['teasers']):
                         movie_details['teasers'].append(None)
+
+            movie_details['recomendations'] = []
+            data = json.loads(get_recommendations(movie_details['description']))['data']
+            poster_url='http://image.tmdb.org/t/p/original/'
+
+            for i in data:
+                recoms = defaultdict(lambda :None)
+                recoms['movieID'] = i[0]
+                recoms['movieTitle'] = i[1]
+                recoms['description'] = i[2]
+                recoms['rating'] = i[3]/2
+                if i[4] is None:
+                    movie_details['poster'] = 'https://i.stack.imgur.com/Q3vyk.png'
+                else:
+                    recoms['poster'] = poster_url + i[4]
+                recoms['releaseDate'] = i[5]
+                movie_details['recomendations'].append(recoms)
+
             review_gender=''
             from_date=''
             to_date=''
@@ -551,7 +594,7 @@ class MovieBrowse(APIView):
                               break
                         res=requests.get('https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page='+str(i)+'&with_genres='+genre)
                         browse_resp['result'].extend(res.json()['results'])
-                        
+
                     #browse_search = search_func(browse_resp,'browse',dir)
                  else:
                     director_given=True

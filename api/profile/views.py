@@ -7,6 +7,7 @@ from movie_review.models import reviews
 from user.models import User
 from notifications.models import notifications
 import datetime
+from collections import defaultdict
 import random
 
 statusCode = status.HTTP_400_BAD_REQUEST
@@ -128,7 +129,7 @@ class watchlistView(RetrieveAPIView):
     def put(self, request, *args, **kwargs):
         user_profile = UserProfile.objects.get(username=request.data['username'])
         try:
-            movie_review = reviews.objects.get(movie__movie_id=request.data['movieID'] , review_user_id=request.data['username'])
+            movie_review = reviews.objects.get(movie_id=request.data['movieID'] , review_user_id=request.data['username'])
         except Exception:
             movie_review = reviews()
             movie_review.movie_id = request.data['movieID']
@@ -208,11 +209,19 @@ class followUser(RetrieveAPIView):
 
     def post(self, request, *args, **kwargs):
         userprofile = UserProfile.objects.get(username=request.data['userID'])
+        data = []
+        for user in userprofile.following:
+            new_user = UserProfile.objects.get(username=user)
+            user_data = defaultdict(lambda: None)
+            user_data['profilePic'] = new_user.profilePic
+            user_data['firstname'] = new_user.firstname
+            user_data['lastname'] = new_user.lastname
+            data.append(user_data)
 
         response = {
             'success': 'true',
             'statusCode': status.HTTP_200_OK,
-            'following':userprofile.following
+            'following':data
         }
         return Response(response, status=status.HTTP_200_OK)
 

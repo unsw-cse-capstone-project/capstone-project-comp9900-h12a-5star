@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {moviesList} from './genericLists'
+import {moviesList} from './MovieData'
 import { Icon, Button, Menu, Segment, Search, Image, Popup, Feed, Label, Grid } from 'semantic-ui-react'
 import _ from 'lodash'
 import {
@@ -7,21 +7,6 @@ import {
 } from "react-router-dom";
 
 const source = moviesList
-
-// const source =  _.times(10, (i) => ({
-  
-//           title: moviesList[i].title,
-//           description: moviesList[i].description,
-//           image: moviesList[i].image,
-//           price: moviesList[i].price,
-// }       
-// ))
-
-// const source = _.times(3, () => ({
-//   title: faker.company.companyName(),
-//   description: faker.company.catchPhrase(),
-//   image: faker.internet.avatar(),
-// }))
 
 const initialState = { isLoading: false, results: [], value: '' }
 
@@ -84,6 +69,7 @@ export default class MenuExampleInvertedSegment extends Component {
       }
 
       window.location.href=`/wishlist/${window.sessionStorage.getItem('username')}`
+      
     }
     else if (name === 'my profile'){
       if (window.sessionStorage.getItem('username') === null || window.sessionStorage.getItem('username') === "guest"){
@@ -126,12 +112,7 @@ export default class MenuExampleInvertedSegment extends Component {
       })
     }, 300)
   }
-  // handleSubmit = (e, { value }) => {
-  //   this.setState({ isLoading: true, value })
-  //   window.location.href=`/search/${value}`
-    
-  // }
-
+  
   render() {
     const { activeItem, isLoading, value, results } = this.state
     console.log(value)
@@ -252,9 +233,6 @@ export default class MenuExampleInvertedSegment extends Component {
                   }
                 </div>
               </Popup>
-              
-              
-              
               
             }
             {(window.sessionStorage.getItem('username') !== null && window.sessionStorage.getItem('username') !== "guest") &&

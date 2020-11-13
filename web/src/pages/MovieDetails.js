@@ -166,7 +166,7 @@ export default class MovieDetails extends Component {
     setSecondOpen(val){
         this.setState({secondOpen: val})
         if (!val){
-            this.setState({firstOpen: false})
+            this.setState({firstOpen: false, shareUser: ''})
         }
     }
 
@@ -237,7 +237,7 @@ export default class MovieDetails extends Component {
 
         // this.setFirstOpen(false)
         // this.setSecondOpen(true)
-        this.setState({secondOpen: true})
+        this.setState({secondOpen: true, shareUser: ''})
     }
 
     handleChange = (event, {name, value}) => {
@@ -356,9 +356,9 @@ export default class MovieDetails extends Component {
                                     </Modal.Content>
                                     <Modal.Actions>
                                     <Button onClick={()=> this.setSecondOpen(false)} color="red">
-                                        <Icon name='close' /> Cancel 
+                                        <Icon name='close' /> Cancel
                                         </Button>
-                                        <Button onClick={()=>this.handle_share_movie(this.state.items.title)} primary>
+                                        <Button onClick={()=>this.handle_share_movie(this.state.items.title)} primary disabled={this.state.shareUser === '' ? true: false}>
                                             Share <Icon name='right chevron' />
                                         </Button>
                                     </Modal.Actions>

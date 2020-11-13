@@ -25,3 +25,11 @@
 .title{
     color: black;
 }
+
+.newNotification{
+    background-color: lightgray;
+}
+
+.oldNotification{
+    padding-top: 2%!important;
+}

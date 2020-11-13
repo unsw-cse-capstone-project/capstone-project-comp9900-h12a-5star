@@ -195,16 +195,17 @@ export default class MenuExampleInvertedSegment extends Component {
                 active={activeItem === 'notification'}
                 onClick={this.handleItemClick}
                 >
-                  <Icon.Group>
-                    <Icon name='bell' size='large'/>
-                    {
-                      // (this.state.newNotifications > 0) &&
-                        <Label circular color="red" floating size="small">
-                          {this.state.newNotifications}
+                  {
+                    (this.state.newNotifications > 0)?
+                      <Icon.Group>
+                      <Icon name='bell' size='large'/>
+                      <Label circular color="red" floating size="small">
+                        {this.state.newNotifications}
                       </Label>
-                    }
-                  </Icon.Group>
-                
+                    </Icon.Group>
+                    :
+                    <Icon name='bell' size='large'/>
+                  }
               </Menu.Item>
               }
               style={style}

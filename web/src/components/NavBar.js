@@ -215,7 +215,7 @@ export default class MenuExampleInvertedSegment extends Component {
                 <div>
                   {
                     (this.state.items.notifications) && 
-                      (this.state.items.notifications > 0) ?
+                      (this.state.items.notifications.length > 0) ?
                         this.state.items.notifications.map((items) => 
                           <Link  key={items.movieID} to= {`/movieDetails/${items.movieID}`}>
                               <Grid className={(items.status)? "oldNotification" : "newNotification"}>

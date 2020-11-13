@@ -163,7 +163,7 @@ def get_review(from_user,id,final,gender,from_date,to_date):
                         final['date_modified'].append(str(int(sec[-2]))+' Minutes Ago')
                     else:
                         a=str(sec[-1])
-                        if int(a) == 0:
+                        if int(float(a)) == 0:
                             final['date_modified'].append('Just Now')
                         else:
                             final['date_modified'].append(str(int(a[:2])) +' Seconds Ago')
@@ -236,7 +236,6 @@ class Homepage(APIView):
             data=cache.get(cache_key)
 
             if  not data:
-
                 required=['popular','top_rated','now_playing']
             #Tmdb provides maximum of 20 results for each page and we can't send Multiple page requests in single Query so using For loop
                 intial_homepage=defaultdict(list)
@@ -269,15 +268,12 @@ class Homepage(APIView):
                 home_page=json.dumps(final_homepage)
                 return JsonResponse(json.loads(home_page), safe=False)
             else:
-
                 home_page=json.dumps(data)
                 return JsonResponse(json.loads(home_page), safe=False)
 
 #request should be "https://127.0.0.1:8000/api/search/?query='movie name'
 
 def search_func(resp, n,m=[],director_given=False):
-
-    #print(m)
     final_resp = defaultdict(list)
     poster_url = 'http://image.tmdb.org/t/p/original/'
     for i in resp['result']:

@@ -108,6 +108,7 @@ export default class WishListPage extends Component {
 
                                             </Grid.Column>
                                             <Grid.Column>
+                                                <p><br /></p>
                                                 <Button circular floated='center' color='red' icon='close' onClick={() => this.removeFromBanlist(item)} />
                                             </Grid.Column>
                                         </Grid.Row>

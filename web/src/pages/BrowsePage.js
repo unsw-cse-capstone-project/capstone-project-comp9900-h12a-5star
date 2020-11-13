@@ -4,7 +4,6 @@ import {  Form, Segment,  Button, Dropdown, GridColumn} from 'semantic-ui-react'
 import { Container, Header, Divider, Grid, Label, Card, Placeholder} from 'semantic-ui-react';
 import MovieTile from '../components/MovieTile';
 import {directorList,genreList} from '../components/genericLists';
-import { Loader } from 'semantic-ui-react'
 
 export default class BrowsePage extends Component {
 

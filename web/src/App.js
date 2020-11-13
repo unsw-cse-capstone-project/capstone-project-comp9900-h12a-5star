@@ -41,7 +41,7 @@ function App() {
         <Route path="/login" component = {Login} />
         <Route path="/signup" component = {SignUp} />
         <Route path="/search/:searchText" component = {SearchPage} />
-        <Route path="/searchMovieTitle/:searchText" component = {SearchMovieTitle} />
+        <Route path="/searchDetails/:searchCategory/:searchText" component = {SearchMovieTitle} />
         <Route path="/searchGenre/:searchText" component = {SearchGenre} />
         <Route path="/searchDescription/:searchText" component = {SearchDescription} />
         <Route path="/movieDetails/:movieId" component = {MovieDetails} />

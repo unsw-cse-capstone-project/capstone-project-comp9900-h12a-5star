@@ -84,12 +84,6 @@ export default class MenuExampleInvertedSegment extends Component {
       }
 
       window.location.href=`/wishlist/${window.sessionStorage.getItem('username')}`
-      // if (window.sessionStorage.getItem('username') === null || window.sessionStorage.getItem('username') === "guest"){
-      //   window.location.href='/login'
-      // }
-      // else{
-      //   window.location.href='/wishlist'
-      // }
     }
     else if (name === 'my profile'){
       if (window.sessionStorage.getItem('username') === null || window.sessionStorage.getItem('username') === "guest"){
@@ -98,6 +92,15 @@ export default class MenuExampleInvertedSegment extends Component {
       else{
         window.location.href='/myprofile' 
       }
+    }
+    else if (name === 'notification'){
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userID: window.sessionStorage.getItem('username') })
+      };
+  
+      fetch("http://127.0.0.1:8000/api/NotificationRead", requestOptions)
     }
   }
 
@@ -229,12 +232,12 @@ export default class MenuExampleInvertedSegment extends Component {
                   {
                     (this.state.items.notifications) && 
                       this.state.items.notifications.map((items) => 
-                      <Link  key={items.movieId} to= {`/movieDetails/${items.movieId}`}>
+                      <Link  key={items.movieID} to= {`/movieDetails/${items.movieID}`}>
                           <Grid>
                             <Grid.Column width={2}>
                               <img className="notification" src={items.profilePic} />
                             </Grid.Column>
-                            <Grid.Column width={10} >
+                            <Grid.Column width={12} stretched>
                               <Grid.Row className="day">
                                 {items.time}
                               </Grid.Row>

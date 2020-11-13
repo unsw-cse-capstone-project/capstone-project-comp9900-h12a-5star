@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {moviesList} from './MovieData'
-import { Icon, Button, Menu, Segment, Search, Image, Popup, Feed, Label, Grid } from 'semantic-ui-react'
+import { Icon, Button, Menu, Segment, Search, Image, Popup, Feed, Label, Grid, Message } from 'semantic-ui-react'
 import _ from 'lodash'
 import {
   Link,
@@ -215,24 +215,30 @@ export default class MenuExampleInvertedSegment extends Component {
                 <div>
                   {
                     (this.state.items.notifications) && 
-                      this.state.items.notifications.map((items) => 
-                      <Link  key={items.movieID} to= {`/movieDetails/${items.movieID}`}>
-                          <Grid className={(items.status)? "oldNotification" : "newNotification"}>
-                            <Grid.Column width={2}>
-                              <img className="notification" src={items.profilePic} />
-                            </Grid.Column>
-                            <Grid.Column width={12} stretched>
-                              <Grid.Row className="day">
-                                {items.time}
-                              </Grid.Row>
-                              <Grid.Row className="title">
-                                <b>{items.fromUsername.charAt(0).toUpperCase()+items.fromUsername.slice(1)} suggested you to watch {items.movieID}</b>
-                              </Grid.Row>
-                            </Grid.Column>
-                          </Grid>
-                     </Link>
-                      
-                      )
+                      (this.state.items.notifications > 0) ?
+                        this.state.items.notifications.map((items) => 
+                          <Link  key={items.movieID} to= {`/movieDetails/${items.movieID}`}>
+                              <Grid className={(items.status)? "oldNotification" : "newNotification"}>
+                                <Grid.Column width={2}>
+                                  <img className="notification" src={items.profilePic} />
+                                </Grid.Column>
+                                <Grid.Column width={12} stretched>
+                                  <Grid.Row className="day">
+                                    {items.time}
+                                  </Grid.Row>
+                                  <Grid.Row className="title">
+                                    <b>{items.fromUsername.charAt(0).toUpperCase()+items.fromUsername.slice(1)} suggested you to watch {items.movieID}</b>
+                                  </Grid.Row>
+                                </Grid.Column>
+                              </Grid>
+                        </Link>
+                        )
+                        :
+                        <Message>
+                          <Message.Header>
+                            No notification to show yet!
+                          </Message.Header> 
+                        </Message>
                   }
                 </div>
               </Popup>

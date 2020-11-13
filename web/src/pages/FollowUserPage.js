@@ -90,10 +90,10 @@ export default class FollowUserPage extends Component {
                     </Header>
                     </Divider>
                     {
-                    (this.state.items.data && this.state.items.data.length !== 0)?
+                    (this.state.items.following && this.state.items.following.length !== 0)?
                     <Grid columns='equal' divided={'vertically'}>
                         {
-                            this.state.items.data.map((item)=>
+                            this.state.items.following.map((item)=>
                             <Grid.Row>
                                 <Grid.Column width={2}>
                                     <Image src={item.profilePic} size='tiny'  />
@@ -101,15 +101,15 @@ export default class FollowUserPage extends Component {
                                 <Grid.Column width={2}>
                                 <br/>
                                 
-                        <p>{item.firstname.toUpperCase()}</p>
-                        <p>{item.lastname.toUpperCase()}</p>
+                                    <p>{item.firstname.toUpperCase()}</p>
+                                    <p>{item.lastname.toUpperCase()}</p>
 
                                     
                                 </Grid.Column>
                                 <Grid.Column width={8}>
                                 <br/><br/>
                                 
-                     
+                                    
                                
                                     
                                 </Grid.Column>

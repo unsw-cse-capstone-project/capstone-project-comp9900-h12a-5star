@@ -579,43 +579,7 @@ export default class MovieDetails extends Component {
                                 <Header as='h3' >
                                     User Reviews
                                 </Header>
-                                <Message>
-                                    <Message.Header>Filter Reviews</Message.Header>
-                                    <br></br>
-                                    <Form>
-                                        <Form.Group >
-                                    
-                                        <Form.Field width={12}>
-                                            
-                                            <Dropdown placeholder="Gender"
-                                            onChange={(event, {value}) =>  this.setState({gender : value})} 
-                                            search 
-                                            fluid selection 
-                                            clearable
-                                            options={this.genderOptions} 
-                                            />
-                                        </Form.Field>
                                 
-                        
-                                        <Form.Field width={12}>
-                                        
-                                        <DatesRangeInput
-                                            name="datesRange"
-                                            placeholder="From - To"
-                                            value={this.state.datesRange}
-                                            iconPosition="left"
-                                            onChange={this.handleChange}
-                                            clearable
-                                            />
-                                        </Form.Field>
-                                
-                            
-                                            <Form.Field width={4}>
-                                                <Button  onClick={this.handleFilterReviews} color={"blue"} fluid type='submit' floated='left'>Filter</Button>
-                                            </Form.Field>
-                                        </Form.Group >
-                                    </Form> 
-                                </Message>
 
                                     {
                                         (this.state.items.review)?
@@ -631,48 +595,93 @@ export default class MovieDetails extends Component {
                                     }
 
                                     {
+                                        
                                         (this.state.items.review)?
-                                        _.times(this.state.items.review.length, (j) => (
-                                            <Comment>
-                                                <Comment.Avatar src={this.state.items.profilePics[j]} />
-                                                <Comment.Content>
+                                        (this.state.items.review.length > 0) &&
+                                        <div>
+                                                    <Message>
+                                                        <Message.Header>Filter Reviews</Message.Header>
+                                                        <br></br>
+                                                        <Form>
+                                                            <Form.Group >
+
+                                                                <Form.Field width={12}>
+
+                                                                    <Dropdown placeholder="Gender"
+                                                                        onChange={(event, { value }) => this.setState({ gender: value })}
+                                                                        search
+                                                                        fluid selection
+                                                                        clearable
+                                                                        options={this.genderOptions}
+                                                                    />
+                                                                </Form.Field>
+
+
+                                                                <Form.Field width={12}>
+
+                                                                    <DatesRangeInput
+                                                                        name="datesRange"
+                                                                        placeholder="From - To"
+                                                                        value={this.state.datesRange}
+                                                                        iconPosition="left"
+                                                                        onChange={this.handleChange}
+                                                                        clearable
+                                                                    />
+                                                                </Form.Field>
+
+
+                                                                <Form.Field width={4}>
+                                                                    <Button onClick={this.handleFilterReviews} color={"blue"} fluid type='submit' floated='left' >Filter</Button>
+                                                                </Form.Field>
+                                                            </Form.Group >
+                                                        </Form>
+                                                    </Message>
                                                     {
-                                                        (this.state.items.user[j] !== this.user) ?
-                                                        <Popup trigger={<Comment.Author as='a'>{this.state.items.user[j]}</Comment.Author>} 
-                                                            flowing 
-                                                            hoverable 
-                                                            style={style} 
-                                                            inverted 
-                                                            position='top center'
-                                                            on={['hover', 'click']}>
-                                                                <Popup trigger={<Button secondary onClick={event =>  window.location.href=`/Wishlist/${this.state.items.user[j]}` } icon="bookmark" size={'big'} />}>
-                                                                    View Wishlist
-                                                                </Popup>
-                                                                <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])} secondary icon='user close' size={'big'} />}>
-                                                                    Ban User
-                                                                </Popup>
-                                                                <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} secondary icon='add user' size={'big'} onClick={() => this.handle_click_follow_user(this.state.items.user[j])} />}>
-                                                                    Follow User
-                                                                </Popup>
-                                                        </Popup>
-                                                        :
-                                                        <Comment.Author as='a'>{this.state.items.user[j]}</Comment.Author>
+                                                         _.times(this.state.items.review.length, (j) => (
+                                                            <Comment>
+                                                                        <Comment.Avatar src={this.state.items.profilePics[j]} />
+                                                                        <Comment.Content>
+                                                                            {
+                                                                                (this.state.items.user[j] !== this.user) ?
+                                                                                    <Popup trigger={<Comment.Author as='a'>{this.state.items.user[j]}</Comment.Author>}
+                                                                                        flowing
+                                                                                        hoverable
+                                                                                        style={style}
+                                                                                        inverted
+                                                                                        position='top center'
+                                                                                        on={['hover', 'click']}>
+                                                                                        <Popup trigger={<Button secondary onClick={event => window.location.href = `/Wishlist/${this.state.items.user[j]}`} icon="bookmark" size={'big'} />}>
+                                                                                            View Wishlist
+                                                                                </Popup>
+                                                                                        <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true : false} value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])} secondary icon='user close' size={'big'} />}>
+                                                                                            Ban User
+                                                                                </Popup>
+                                                                                        <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true : false} secondary icon='add user' size={'big'} onClick={() => this.handle_click_follow_user(this.state.items.user[j])} />}>
+                                                                                            Follow User
+                                                                                </Popup>
+                                                                                    </Popup>
+                                                                                    :
+                                                                                    <Comment.Author as='a'>{this.state.items.user[j]}</Comment.Author>
+                                                                            }
+                
+                                                                            <Comment.Metadata>
+                                                                                <div>{this.state.items.date_modified[j]}</div>
+                                                                            </Comment.Metadata>
+                                                                            <Comment.Text>
+                                                                                <Rating icon='star' defaultRating={this.state.items.rating[j]} maxRating={5} disabled /><br />
+                                                                                {this.state.items.review[j]}
+                                                                            </Comment.Text>
+                                                                            <Comment.Actions>
+                                                                                <Comment.Action>upvote</Comment.Action>
+                                                                                <Comment.Action>downvote</Comment.Action>
+                                                                            </Comment.Actions>
+                                                                        </Comment.Content>
+                                                                    </Comment>
+                                                        ))
                                                     }
-                                                    
-                                                    <Comment.Metadata>
-                                                        <div>{this.state.items.date_modified[j]}</div>
-                                                    </Comment.Metadata>
-                                                    <Comment.Text>
-                                                        <Rating icon='star' defaultRating={this.state.items.rating[j]} maxRating={5} disabled /><br />
-                                                        {this.state.items.review[j]}
-                                                    </Comment.Text>
-                                                    <Comment.Actions>
-                                                        <Comment.Action>upvote</Comment.Action>
-                                                        <Comment.Action>downvote</Comment.Action>
-                                                    </Comment.Actions>
-                                                </Comment.Content>
-                                            </Comment>
-                                        ))
+                                                   
+                                        </div>
+                                        
                                         :
                                         <div></div>
                                     }

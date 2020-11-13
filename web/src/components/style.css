@@ -12,3 +12,16 @@
     height: 25px!important;
     overflow: hidden;
 }
+
+.notification{
+    height: 50px;
+    border-radius: 50%;
+}
+
+.day{
+    color: grey;
+}
+
+.title{
+    color: black;
+}

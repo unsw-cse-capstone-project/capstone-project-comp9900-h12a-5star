@@ -25,10 +25,10 @@ export default class FollowUserPage extends Component {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({username: this.user})
+            body: JSON.stringify({userID: this.user})
         };
 
-        fetch("http://127.0.0.1:8000/api/banUsername/", requestOptions)
+        fetch("http://127.0.0.1:8000/api/followUser/", requestOptions)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -65,10 +65,10 @@ export default class FollowUserPage extends Component {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
-            body: JSON.stringify({ username: this.user, bannedUsername:val.username, banStatus: false})
+            body: JSON.stringify({ follower: this.user, followee:val.username})
         };
 
-        fetch("http://127.0.0.1:8000/api/banUsername/", requestOptions)
+        fetch("http://127.0.0.1:8000/api/unfollowUser/", requestOptions)
         this.revoveElement(val)
         // window.location.reload(false
     }

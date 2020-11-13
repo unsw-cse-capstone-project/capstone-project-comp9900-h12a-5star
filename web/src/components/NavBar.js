@@ -1,15 +1,59 @@
 import React, { Component } from 'react'
 import {moviesList} from './MovieData'
-import { Icon, Button, Menu, Segment, Search, Image, Popup, Feed } from 'semantic-ui-react'
+import { Icon, Button, Menu, Segment, Search, Image, Popup, Feed, Label, Grid } from 'semantic-ui-react'
 import _ from 'lodash'
-
+import {
+  Link,
+} from "react-router-dom";
 
 const source = moviesList
 
 const initialState = { isLoading: false, results: [], value: '' }
 
 export default class MenuExampleInvertedSegment extends Component {
-  state = { activeItem: '', isLoading: false, results: [], value: '' }
+
+  constructor() {
+    super();
+    this.state = {
+      activeItem: '', 
+      isLoading: false, 
+      results: [], 
+      value: '',
+      newNotifications : 0,
+      error: null,
+      isLoaded: false,
+      items: []
+    }
+  }
+
+  componentDidMount() {
+    if (window.sessionStorage.getItem('username') === null){
+      window.sessionStorage.setItem('username', 'guest');
+    }
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userID: window.sessionStorage.getItem('username') })
+    };
+
+    fetch("http://127.0.0.1:8000/api/getNotifications", requestOptions)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        items: result,
+                        newNotifications: result.newNotifications
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+  }
 
   handleItemClick = (e, { name }) => {
     this.setState({ activeItem: name })
@@ -34,6 +78,15 @@ export default class MenuExampleInvertedSegment extends Component {
       else{
         window.location.href='/myprofile' 
       }
+    }
+    else if (name === 'notification'){
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userID: window.sessionStorage.getItem('username') })
+      };
+  
+      fetch("http://127.0.0.1:8000/api/NotificationRead", requestOptions)
     }
   }
 
@@ -72,6 +125,19 @@ export default class MenuExampleInvertedSegment extends Component {
     const style = {
       width: 450
     }
+
+    var content = (items) => (
+      <div>
+        <Link  key={items.movieID} to= {`/movieDetails/${items.movieID}`}>
+                      <Feed.Event
+                          image={items.profilePic}
+                          date={items.time}
+                          summary={summary}
+                          extraText={extraText}
+                        />
+                      </Link>
+      </div>
+    )
 
     return (
       <Segment inverted>
@@ -127,35 +193,45 @@ export default class MenuExampleInvertedSegment extends Component {
                 active={activeItem === 'notification'}
                 onClick={this.handleItemClick}
                 >
-                <Icon name='bell' size='large'/>
+                  <Icon.Group>
+                    <Icon name='bell' size='large'/>
+                    {
+                      // (this.state.newNotifications > 0) &&
+                        <Label circular color="red" floating size="small">
+                          {this.state.newNotifications}
+                      </Label>
+                    }
+                  </Icon.Group>
+                
               </Menu.Item>
               }
               style={style}
               position='top center'
               flowing
               on={['click']}>
-                <Feed>
-                  <Feed.Event
-                    image={image}
-                    date={date}
-                    summary={summary}
-                    extraText={extraText}
-                  />
-
-                  <Feed.Event>
-                    <Feed.Label image={image} />
-                    <Feed.Content date={date} summary={summary} extraText={extraText} />
-                  </Feed.Event>
-
-                  <Feed.Event>
-                    <Feed.Label image={image} />
-                    <Feed.Content>
-                      <Feed.Date content={date} />
-                      <Feed.Summary content={summary} />
-                      <Feed.Extra text content={extraText} />
-                    </Feed.Content>
-                  </Feed.Event>
-                </Feed>
+                <div>
+                  {
+                    (this.state.items.notifications) && 
+                      this.state.items.notifications.map((items) => 
+                      <Link  key={items.movieID} to= {`/movieDetails/${items.movieID}`}>
+                          <Grid>
+                            <Grid.Column width={2}>
+                              <img className="notification" src={items.profilePic} />
+                            </Grid.Column>
+                            <Grid.Column width={12} stretched>
+                              <Grid.Row className="day">
+                                {items.time}
+                              </Grid.Row>
+                              <Grid.Row className="title">
+                                <b>{items.fromUsername.charAt(0).toUpperCase()+items.fromUsername.slice(1)} suggested you to watch {items.movieID}</b>
+                              </Grid.Row>
+                            </Grid.Column>
+                          </Grid>
+                     </Link>
+                      
+                      )
+                  }
+                </div>
               </Popup>
               
             }

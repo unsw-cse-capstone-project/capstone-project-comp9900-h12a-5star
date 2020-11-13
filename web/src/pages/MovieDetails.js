@@ -170,6 +170,23 @@ export default class MovieDetails extends Component {
         }
     }
 
+    handle_click_follow_user = (val) =>{
+
+  
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
+            body: JSON.stringify({ follower: this.user, followee:val})
+        };
+
+        fetch("http://127.0.0.1:8000/api/followUser", requestOptions)
+
+       // window.location.href=`/bannedlist/${window.sessionStorage.getItem('username')}`;
+       alert("User Followed Successfully");
+       window.location.reload(false);
+    }
+
     handle_click_ban_user = (val) =>{
 
   
@@ -634,7 +651,7 @@ export default class MovieDetails extends Component {
                                                                 <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])} secondary icon='user close' size={'big'} />}>
                                                                     Ban User
                                                                 </Popup>
-                                                                <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} secondary icon='add user' size={'big'} />}>
+                                                                <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false} secondary icon='add user' size={'big'} onClick={() => this.handle_click_follow_user(this.state.items.user[j])} />}>
                                                                     Follow User
                                                                 </Popup>
                                                         </Popup>

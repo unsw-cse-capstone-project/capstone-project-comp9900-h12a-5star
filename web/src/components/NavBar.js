@@ -187,7 +187,9 @@ export default class MenuExampleInvertedSegment extends Component {
             
             </Menu.Item>
             {(window.sessionStorage.getItem('username') !== null && window.sessionStorage.getItem('username') !== "guest") &&
-              <Popup trigger={
+              <Popup
+              basic
+              trigger={
                 <Menu.Item
                 name='notification'
                 active={activeItem === 'notification'}

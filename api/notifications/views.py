@@ -12,7 +12,7 @@ def suggestMovie(request):
     new.toUsername = request.data['toUser']
     new.fromUsername = request.data['fromUser']
     new.movieId = request.data['movieId']
-    new.type = 'SUGGESTION'
+    new.type = request.data['fromUser'] + ' suggested you to watch ' + request.data['movieTitle']
     new.movieTitle = request.data['movieTitle']
     new.Date = datetime.date.today()
     new.Time = datetime.datetime.now().time()

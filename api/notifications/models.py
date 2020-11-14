@@ -6,6 +6,7 @@ class notifications(models.Model):
     fromUsername = models.CharField(max_length=30, blank=False, unique=False)
     type = models.CharField(max_length=30, blank=False, unique=False) #type of notification
     movieId = models.IntegerField(default=0, blank=False)
+    movieTitle = models.CharField(max_length=30, blank=False, unique=False, default=None)
     status = models.BooleanField(default=False) #read=True or unread=False
     sent = models.BooleanField(default=False)
 

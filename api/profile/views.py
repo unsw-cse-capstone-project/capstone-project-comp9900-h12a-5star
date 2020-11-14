@@ -213,6 +213,7 @@ class followUser(RetrieveAPIView):
         for user in userprofile.following:
             new_user = UserProfile.objects.get(username=user)
             user_data = defaultdict(lambda: None)
+            user_data['username'] = user
             user_data['profilePic'] = new_user.profilePic
             user_data['firstname'] = new_user.firstname
             user_data['lastname'] = new_user.lastname

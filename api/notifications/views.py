@@ -13,6 +13,7 @@ def suggestMovie(request):
     new.fromUsername = request.data['fromUser']
     new.movieId = request.data['movieId']
     new.type = 'SUGGESTION'
+    new.movieTitle = request.data['movieTitle']
     new.Date = datetime.date.today()
     new.Time = datetime.datetime.now().time()
     new.save()
@@ -38,6 +39,7 @@ def getNotifications(request):
         data['fromUsername']= i.fromUsername
         data['type'] = i.type
         data['movieID'] = i.movieId
+        data['movieTitle'] = i.movieTitle
         data['date'] = str(abs((datetime.date.today() - i.Date).days)) + ' days ago'
         data['profilePic'] = UserProfile.objects.get(username = i.fromUsername).profilePic
         data['status'] = i.status

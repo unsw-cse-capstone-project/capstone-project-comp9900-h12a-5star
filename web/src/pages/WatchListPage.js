@@ -59,7 +59,7 @@ export default class WatchListPage extends Component {
         }
         
     }
-    removeFromWishlist = (val) => {
+    removeFromWatchlist = (val) => {
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -112,15 +112,8 @@ export default class WatchListPage extends Component {
                                     
                                 </Grid.Column>
                                 <Grid.Column>
-                                    <br/><br/>
-                                    {
-                                        (this.props.match.params.userId === window.sessionStorage.getItem('username'))?
-                                            <Button circular floated='right' color='red' icon='close' onClick={()=>this.removeFromWishlist(item)} />
-                                            :
-                                            <Button primary floated='right'><Link style={{ color: '#FFF'}} className="MovieDetails" key={item.movieID} to= {`/movieDetails/${item.movieID}`}>
-                                            View Details
-                                        </Link><Icon name='right chevron' />  </Button> 
-                                    }
+                                    <p><br /></p>
+                                    <Button circular floated='right' color='red' icon='close' onClick={()=>this.removeFromWatchlist(item)} />
                                     
                             </Grid.Column>
                         </Grid.Row>

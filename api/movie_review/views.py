@@ -214,9 +214,16 @@ def upvote(request):
     if a==False:
         return Response(b)
     for i in reviews.objects.filter(review_user_id=request.data['reviewerUsername'], movie_id=request.data['movieId']):
-        i.upvote_count += int(request.data['upvote'])
-        votes = i.upvote_count
-        i.save()
+        if request.data['likerUsername'] not in i.like_reviewers:
+            i.like_reviewers.append(request.data['likerUsername'])
+            i.upvote_count += 1
+            votes = i.upvote_count
+            i.save()
+        else:
+            i.like_reviewers.remove(request.data['likerUsername'])
+            i.upvote_count -= 1
+            votes = i.upvote_count
+            i.save()
     response = {
                 'success': 'True',
                 'statusCode': status.HTTP_200_OK,

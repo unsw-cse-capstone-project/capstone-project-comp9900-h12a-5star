@@ -86,6 +86,8 @@ class BanView(RetrieveAPIView):
         user_profile = UserProfile.objects.get(username=request.data['username'])
         if request.data['banStatus'] and request.data['bannedUsername'] not in user_profile.banned:
             user_profile.banned.append(request.data['bannedUsername'])
+            if request.data['bannedUsername'] in list(user_profile.following):
+                user_profile.following.remove(request.data['bannedUsername'])
             message = 'user banned'
         elif request.data['banStatus']==False and request.data['bannedUsername'] in user_profile.banned:
             user_profile.banned.remove(request.data['bannedUsername'])

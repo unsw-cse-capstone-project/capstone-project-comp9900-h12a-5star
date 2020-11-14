@@ -1,13 +1,94 @@
+export const genreList = [
+    {  key: 28 , text: 'Action', value: 28 },
+    {  key: 12, text: 'Adventure', value: 12 },
+    {  key: 16 , text: 'Animation', value: 16 },
+    { key:35 , text: 'Comedy', value: 35 },
+    {  key: 80 , text: 'Crime', value: 80},
+    { key: 90 , text: 'Documentary', value: 99},
+    { key:18 , text: 'Drama', value: 18},
+    { key: 10751, text: 'Family', value: 10751},
+    {  key:14, text: 'Fantasy', value: 14 },
+    {  key: 36, text: 'History', value: 36 },
+    { key:27, text: 'Horror', value: 27 },
+    { key: 10402, text: 'Music', value: 10402 },
+    { key: 9648, text: 'Mystery', value: 9648 },
+    { key: 10749, text: 'Romance', value: 10749 },
+    { key: 878, text: 'Science Fiction', value: 878 },
+    { key: 53, text: 'Thriller', value: 53 },
+    { key:10770, text: 'TV Movie', value: 10770 },
+    { key: 10752, text: 'War', value: 10752 },
+    { key: 37, text: 'Western', value: 37 },
+    
+];
+
+export const gender = [
+    { key: 'Male', text: 'Male', value: 'Male' },
+    { key: 'Female', text: 'Female', value: 'Female' },
+];
+
+
+export const genres = [
+    { key: 'Action', text: 'Action', value: 'Action' },
+    { key: 'Adventure', text: 'Adventure', value: 'Adventure' },
+    {  key: 'Animation' , text: 'Animation', value: 'Animation' },
+    { key: 'Comedy', text: 'Comedy', value: 'Comedy' },
+    { key: 'Crime', text: 'Crime', value: 'Crime' },
+    { key: 'Documentary' , text: 'Documentary', value: 'Documentary'},
+    { key: 'Drama', text: 'Drama', value: 'Drama' },
+    { key: 'Family', text: 'Family', value: 'Family' },
+    { key: 'Fantasy', text: 'Fantasy', value: 'Fantasy' },
+    {  key: 'History', text: 'History', value: 'History' },
+    { key: 'Horror', text: 'Horror', value: 'Horror' },
+    { key: 'Music', text: 'Music', value: 'Music' },
+    { key: 'Mystery', text: 'Mystery', value: 'Mystery' },
+    { key: 'Romance', text: 'Romance', value: 'Romance' },
+    { key: 'Science Fiction', text: 'Science Fiction', value: 'Science Fiction' },
+    { key: 'Thriller', text: 'Thriller', value: 'Thriller' },
+    { key:'TV Movie', text: 'TV Movie', value: 'TV Movie' },
+    { key: 'War', text: 'War', value: 'War' },
+    { key: 'Western', text: 'Western', value: 'Western' },
+    
+]
+
+export const languages=  [
+    { key: 'English', text: 'English', value: 'English' },
+    { key: 'Mandarin Chinese', text: 'Mandarin Chinese', value: 'Mandarin Chinese' },
+    { key: 'Hindi', text: 'Hindi', value: 'Hindi' },
+    { key: 'Spanish', text: 'Spanish', value: 'Spanish' },
+    { key: 'French', text: 'French', value: 'French' },
+    { key: 'Standard Arabic', text: 'Standard Arabic', value: 'Standard Arabic' },
+    { key: 'Bengali', text: 'Bengali', value: 'Bengali' },
+    { key: 'Russian', text: 'Russian', value: 'Russian' },
+    { key: 'Portuguese', text: 'Portuguese', value: 'Portuguese' },
+    { key: 'Indonesian', text: 'Indonesian', value: 'Indonesian' },
+    { key: 'Korean', text: 'Korean', value: 'Korean' },
+];
+
+export const maleProfile = [
+    "https://react.semantic-ui.com/images/avatar/large/elliot.jpg",
+    "https://react.semantic-ui.com/images/avatar/large/matthew.png",
+    "https://react.semantic-ui.com/images/avatar/large/steve.jpg",
+    "https://react.semantic-ui.com/images/avatar/large/daniel.jpg",
+    "https://react.semantic-ui.com/images/avatar/large/joe.jpg",
+    "https://react.semantic-ui.com/images/avatar/large/christian.jpg",
+    "https://react.semantic-ui.com/images/avatar/large/matt.jpg"
+]
+
+export const femaleProfile = [
+    "https://react.semantic-ui.com/images/avatar/large/molly.png",
+    "https://react.semantic-ui.com/images/avatar/large/jenny.jpg",
+    "https://react.semantic-ui.com/images/avatar/large/stevie.jpg",
+    "https://react.semantic-ui.com/images/avatar/large/helen.jpg",
+    "https://react.semantic-ui.com/images/avatar/large/laura.jpg",
+    "https://react.semantic-ui.com/images/avatar/large/veronika.jpg"
+]
+
 export const directorList=
     [
-        {text: 'James Cameron', value: 2710, key: 2710},
-    
-    {text: 'Gore Verbinski', value: 1704, key: 1704},
-    
+     {text: 'James Cameron', value: 2710, key: 2710},
+     {text: 'Gore Verbinski', value: 1704, key: 1704},
      {text: 'Sam Mendes', value: 39, key: 39},
-    
      {text: 'Christopher Nolan', value: 525, key: 525},
-    
      {text: 'Andrew Stanton', value: 7, key: 7},
      {text: 'Sam Raimi', value: 7623, key: 7623},
      {text: 'Byron Howard', value: 76595, key: 76595},
@@ -2354,71 +2435,5 @@ export const directorList=
      {text: 'Daniel Hsia', value: 208138, key: 208138},
      {text: 'Brian Herzlinger', value: 85563, key: 85563}
 ];
-    
-export const genreList = [
-    {  key: 28 , text: 'Action', value: 28 },
-    {  key: 12, text: 'Adventure', value: 12 },
-    {  key: 16 , text: 'Animation', value: 16 },
-    { key:35 , text: 'Comedy', value: 35 },
-    {  key: 80 , text: 'Crime', value: 80},
-    { key: 90 , text: 'Documentary', value: 99},
-    { key:18 , text: 'Drama', value: 18},
-    { key: 10751, text: 'Family', value: 10751},
-    {  key:14, text: 'Fantasy', value: 14 },
-    {  key: 36, text: 'History', value: 36 },
-    { key:27, text: 'Horror', value: 27 },
-    { key: 10402, text: 'Music', value: 10402 },
-    { key: 9648, text: 'Mystery', value: 9648 },
-    { key: 10749, text: 'Romance', value: 10749 },
-    { key: 878, text: 'Science Fiction', value: 878 },
-    { key: 53, text: 'Thriller', value: 53 },
-    { key:10770, text: 'TV Movie', value: 10770 },
-    { key: 10752, text: 'War', value: 10752 },
-    { key: 37, text: 'Western', value: 37 },
-    
-];
 
-export const gender = [
-    { key: 'Male', text: 'Male', value: 'Male' },
-    { key: 'Female', text: 'Female', value: 'Female' },
-];
-
-
-export const genres = [
-    { key: 'Action', text: 'Action', value: 'Action' },
-    { key: 'Adventure', text: 'Adventure', value: 'Adventure' },
-    {  key: 'Animation' , text: 'Animation', value: 'Animation' },
-    { key: 'Comedy', text: 'Comedy', value: 'Comedy' },
-    { key: 'Crime', text: 'Crime', value: 'Crime' },
-    { key: 'Documentary' , text: 'Documentary', value: 'Documentary'},
-    { key: 'Drama', text: 'Drama', value: 'Drama' },
-    { key: 'Family', text: 'Family', value: 'Family' },
-    { key: 'Fantasy', text: 'Fantasy', value: 'Fantasy' },
-    {  key: 'History', text: 'History', value: 'History' },
-    { key: 'Horror', text: 'Horror', value: 'Horror' },
-    { key: 'Music', text: 'Music', value: 'Music' },
-    { key: 'Mystery', text: 'Mystery', value: 'Mystery' },
-    { key: 'Romance', text: 'Romance', value: 'Romance' },
-    { key: 'Science Fiction', text: 'Science Fiction', value: 'Science Fiction' },
-    { key: 'Thriller', text: 'Thriller', value: 'Thriller' },
-    { key:'TV Movie', text: 'TV Movie', value: 'TV Movie' },
-    { key: 'War', text: 'War', value: 'War' },
-    { key: 'Western', text: 'Western', value: 'Western' },
-    
-]
-
-export const languages=  [
-    { key: 'English', text: 'English', value: 'English' },
-    { key: 'Mandarin Chinese', text: 'Mandarin Chinese', value: 'Mandarin Chinese' },
-    { key: 'Hindi', text: 'Hindi', value: 'Hindi' },
-    { key: 'Spanish', text: 'Spanish', value: 'Spanish' },
-    { key: 'French', text: 'French', value: 'French' },
-    { key: 'Standard Arabic', text: 'Standard Arabic', value: 'Standard Arabic' },
-    { key: 'Bengali', text: 'Bengali', value: 'Bengali' },
-    { key: 'Russian', text: 'Russian', value: 'Russian' },
-    { key: 'Portuguese', text: 'Portuguese', value: 'Portuguese' },
-    { key: 'Indonesian', text: 'Indonesian', value: 'Indonesian' },
-    { key: 'Korean', text: 'Korean', value: 'Korean' },
-];
-
-export default {directorList,genreList,gender,genres,languages};
+export default {directorList,genreList,gender,genres,languages, maleProfile, femaleProfile};

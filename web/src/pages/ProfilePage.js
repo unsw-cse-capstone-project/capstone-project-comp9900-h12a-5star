@@ -1,62 +1,15 @@
 import React , { Component } from 'react'
 import { Container, Icon, Image, Button, Header, Divider,Form, Label, Modal, Dropdown, List } from 'semantic-ui-react'
 import './style.css'
+import {gender,genres,languages, maleProfile, femaleProfile} from '../components/genericLists';
 
 export default class ProfilePage extends Component {
 
-    genderOptions = [
-        { key: 'Male', text: 'Male', value: 'Male' },
-        { key: 'Female', text: 'Female', value: 'Female' },
-    ]
-    
-    genreOptions = [
-        { key: 'Action', text: 'Action', value: 'Action' },
-        { key: 'Adventure', text: 'Adventure', value: 'Adventure' },
-        { key: 'Comedy', text: 'Comedy', value: 'Comedy' },
-        { key: 'Crime', text: 'Crime', value: 'Crime' },
-        { key: 'Drama', text: 'Drama', value: 'Drama' },
-        { key: 'Family', text: 'Family', value: 'Family' },
-        { key: 'Fantasy', text: 'Fantasy', value: 'Fantasy' },
-        { key: 'Horror', text: 'Horror', value: 'Horror' },
-        { key: 'Mystery', text: 'Mystery', value: 'Mystery' },
-        { key: 'Romance', text: 'Romance', value: 'Romance' },
-        { key: 'Science Fiction', text: 'Science Fiction', value: 'Science Fiction' },
-        { key: 'Thriller', text: 'Thriller', value: 'Thriller' },
-        
-    ]
-
-    languageOptions = [
-        { key: 'English', text: 'English', value: 'English' },
-        { key: 'Mandarin Chinese', text: 'Mandarin Chinese', value: 'Mandarin Chinese' },
-        { key: 'Hindi', text: 'Hindi', value: 'Hindi' },
-        { key: 'Spanish', text: 'Spanish', value: 'Spanish' },
-        { key: 'French', text: 'French', value: 'French' },
-        { key: 'Standard Arabic', text: 'Standard Arabic', value: 'Standard Arabic' },
-        { key: 'Bengali', text: 'Bengali', value: 'Bengali' },
-        { key: 'Russian', text: 'Russian', value: 'Russian' },
-        { key: 'Portuguese', text: 'Portuguese', value: 'Portuguese' },
-        { key: 'Indonesian', text: 'Indonesian', value: 'Indonesian' },
-        { key: 'Korean', text: 'Korean', value: 'Korean' },
-      ]
-
-    maleProfile = [
-        "https://react.semantic-ui.com/images/avatar/large/elliot.jpg",
-        "https://react.semantic-ui.com/images/avatar/large/matthew.png",
-        "https://react.semantic-ui.com/images/avatar/large/steve.jpg",
-        "https://react.semantic-ui.com/images/avatar/large/daniel.jpg",
-        "https://react.semantic-ui.com/images/avatar/large/joe.jpg",
-        "https://react.semantic-ui.com/images/avatar/large/christian.jpg",
-        "https://react.semantic-ui.com/images/avatar/large/matt.jpg"
-    ]
-
-    femaleProfile = [
-        "https://react.semantic-ui.com/images/avatar/large/molly.png",
-        "https://react.semantic-ui.com/images/avatar/large/jenny.jpg",
-        "https://react.semantic-ui.com/images/avatar/large/stevie.jpg",
-        "https://react.semantic-ui.com/images/avatar/large/helen.jpg",
-        "https://react.semantic-ui.com/images/avatar/large/laura.jpg",
-        "https://react.semantic-ui.com/images/avatar/large/veronika.jpg"
-    ]
+    genderOptions = gender
+    genreOptions = genres
+    languageOptions = languages
+    maleProfile = maleProfile
+    femaleProfile = femaleProfile
     
     constructor() {
         super();

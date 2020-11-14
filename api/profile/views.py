@@ -197,7 +197,7 @@ class followUser(RetrieveAPIView):
         new = notifications()
         new.toUsername = request.data['followee']
         new.fromUsername = request.data['follower']
-        new.type = 'FOLLOW'
+        new.type = request.data['follower'] + ' is following you'
         new.Date = datetime.date.today()
         new.Time = datetime.datetime.now().time()
         new.save()

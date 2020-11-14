@@ -227,7 +227,7 @@ export default class MenuExampleInvertedSegment extends Component {
                                     {items.time}
                                   </Grid.Row>
                                   <Grid.Row className="title">
-                                    <b>{items.fromUsername.charAt(0).toUpperCase()+items.fromUsername.slice(1)} suggested you to watch {items.movieID}</b>
+                                    <b>{items.type}</b>
                                   </Grid.Row>
                                 </Grid.Column>
                               </Grid>

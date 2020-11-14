@@ -24,9 +24,6 @@ export default class SearchMovieTitle extends Component {
                         items: result
                     });
                 },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
                 (error) => {
                     this.setState({
                         isLoaded: true,
@@ -284,10 +281,10 @@ export default class SearchMovieTitle extends Component {
             <>
                 <Container style={{ margin: 20 }}>
                     {flag==1 &&
-                    <Header as='h1'>Search Results by Movie Title: {this.props.match.params.searchText}</Header>
+                        <Header as='h1'>Search Results by Movie Title: {this.props.match.params.searchText}</Header>
                     }
                     {flag==1 &&
-                    <Divider section />
+                        <Divider section />
                     }
                     {/* <Grid columns='equal'>{columnsMovie}</Grid> */}
 
@@ -300,10 +297,10 @@ export default class SearchMovieTitle extends Component {
                                 </Grid>
                     }
                     {flag==2 &&
-                    <Header as='h1'>Search Results by Movie Genre: {this.props.match.params.searchText}</Header>
+                        <Header as='h1'>Search Results by Movie Genre: {this.props.match.params.searchText}</Header>
                     }
                     {flag==2 &&
-                    <Divider section />
+                        <Divider section />
                     }
                     {/* <Grid columns='equal'>{columnsGenre}</Grid> */}
                     {   flag==2 && y >= 4 
@@ -315,10 +312,10 @@ export default class SearchMovieTitle extends Component {
                             </Grid>
                     }
                     {flag ==3 &&
-                    <Header as='h1'>Search Results by Movie Description: {this.props.match.params.searchText}</Header>
+                        <Header as='h1'>Search Results by Movie Description: {this.props.match.params.searchText}</Header>
                     }
                     {flag==3 &&
-                    <Divider section />
+                        <Divider section />
                     }
                     {/* <Grid columns='equal'>{columnsDesc}</Grid> */}
                     {   flag==3 && y >= 4 
@@ -328,7 +325,7 @@ export default class SearchMovieTitle extends Component {
                             <GridColumn></GridColumn>
 
                             </Grid>
-                        }
+                    }
 
                 </Container>
             </>

@@ -277,7 +277,7 @@ export default class SearchPage extends Component {
         return (
             <React.Fragment>
                 <Container style={{ margin: 20 }}>
-                { flag == 1  && 
+                { flag === 1  && 
                     <Grid.Column>
                         <Header as='h1'>Search Results: {this.props.match.params.searchText}</Header>
                         <Divider section />
@@ -356,7 +356,7 @@ export default class SearchPage extends Component {
                             <GridColumn></GridColumn>
                         </Grid>
                 }
-                {movieLength == 0 && genreLength == 0 && descLength == 0 &&
+                {movieLength === 0 && genreLength === 0 && descLength === 0 &&
               
                     <Grid.Column>
                         <Header as='h1'>No Search Results Found! Please search with other keyword.</Header>

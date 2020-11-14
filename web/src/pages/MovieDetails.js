@@ -691,7 +691,8 @@ export default class MovieDetails extends Component {
                                                                             </Comment.Text>
                                                                             <Comment.Actions>
                                                                                 
-                                                                                <Button icon='heart' color="red" content='Like' label={{ basic: true, color: 'red', pointing: 'left', content: this.state.items.upvote[j] }} size={'mini'}  onClick={() => this.handleClickLikeReview(this.state.items.user[j])} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>
+                                                                                {/* <Button icon='heart' color="red" active={false} content='Like' label={{ basic: true, color: 'red', pointing: 'left', content: this.state.items.upvote[j] }} size={'mini'}  onClick={() => this.handleClickLikeReview(this.state.items.user[j])} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/> */}
+                                                                                <Button icon='heart'  active={false}  size={'mini'}  onClick={() => this.handleClickLikeReview(this.state.items.user[j])} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/> {this.state.items.upvote[j]}
                                                                             </Comment.Actions>
                                                                         </Comment.Content>
                                                                     </Comment>

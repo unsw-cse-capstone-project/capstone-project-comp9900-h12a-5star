@@ -173,8 +173,8 @@ def get_review(from_user,id,final,gender,from_date,to_date):
                             final['date_modified'].append('Just Now')
                         else:
                             final['date_modified'].append(str(int(a[:2])) +' Seconds Ago')
-		if from_user.lower() != 'guest':
-		    final['upvote'].append(i.upvote_count)
+                if from_user.lower() != 'guest':
+                    final['upvote'].append(i.upvote_count)
                     if i.review_user_id in list(user_profile.following):
                         final['follow'].append(True)
                     else:
@@ -220,13 +220,13 @@ def get_review(from_user,id,final,gender,from_date,to_date):
                                 final['date_modified'].append('Just Now')
                             else:
                                 final['date_modified'].append(str(int(a[:2])) +' Seconds Ago')
-		    if from_user.lower() != 'guest':
-                        final['upvote'].append(i.upvote_count)
-                        if i.review_user_id in list(user_profile.following):
-                            final['follow'].append(True)
-                        else:
-                            final['follow'].append(False)
-                        final['watched'] = i.watched
+                        if from_user.lower() != 'guest':
+                            final['upvote'].append(i.upvote_count)
+                            if i.review_user_id in list(user_profile.following):
+                                final['follow'].append(True)
+                            else:
+                                final['follow'].append(False)
+                            final['watched'] = i.watched
     if from_user.lower() == 'guest':
         final['watched']= False
         final['liked']=False

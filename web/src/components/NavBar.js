@@ -87,6 +87,9 @@ export default class MenuExampleInvertedSegment extends Component {
       };
   
       fetch("http://127.0.0.1:8000/api/NotificationRead", requestOptions)
+
+      this.setState({newNotifications : 0})
+
     }
   }
 

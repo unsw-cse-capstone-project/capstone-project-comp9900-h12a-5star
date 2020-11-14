@@ -314,6 +314,22 @@ export default class SearchMovieTitle extends Component {
 
                             </Grid>
                     }
+                    {flag ==3 &&
+                    <Header as='h1'>Search Results by Movie Description: {this.props.match.params.searchText}</Header>
+                    }
+                    {flag==3 &&
+                    <Divider section />
+                    }
+                    {/* <Grid columns='equal'>{columnsDesc}</Grid> */}
+                    {   flag==3 && y >= 4 
+
+                        ? <Grid columns='equal'>{columnsDesc}</Grid>
+                        : <Grid columns='equal'>{columnsDesc}
+                            <GridColumn></GridColumn>
+
+                            </Grid>
+                        }
+
                 </Container>
             </>
         )

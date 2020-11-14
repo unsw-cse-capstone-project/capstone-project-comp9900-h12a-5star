@@ -1,13 +1,9 @@
 export const directorList=
     [
-        {text: 'James Cameron', value: 2710, key: 2710},
-    
-    {text: 'Gore Verbinski', value: 1704, key: 1704},
-    
+     {text: 'James Cameron', value: 2710, key: 2710}, 
+     {text: 'Gore Verbinski', value: 1704, key: 1704},
      {text: 'Sam Mendes', value: 39, key: 39},
-    
      {text: 'Christopher Nolan', value: 525, key: 525},
-    
      {text: 'Andrew Stanton', value: 7, key: 7},
      {text: 'Sam Raimi', value: 7623, key: 7623},
      {text: 'Byron Howard', value: 76595, key: 76595},

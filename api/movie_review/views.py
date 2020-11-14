@@ -1,7 +1,6 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from profile.models import UserProfile
 from movie_review.models import movies,reviews
 from movie_review.helper import verify_user, get_movie_details, send_notifications
 import datetime

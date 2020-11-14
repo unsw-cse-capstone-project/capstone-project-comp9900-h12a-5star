@@ -22,6 +22,7 @@ import BrowsePage from './pages/BrowsePage';
 import NavBar from './components/NavBar';
 import WelcomeCategory from './pages/WelcomeCategory';
 import FollowUserPage from './pages/FollowUserPage';
+import MovieCategory from './pages/MovieCategory';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
         <Route path="/searchGenre/:searchText" component = {SearchGenre} />
         <Route path="/searchDescription/:searchText" component = {SearchDescription} />
         <Route path="/movieDetails/:movieId" component = {MovieDetails} />
+        <Route path="/movieDetails/:category" component={MovieCategory} exact/>
         <Route component = {NotFoundPage} />
       </Switch>
     </Router>

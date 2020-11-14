@@ -27,9 +27,23 @@
 }
 
 .newNotification{
-    background-color: lightgray;
+    background-color: lightblue;
 }
 
 .oldNotification{
     padding-top: 2%!important;
+}
+
+.result .description{
+    height: 55px;
+    overflow: hidden;
+    width: 180px!important;
+}
+
+.result .image{
+    width: 40px!important;
+}
+
+.result .content .title{
+    width: 180px!important;
 }

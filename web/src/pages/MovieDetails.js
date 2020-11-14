@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
-import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed,Dropdown} from 'semantic-ui-react'
+import { Grid, Container, Image, Segment, Card, Placeholder,Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed,Dropdown} from 'semantic-ui-react'
 import {gender,genres,languages} from '../components/genericLists';
+import MovieTile from '../components/MovieTile';
 import {
     DateInput,
     TimeInput,
@@ -228,11 +229,12 @@ export default class MovieDetails extends Component {
         const user = this.user
         const review = this.state.review;
         const rating = this.state.rating;
+        const movieTitle = this.state.items.title
         if (user!=="guest"){
 
             const result = await fetch(`http://127.0.0.1:8000/api/addreview`, {
                 method: 'post',
-                body: JSON.stringify({movie,user,review,rating}),
+                body: JSON.stringify({movie,user,review,rating, movieTitle}),
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -315,10 +317,50 @@ export default class MovieDetails extends Component {
 
 
     render() {
-        console.log(this.state.items)
+        
         const { active_like } = this.state
         const { active_seen } = this.state
         const { active_wishlist } = this.state
+        var recommendSimilar = null
+        if (this.state.items.recomendations) {
+        recommendSimilar = _.times(4, (i) => (
+            <Grid.Column key={i}>
+                <MovieTile
+                    title={this.state.items.recomendations[i].movieTitle} 
+                    poster={this.state.items.recomendations[i].poster} 
+                    release={this.state.items.recomendations[i].releaseDate} 
+                    rating={this.state.items.recomendations[i].rating} 
+                    description={this.state.items.recomendations[i].description} 
+                    movieId={this.state.items.recomendations[i].movieID} 
+                />
+            </Grid.Column>
+        ))
+        }
+        else{
+
+            recommendSimilar = _.times(4, (i) => (
+                <Grid.Column key={i}>
+                    <Card.Group>
+                        <Card>
+                            <Placeholder>
+                                <Placeholder.Image square />
+                            </Placeholder>
+                        </Card>
+                        <Card.Content>
+                            <Placeholder>
+                                <Placeholder.Header>
+                                    <Placeholder.Line length='very short' />
+                                    <Placeholder.Line length='medium' />
+                                </Placeholder.Header>
+                                <Placeholder.Paragraph>
+                                    <Placeholder.Line length='short' />
+                                </Placeholder.Paragraph>
+                            </Placeholder>
+                        </Card.Content>
+                    </Card.Group>
+                </Grid.Column>
+            ))
+        }
 
         const style = {
             opacity: 1
@@ -676,7 +718,7 @@ export default class MovieDetails extends Component {
                                                                                         <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true : false} value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])} secondary icon='user close' size={'big'} />}>
                                                                                             Ban User
                                                                                 </Popup>
-                                                                                        <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true : false} secondary icon='add user' size={'big'} onClick={() => this.handle_click_follow_user(this.state.items.user[j])} />}>
+                                                                                        <Popup trigger={<Button disabled={(window.sessionStorage.getItem('username') === 'guest') ? true : (this.state.items.follow[j] ? true : false)} secondary icon='add user' size={'big'} onClick={() => this.handle_click_follow_user(this.state.items.user[j])} />}>
                                                                                             Follow User
                                                                                 </Popup>
                                                                                     </Popup>
@@ -726,6 +768,20 @@ export default class MovieDetails extends Component {
                                 </Grid.Column>
                             </Grid.Row>
                         </Grid>
+
+                        <Grid columns="equal">
+                            <Grid.Column>
+                                <Header as='h1'>More Like This </Header>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = `/movieRecommendations/${this.props.match.params.movieId}/RecommendMore`}>
+                                see more
+                                </Label>
+                            </Grid.Column>
+                        </Grid>
+                    <Grid columns='equal'>{recommendSimilar}</Grid>
+
+
                     </Segment>
                 </Container>
             </React.Fragment>

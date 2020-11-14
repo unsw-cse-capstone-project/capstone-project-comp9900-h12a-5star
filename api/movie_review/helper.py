@@ -48,7 +48,7 @@ def send_notifications(userID, movieID, movieTitle):
         new.fromUsername = userID
         new.movieId = movieID
         new.movieTitle = movieTitle
-        new.type = 'COMMENT'
+        new.type = userID + ' added a review for ' + movieTitle
         new.Date = datetime.date.today()
         new.Time = datetime.datetime.now().time()
         new.save()

@@ -126,6 +126,7 @@ def get_review(from_user,id,final,gender,from_date,to_date):
     final['upvoteStatus'] = []
     if from_user.lower() != "guest":
         user_profile = UserProfile.objects.get(username=from_user)
+        #print('following ', list(user_profile.following))
     else:
         user_profile = Ban()
     if from_date == '' and to_date == '':
@@ -148,8 +149,8 @@ def get_review(from_user,id,final,gender,from_date,to_date):
                 final['rating'].append(i.rating)
                 final['time'].append(i.review_time)
                 final['date'].append(i.review_date)
-                print('-------------',i.review_user_id,'str', i.like_reviewers)
-                if i.review_user_id in i.like_reviewers:
+                #print('-------------',i.review_user_id,'str', list(i.like_reviewers))
+                if from_user in i.like_reviewers:
                     final['upvoteStatus'].append(True)
                 else:
                     final['upvoteStatus'].append(False)
@@ -173,7 +174,10 @@ def get_review(from_user,id,final,gender,from_date,to_date):
                         else:
                             final['date_modified'].append(str(int(a[:2])) +' Seconds Ago')
                 final['upvote'].append(i.upvote_count)
-                final['follow'].append(i.follow)
+                if i.review_user_id in list(user_profile.following):
+                    final['follow'].append(True)
+                else:
+                    final['follow'].append(False)
                 final['watched'] = i.watched
     else:
         user=[]
@@ -191,8 +195,8 @@ def get_review(from_user,id,final,gender,from_date,to_date):
                     final['rating'].append(i.rating)
                     final['time'].append(i.review_time)
                     final['date'].append(i.review_date)
-                    print(i.review_user_id, i.like_reviewers)
-                    if i.review_user_id in i.like_reviewers:
+                    #print(i.review_user_id, i.like_reviewers)
+                    if from_user in i.like_reviewers:
                         final['upvoteStatus'].append(True)
                     else:
                         final['upvoteStatus'].append(False)
@@ -216,7 +220,10 @@ def get_review(from_user,id,final,gender,from_date,to_date):
                             else:
                                 final['date_modified'].append(str(int(a[:2])) +' Seconds Ago')
                     final['upvote'].append(i.upvote_count)
-                    final['follow'].append(i.follow)
+                    if i.review_user_id in list(user_profile.following):
+                        final['follow'].append(True)
+                    else:
+                        final['follow'].append(False)
                     final['watched'] = i.watched
     if from_user.lower() == 'guest':
         final['watched']= False
@@ -522,7 +529,7 @@ class MovieDetails(APIView):
                 recoms['description'] = i[2]
                 recoms['rating'] = i[3]/2
                 if i[4] is None:
-                    movie_details['poster'] = 'https://i.stack.imgur.com/Q3vyk.png'
+                    recoms['poster'] = 'https://i.stack.imgur.com/Q3vyk.png'
                 else:
                     recoms['poster'] = poster_url + i[4]
                 recoms['releaseDate'] = i[5]

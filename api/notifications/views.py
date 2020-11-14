@@ -12,7 +12,8 @@ def suggestMovie(request):
     new.toUsername = request.data['toUser']
     new.fromUsername = request.data['fromUser']
     new.movieId = request.data['movieId']
-    new.type = 'SUGGESTION'
+    new.type = request.data['fromUser'] + ' suggested you to watch ' + request.data['movieTitle']
+    new.movieTitle = request.data['movieTitle']
     new.Date = datetime.date.today()
     new.Time = datetime.datetime.now().time()
     new.save()
@@ -25,7 +26,6 @@ def suggestMovie(request):
 @api_view(['POST', ])
 def getNotifications(request):
     notices = notifications.objects.filter(toUsername=request.data['userID']).order_by('-Date', '-Time')
-    #notices = notifications.objects.all().order_by('-Date', '-Time')
     newNotifications =0
     new_data = []
 
@@ -38,6 +38,7 @@ def getNotifications(request):
         data['fromUsername']= i.fromUsername
         data['type'] = i.type
         data['movieID'] = i.movieId
+        data['movieTitle'] = i.movieTitle
         data['date'] = str(abs((datetime.date.today() - i.Date).days)) + ' days ago'
         data['profilePic'] = UserProfile.objects.get(username = i.fromUsername).profilePic
         data['status'] = i.status

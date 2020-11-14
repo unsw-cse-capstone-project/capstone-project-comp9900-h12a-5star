@@ -1,6 +1,5 @@
 from djongo import models
-from user.models import User
-from profile.models import UserProfile
+from multiselectfield import MultiSelectField
 
 class movies(models.Model):
     movie_id = models.IntegerField(unique=True,default=0)
@@ -22,5 +21,5 @@ class reviews(models.Model):
     Time=models.TimeField(auto_now=True)
     Date=models.DateField(auto_now=True)
     upvote_count=models.IntegerField(default=0)
-    downvote_count=models.IntegerField(default=0)
+    like_reviewers = MultiSelectField(default= None)
     follow=models.BooleanField(default=False)

@@ -773,7 +773,7 @@ export default class MovieDetails extends Component {
                                 <Header as='h1'>More Like This </Header>
                             </Grid.Column>
                             <Grid.Column>
-                                <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = 'movieDetails/RecommendMore'}>
+                                <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = `/movieRecommendations/${this.props.match.params.movieId}/RecommendMore`}>
                                 see more
                                 </Label>
                             </Grid.Column>

@@ -107,6 +107,29 @@ export default class RecentReleased extends Component {
                 ))
             }
         }
+        else if (this.props.match.params.category === "RecommendMore"){
+            if (this.state.items.recomendations) {
+                console.log("recommending")
+                category = "Recommend More"
+                columnsCategory = _.times(12, (i) => (
+                    <Grid.Row key={i}>{
+                        _.times(4, (j) => (
+                            <Grid.Column>
+                                <MovieTile 
+                    title={this.state.items.recomendations[i*4+j].movieTitle} 
+                    poster={this.state.items.recomendations[i*4+j].poster} 
+                    release={this.state.items.recomendations[i*4+j].releaseDate} 
+                    rating={this.state.items.recomendations[i*4+j].rating} 
+                    description={this.state.items.recomendations[i*4+j].description} 
+                    movieId={this.state.items.recomendations[i*4+j].movieID} 
+                                />
+                            </Grid.Column>
+                        ))
+                    }
+                    </Grid.Row>
+                ))
+            }
+        }
         
         return (
             <>

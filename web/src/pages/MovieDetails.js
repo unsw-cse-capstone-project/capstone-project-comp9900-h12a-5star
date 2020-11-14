@@ -219,7 +219,6 @@ export default class MovieDetails extends Component {
     handleReview = (event) => {   
        this.state.review = event.target.value;
 
-       console.log("Review: "+this.state.review);
        }
      handleRate = (e, { rating, maxRating }) => {
      this.state.rating = rating;
@@ -243,8 +242,6 @@ export default class MovieDetails extends Component {
             const body = await result.json();
 
             if (body.statusCode === 200){
-            
-                console.log("loop entered")
                 window.location.reload(false);
             }
         }

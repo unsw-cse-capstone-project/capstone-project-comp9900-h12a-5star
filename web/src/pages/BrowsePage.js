@@ -51,7 +51,6 @@ export default class BrowsePage extends Component {
     checkGenreDirector = () => {
         
         this.setState({ isLoaded: true })
-        console.log(this.state.isLoaded)
         var obj = {"genre_id":this.state.genres,"director_id":this.state.directors};
    
         const requestOptions = {
@@ -148,7 +147,7 @@ export default class BrowsePage extends Component {
 
         
         if ( movieLength >=4 ) {
-            console.log('inside movie length >= 4')
+           
             columnsMovie = _.times(x, (i) => (
                 <Grid.Row key={i}>{
                     _.times(4, (j) => (
@@ -168,7 +167,7 @@ export default class BrowsePage extends Component {
                 ))
         }
         else if(movieLength>0 & movieLength<4){
-            console.log('inside movie length < 4')
+            
             columnsMovie = _.times(movieLength, (i) => (
                 <Grid.Column key={i}>
                     <MovieTile 
@@ -184,12 +183,11 @@ export default class BrowsePage extends Component {
             ))
         }
         else if(movieLength ===0 & this.state.flag!==0){
-            console.log('inside movie length is 0 and flag not 0')
+           
             columnsMovie=null
         }
         if(this.state.isLoaded === false){
             
-            console.log('inside movie length 0')
             columnsMovie = _.times(12, (i) => (
                 <Grid.Row key={i}>{
                     _.times(4, (j) => (

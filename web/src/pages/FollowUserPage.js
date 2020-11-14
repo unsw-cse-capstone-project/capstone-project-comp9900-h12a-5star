@@ -45,8 +45,6 @@ export default class FollowUserPage extends Component {
 
     revoveElement = (val) => {
         delete this.state.items.data[this.state.items.data.indexOf(val)]
-        //console.log(this.state.items.data)
-        // this.state.items = this.state.items
         this.setState({item: this.state.items.data})
         var len = 0
         this.state.items.data.map(()=>

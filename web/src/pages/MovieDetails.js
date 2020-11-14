@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
-import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed,Dropdown} from 'semantic-ui-react'
+import { Grid, Container, Image, Segment, Card, Placeholder,Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed,Dropdown} from 'semantic-ui-react'
 import {gender,genres,languages} from '../components/genericLists';
+import MovieTile from '../components/MovieTile';
 import {
     DateInput,
     TimeInput,
@@ -203,6 +204,18 @@ export default class MovieDetails extends Component {
        alert("User Banned Successfully");
        window.location.reload(false);
     }
+    handleClickLikeReview = (val) =>{
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
+            body: JSON.stringify({ movieId : this.props.match.params.movieId, reviewerUsername:val , likerUsername:this.user})
+        };
+
+        fetch("http://127.0.0.1:8000/api/upvote", requestOptions)
+        window.location.reload(false);
+
+    }
     handleReview = (event) => {   
        this.state.review = event.target.value;
 
@@ -303,10 +316,50 @@ export default class MovieDetails extends Component {
 
 
     render() {
-        console.log(this.state.items)
+        
         const { active_like } = this.state
         const { active_seen } = this.state
         const { active_wishlist } = this.state
+        var recommendSimilar = null
+        if (this.state.items.recomendations) {
+        recommendSimilar = _.times(4, (i) => (
+            <Grid.Column key={i}>
+                <MovieTile
+                    title={this.state.items.recomendations[i].movieTitle} 
+                    poster={this.state.items.recomendations[i].poster} 
+                    release={this.state.items.recomendations[i].releaseDate} 
+                    rating={this.state.items.recomendations[i].rating} 
+                    description={this.state.items.recomendations[i].description} 
+                    movieId={this.state.items.recomendations[i].movieID} 
+                />
+            </Grid.Column>
+        ))
+        }
+        else{
+
+            recommendSimilar = _.times(4, (i) => (
+                <Grid.Column key={i}>
+                    <Card.Group>
+                        <Card>
+                            <Placeholder>
+                                <Placeholder.Image square />
+                            </Placeholder>
+                        </Card>
+                        <Card.Content>
+                            <Placeholder>
+                                <Placeholder.Header>
+                                    <Placeholder.Line length='very short' />
+                                    <Placeholder.Line length='medium' />
+                                </Placeholder.Header>
+                                <Placeholder.Paragraph>
+                                    <Placeholder.Line length='short' />
+                                </Placeholder.Paragraph>
+                            </Placeholder>
+                        </Card.Content>
+                    </Card.Group>
+                </Grid.Column>
+            ))
+        }
 
         const style = {
             opacity: 1
@@ -586,26 +639,7 @@ export default class MovieDetails extends Component {
                                     User Reviews
                                 </Header>
                                 
-
-                                    {
-                                        (this.state.items.review)?
-                                        (this.state.items.review.length === 0)?
-                                        <Message>
-                                            <Message.Header>There are no reviews to show yet!</Message.Header>
-                                            <p>
-                                            Be the first one to review {this.state.items.title}
-                                            </p>
-                                        </Message> : <div></div>
-                                        :
-                                        <div></div>
-                                    }
-
-                                    {
-                                        
-                                        (this.state.items.review)?
-                                        (this.state.items.review.length > 0) &&
-                                        <div>
-                                                    <Message>
+                                <Message>
                                                         <Message.Header>Filter Reviews</Message.Header>
                                                         <br></br>
                                                         <Form>
@@ -642,6 +676,27 @@ export default class MovieDetails extends Component {
                                                             </Form.Group >
                                                         </Form>
                                                     </Message>
+                                                   
+
+                                    {
+                                        (this.state.items.review)?
+                                        (this.state.items.review.length === 0)?
+                                        <Message>
+                                            <Message.Header>There are no reviews to show yet!</Message.Header>
+                                            <p>
+                                            Be the first one to review {this.state.items.title}
+                                            </p>
+                                        </Message> : <div></div>
+                                        :
+                                        <div></div>
+                                    }
+
+                                    {
+                                        
+                                        (this.state.items.review)?
+                                        (this.state.items.review.length > 0) &&
+                                        <div>
+                                                   
                                                     {
                                                          _.times(this.state.items.review.length, (j) => (
                                                             <Comment>
@@ -678,8 +733,9 @@ export default class MovieDetails extends Component {
                                                                                 {this.state.items.review[j]}
                                                                             </Comment.Text>
                                                                             <Comment.Actions>
-                                                                                <Comment.Action>upvote</Comment.Action>
-                                                                                <Comment.Action>downvote</Comment.Action>
+                                                                                
+                                                                                {/* <Button icon='heart' color="red" active={false} content='Like' label={{ basic: true, color: 'red', pointing: 'left', content: this.state.items.upvote[j] }} size={'mini'}  onClick={() => this.handleClickLikeReview(this.state.items.user[j])} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/> */}
+                                                                                <Button icon='heart'  active={this.state.items.upvoteStatus[j]}  size={'mini'}  onClick={() => this.handleClickLikeReview(this.state.items.user[j])} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/> {this.state.items.upvote[j]}
                                                                             </Comment.Actions>
                                                                         </Comment.Content>
                                                                     </Comment>
@@ -711,6 +767,20 @@ export default class MovieDetails extends Component {
                                 </Grid.Column>
                             </Grid.Row>
                         </Grid>
+
+                        <Grid columns="equal">
+                            <Grid.Column>
+                                <Header as='h1'>More Like This </Header>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = 'movieDetails/RecommendMore'}>
+                                see more
+                                </Label>
+                            </Grid.Column>
+                        </Grid>
+                    <Grid columns='equal'>{recommendSimilar}</Grid>
+
+
                     </Segment>
                 </Container>
             </React.Fragment>

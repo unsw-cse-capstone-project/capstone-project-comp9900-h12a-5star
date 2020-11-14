@@ -12,8 +12,8 @@ def rate1(description):
 def file_creation():
     path = Path(os.getcwd())
     #os.chdir("C:/Users/HP/Desktop")
-    df = pd.read_csv(path.parents[0]/'tmdb_5000_movies.csv')
-    df1 = pd.read_csv(path.parents[0]/'movies.csv')
+    df = pd.read_csv(path.parents[0]/'api/recommedation/Movieset.csv')
+    df1 = pd.read_csv(path.parents[0]/'api/recommedation/movies.csv')
     df1= df1.drop(df1.columns[[0,2]], axis=1)
     df1 = df1.rename(columns={'overview': 'description', 'poster_path': 'image'})
     #df1['price']=df['vote_average']

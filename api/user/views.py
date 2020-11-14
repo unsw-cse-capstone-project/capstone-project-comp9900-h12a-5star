@@ -529,7 +529,7 @@ class MovieDetails(APIView):
                 recoms['description'] = i[2]
                 recoms['rating'] = i[3]/2
                 if i[4] is None:
-                    movie_details['poster'] = 'https://i.stack.imgur.com/Q3vyk.png'
+                    recoms['poster'] = 'https://i.stack.imgur.com/Q3vyk.png'
                 else:
                     recoms['poster'] = poster_url + i[4]
                 recoms['releaseDate'] = i[5]

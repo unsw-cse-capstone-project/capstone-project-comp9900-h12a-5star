@@ -110,7 +110,7 @@ export default class FollowUserPage extends Component {
                                             </Grid.Column>
                                             <Grid.Column>
                                                 <p><br /></p>
-                                                <Button circular floated='center' color='red' icon='close' onClick={() => this.removeFromWishlist(item)} />
+                                                <Button circular floated='center' color='red' icon='close' onClick={() => this.removeFromFollowlist(item)} />
 
                                             </Grid.Column>
                                         </Grid.Row>

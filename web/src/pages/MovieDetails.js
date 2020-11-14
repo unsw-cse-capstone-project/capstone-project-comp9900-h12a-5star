@@ -597,6 +597,7 @@ export default class MovieDetails extends Component {
                                 <Header as='h3' >
                                     User Reviews
                                 </Header>
+                                
                                 <Message>
                                                         <Message.Header>Filter Reviews</Message.Header>
                                                         <br></br>
@@ -634,6 +635,7 @@ export default class MovieDetails extends Component {
                                                             </Form.Group >
                                                         </Form>
                                                     </Message>
+                                                   
 
                                     {
                                         (this.state.items.review)?

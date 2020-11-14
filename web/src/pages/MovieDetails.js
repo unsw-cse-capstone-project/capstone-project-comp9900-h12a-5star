@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
 import { Grid, Container, Image, Segment, Card, Placeholder,Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed,Dropdown} from 'semantic-ui-react'
-import {gender,genres,languages} from '../components/genericLists';
+import {gender} from '../components/genericLists';
 import MovieTile from '../components/MovieTile';
 import {
-    DateInput,
-    TimeInput,
-    DateTimeInput,
     DatesRangeInput
   } from 'semantic-ui-calendar-react';
 export default class MovieDetails extends Component {

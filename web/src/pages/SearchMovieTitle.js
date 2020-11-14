@@ -299,6 +299,21 @@ export default class SearchMovieTitle extends Component {
 
                                 </Grid>
                     }
+                    {flag==2 &&
+                    <Header as='h1'>Search Results by Movie Genre: {this.props.match.params.searchText}</Header>
+                    }
+                    {flag==2 &&
+                    <Divider section />
+                    }
+                    {/* <Grid columns='equal'>{columnsGenre}</Grid> */}
+                    {   flag==2 && y >= 4 
+
+                        ? <Grid columns='equal'>{columnsGenre}</Grid>
+                        : <Grid columns='equal'>{columnsGenre}
+                            <GridColumn></GridColumn>
+
+                            </Grid>
+                    }
                 </Container>
             </>
         )

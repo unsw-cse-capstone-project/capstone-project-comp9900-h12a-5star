@@ -26,7 +26,6 @@ def suggestMovie(request):
 @api_view(['POST', ])
 def getNotifications(request):
     notices = notifications.objects.filter(toUsername=request.data['userID']).order_by('-Date', '-Time')
-    #notices = notifications.objects.all().order_by('-Date', '-Time')
     newNotifications =0
     new_data = []
 

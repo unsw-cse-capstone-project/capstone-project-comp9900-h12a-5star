@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
-import { Grid, Container, Image, Segment, Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed,Dropdown} from 'semantic-ui-react'
+import { Grid, Container, Image, Segment, Card, Placeholder,Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed,Dropdown} from 'semantic-ui-react'
 import {gender,genres,languages} from '../components/genericLists';
+import MovieTile from '../components/MovieTile';
 import {
     DateInput,
     TimeInput,
@@ -216,10 +217,50 @@ export default class MovieDetails extends Component {
 
 
     render() {
-        console.log(this.state.items)
+        
         const { active_like } = this.state
         const { active_seen } = this.state
         const { active_wishlist } = this.state
+        var recommendSimilar = null
+        if (this.state.items.recomendations) {
+        recommendSimilar = _.times(4, (i) => (
+            <Grid.Column key={i}>
+                <MovieTile
+                    title={this.state.items.recomendations[i].movieTitle} 
+                    poster={this.state.items.recomendations[i].poster} 
+                    release={this.state.items.recomendations[i].releaseDate} 
+                    rating={this.state.items.recomendations[i].rating} 
+                    description={this.state.items.recomendations[i].description} 
+                    movieId={this.state.items.recomendations[i].movieID} 
+                />
+            </Grid.Column>
+        ))
+        }
+        else{
+
+            recommendSimilar = _.times(4, (i) => (
+                <Grid.Column key={i}>
+                    <Card.Group>
+                        <Card>
+                            <Placeholder>
+                                <Placeholder.Image square />
+                            </Placeholder>
+                        </Card>
+                        <Card.Content>
+                            <Placeholder>
+                                <Placeholder.Header>
+                                    <Placeholder.Line length='very short' />
+                                    <Placeholder.Line length='medium' />
+                                </Placeholder.Header>
+                                <Placeholder.Paragraph>
+                                    <Placeholder.Line length='short' />
+                                </Placeholder.Paragraph>
+                            </Placeholder>
+                        </Card.Content>
+                    </Card.Group>
+                </Grid.Column>
+            ))
+        }
 
         const style = {
             opacity: 1
@@ -562,6 +603,20 @@ export default class MovieDetails extends Component {
                                 </Grid.Column>
                             </Grid.Row>
                         </Grid>
+
+                        <Grid columns="equal">
+                            <Grid.Column>
+                                <Header as='h1'>More Like This </Header>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = 'movieDetails/RecommendMore'}>
+                                see more
+                                </Label>
+                            </Grid.Column>
+                        </Grid>
+                    <Grid columns='equal'>{recommendSimilar}</Grid>
+
+
                     </Segment>
                 </Container>
             </React.Fragment>

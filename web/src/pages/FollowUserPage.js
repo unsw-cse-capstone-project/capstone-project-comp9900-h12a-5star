@@ -105,11 +105,11 @@ export default class FollowUserPage extends Component {
                                             <Grid.Column width={8}>
                                                 <p></p>
 
-                                                {/* <Header as="h1">{item.username.charAt(0).toUpperCase() + item.username.slice(1)}</Header> */}
+                                                <Header as="h1">{item.username.charAt(0).toUpperCase() + item.username.slice(1)}</Header>
 
                                             </Grid.Column>
                                             <Grid.Column>
-                                                <br /><br />
+                                                <p><br /></p>
                                                 <Button circular floated='center' color='red' icon='close' onClick={() => this.removeFromWishlist(item)} />
 
                                             </Grid.Column>

@@ -208,7 +208,7 @@ export default class MovieDetails extends Component {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
-            body: JSON.stringify({ movieId : this.props.match.params.movieId, reviewerUsername:val , upvote : 1})
+            body: JSON.stringify({ movieId : this.props.match.params.movieId, reviewerUsername:val , likerUsername:this.user})
         };
 
         fetch("http://127.0.0.1:8000/api/upvote", requestOptions)
@@ -692,7 +692,7 @@ export default class MovieDetails extends Component {
                                                                             <Comment.Actions>
                                                                                 
                                                                                 {/* <Button icon='heart' color="red" active={false} content='Like' label={{ basic: true, color: 'red', pointing: 'left', content: this.state.items.upvote[j] }} size={'mini'}  onClick={() => this.handleClickLikeReview(this.state.items.user[j])} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/> */}
-                                                                                <Button icon='heart'  active={false}  size={'mini'}  onClick={() => this.handleClickLikeReview(this.state.items.user[j])} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/> {this.state.items.upvote[j]}
+                                                                                <Button icon='heart'  active={this.state.items.upvoteStatus[j]}  size={'mini'}  onClick={() => this.handleClickLikeReview(this.state.items.user[j])} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/> {this.state.items.upvote[j]}
                                                                             </Comment.Actions>
                                                                         </Comment.Content>
                                                                     </Comment>

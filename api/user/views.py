@@ -150,6 +150,8 @@ def get_review(from_user,id,final,gender,from_date,to_date):
                 final['date'].append(i.review_date)
                 if i.review_user_id in i.like_reviewers:
                     final['upvoteStatus'].append('True')
+                else:
+                    final['upvoteStatus'].append('False')
                 review_diff=datetime.now()-datetime.combine(i.review_date, i.review_time)
                 day=review_diff.days
                 if day != 0:
@@ -190,6 +192,8 @@ def get_review(from_user,id,final,gender,from_date,to_date):
                     final['date'].append(i.review_date)
                     if i.review_user_id in i.like_reviewers:
                         final['upvoteStatus'].append('True')
+                    else:
+                        final['upvoteStatus'].append('False')
                     review_diff=datetime.now()-datetime.combine(i.review_date, i.review_time)
                     day=review_diff.days
                     if day != 0:

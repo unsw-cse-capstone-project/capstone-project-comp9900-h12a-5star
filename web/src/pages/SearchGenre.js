@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
-import { Container, Header, Divider, Grid, Label, Card, Placeholder,GridColumn} from 'semantic-ui-react';
+import { Container, Header, Divider, Grid, Card, Placeholder,GridColumn} from 'semantic-ui-react';
 import MovieTile from '../components/MovieTile';
 
 export default class SearchGenre extends Component {

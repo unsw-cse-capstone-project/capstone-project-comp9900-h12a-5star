@@ -1,5 +1,5 @@
-import React , { Component, createRef } from 'react'
-import { Tab, Segment, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Form, Label, Ref, Dropdown } from 'semantic-ui-react'
+import React , { Component } from 'react'
+import { Segment, Grid, Button,Form, Dropdown } from 'semantic-ui-react'
 import './style.css'
 import {gender,genres,languages} from '../components/genericLists';
 export default class SignUp extends Component {
@@ -133,7 +133,7 @@ export default class SignUp extends Component {
                     </Form.Group>
                     <br></br>
                     <center>
-                      <Button className="signup" primary type='submit' onClick={this.checkSignUp} color={"blue"} fluid type='submit'>Join Now</Button>
+                      <Button className="signup" primary onClick={this.checkSignUp} color={"blue"} fluid type='submit'>Join Now</Button>
                     </center>
                     </Form>
                 

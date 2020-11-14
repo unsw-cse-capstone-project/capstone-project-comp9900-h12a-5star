@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import _ from 'lodash'
-import { Button, Container, Grid, Header, Icon, Image, Divider, Message} from 'semantic-ui-react';
+import { Button, Container, Grid, Header, Image, Divider, Message} from 'semantic-ui-react';
 
 export default class FollowUserPage extends Component {
 

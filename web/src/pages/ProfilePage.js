@@ -1,5 +1,5 @@
-import React , { Component, createRef } from 'react'
-import { Tab, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Form, Label, Modal, Dropdown, List } from 'semantic-ui-react'
+import React , { Component } from 'react'
+import { Container, Icon, Image, Button, Header, Divider,Form, Label, Modal, Dropdown, List } from 'semantic-ui-react'
 import './style.css'
 
 export default class ProfilePage extends Component {

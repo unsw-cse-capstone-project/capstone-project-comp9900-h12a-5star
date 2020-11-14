@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import _ from 'lodash'
 import { Button, Container, Grid, Header, Icon, Image, Divider, Message} from 'semantic-ui-react';
 import {
     Link,
@@ -71,25 +70,6 @@ export default class WatchListPage extends Component {
         fetch("http://127.0.0.1:8000/api/watchMovie/", requestOptions)
         this.revoveElement(val)
         // window.location.reload(false
-    }
-   
-    
-    addToMyWishlist = (val) => {
-        this.setState((prevState) => ({ active_wishlist: !prevState.active_wishlist }))
-
-        // this.state.active_wishlist = !this.state.active_wishlist
-
-        const requestOptions = {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
-            body: JSON.stringify({ username: this.user, movieID: val, movieStatus: !this.state.items.watched})
-
-        };
-
-        // fetch("http://127.0.0.1:8000/api/addWishlist/", requestOptions)
-            
-            // this.state.items.wishlist = !this.state.items.wishlist
     }
 
     render() {

@@ -229,11 +229,12 @@ export default class MovieDetails extends Component {
         const user = this.user
         const review = this.state.review;
         const rating = this.state.rating;
+        const movieTitle = this.state.items.title
         if (user!=="guest"){
 
             const result = await fetch(`http://127.0.0.1:8000/api/addreview`, {
                 method: 'post',
-                body: JSON.stringify({movie,user,review,rating}),
+                body: JSON.stringify({movie,user,review,rating, movieTitle}),
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -717,7 +718,7 @@ export default class MovieDetails extends Component {
                                                                                         <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true : false} value={this.state.items.user[j]} onClick={() => this.handle_click_ban_user(this.state.items.user[j])} secondary icon='user close' size={'big'} />}>
                                                                                             Ban User
                                                                                 </Popup>
-                                                                                        <Popup trigger={<Button disabled={window.sessionStorage.getItem('username') === 'guest' ? true : false} secondary icon='add user' size={'big'} onClick={() => this.handle_click_follow_user(this.state.items.user[j])} />}>
+                                                                                        <Popup trigger={<Button disabled={(window.sessionStorage.getItem('username') === 'guest') ? true : (this.state.items.follow[j] ? true : false)} secondary icon='add user' size={'big'} onClick={() => this.handle_click_follow_user(this.state.items.user[j])} />}>
                                                                                             Follow User
                                                                                 </Popup>
                                                                                     </Popup>

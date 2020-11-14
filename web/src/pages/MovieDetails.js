@@ -229,11 +229,12 @@ export default class MovieDetails extends Component {
         const user = this.user
         const review = this.state.review;
         const rating = this.state.rating;
+        const movieTitle = this.state.items.title
         if (user!=="guest"){
 
             const result = await fetch(`http://127.0.0.1:8000/api/addreview`, {
                 method: 'post',
-                body: JSON.stringify({movie,user,review,rating}),
+                body: JSON.stringify({movie,user,review,rating, movieTitle}),
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',

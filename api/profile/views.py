@@ -22,6 +22,7 @@ pictures = {'Female': ['https://react.semantic-ui.com/images/avatar/small/elliot
 'Male': ['https://react.semantic-ui.com/images/avatar/small/matt.jpg',
 'https://react.semantic-ui.com/images/avatar/small/joe.jpg']}
 
+#post for viewing user profile and put edits profile
 class UserProfileView(RetrieveAPIView):
     def post(self, request, *args, **kwargs):
         try:
@@ -81,6 +82,7 @@ class UserProfileView(RetrieveAPIView):
             return Response(RESPONSE, status=status.HTTP_400_BAD_REQUEST)
         return Response(response, status=statusCode)
 
+#put for banning a user and post for seeing banned users
 class BanView(RetrieveAPIView):
     def put(self, request, *args, **kwargs):
         user_profile = UserProfile.objects.get(username=request.data['username'])
@@ -127,6 +129,7 @@ class BanView(RetrieveAPIView):
 
         return Response(response, status=status.HTTP_200_OK)
 
+#put for adding to watchlist and post for seeing watchlist
 class watchlistView(RetrieveAPIView):
     def put(self, request, *args, **kwargs):
         user_profile = UserProfile.objects.get(username=request.data['username'])
@@ -175,6 +178,7 @@ class watchlistView(RetrieveAPIView):
             response['data'].append(get_movie_details(movie))
         return Response(response, status=status.HTTP_200_OK)
 
+#put for following user and post for seeing follwed users
 class followUser(RetrieveAPIView):
     def put(self, request, *args, **kwargs):
         follower = UserProfile.objects.get(username=request.data['follower'])
@@ -228,6 +232,7 @@ class followUser(RetrieveAPIView):
         }
         return Response(response, status=status.HTTP_200_OK)
 
+#put unfollws user
 class unfollowUser(RetrieveAPIView):
     def put(self, request, *args, **kwargs):
         follower = UserProfile.objects.get(username=request.data['follower'])

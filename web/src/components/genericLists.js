@@ -52,6 +52,12 @@ export const genres = [
     
 ]
 
+// Feature options for the recomendations
+export const featureList = [
+    {  key: 28 , text: 'Genre', value: "Genre" },
+    { key:36 , text: 'Description', value: "Description" }   
+]
+
 // List of all the languages which the users can select
 export const languages=  [
     { key: 'English', text: 'English', value: 'English' },
@@ -2442,4 +2448,4 @@ export const directorList=
      {text: 'Brian Herzlinger', value: 85563, key: 85563}
 ];
 
-export default {directorList,genreList,gender,genres,languages, maleProfile, femaleProfile};
+export default {directorList,genreList,gender,genres,languages, maleProfile, femaleProfile, featureList};

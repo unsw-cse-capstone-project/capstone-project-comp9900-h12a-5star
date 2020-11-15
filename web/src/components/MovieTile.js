@@ -3,77 +3,75 @@ import { Card, Image } from 'semantic-ui-react'
 import { Button, Dimmer, Rating } from 'semantic-ui-react'
 import './style.css'
 
-import {
-  Link,
-} from "react-router-dom";
 
-  export default class MovieTile extends Component {
+// This class component is designed to show movie details in the title format.
+// This class will be used on all pages where the movie information has to be shown
+export default class MovieTile extends Component {
 
-    
-    state ={}
-  
-    handleShow = () => this.setState({ active: true })
-    handleHide = () => this.setState({ active: false })
+  state = {}
 
-    render() {
-      const { active } = this.state
-      
-      const content = (
-        <div>
-          <Button primary>
-            <Link style={{ color: '#FFF' }} className="MovieDetails" key={this.props.movieId} to= {`/movieDetails/${this.props.movieId}`}>
-              View Details
-          </Link>
+  //functions to handle the hover effect of movie card
+  handleShow = () => this.setState({ active: true })
+  handleHide = () => this.setState({ active: false })
+
+  render() {
+    const { active } = this.state
+
+    // The content which appears when hovered on the image
+    const content = (
+      <div>
+        <Button primary onClick={event => window.location.href = `/movieDetails/${this.props.movieId}`}>
+          View Details
         </Button>
-        </div>
-      )
-  
-      return (
-        <React.Fragment>
-            <Card className='movie_card'>
-            <Dimmer.Dimmable
-                as={Image}
-                dimmed={active}
-                dimmer={{ active, content }}
-                onMouseEnter={this.handleShow}
-                onMouseLeave={this.handleHide}
-                size='medium'
-                src= {this.props.poster}
-                className='movie_image'
-              />
-            <Card.Content>
-              <Card.Header>{this.props.title}</Card.Header>
-              <Card.Meta><Rating icon='star' defaultRating={1} maxRating={1} disabled/> {this.props.rating}  </Card.Meta>
-              <Card.Description>
-                {
-                  (this.props.description)?
+      </div>
+    )
+
+    return (
+      <React.Fragment>
+        <Card className='movie_card'>
+          <Dimmer.Dimmable
+            as={Image}
+            dimmed={active}
+            dimmer={{ active, content }}
+            onMouseEnter={this.handleShow}
+            onMouseLeave={this.handleHide}
+            size='medium'
+            src={this.props.poster}
+            className='movie_image'
+          />
+          <Card.Content>
+            <Card.Header>{this.props.title}</Card.Header>
+            <Card.Meta><Rating icon='star' defaultRating={1} maxRating={1} disabled /> {this.props.rating}  </Card.Meta>
+            <Card.Description>
+              {
+                (this.props.description) ?
                   <p>
-                    {this.props.description} ... 
+                    {this.props.description} ...
                   </p>
                   :
                   <p>
                     Description not available
                   </p>
-                }
-                
-              </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-              {
-                (this.props.release)?
+              }
+
+            </Card.Description>
+          </Card.Content>
+          <Card.Content extra>
+            {
+              (this.props.release) ?
                 <p>
-                  Released in {this.props.release.substring(0,4)}
+                  Released in {this.props.release.substring(0, 4)}
                 </p>
                 :
                 <p>
                   Release date not available
                 </p>
-              }
-              
-            </Card.Content>
-          </Card> 
-        </React.Fragment>
-        
-      )
-    }
+            }
+
+          </Card.Content>
+        </Card>
+      </React.Fragment>
+
+    )
   }
+}

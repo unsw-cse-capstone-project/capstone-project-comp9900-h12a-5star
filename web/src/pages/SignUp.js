@@ -9,7 +9,7 @@ export default class SignUp extends Component {
     genderOptions = gender
     genreOptions = genres
     languageOptions = languages
-
+    //Constructor called at the time of page load
     constructor() {
         super();
         this.state = {
@@ -26,7 +26,7 @@ export default class SignUp extends Component {
             genres : []
         };
     }
-
+    //function sets the value of each class variable based on user input and saves details in database
     checkSignUp = async() => {
         if (this.state.email !== "" & this.state.password !== "" & this.state.gender !== "" & this.state.languages !== [] &
         this.state.userName !== "" & this.state.firstName !== "" & this.state.lastName !== "" & this.state.genres !== []){
@@ -43,15 +43,17 @@ export default class SignUp extends Component {
         
             const result = await fetch(`http://127.0.0.1:8000/api/signup`, requestOptions)
             const body = await result.json();
-           
+            //registration successful
             if (body.statusCode === 200){
 
                 window.location.href='/login';
             }
+            //Username and Email should be unique
             else{
                 this.setState({error: "Please enter unique Username and Email!"})
             }
         }
+        //User input is incorrect
         else{
             this.setState({error: "Please check all fields are filled correctly!"})
         }     

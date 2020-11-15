@@ -5,7 +5,7 @@ import MovieTile from '../components/MovieTile';
 
 
 export default class SearchPage extends Component {
-
+    //Constructor called at the time of page load
     constructor() {
         super();
         this.state = {
@@ -15,7 +15,8 @@ export default class SearchPage extends Component {
             url: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg"
         };
     }
-    
+    // function called when the components are loaded onto the page.It gets executed right after the constructor.
+    // Performs an operation to pull the movies based on user search text
     componentDidMount() {
         fetch(`http://127.0.0.1:8000/api/search/?query=${this.props.match.params.searchText}`)
             .then(res => res.json())
@@ -43,6 +44,7 @@ export default class SearchPage extends Component {
         var columnsMovie = null
         var columnsGenre = null
         var columnsDesc = null
+        //Initialise the variables if movies are returned based on movie name, genre or description
         if (this.state.items.name_result || this.state.items.genre_result || this.state.items.description_result ){
             if (this.state.items.name_result){
                 movieLength = this.state.items.name_result.length;
@@ -63,6 +65,7 @@ export default class SearchPage extends Component {
                 descLength=0;
             }   
         }
+        //after page load if movies are not returned then initialise variables are zero. No search results
         if (this.state.isLoaded === true){
             if (this.state.items.name_result || this.state.items.genre_result || this.state.items.description_result ){
                 
@@ -78,6 +81,7 @@ export default class SearchPage extends Component {
         if (movieLength>0 || genreLength>0 || descLength>0){
             flag=1;
         }
+        //variables x,y,a,b,m,n used to display results if exists
         var x = Math.floor(movieLength/4);
 
         var y= x*4;
@@ -98,6 +102,7 @@ export default class SearchPage extends Component {
         if (descLength>0 && descLength<4){
             n=descLength
         }
+        //Initialise columnsMovie,columnsGenre and columnsDesc based on movie results returned
         if (this.state.items.name_result || this.state.items.genre_result || this.state.items.description_result){
             if ( movieLength >= 4) {
                 columnsMovie = _.times(4, (i) => (
@@ -192,6 +197,8 @@ export default class SearchPage extends Component {
 
 
         }
+        //On search page load show empty tiles (placeholder)
+        //Initialise columnsMovie,columnsGenre and columnsDesc with placeholder value
         else if (movieLength===1 & genreLength===1 & descLength ===1){
             b=5
             y=5

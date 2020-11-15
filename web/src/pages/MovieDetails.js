@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
-import { Grid, Container, Image, Segment, Card, Placeholder,Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed,Dropdown} from 'semantic-ui-react'
+import { Divider , Checkbox, Grid, Container, Image, Segment, Card, Placeholder,Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed,Dropdown} from 'semantic-ui-react'
 import {gender,genres,languages} from '../components/genericLists';
 import MovieTile from '../components/MovieTile';
 import {
@@ -10,6 +10,16 @@ import {
     DatesRangeInput
   } from 'semantic-ui-calendar-react';
 export default class MovieDetails extends Component {
+
+    featureList = [
+    {  key: 28 , text: 'Genre', value: 28 },
+    {  key: 12, text: 'Review History', value: 12 },
+    {  key: 16 , text: 'Directors', value: 16 },
+    { key:35 , text: 'Wishlist', value: 35 },
+    { key:36 , text: 'Description', value: 36 },
+
+    
+];
 
     genderOptions = gender
 
@@ -24,7 +34,8 @@ export default class MovieDetails extends Component {
             review: "",
             rating: "0",
             gender : "",
-            datesRange:""
+            datesRange:"",
+            features : []
 
             
         };
@@ -85,6 +96,13 @@ export default class MovieDetails extends Component {
 
         this.state.items.liked = !this.state.items.liked
     }
+
+    handleClickRecommend = () =>{
+
+
+    }
+
+
     handleClick_seen = () =>{
         this.setState((prevState) => ({ active_seen: !prevState.active_seen }))
         const requestOptions = {
@@ -592,6 +610,8 @@ export default class MovieDetails extends Component {
                                     
                                         </Form>
 
+                                       
+
                                         <br></br>
 
                                         <br></br>
@@ -600,21 +620,70 @@ export default class MovieDetails extends Component {
                                     </Form>
                             
                                 </Comment.Group>
-                                </Grid.Column>
-                            </Grid.Row>
-                        </Grid>
+
+                                 <Divider />
+
+                                <Header as='h1'>
+
+
+                        <center>Personalize your Recommendations</center></Header>
+
+
+                <Form>
+                    <Form.Group >
+                 
+                      <Form.Field width={12}>
+                        
+                        <Dropdown placeholder="Select your Preferences"
+                         onChange={(event, {value}) =>  this.setState({features : value})} 
+                         search 
+                         fluid selection multiple options={this.featureList} 
+                         required/>
+                      </Form.Field>
+              
+    
+              
+
+             
+          
+                        <Form.Field width={4}>
+                            <Button  onClick={()=>this.handleClickRecommend} color={"blue"} fluid type='submit' floated='right'>Set Preferences </Button>
+                        </Form.Field>
+                    </Form.Group >
+                </Form> 
+                        
+            <Divider hidden />
+            <Divider/>
+             
+             
+             <Divider hidden />
+             <Divider hidden />
 
                         <Grid columns="equal">
+
+
                             <Grid.Column>
-                                <Header as='h1'>More Like This </Header>
-                            </Grid.Column>
-                            <Grid.Column>
+
                                 <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = `/movieRecommendations/${this.props.match.params.movieId}/RecommendMore`}>
                                 see more
                                 </Label>
                             </Grid.Column>
                         </Grid>
                     <Grid columns='equal'>{recommendSimilar}</Grid>
+
+                    <br> 
+                    
+                    </br>
+                                </Grid.Column>
+                            </Grid.Row>
+                        </Grid>
+
+                        
+
+
+
+
+
 
 
                     </Segment>

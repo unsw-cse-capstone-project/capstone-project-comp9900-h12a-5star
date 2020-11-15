@@ -2,8 +2,8 @@ import smtplib
 from email.message import EmailMessage
 from time import time
 
-gmail_id = 'korupalli87122@gmail.com'
-password = ''
+gmail_id = 'grp.9267.5@gmail.com'
+password = 'Pa@92675'
 
 def verification_email(user_id):
     msg = EmailMessage()

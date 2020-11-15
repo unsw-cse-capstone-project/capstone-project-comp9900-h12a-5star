@@ -51,6 +51,17 @@ def UserRegistrationView(request):
         permission_classes = (AllowAny,)
         serializer = serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
+        try:
+            verification_email(request.data['email'])
+        except Exception as e:
+            response = {
+            'success' : 'False',
+            'statusCode' : status.HTTP_400_BAD_REQUEST,
+            'message': e,
+            }
+            statusCode = status.HTTP_400_BAD_REQUEST
+
+            return Response(response, status=statusCode)
         serializer.save()
         response = {
             'success' : 'True',
@@ -58,7 +69,7 @@ def UserRegistrationView(request):
             'message': 'User registered  successfully',
             }
         statusCode = status.HTTP_200_OK
-        #verification_email(request.data['email'])
+
         return Response(response, status=statusCode)
 
 #User Login API

@@ -26,9 +26,6 @@ export default class SearchPage extends Component {
                         items: result
                     });
                 },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
                 (error) => {
                     this.setState({
                         isLoaded: true,
@@ -101,10 +98,6 @@ export default class SearchPage extends Component {
         if (descLength>0 && descLength<4){
             n=descLength
         }
-            
-       
-        
-        // this.state.items.name_result[0].title
         if (this.state.items.name_result || this.state.items.genre_result || this.state.items.description_result){
             if ( movieLength >= 4) {
                 columnsMovie = _.times(4, (i) => (
@@ -296,10 +289,6 @@ export default class SearchPage extends Component {
                     </Grid>
 
                 }
-                {/* { movieLength > 0 &&
-                    
-                    <Grid columns='equal'>{columnsMovie}</Grid>
-                } */}
 
                 { movieLength > 0 && y >= 4
                     ? <Grid columns='equal'>{columnsMovie}</Grid>
@@ -307,7 +296,7 @@ export default class SearchPage extends Component {
                         <GridColumn></GridColumn>
 
                         </Grid>
-                    // <Grid columns='equal'>{columnsMovie}</Grid>
+                  
                 }
                 { movieLength > 0 &&
                     <Divider section />
@@ -326,7 +315,7 @@ export default class SearchPage extends Component {
                     </Grid>
                 } 
                 {  genreLength > 0 && b >= 4
-                    // <Grid columns='equal'>{columnsGenre}</Grid>
+                   
                     ? <Grid columns='equal'>{columnsGenre}</Grid>
                     : <Grid columns='equal'>{columnsGenre}
                         <GridColumn></GridColumn>
@@ -350,7 +339,6 @@ export default class SearchPage extends Component {
                     </Grid>
                 }
                 { descLength > 0 && n >= 4
-                    // <Grid columns='equal'>{columnsDesc}</Grid>
                     ? <Grid columns='equal'>{columnsDesc}</Grid>
                         : <Grid columns='equal'>{columnsDesc}
                             <GridColumn></GridColumn>

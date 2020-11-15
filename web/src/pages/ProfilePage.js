@@ -3,6 +3,8 @@ import { Container, Icon, Image, Button, Header, Divider,Form, Label, Modal, Dro
 import './style.css'
 import {gender,genres,languages, maleProfile, femaleProfile} from '../components/genericLists';
 
+
+
 export default class ProfilePage extends Component {
 
     genderOptions = gender
@@ -10,6 +12,7 @@ export default class ProfilePage extends Component {
     languageOptions = languages
     maleProfile = maleProfile
     femaleProfile = femaleProfile
+
     
     constructor() {
         super();

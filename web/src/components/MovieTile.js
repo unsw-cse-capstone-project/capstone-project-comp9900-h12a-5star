@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Image } from 'semantic-ui-react'
-import { Button, Dimmer, Rating } from 'semantic-ui-react'
+import { Card, Icon, Image, Button, Dimmer } from 'semantic-ui-react'
 import './style.css'
 
 
@@ -41,7 +40,7 @@ export default class MovieTile extends Component {
           />
           <Card.Content>
             <Card.Header>{this.props.title}</Card.Header>
-            <Card.Meta><Rating icon='star' defaultRating={1} maxRating={1} disabled /> {this.props.rating}  </Card.Meta>
+            <Card.Meta><Icon name='chart pie' color={(this.props.rating >4) ? 'green' : ((this.props.rating >2.5) ? 'yellow' : 'orange')} />  {this.props.rating * 20}%  </Card.Meta>
             <Card.Description>
               {
                 (this.props.description) ?

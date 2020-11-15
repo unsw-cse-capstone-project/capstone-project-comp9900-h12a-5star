@@ -60,7 +60,7 @@ export default class MovieDetails extends Component {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
+            body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user, selection : [] })
         };
 
         fetch("http://127.0.0.1:8000/api/moviedetail", requestOptions)
@@ -406,9 +406,19 @@ export default class MovieDetails extends Component {
                                         :
                                         <Header as='h1'></Header>
                                     }
-                                    
-                                <Icon name='star' color={"yellow"}/> {this.state.items.avg_rating} 
-                                
+                                <p>
+                                    {
+                                        (this.state.items.title)?
+                                        <div>
+                                            <Icon name='star' color={"yellow"}/> {this.state.items.avg_rating}&nbsp;&nbsp;&nbsp;
+                                            <Icon name='chart pie' color={(this.props.rating >4) ? 'green' : ((this.props.rating >2.5) ? 'yellow' : 'orange')} />  {this.state.items.tmdb_rating * 20}% 
+                                        </div>:
+                                        <div>
+                                            <Icon name='star' color={"yellow"}/> 
+                                            <Icon name='chart pie' color={(this.props.rating >4) ? 'green' : ((this.props.rating >2.5) ? 'yellow' : 'orange')} />
+                                        </div>
+                                    }  
+                                </p>
                                 </Grid.Column>
                                     
                                 <Grid.Column textAlign={"right"} >

@@ -48,7 +48,7 @@ export default class MovieDetails extends Component {
             
 =======
 
-            features : []
+            features : [],
 
             
 

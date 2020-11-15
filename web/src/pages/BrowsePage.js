@@ -9,7 +9,8 @@ export default class BrowsePage extends Component {
 
     genreOptions=genreList
     directorOptions=directorList
-  
+    
+    //Constructor called at the time of page load
     constructor() {
         super();
         this.state = {
@@ -22,6 +23,8 @@ export default class BrowsePage extends Component {
         };
     }
 
+    // function called when the components are loaded onto the page.It gets executed right after the constructor.
+    // Performs an operation to pull the movies ordered based on rating from high to low.
     componentDidMount() {
         const requestOptions = {
             method: 'POST',
@@ -48,6 +51,8 @@ export default class BrowsePage extends Component {
                 }
             )
     }
+
+    // function called when user clicks on browse button. Movies are searched based on user selection of genre or director or both.
     checkGenreDirector = () => {
         
         this.setState({ isLoaded: true })
@@ -58,6 +63,7 @@ export default class BrowsePage extends Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(obj)
         };
+        //Movies searched on user selection of both genre and director
         if (this.state.genres.length >0 & this.state.directors.length >0){
             this.setState({flag: 1})
             
@@ -80,6 +86,7 @@ export default class BrowsePage extends Component {
             )
             this.setState({isLoaded:false})
         }
+        //Movies searched on user selection of only genres
         else if (this.state.genres.length >0){
             this.setState({flag: 2})
             
@@ -102,6 +109,7 @@ export default class BrowsePage extends Component {
             )
             this.setState({isLoaded:false})
         }
+        //Movies searched on user selection of only directors
         else if (this.state.directors.length > 0){
             this.setState({flag: 3})
             
@@ -145,7 +153,7 @@ export default class BrowsePage extends Component {
             y=movieLength
         }
 
-        
+        //Count of movies returned are greater than equal to 4
         if ( movieLength >=4 ) {
            
             columnsMovie = _.times(x, (i) => (
@@ -166,6 +174,7 @@ export default class BrowsePage extends Component {
                 </Grid.Row>
                 ))
         }
+        //Count of movies returned are between 0 and less than 4
         else if(movieLength>0 & movieLength<4){
             
             columnsMovie = _.times(movieLength, (i) => (
@@ -182,10 +191,12 @@ export default class BrowsePage extends Component {
                 
             ))
         }
+        //Count of movies returned are zero when browse button is clicked
         else if(movieLength ===0 & this.state.flag!==0){
            
             columnsMovie=null
         }
+        //On page load show empty movie tiles (placeholder)
         if(this.state.isLoaded === false){
             
             columnsMovie = _.times(12, (i) => (
@@ -218,8 +229,6 @@ export default class BrowsePage extends Component {
         }
         return (
             <>
-                
-    
                 <Container style={{ margin: 20 }}>
     
                     <Header as='h1'>Browse Movies</Header>
@@ -282,9 +291,6 @@ export default class BrowsePage extends Component {
 
                    </Grid>
                 }
-                    
-            
-                {/* <Grid columns='equal'>{columnsMovie}</Grid> */}
                 </Container>
             </>
             )

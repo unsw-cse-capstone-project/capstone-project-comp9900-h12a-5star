@@ -6,6 +6,7 @@ from profile.models import UserProfile
 import datetime
 from collections import defaultdict
 
+#To share a movie with another user
 @api_view(['POST', ])
 def suggestMovie(request):
     new = notifications()
@@ -23,6 +24,7 @@ def suggestMovie(request):
     }
     return Response(response, status=status.HTTP_200_OK)
 
+#collects notifications for a user
 @api_view(['POST', ])
 def getNotifications(request):
     notices = notifications.objects.filter(toUsername=request.data['userID']).order_by('-Date', '-Time')
@@ -68,6 +70,7 @@ def getNotifications(request):
     }
     return Response(response, status=status.HTTP_200_OK)
 
+#maintains the notifications read status
 @api_view(['POST', ])
 def NotificationRead(request):
     notices = notifications.objects.filter(toUsername=request.data['userID'])

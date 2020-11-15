@@ -32,11 +32,21 @@ def get_movie_details(movie):
     else:
         movie_details['poster'] = poster_url + response.json()['poster_path']
 
-    movie_details['rating']=round((response.json()['vote_average'])/2,1)
+    movie_details['tmdbRating']=round((response.json()['vote_average'])/2,1)
     movie_details['movieID'] = movie
     movie_details['title']=response.json()['title']
     movie_details['release_date']=response.json()['release_date']
     movie_details["myWishlist"] = True
+
+    movie_details["avgRating"] = 0
+    j = 0
+    for i in reviews.objects.filter(movie_id=movie):
+        if i.rating != None:
+            j += 1
+            movie_details["avgRating"] += i.rating
+    if j != 0:
+        movie_details["avgRating"] = movie_details["avgRating"]//j
+
     return movie_details
 
 def send_notifications(userID, movieID, movieTitle):

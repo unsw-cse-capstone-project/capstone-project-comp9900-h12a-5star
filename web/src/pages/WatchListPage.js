@@ -99,20 +99,24 @@ export default class WatchListPage extends Component {
                                 </Grid.Column>
                                 <Grid.Column width={2}>
                                 <br/>
-                                    <Icon name='star' color={"yellow"}/> {item.rating} <br/><br/>
+                                    <Icon name='star' color={"yellow"}/> {item.avgRating} <br/><br/>
+                                    <Icon name='chart pie' color={(item.tmdbRating >4) ? 'green' : ((item.tmdbRating >2.5) ? 'yellow' : 'orange')} />  {item.tmdbRating * 20}% <br /><br />
                                     <Icon name='calendar alternate outline' /> {item.release_date.substring(0,4)}
                                 </Grid.Column>
                                 <Grid.Column width={8}>
-                                <br/><br/>
-                                
+                                <p>
+                                    <br/>
+                                    <br/>
+                                </p>
                                     <Link style={{ color: 'black', fontSize:24}} className="MovieDetails" key={item.movieID} to= {`/movieDetails/${item.movieID}`}>
                                         {item.title}
                                     </Link>
-                               
-                                    
                                 </Grid.Column>
                                 <Grid.Column>
-                                    <p><br /></p>
+                                    <p>
+                                        <br />
+                                        <br />
+                                    </p>
                                     <Button circular floated='right' color='red' icon='close' onClick={()=>this.removeFromWatchlist(item)} />
                                     
                             </Grid.Column>

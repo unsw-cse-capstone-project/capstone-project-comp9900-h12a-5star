@@ -1,4 +1,5 @@
 from djongo import models
+import datetime
 from multiselectfield import MultiSelectField
 
 class movies(models.Model):
@@ -16,8 +17,8 @@ class reviews(models.Model):
     wishlist=models.BooleanField(default=False)
     liked=models.BooleanField(default=False)
     watched=models.BooleanField(default=False)
-    review_time=models.TimeField(auto_now=False, default=None)
-    review_date=models.DateField(auto_now=False, default=None)
+    review_time=models.TimeField(auto_now=False, default=datetime.datetime.now().time())
+    review_date=models.DateField(auto_now=False, default=datetime.date.today())
     Time=models.TimeField(auto_now=True)
     Date=models.DateField(auto_now=True)
     upvote_count=models.IntegerField(default=0)

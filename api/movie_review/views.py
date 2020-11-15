@@ -220,13 +220,13 @@ def upvote(request):
         i.save()
     if request.data['likerUsername'] not in i.like_reviewers:
         i.like_reviewers.append(request.data['likerUsername'])
-        print('------------',request.data['reviewerUsername'],i.like_reviewers)
+        #print('------------',request.data['reviewerUsername'],i.like_reviewers)
         i.upvote_count += 1
         votes = i.upvote_count
         i.save()
     else:
         i.like_reviewers.remove(request.data['likerUsername'])
-        print('------------',request.data['reviewerUsername'],i.like_reviewers)
+        #print('------------',request.data['reviewerUsername'],i.like_reviewers)
         i.upvote_count -= 1
         votes = i.upvote_count
         i.save()

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Icon, Segment } from 'semantic-ui-react';
+import { Container, Icon } from 'semantic-ui-react';
 
 const NotFoundPage = () => (
     <Container>

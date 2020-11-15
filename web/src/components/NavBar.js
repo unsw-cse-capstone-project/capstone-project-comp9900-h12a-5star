@@ -1,15 +1,59 @@
 import React, { Component } from 'react'
 import {moviesList} from './MovieData'
-import { Icon, Button, Menu, Segment, Search, Image, Popup, Feed } from 'semantic-ui-react'
+import { Icon, Button, Menu, Segment, Search, Image, Popup, Label, Grid, Message } from 'semantic-ui-react'
 import _ from 'lodash'
-
+import {
+  Link,
+} from "react-router-dom";
 
 const source = moviesList
 
 const initialState = { isLoading: false, results: [], value: '' }
 
 export default class MenuExampleInvertedSegment extends Component {
-  state = { activeItem: '', isLoading: false, results: [], value: '' }
+
+  constructor() {
+    super();
+    this.state = {
+      activeItem: '', 
+      isLoading: false, 
+      results: [], 
+      value: '',
+      newNotifications : 0,
+      error: null,
+      isLoaded: false,
+      items: []
+    }
+  }
+
+  componentDidMount() {
+    if (window.sessionStorage.getItem('username') === null){
+      window.sessionStorage.setItem('username', 'guest');
+    }
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userID: window.sessionStorage.getItem('username') })
+    };
+
+    fetch("http://127.0.0.1:8000/api/getNotifications", requestOptions)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        items: result,
+                        newNotifications: result.newNotifications
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+  }
 
   handleItemClick = (e, { name }) => {
     this.setState({ activeItem: name })
@@ -34,6 +78,18 @@ export default class MenuExampleInvertedSegment extends Component {
       else{
         window.location.href='/myprofile' 
       }
+    }
+    else if (name === 'notification'){
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userID: window.sessionStorage.getItem('username') })
+      };
+  
+      fetch("http://127.0.0.1:8000/api/NotificationRead", requestOptions)
+
+      this.setState({newNotifications : 0})
+
     }
   }
 
@@ -63,11 +119,6 @@ export default class MenuExampleInvertedSegment extends Component {
   render() {
     const { activeItem, isLoading, value, results } = this.state
     console.log(value)
-
-    const image = 'https://react.semantic-ui.com/images/avatar/large/laura.jpg'
-    const date = '3 days ago'
-    const summary = 'roku1234 added a new review on Gabriels Inferno Part II'
-    const extraText = "Have you seen what's going on in Israel? Can you believe it."
 
     const style = {
       width: 450
@@ -108,7 +159,7 @@ export default class MenuExampleInvertedSegment extends Component {
               })}
               results={results}
               value={value}
-              minCharacters={1}
+              minCharacters={4}
               noResultsMessage="No movie title found."
               noResultsDescription="Don't worry! We will check other parameters once you click search icon!"
             
@@ -121,41 +172,60 @@ export default class MenuExampleInvertedSegment extends Component {
             
             </Menu.Item>
             {(window.sessionStorage.getItem('username') !== null && window.sessionStorage.getItem('username') !== "guest") &&
-              <Popup trigger={
+              <Popup
+              basic
+              trigger={
                 <Menu.Item
                 name='notification'
                 active={activeItem === 'notification'}
                 onClick={this.handleItemClick}
                 >
-                <Icon name='bell' size='large'/>
+                  {
+                    (this.state.newNotifications > 0)?
+                      <Icon.Group>
+                      <Icon name='bell' size='large'/>
+                      <Label circular color="red" floating size="small">
+                        {this.state.newNotifications}
+                      </Label>
+                    </Icon.Group>
+                    :
+                    <Icon name='bell' size='large'/>
+                  }
               </Menu.Item>
               }
               style={style}
               position='top center'
               flowing
               on={['click']}>
-                <Feed>
-                  <Feed.Event
-                    image={image}
-                    date={date}
-                    summary={summary}
-                    extraText={extraText}
-                  />
-
-                  <Feed.Event>
-                    <Feed.Label image={image} />
-                    <Feed.Content date={date} summary={summary} extraText={extraText} />
-                  </Feed.Event>
-
-                  <Feed.Event>
-                    <Feed.Label image={image} />
-                    <Feed.Content>
-                      <Feed.Date content={date} />
-                      <Feed.Summary content={summary} />
-                      <Feed.Extra text content={extraText} />
-                    </Feed.Content>
-                  </Feed.Event>
-                </Feed>
+                <div>
+                  {
+                    (this.state.items.notifications) && 
+                      (this.state.items.notifications.length > 0) ?
+                        this.state.items.notifications.map((items) => 
+                          <Link  key={items.movieID} to= {`/movieDetails/${items.movieID}`}>
+                              <Grid className={(items.status)? "oldNotification" : "newNotification"}>
+                                <Grid.Column width={2}>
+                                  <img className="notification" src={items.profilePic} alt=""/>
+                                </Grid.Column>
+                                <Grid.Column width={12} stretched>
+                                  <Grid.Row className="day">
+                                    {items.time}
+                                  </Grid.Row>
+                                  <Grid.Row className="title">
+                                    <b>{items.type}</b>
+                                  </Grid.Row>
+                                </Grid.Column>
+                              </Grid>
+                        </Link>
+                        )
+                        :
+                        <Message>
+                          <Message.Header>
+                            No notification to show yet!
+                          </Message.Header> 
+                        </Message>
+                  }
+                </div>
               </Popup>
               
             }

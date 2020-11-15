@@ -18,3 +18,4 @@ asgiref==3.2.10
 bs4
 secure-smtplib
 pandas
+scikit-learn==0.21.2

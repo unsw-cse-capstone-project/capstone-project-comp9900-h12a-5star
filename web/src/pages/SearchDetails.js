@@ -4,7 +4,8 @@ import { Container, Header, Divider, Grid, Card, Placeholder,GridColumn} from 's
 import MovieTile from '../components/MovieTile';
 
 export default class SearchDetails extends Component {
-
+    
+    //Constructor called at the time of page load
     constructor() {
         super();
         this.state = {

@@ -21,7 +21,7 @@ export default class RecentReleased extends Component {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: this.props.match.params.userId, user: window.sessionStorage.getItem('username') })
+            body: JSON.stringify({ id: this.props.match.params.movieId, user: window.sessionStorage.getItem('username') })
             
         };
 
@@ -56,9 +56,9 @@ export default class RecentReleased extends Component {
             if (this.state.items.recomendations) {
                 console.log("recommending")
                 category = "More Like This"
-                columnsCategory = _.times(11, (i) => (
+                columnsCategory = _.times(3, (i) => (
                     <Grid.Row key={i}>{
-                        _.times(4, (j) => (
+                        _.times(3, (j) => (
                             <Grid.Column>
                                 <MovieTile 
                     title={this.state.items.recomendations[i*4+j].movieTitle} 

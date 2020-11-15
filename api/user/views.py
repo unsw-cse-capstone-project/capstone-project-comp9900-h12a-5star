@@ -461,7 +461,7 @@ class MovieDetails(APIView):
             url='https://api.themoviedb.org/3/movie/'+str(id)+'?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&append_to_response=credits,videos'
             response=requests.get(url)
             movie_details['id']=response.json()['id']
-            #movie_details['imdb_rating']=round((response.json()['vote_average'])/2,1)
+            movie_details['tmdb_rating']=round((response.json()['vote_average'])/2,1)
             movie_details['description']=response.json()['overview']
             movie_details['title']=response.json()['title']
             if response.json()['poster_path'] is None:

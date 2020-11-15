@@ -20,10 +20,8 @@ import {
       
       const content = (
         <div>
-          <Button primary>
-            <Link style={{ color: '#FFF' }} className="MovieDetails" key={this.props.movieId} to= {`/movieDetails/${this.props.movieId}`}>
+          <Button primary onClick={event => window.location.href = `/movieDetails/${this.props.movieId}`}>
               View Details
-          </Link>
         </Button>
         </div>
       )

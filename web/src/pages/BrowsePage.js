@@ -263,6 +263,7 @@ export default class BrowsePage extends Component {
                     </Form.Group >
                 </Form> 
                 <Divider section />
+                {/* To make the flow dynamic flag value is set based on user selection of browse category */}
                 { this.state.flag===1 &&
                     <Grid.Column>
                         <Header as='h1'>Browse Results by Genres and Directors: {y} </Header>

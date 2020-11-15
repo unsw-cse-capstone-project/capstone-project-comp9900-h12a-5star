@@ -5,6 +5,7 @@ import MovieTile from '../components/MovieTile';
 
 export default class RecentReleased extends Component {
 
+    //Constructor called at the time of page load
     constructor() {
         super();
         this.state = {
@@ -15,6 +16,8 @@ export default class RecentReleased extends Component {
         };
     }
 
+    // function called when the components are loaded onto the page.It gets executed right after the constructor.
+    // Performs an operation to pull the recomendations of the for the user from the database.
     componentDidMount() {
 
         console.log(this.props.match.params.movieId)
@@ -56,8 +59,6 @@ export default class RecentReleased extends Component {
         var columnsCategory = null
         var category = null
 
-
-
         if (this.props.match.params.category === "RecommendMore"){
             if (this.state.items.recomendations) {
                 console.log("recommending")
@@ -67,12 +68,12 @@ export default class RecentReleased extends Component {
                         _.times(3, (j) => (
                             <Grid.Column>
                                 <MovieTile 
-                    title={this.state.items.recomendations[i*4+j].movieTitle} 
-                    poster={this.state.items.recomendations[i*4+j].poster} 
-                    release={this.state.items.recomendations[i*4+j].releaseDate} 
-                    rating={this.state.items.recomendations[i*4+j].rating} 
-                    description={this.state.items.recomendations[i*4+j].description} 
-                    movieId={this.state.items.recomendations[i*4+j].movieID} 
+                                    title={this.state.items.recomendations[i*4+j].movieTitle} 
+                                    poster={this.state.items.recomendations[i*4+j].poster} 
+                                    release={this.state.items.recomendations[i*4+j].releaseDate} 
+                                    rating={this.state.items.recomendations[i*4+j].rating} 
+                                    description={this.state.items.recomendations[i*4+j].description} 
+                                    movieId={this.state.items.recomendations[i*4+j].movieID} 
                                 />
                             </Grid.Column>
                         ))

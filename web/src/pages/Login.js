@@ -4,11 +4,16 @@ import { Grid, Form, Segment, Button,Divider} from 'semantic-ui-react';
 import './style.css'
 
 const Login = () => {
+
+    // Set the states for the input variables
     const [email, setUsername] = useState('');
     const [password, setpassword] = useState('')
     const [error, setError] = useState('');
 
+    // Function to perform the login operation for the user
     const checkLogin = async () => {
+
+        // Check if the values have been entered
         if (email !== '' && password !== ''){
 
             const result = await fetch(`http://127.0.0.1:8000/api/signin`, {
@@ -30,8 +35,6 @@ const Login = () => {
                 setError(body.response)
             }
         }
-
-
     };
     return(
 

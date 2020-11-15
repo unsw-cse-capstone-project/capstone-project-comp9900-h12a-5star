@@ -6,6 +6,7 @@ import {
 
 export default class WatchListPage extends Component {
 
+    //Constructor called at the time of page load
     constructor() {
         super();
         this.state = {
@@ -19,6 +20,8 @@ export default class WatchListPage extends Component {
         this.user = window.sessionStorage.getItem('username')
     }
 
+    // function called when the components are loaded onto the page.It gets executed right after the constructor.
+    // Performs an operation to pull the watch list from the database.
     componentDidMount() {
 
         const requestOptions = {
@@ -45,6 +48,7 @@ export default class WatchListPage extends Component {
             )
     }
 
+    // Removes the watched movie from the state so that it is instantly loaded on the page and a refresh is not required.
     revoveElement = (val) => {
         delete this.state.items.data[this.state.items.data.indexOf(val)]
         console.log(this.state.items.data)
@@ -59,6 +63,8 @@ export default class WatchListPage extends Component {
         }
         
     }
+
+    // Remove a movi from the watch list and send the request to the database
     removeFromWatchlist = (val) => {
         const requestOptions = {
             method: 'PUT',
@@ -74,6 +80,7 @@ export default class WatchListPage extends Component {
 
     render() {
 
+        // Re-route the user to login page
         if (this.props.match.params.userId === "guest"){
             window.location.href='/login'
         }

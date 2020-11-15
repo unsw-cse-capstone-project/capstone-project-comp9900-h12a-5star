@@ -5,6 +5,7 @@ import MovieTile from '../components/MovieTile';
 
 export default class RecentReleased extends Component {
 
+    //Constructor called at the time of page load
     constructor() {
         super();
         this.state = {
@@ -14,6 +15,8 @@ export default class RecentReleased extends Component {
         };
     }
 
+    // function called when the components are loaded onto the page.It gets executed right after the constructor.
+    // Performs an operation to pull all the top rated, popular and recently released movies from the database.
     componentDidMount() {
         fetch("http://127.0.0.1:8000/api/homepage/")
             .then(res => res.json())
@@ -41,6 +44,7 @@ export default class RecentReleased extends Component {
         var columnsCategory = null
         var category = null
 
+        // Populate the recently released movies
         if (this.props.match.params.category === "RecentlyReleased"){
             if (this.state.items.now_playing) {
                 category = "Recently Released Movies"
@@ -63,6 +67,8 @@ export default class RecentReleased extends Component {
                     ))
                 }
             }
+
+        // Populate the top rated movies
         else if(this.props.match.params.category === "TopRated"){
             category = "Top Rated Movies"
             if (this.state.items.top_rated) {
@@ -85,6 +91,8 @@ export default class RecentReleased extends Component {
                 ))
             }
         }
+
+        // Populate the trending movies
         else if (this.props.match.params.category === "TrendingNow"){
             if (this.state.items.now_playing) {
                 category = "Trending Movies"
@@ -99,29 +107,6 @@ export default class RecentReleased extends Component {
                                     rating={this.state.items.popular[i*4+j].rating} 
                                     description={this.state.items.popular[i*4+j].description} 
                                     movieId={this.state.items.popular[i*4+j].id}
-                                />
-                            </Grid.Column>
-                        ))
-                    }
-                    </Grid.Row>
-                ))
-            }
-        }
-        else if (this.props.match.params.category === "RecommendMore"){
-            if (this.state.items.recomendations) {
-                console.log("recommending")
-                category = "Recommend More"
-                columnsCategory = _.times(12, (i) => (
-                    <Grid.Row key={i}>{
-                        _.times(4, (j) => (
-                            <Grid.Column>
-                                <MovieTile 
-                    title={this.state.items.recomendations[i*4+j].movieTitle} 
-                    poster={this.state.items.recomendations[i*4+j].poster} 
-                    release={this.state.items.recomendations[i*4+j].releaseDate} 
-                    rating={this.state.items.recomendations[i*4+j].rating} 
-                    description={this.state.items.recomendations[i*4+j].description} 
-                    movieId={this.state.items.recomendations[i*4+j].movieID} 
                                 />
                             </Grid.Column>
                         ))

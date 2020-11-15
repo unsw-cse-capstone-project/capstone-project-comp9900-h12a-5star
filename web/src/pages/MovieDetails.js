@@ -11,11 +11,8 @@ import {
 export default class MovieDetails extends Component {
 
     featureList = [
-    {  key: 28 , text: 'Genre', value: 28 },
-    {  key: 12, text: 'Review History', value: 12 },
-    {  key: 16 , text: 'Directors', value: 16 },
-    { key:35 , text: 'Wishlist', value: 35 },
-    { key:36 , text: 'Description', value: 36 },
+    {  key: 28 , text: 'Genre', value: "Genre" },
+    { key:36 , text: 'Description', value: "Description" }
 
     
 ];
@@ -60,7 +57,9 @@ export default class MovieDetails extends Component {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user, selection : [] })
+
+            body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user, selection: this.state.features })
+
         };
 
         fetch("http://127.0.0.1:8000/api/moviedetail", requestOptions)
@@ -104,6 +103,38 @@ export default class MovieDetails extends Component {
     }
 
     handleClickRecommend = () =>{
+        console.log(this.state.features)
+       
+        var obj = {id: this.props.match.params.movieId, user: this.user, selection: this.state.features};
+        
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(obj)
+        };
+        if (this.state.features.length >0){
+            this.setState({flag: 1})
+            
+            fetch("http://127.0.0.1:8000/api/moviedetail/",requestOptions)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        items: result
+                    });
+                },
+                
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+            this.setState({isLoaded:false})
+        }
+   
 
 
     }
@@ -825,6 +856,7 @@ export default class MovieDetails extends Component {
                         
                         <Dropdown placeholder="Select your Preferences"
                          onChange={(event, {value}) =>  this.setState({features : value})} 
+                     
                          search 
                          fluid selection multiple options={this.featureList} 
                          required/>
@@ -836,7 +868,7 @@ export default class MovieDetails extends Component {
              
           
                         <Form.Field width={4}>
-                            <Button  onClick={()=>this.handleClickRecommend} color={"blue"} fluid type='submit' floated='right'>Set Preferences </Button>
+                            <Button  onClick={this.handleClickRecommend} color={"blue"} fluid type='submit' floated='right'>Set Preferences </Button>
                         </Form.Field>
                     </Form.Group >
                 </Form> 
@@ -853,9 +885,9 @@ export default class MovieDetails extends Component {
 
                             <Grid.Column>
 
-                                <Label as='a' color='blue' ribbon='right' onClick={event => window.location.href = `/movieRecommendations/${this.props.match.params.movieId}/RecommendMore`}>
+                                {/*<Label hidden as='a' color='blue' ribbon='right' onClick={event => window.location.href = `/movieRecommendations/${this.props.match.params.movieId}/${this.state.features}/RecommendMore`}>
                                 see more
-                                </Label>
+                                </Label>*/}
                             </Grid.Column>
                         </Grid>
                     <Grid columns='equal'>{recommendSimilar}</Grid>

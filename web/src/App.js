@@ -43,7 +43,7 @@ function App() {
         <Route path="/search/:searchText" component = {SearchPage} />
         <Route path="/searchDetails/:searchCategory/:searchText" component = {SearchDetails} />
         <Route path="/movieDetails/:movieId" component = {MovieDetails} />
-        <Route path="/movieDetails/:category" component={MovieCategory} exact/>
+        <Route path="/movieRecommendations/:movieId/:features/:category" component={MovieCategory} exact/>
         <Route component = {NotFoundPage} />
       </Switch>
     </Router>

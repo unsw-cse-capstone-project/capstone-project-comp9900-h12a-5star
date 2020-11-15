@@ -1,3 +1,4 @@
+// List of all the genres maping with tmdb which the users can select
 export const genreList = [
     {  key: 28 , text: 'Action', value: 28 },
     {  key: 12, text: 'Adventure', value: 12 },
@@ -21,12 +22,13 @@ export const genreList = [
     
 ];
 
+// List of all the gender which the users can select
 export const gender = [
     { key: 'Male', text: 'Male', value: 'Male' },
     { key: 'Female', text: 'Female', value: 'Female' },
 ];
 
-
+// List of all the genres which the users can select
 export const genres = [
     { key: 'Action', text: 'Action', value: 'Action' },
     { key: 'Adventure', text: 'Adventure', value: 'Adventure' },
@@ -50,6 +52,7 @@ export const genres = [
     
 ]
 
+// List of all the languages which the users can select
 export const languages=  [
     { key: 'English', text: 'English', value: 'English' },
     { key: 'Mandarin Chinese', text: 'Mandarin Chinese', value: 'Mandarin Chinese' },
@@ -64,6 +67,7 @@ export const languages=  [
     { key: 'Korean', text: 'Korean', value: 'Korean' },
 ];
 
+// List of all the male profile pictures which the users can select
 export const maleProfile = [
     "https://react.semantic-ui.com/images/avatar/large/elliot.jpg",
     "https://react.semantic-ui.com/images/avatar/large/matthew.png",
@@ -74,6 +78,7 @@ export const maleProfile = [
     "https://react.semantic-ui.com/images/avatar/large/matt.jpg"
 ]
 
+// List of all the female profile pictures which the users can select
 export const femaleProfile = [
     "https://react.semantic-ui.com/images/avatar/large/molly.png",
     "https://react.semantic-ui.com/images/avatar/large/jenny.jpg",
@@ -83,6 +88,7 @@ export const femaleProfile = [
     "https://react.semantic-ui.com/images/avatar/large/veronika.jpg"
 ]
 
+// List of all the directors which the users can select
 export const directorList=
     [
      {text: 'James Cameron', value: 2710, key: 2710},

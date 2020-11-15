@@ -34,7 +34,7 @@ export default class MovieDetails extends Component {
             rating: "0",
             gender : "",
 
-            features : []
+            features : [],
 
             
 

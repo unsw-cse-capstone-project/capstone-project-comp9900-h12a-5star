@@ -5,6 +5,7 @@ from movie_review.models import movies,reviews
 from movie_review.helper import verify_user, get_movie_details, send_notifications
 import datetime
 
+#adds a review by a user for a movie
 @api_view(['POST', ])
 def add_review(request):
     #print(request.data)
@@ -46,6 +47,7 @@ def add_review(request):
     #print(response)
     return Response(response)
 
+#collects reviews for a movie
 @api_view(['POST', ])
 def get_review(request):
     #print(request.data.keys())
@@ -93,6 +95,7 @@ def get_review(request):
             response['watched'].append(i.watched)
     return Response(response)
 
+#adds rating for a movie
 @api_view(['POST', ])
 def add_rating(request):
     #print(request.data)
@@ -176,6 +179,7 @@ def get_wishlist(request):
         response.append(get_movie_details(movie))
     return Response(response)
 
+#liking a movie by a user
 @api_view(['PUT', ])
 def liked(request):
     #print(request.data)
@@ -208,6 +212,7 @@ def liked(request):
                 }
     return Response(response)
 
+#upvote reviews
 @api_view(['POST', ])
 def upvote(request):
     a,b = verify_user(request.data['reviewerUsername'])

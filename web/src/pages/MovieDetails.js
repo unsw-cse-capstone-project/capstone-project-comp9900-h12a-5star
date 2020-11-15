@@ -230,16 +230,24 @@ export default class MovieDetails extends Component {
        alert("User Banned Successfully");
        window.location.reload(false);
     }
-    handleClickLikeReview = (val) =>{
+    handleClickLikeReview = (val, j) =>{
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
             body: JSON.stringify({ movieId : this.props.match.params.movieId, reviewerUsername:val , likerUsername:this.user})
         };
 
         fetch("http://127.0.0.1:8000/api/upvote", requestOptions)
-        window.location.reload(false);
+        
+        var itemTemp = this.state.items
+        if (itemTemp.upvoteStatus[j]){
+            itemTemp.upvote[j] = itemTemp.upvote[j] - 1
+        }
+        else{
+            itemTemp.upvote[j] = itemTemp.upvote[j] + 1
+        }
+        itemTemp.upvoteStatus[j] = !itemTemp.upvoteStatus[j]
+        this.setState({items:itemTemp})
 
     }
     handleReview = (event) => {
@@ -769,7 +777,8 @@ export default class MovieDetails extends Component {
                                                                             <Comment.Actions>
                                                                                 
                                                                                 {/* <Button icon='heart' color="red" active={false} content='Like' label={{ basic: true, color: 'red', pointing: 'left', content: this.state.items.upvote[j] }} size={'mini'}  onClick={() => this.handleClickLikeReview(this.state.items.user[j])} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/> */}
-                                                                                <Button icon='heart'  active={this.state.items.upvoteStatus[j]}  size={'mini'}  onClick={() => this.handleClickLikeReview(this.state.items.user[j])} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/> {this.state.items.upvote[j]}
+                                                                                {/* <Button icon='heart'  active={this.state.items.upvoteStatus[j]}  size={'mini'}  onClick={() => this.handleClickLikeReview(this.state.items.user[j])} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/> {this.state.items.upvote[j]} */}
+                                                                                <Icon name={this.state.items.upvoteStatus[j]? 'heart' : 'heart outline'} color='red' onClick={() => this.handleClickLikeReview(this.state.items.user[j], j)} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/>{this.state.items.upvote[j]}
                                                                             </Comment.Actions>
                                                                         </Comment.Content>
                                                                     </Comment>

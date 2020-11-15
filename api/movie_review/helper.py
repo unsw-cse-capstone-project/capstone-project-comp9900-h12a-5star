@@ -45,7 +45,7 @@ def get_movie_details(movie):
             j += 1
             movie_details["avgRating"] += i.rating
     if j != 0:
-        movie_details["avgRating"] = round((movie_details["avgRating"])/j,1)
+        movie_details["avgRating"] = movie_details["avgRating"]//j
     return movie_details
 
 def send_notifications(userID, movieID, movieTitle):

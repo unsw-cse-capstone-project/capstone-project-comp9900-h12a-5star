@@ -14,7 +14,8 @@ export default class SearchDetails extends Component {
             items: []
         };
     }
-
+    // function called when the components are loaded onto the page.It gets executed right after the constructor.
+    // Performs an operation to pull the movies based on user search text
     componentDidMount() {
         fetch(`http://127.0.0.1:8000/api/search/?query=${this.props.match.params.searchText}`)
             .then(res => res.json())
@@ -37,6 +38,7 @@ export default class SearchDetails extends Component {
     render() {
         
         var flag=0
+        //User wants to see more movies based on movie name
         if (this.props.match.params.searchCategory === "searchMovieTitle"){
             flag=1
             var columnsMovie = null
@@ -50,7 +52,7 @@ export default class SearchDetails extends Component {
             if (movieLength>0 && movieLength<4){
                 y=movieLength
             }
-            
+            //Count of movies returned are greater than equal to 4
             if ( movieLength >=4 ) {
                 columnsMovie = _.times(x, (i) => (
                     <Grid.Row key={i}>{
@@ -70,6 +72,7 @@ export default class SearchDetails extends Component {
                     </Grid.Row>
                     ))
             }
+            //Count of movies returned are between 0 and less than 4
             else if(movieLength>0 & movieLength<4){
                 columnsMovie = _.times(movieLength, (i) => (
                     <Grid.Column key={i}>
@@ -84,6 +87,7 @@ export default class SearchDetails extends Component {
                     </Grid.Column>
                 ))
             }
+            //Count of movies returned are zero, show empty tiles (placeholder)
             else if(movieLength === 0){
     
                 columnsMovie = _.times(12, (i) => (
@@ -115,6 +119,7 @@ export default class SearchDetails extends Component {
                 ))
             }
         }
+        //User wants to see more movies based on genre 
         else if(this.props.match.params.searchCategory === "searchGenre"){
             flag=2
             var columnsGenre = null
@@ -127,7 +132,7 @@ export default class SearchDetails extends Component {
             if (genreLength>0 && genreLength<4){
                 y=genreLength
             }
-
+            //Count of movies returned are greater than equal to 4
             if ( genreLength >=4 ) {
                 columnsGenre = _.times(x, (i) => (
                     <Grid.Row key={i}>{
@@ -147,6 +152,7 @@ export default class SearchDetails extends Component {
                     </Grid.Row>
                     ))
             }
+            //Count of movies returned are between 0 and less than 4
             else if(genreLength>0 & genreLength<4){
                 columnsGenre = _.times(genreLength, (i) => (
 
@@ -162,6 +168,7 @@ export default class SearchDetails extends Component {
                     </Grid.Column>
                 ))
             }
+            //Count of movies returned are zero, show empty tiles (placeholder)
             else if(genreLength === 0){
 
                 columnsGenre = _.times(12, (i) => (
@@ -194,6 +201,7 @@ export default class SearchDetails extends Component {
             }
 
         }
+        //User wants to see more movies based on description 
         else if(this.props.match.params.searchCategory === "searchDescription"){
             flag=3
             var columnsDesc = null
@@ -207,7 +215,7 @@ export default class SearchDetails extends Component {
                 y=descLength
             }
 
-
+            //Count of movies returned are greater than equal to 4
             if ( descLength >=4 ) {
                 columnsDesc = _.times(x, (i) => (
                     <Grid.Row key={i}>{
@@ -227,6 +235,7 @@ export default class SearchDetails extends Component {
                     </Grid.Row>
                     ))
             }
+            //Count of movies returned are between 0 and less than 4
             else if(descLength>0 & descLength<4){
                 columnsDesc = _.times(descLength, (i) => (
                     <Grid.Column key={i}>
@@ -242,6 +251,7 @@ export default class SearchDetails extends Component {
                 ))
 
             }
+            //Count of movies returned are zero, show empty tiles (placeholder)
             else if(descLength===0){
 
                 columnsDesc = _.times(12, (i) => (
@@ -277,6 +287,7 @@ export default class SearchDetails extends Component {
         return (
             <>
                 <Container style={{ margin: 20 }}>
+                    {/* To make the flow dynamic flag value is set based on user selection of search category */}
                     {flag==1 &&
                         <Header as='h1'>Search Results by Movie Title: {this.props.match.params.searchText}</Header>
                     }

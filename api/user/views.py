@@ -237,7 +237,7 @@ def get_review(from_user,id,final,gender,from_date,to_date):
         final['liked']=False
         final['wishlist']=False
         if len(final['rating'])>0:
-             final['rating']=[i if i is not None else 0 for i in final['rating']]
+             final['rating']=[i  for i in final['rating'] if i]
              final['avg_rating']=round(sum(final['rating'])/len(final['rating']),1)
     else:
         for i in reviews.objects.filter(movie_id=id , review_user_id=from_user):
@@ -245,7 +245,7 @@ def get_review(from_user,id,final,gender,from_date,to_date):
             final['liked'] = i.liked
             final['wishlist'] = i.wishlist
             if len(final['rating'])>0:
-                 final['rating']=[i if i is not None else 0 for i in final['rating']]
+                 final['rating']=[i for i in final['rating'] if i]
                  final['avg_rating']=round(sum(final['rating'])/len(final['rating']),1)
     return final
 

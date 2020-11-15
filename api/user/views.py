@@ -19,7 +19,7 @@ from datetime import datetime
 from datetime import date
 from user.helper import verification_email
 from django.core.cache import cache
-from recommendation.similiar_movies import get_recommendations
+from recommendation.similiar_movies import get_recommendations, get_preferences
 
 
 '''
@@ -493,22 +493,32 @@ class MovieDetails(APIView):
             if not(movie_details['teasers']):
                         movie_details['teasers'].append(None)
 
+            selection = request.data['selection']
             movie_details['recomendations'] = []
-            data = json.loads(get_recommendations(movie_details['description']))['data']
-            poster_url='http://image.tmdb.org/t/p/original/'
+            data = []
+            if 'Description' in selection or len(selection)==0:
+                data.append(json.loads(get_recommendations(movie_details['description']))['data'])
+            if 'Genre' in selection:
+                data.append(get_preferences(genres=[i.lower() for i in movie_details['genres']]))
+            elif 'Directors' in selection:
+                data.append(get_preferences([],[],directors = [i.lower() for i in movie_details['director']]))
 
-            for i in data:
-                recoms = defaultdict(lambda :None)
-                recoms['movieID'] = i[0]
-                recoms['movieTitle'] = i[1]
-                recoms['description'] = i[2]
-                recoms['rating'] = i[3]/2
-                if i[4] is None:
-                    recoms['poster'] = 'https://i.stack.imgur.com/Q3vyk.png'
-                else:
-                    recoms['poster'] = poster_url + i[4]
-                recoms['releaseDate'] = i[5]
-                movie_details['recomendations'].append(recoms)
+            for j in data:
+                for i in j:
+                    if len(movie_details['recomendations'])==12:
+                        continue
+                    if i[0] != request.data['id']:
+                        recoms = defaultdict(lambda :None)
+                        recoms['movieID'] = i[0]
+                        recoms['movieTitle'] = i[1]
+                        recoms['description'] = i[2]
+                        recoms['rating'] = i[3]/2
+                        if i[4] is None:
+                            recoms['poster'] = 'https://i.stack.imgur.com/Q3vyk.png'
+                        else:
+                            recoms['poster'] = poster_url + i[4]
+                        recoms['releaseDate'] = i[5]
+                        movie_details['recomendations'].append(recoms)
 
             review_gender=''
             from_date=''

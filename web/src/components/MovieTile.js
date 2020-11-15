@@ -39,7 +39,7 @@ export default class MovieTile extends Component {
             className='movie_image'
           />
           <Card.Content>
-            <Card.Header>{this.props.title}</Card.Header>
+            <Card.Header as='a' onClick={event => window.location.href = `/movieDetails/${this.props.movieId}`}>{this.props.title}</Card.Header>
             <Card.Meta><Icon name='chart pie' color={(this.props.rating >4) ? 'green' : ((this.props.rating >2.5) ? 'yellow' : 'orange')} />  {this.props.rating * 20}%  </Card.Meta>
             <Card.Description>
               {

@@ -7,7 +7,8 @@ import requests, datetime
 
 def verify_user(user):
     try:
-        a = UserProfile.objects.get(username=user)
+        if user.lower() != 'guest':
+            a = UserProfile.objects.get(username=user)
 
     except Exception as e:
         response = {

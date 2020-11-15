@@ -11,9 +11,7 @@ import HomePage from './pages/HomePage';
 import Login from './pages/Login';
 import WishListPage from './pages/WishListPage';
 import SearchPage from './pages/SearchPage';
-import SearchMovieTitle from './pages/SearchMovieTitle';
-import SearchGenre from './pages/SearchGenre';
-import SearchDescription from './pages/SearchDescription';
+import SearchDetails from './pages/SearchDetails';
 import ProfilePage from './pages/ProfilePage';
 import WatchListPage from './pages/WatchListPage';
 import BannedUsers from './pages/BannedUsers';
@@ -23,6 +21,7 @@ import NavBar from './components/NavBar';
 import WelcomeCategory from './pages/WelcomeCategory';
 import FollowUserPage from './pages/FollowUserPage';
 import MovieCategory from './pages/MovieCategory';
+
 
 function App() {
   return (
@@ -42,9 +41,7 @@ function App() {
         <Route path="/login" component = {Login} />
         <Route path="/signup" component = {SignUp} />
         <Route path="/search/:searchText" component = {SearchPage} />
-        <Route path="/searchDetails/:searchCategory/:searchText" component = {SearchMovieTitle} />
-        <Route path="/searchGenre/:searchText" component = {SearchGenre} />
-        <Route path="/searchDescription/:searchText" component = {SearchDescription} />
+        <Route path="/searchDetails/:searchCategory/:searchText" component = {SearchDetails} />
         <Route path="/movieDetails/:movieId" component = {MovieDetails} />
         <Route path="/movieDetails/:category" component={MovieCategory} exact/>
         <Route component = {NotFoundPage} />

@@ -10,7 +10,8 @@ export default class RecentReleased extends Component {
         this.state = {
             error: null,
             isLoaded: false,
-            items: []
+            items: [],
+            feats: []
         };
     }
 
@@ -18,10 +19,15 @@ export default class RecentReleased extends Component {
 
         console.log(this.props.match.params.movieId)
         console.log(window.sessionStorage.getItem('username'))
+        var feat = this.props.match.params.features;
+        this.state.feats = feat.split(',');
+
+        
+        console.log(this.state.feats)
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: this.props.match.params.movieId, user: window.sessionStorage.getItem('username') })
+            body: JSON.stringify({ id: this.props.match.params.movieId, user: window.sessionStorage.getItem('username') , selection:this.props.match.params.features  })
             
         };
 
@@ -56,7 +62,7 @@ export default class RecentReleased extends Component {
             if (this.state.items.recomendations) {
                 console.log("recommending")
                 category = "More Like This"
-                columnsCategory = _.times(3, (i) => (
+                columnsCategory = _.times(2, (i) => (
                     <Grid.Row key={i}>{
                         _.times(3, (j) => (
                             <Grid.Column>

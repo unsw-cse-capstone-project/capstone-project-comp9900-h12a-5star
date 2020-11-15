@@ -10,9 +10,11 @@ import {
 
 export default class MovieDetails extends Component {
 
+    // Loading options for the dropdown
     featureList = featureList
     genderOptions = gender
 
+    //Constructor called at the time of page load
     constructor() {
         super();
 
@@ -40,6 +42,8 @@ export default class MovieDetails extends Component {
         this.user = window.sessionStorage.getItem('username')
     }
 
+    // function called when the components are loaded onto the page.It gets executed right after the constructor.
+    // Performs an operation to pull the movie details from the database.
     componentDidMount() {
 
         const requestOptions = {
@@ -69,6 +73,7 @@ export default class MovieDetails extends Component {
             )
     }
 
+    // Function to mark the movie as liked
     handleClick_like = () => {
         this.setState((prevState) => ({ active_like: !prevState.active_like }))
 
@@ -86,6 +91,7 @@ export default class MovieDetails extends Component {
         this.setState({ items: itemTemp })
     }
 
+    // Function to handle the recommendation prefrences
     handleClickRecommend = () => {
         console.log(this.state.features)
 
@@ -120,7 +126,7 @@ export default class MovieDetails extends Component {
         }
     }
 
-
+    // Function to mark the movie as seen
     handleClick_seen = () => {
         this.setState((prevState) => ({ active_seen: !prevState.active_seen }))
         const requestOptions = {
@@ -134,6 +140,8 @@ export default class MovieDetails extends Component {
         itemTemp.watched = !itemTemp.watched
         this.setState({ items: itemTemp })
     }
+
+    // Function to add the movie in wishlist
     handleClick_wishlist = () => {
         this.setState((prevState) => ({ active_wishlist: !prevState.active_wishlist }))
 
@@ -150,10 +158,12 @@ export default class MovieDetails extends Component {
         this.setState({ items: itemTemp })
     }
 
+    // Funtcion to toggle the watch trailer popup window
     setOpen(val) {
         this.setState({ open: val })
     }
 
+    // Function to open the menu the to select the username for sharing the movie
     async setFirstOpen(val) {
         this.setState({ firstOpen: val })
 
@@ -191,10 +201,9 @@ export default class MovieDetails extends Component {
 
             this.setState({ userList: tmpList })
         }
-
-
     }
 
+    // Function to open the menu for displaying the sharing confirmation
     setSecondOpen(val) {
         this.setState({ secondOpen: val })
         if (!val) {
@@ -202,6 +211,7 @@ export default class MovieDetails extends Component {
         }
     }
 
+    // Function to handle teh following a review writer
     handle_click_follow_user = (val) => {
 
         const requestOptions = {
@@ -216,6 +226,7 @@ export default class MovieDetails extends Component {
         window.location.reload(false);
     }
 
+    // Function to handle the banning of a review writer
     handle_click_ban_user = (val) => {
 
         const requestOptions = {
@@ -229,6 +240,8 @@ export default class MovieDetails extends Component {
         alert("User Banned Successfully");
         window.location.reload(false);
     }
+
+    // Function to handle the liking of a review
     handleClickLikeReview = (val, j) => {
         const requestOptions = {
             method: 'POST',
@@ -250,15 +263,17 @@ export default class MovieDetails extends Component {
 
     }
 
+    // Function to handle storing of the review text 
     handleReview = (event) => {
         this.setState({ review: event.target.value })
-
     }
 
+    // Function to handle storing of the review rating
     handleRate = (e, { rating, maxRating }) => {
         this.setState({ rating: rating })
     }
 
+    // Function to handle adding of a new review
     handle_adding_review = async () => {
         const movie = this.props.match.params.movieId;
         const user = this.user
@@ -287,6 +302,7 @@ export default class MovieDetails extends Component {
 
     }
 
+    // Function to handle sharing of a movie to a user
     handle_share_movie = (val) => {
         const requestOptions = {
             method: 'POST',
@@ -304,13 +320,14 @@ export default class MovieDetails extends Component {
         this.setState({ secondOpen: true, shareUser: '' })
     }
 
+    // Function to handle the calander dropdown
     handleChange = (event, { name, value }) => {
         if (this.state.hasOwnProperty(name)) {
             this.setState({ [name]: value });
         }
     }
 
-
+    // Function to handle filtering of reviews
     handleFilterReviews = () => {
 
         this.setState({ items: [] })
@@ -351,10 +368,13 @@ export default class MovieDetails extends Component {
 
     render() {
 
+        // Load the states and initialize variables
         const { active_like } = this.state
         const { active_seen } = this.state
         const { active_wishlist } = this.state
         var recommendSimilar = null
+
+        // Load recomendations
         if (this.state.items.recomendations) {
             recommendSimilar = _.times(4, (i) => (
                 <Grid.Column key={i}>
@@ -370,7 +390,7 @@ export default class MovieDetails extends Component {
             ))
         }
         else {
-
+            // Placeholder for the recomendations
             recommendSimilar = _.times(4, (i) => (
                 <Grid.Column key={i}>
                     <Card.Group>

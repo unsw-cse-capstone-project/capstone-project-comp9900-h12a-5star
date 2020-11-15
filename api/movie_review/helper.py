@@ -7,7 +7,8 @@ import requests, datetime
 
 def verify_user(user):
     try:
-        a = UserProfile.objects.get(username=user)
+        if user.lower() != 'guest':
+            a = UserProfile.objects.get(username=user)
 
     except Exception as e:
         response = {
@@ -45,7 +46,7 @@ def get_movie_details(movie):
             j += 1
             movie_details["avgRating"] += i.rating
     if j != 0:
-        movie_details["avgRating"] = round((movie_details["avgRating"])/j,1)
+        movie_details["avgRating"] = movie_details["avgRating"]//j
     return movie_details
 
 def send_notifications(userID, movieID, movieTitle):

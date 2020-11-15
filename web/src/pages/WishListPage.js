@@ -6,6 +6,7 @@ import {
 
 export default class WishListPage extends Component {
 
+    //Constructor called at the time of page load
     constructor() {
         super();
         this.state = {
@@ -19,8 +20,9 @@ export default class WishListPage extends Component {
         this.user = window.sessionStorage.getItem('username')
     }
 
+    // function called when the components are loaded onto the page.It gets executed right after the constructor.
+    // Performs an operation to pull the wish list from the database.
     componentDidMount() {
-
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -45,10 +47,9 @@ export default class WishListPage extends Component {
             )
     }
 
+    // Removes the movie from the state so that it is instantly loaded on the page and a refresh is not required.
     revoveElement = (val) => {
         delete this.state.items[this.state.items.indexOf(val)]
-        console.log(this.state.items)
-        // this.state.items = this.state.items
         this.setState({item: this.state.items})
         var len = 0
         this.state.items.map(()=>
@@ -59,21 +60,22 @@ export default class WishListPage extends Component {
         }
         
     }
+
+    // remove a movie from wishlist and send the request to the database
     removeFromWishlist = (val) => {
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
             body: JSON.stringify({ movieId: val.movieID, username: this.user, wishlist: false})
         };
 
         fetch("http://127.0.0.1:8000/api/addWishlist/", requestOptions)
         this.revoveElement(val)
-        // window.location.reload(false)
     }
 
     render() {
 
+        // Redirect the user to login page if they are not logged in yet.
         if (this.props.match.params.userId === "guest"){
             window.location.href='/login'
         }
@@ -81,67 +83,60 @@ export default class WishListPage extends Component {
         return (
             <>
                 <Container>
-                    {/* <Header as='h1'>{this.props.match.params.userId}'s Wishlist</Header> */}
+                    {/* title section of the application */}
                     <Divider horizontal></Divider>
                     <Divider horizontal>
                     <Header as='h1'>
                         {this.props.match.params.userId.charAt(0).toUpperCase() + this.props.match.params.userId.slice(1)}'s Wishlist
                     </Header>
                     </Divider>
+                    {/* Wish list is loaded dynamically from the data received from the database */ }
                     {
-                    (this.state.items.length !== 0)?
-                    <Grid columns='equal' divided={'vertically'}>
-                        {
-                            this.state.items.map((item)=>
-                            <Grid.Row>
-                                <Grid.Column width={2}>
-                                    <Image src={item.poster} size='tiny'  />
-                                </Grid.Column>
-                                <Grid.Column width={2}>
-                                <br/>
-                                    <Icon name='star' color={"yellow"}/> {item.rating} <br/><br/>
-                                    <Icon name='calendar alternate outline' /> {item.release_date.substring(0,4)}
-                                </Grid.Column>
-                                <Grid.Column width={8}>
-                                <br/><br/>
-                                
-                                    <Link style={{ color: 'black', fontSize:24}} className="MovieDetails" key={item.movieID} to= {`/movieDetails/${item.movieID}`}>
-                                        {item.title}
-                                    </Link>
-                               
-                                    
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <br/><br/>
-                                    {
-                                        (this.props.match.params.userId === window.sessionStorage.getItem('username'))?
-                                            <Button circular floated='right' color='red' icon='close' onClick={()=>this.removeFromWishlist(item)} />
-                                            :
-                                            <Button primary floated='right'><Link style={{ color: '#FFF'}} className="MovieDetails" key={item.movieID} to= {`/movieDetails/${item.movieID}`}>
-                                            View Details
-                                        </Link><Icon name='right chevron' />  </Button> 
-                                    }
-                                    
-                            </Grid.Column>
-                        </Grid.Row>
-                            )
-                        }
-                        
+                            (this.state.items.length !== 0) ?
+                            <Grid columns='equal' divided={'vertically'}>
+                                {
+                                    this.state.items.map((item) =>
+                                        <Grid.Row>
+                                            <Grid.Column width={2}>
+                                                <Image src={item.poster} size='tiny' />
+                                            </Grid.Column>
+                                            <Grid.Column width={2}>
+                                                <br />
+                                                <Icon name='star' color={"yellow"} /> {item.rating} <br /><br />
+                                                <Icon name='calendar alternate outline' /> {item.release_date.substring(0, 4)}
+                                            </Grid.Column>
+                                            <Grid.Column width={8}>
+                                                <br /><br />
+                                                <Link style={{ color: 'black', fontSize: 24 }} className="MovieDetails" key={item.movieID} to={`/movieDetails/${item.movieID}`}>
+                                                    {item.title}
+                                                </Link>
+                                            </Grid.Column>
+                                            <Grid.Column>
+                                                <br /><br />
+                                                {
+                                                    (this.props.match.params.userId === window.sessionStorage.getItem('username')) ?
+                                                        <Button circular floated='right' color='red' icon='close' onClick={() => this.removeFromWishlist(item)} />
+                                                        :
+                                                        <Button primary floated='right'><Link style={{ color: '#FFF' }} className="MovieDetails" key={item.movieID} to={`/movieDetails/${item.movieID}`}>
+                                                            View Details
+                                        </Link><Icon name='right chevron' />  </Button>
+                                                }
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                    )
+                                }  
                     </Grid>
                     :
                     <Message>
+                        {/* Message incase there are no movies in wishlist */}
                         <Message.Header>Opps...It's time to create a wishlist!</Message.Header>
                         <p>
                             Go ahead and add items to your wishlist.
                         </p>
                     </Message>
                 }
-                </Container>
-                
-                
+                </Container> 
             </>
-
         )
     }
-
 }

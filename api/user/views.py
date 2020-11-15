@@ -500,7 +500,7 @@ class MovieDetails(APIView):
                 data.append(json.loads(get_recommendations(movie_details['description']))['data'])
             if 'Genre' in selection:
                 data.append(get_preferences(genres=[i.lower() for i in movie_details['genres']]))
-            elif 'Directors' in selection:
+            if 'Directors' in selection:
                 data.append(get_preferences([],[],directors = [i.lower() for i in movie_details['director']]))
 
             for j in data:

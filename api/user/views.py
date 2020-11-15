@@ -500,8 +500,15 @@ class MovieDetails(APIView):
                 data.append(json.loads(get_recommendations(movie_details['description']))['data'])
             if 'Genre' in selection:
                 data.append(get_preferences(genres=[i.lower() for i in movie_details['genres']]))
-            elif 'Directors' in selection:
+            if 'Directors' in selection:
                 data.append(get_preferences([],[],directors = [i.lower() for i in movie_details['director']]))
+            if 'Wishlist' in selection:
+                d = ''
+                for i in reviews.objects.filter(review_user_id=request.data['reviewerUsername']):
+                    if i.wishlist == True:
+                        url='https://api.themoviedb.org/3/movie/'+str(i.movie_id)+'?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&append_to_response=credits,videos'
+                        d += requests.get(url).json()['overview']
+                    data.append(json.loads(get_recommendations(d))['data'])
 
             for j in data:
                 for i in j:

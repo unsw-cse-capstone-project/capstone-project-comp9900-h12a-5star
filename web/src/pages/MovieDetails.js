@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
+<<<<<<< HEAD
 import { Divider , Checkbox, Grid, Container, Image, Segment, Card, Placeholder,Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed,Dropdown} from 'semantic-ui-react'
 import {gender,genres,languages} from '../components/genericLists';
+=======
+
+import { Divider , Checkbox, Grid, Container, Image, Segment, Card, Placeholder,Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed,Dropdown} from 'semantic-ui-react'
+import {gender,genres,languages} from '../components/genericLists';
+
+>>>>>>> c6c12e6fc9c9c691eae33362daf0084437375419
 import MovieTile from '../components/MovieTile';
 import {
     DateInput,
@@ -34,10 +41,25 @@ export default class MovieDetails extends Component {
             review: "",
             rating: "0",
             gender : "",
+<<<<<<< HEAD
             datesRange:"",
             features : []
 
             
+=======
+
+            features : []
+
+            
+
+            shareUser: "",
+            firstOpen: false,
+            secondOpen: false,
+            isLoadedUser: false,
+            errorUser: false,
+            userList:[]
+
+>>>>>>> c6c12e6fc9c9c691eae33362daf0084437375419
         };
         this.handleReview = this.handleReview.bind(this);
         if (window.sessionStorage.getItem('username') === null){

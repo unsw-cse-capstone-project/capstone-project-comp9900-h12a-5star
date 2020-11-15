@@ -3,17 +3,16 @@ import { Container, Icon, Image, Button, Header, Divider,Form, Label, Modal, Dro
 import './style.css'
 import {gender,genres,languages, maleProfile, femaleProfile} from '../components/genericLists';
 
-
-
 export default class ProfilePage extends Component {
 
+    // Store the values for teh dropdown menues
     genderOptions = gender
     genreOptions = genres
     languageOptions = languages
     maleProfile = maleProfile
     femaleProfile = femaleProfile
 
-    
+    //Constructor called at the time of page load
     constructor() {
         super();
         this.state = {
@@ -37,10 +36,13 @@ export default class ProfilePage extends Component {
         this.user = window.sessionStorage.getItem('username')
     }
 
+    // Toggle the popup window for changing the profile avatar 
     setOpen(val){
         this.setState({open: val})
     }
 
+    // function called when the components are loaded onto the page.It gets executed right after the constructor.
+    // Performs an operation to pull the profile details of the user from the database.
     componentDidMount() {
 
         const requestOptions = {
@@ -48,8 +50,6 @@ export default class ProfilePage extends Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: this.user })
         };
-
-        // const username = "roko1234"
 
         fetch("http://127.0.0.1:8000/api/profile/"+{"username":this.user}, requestOptions)
             .then(res => res.json())
@@ -75,17 +75,21 @@ export default class ProfilePage extends Component {
             )
     }
 
+    // Function to toggle the edit profle button 
     handleClick_edit = () =>{
         this.setState({edit: true})
         this.setState({editTransparent: false})
         this.setState({editDisabled: false})
     }
+
+    // Function to toggle the cancel edit profile button
     handleClick_cancelEdit = () =>{
         this.setState({edit: false})
         this.setState({editTransparent: true})
         this.setState({editDisabled: true})
     }
 
+    // Function to handle the updating of teh user profile
     handle_edit_profile= () =>{
         const requestOptions = {
             method: 'PUT',
@@ -125,6 +129,7 @@ export default class ProfilePage extends Component {
             window.location.reload(false)
     }
 
+    // Function to handle the edit profile avatar button
     handleClick_editAvatar = (val) => {
         this.setState({profilePic: val})
         this.setOpen(false)

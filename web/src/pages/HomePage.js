@@ -6,19 +6,21 @@ import MovieTile from '../components/MovieTile';
 
 export default class HomePage extends Component {
 
+    //Constructor called at the time of page load
     constructor() {
         super();
         this.state = {
             error: null,
             isLoaded: false,
-            items: [],
-            url: "http://image.tmdb.org/t/p/w780//riYInlsq2kf1AWoGm80JQW5dLKp.jpg"
+            items: []
         };
         if (window.sessionStorage.getItem('username') === null){
             window.sessionStorage.setItem('username', 'guest');
         }
     }
 
+    // function called when the components are loaded onto the page.It gets executed right after the constructor.
+    // Performs an operation to pull the top rated, popular and recently released movies from the database.
     async componentDidMount() {
         await fetch("http://127.0.0.1:8000/api/homepage/")
             .then(res => res.json())
@@ -42,11 +44,15 @@ export default class HomePage extends Component {
     }
 
     render() {
+
+        // Innitializing the variables
         var columnsTopMovies = null
         var columnsRecentlyReleased = null
         var columnsMostPopular = null
 
         if (this.state.items.popular) {
+
+            // Populate the top movies
             columnsTopMovies = _.times(4, (i) => (
                 <Grid.Column key={i}>
                     <MovieTile 
@@ -59,8 +65,9 @@ export default class HomePage extends Component {
                     />
                 </Grid.Column>
             ))
-            columnsRecentlyReleased = _.times(4, (i) => (
 
+            // Populate the recently released movies
+            columnsRecentlyReleased = _.times(4, (i) => (
                 <Grid.Column key={i}>
                     <MovieTile 
                         title={this.state.items.now_playing[i].title} 
@@ -71,8 +78,9 @@ export default class HomePage extends Component {
                         movieId={this.state.items.now_playing[i].id}
                     />
                 </Grid.Column>
-
             ))
+
+            // POpulate the most popular movies
             columnsMostPopular = _.times(4, (i) => (
                 <Grid.Column key={i}>
                     <MovieTile 
@@ -88,6 +96,8 @@ export default class HomePage extends Component {
             
         }
         else{
+
+            // The placeholder elements while the page is being loaded 
             columnsTopMovies = _.times(4, (i) => (
                 <Grid.Column key={i}>
                     <Card.Group>
@@ -110,8 +120,9 @@ export default class HomePage extends Component {
                     </Card.Group>
                 </Grid.Column>
             ))
-            columnsRecentlyReleased = _.times(4, (i) => (
 
+            // The placeholder elements while the page is being loaded 
+            columnsRecentlyReleased = _.times(4, (i) => (
                 <Grid.Column key={i}>
                     <Card.Group>
                         <Card>
@@ -132,8 +143,9 @@ export default class HomePage extends Component {
                         </Card.Content>
                     </Card.Group>
                 </Grid.Column>
-
             ))
+
+            // The placeholder elements while the page is being loaded 
             columnsMostPopular = _.times(4, (i) => (
                 <Grid.Column key={i}>
                     <Card.Group>

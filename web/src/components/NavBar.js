@@ -12,6 +12,7 @@ const initialState = { isLoading: false, results: [], value: '' }
 
 export default class MenuExampleInvertedSegment extends Component {
 
+  //Constructor called at the time of page load
   constructor() {
     super();
     this.state = {
@@ -26,10 +27,15 @@ export default class MenuExampleInvertedSegment extends Component {
     }
   }
 
+  // function called when the components are loaded onto the page.It gets executed right after the constructor.
+  // Performs an operation to pull the notifications from the database.
   componentDidMount() {
+
+    // set the default profile name as guest for the anonymous login 
     if (window.sessionStorage.getItem('username') === null){
       window.sessionStorage.setItem('username', 'guest');
     }
+
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -55,51 +61,57 @@ export default class MenuExampleInvertedSegment extends Component {
             )
   }
 
+  // Function to handle the actions for the menu buttons
+  // The user is redirected to teh relevant page based on his selection
   handleItemClick = (e, { name }) => {
     this.setState({ activeItem: name })
     if (name === 'browse') {
-      window.location.href='/browse'
+      window.location.href = '/browse'
     }
-    else if (name === 'home'){
-      window.location.href='/welcome'
+    else if (name === 'home') {
+      window.location.href = '/welcome'
     }
-    else if (name === 'my wishlist'){
-      if (window.sessionStorage.getItem('username') === null){
+    else if (name === 'my wishlist') {
+      if (window.sessionStorage.getItem('username') === null) {
         window.sessionStorage.setItem('username', "guest");
       }
 
-      window.location.href=`/wishlist/${window.sessionStorage.getItem('username')}`
-      
+      window.location.href = `/wishlist/${window.sessionStorage.getItem('username')}`
+
     }
-    else if (name === 'my profile'){
-      if (window.sessionStorage.getItem('username') === null || window.sessionStorage.getItem('username') === "guest"){
-        window.location.href='/login'
+    else if (name === 'my profile') {
+      if (window.sessionStorage.getItem('username') === null || window.sessionStorage.getItem('username') === "guest") {
+        window.location.href = '/login'
       }
-      else{
-        window.location.href='/myprofile' 
+      else {
+        window.location.href = '/myprofile'
       }
     }
-    else if (name === 'notification'){
+    else if (name === 'notification') {
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userID: window.sessionStorage.getItem('username') })
       };
-  
+
+      // Mark the notifications as read once they have been seen by the user
       fetch("http://127.0.0.1:8000/api/NotificationRead", requestOptions)
 
-      this.setState({newNotifications : 0})
+      this.setState({ newNotifications: 0 })
 
     }
   }
 
+  // Function to perform logout action for the user.
   performLogout = async () => {
     window.sessionStorage.setItem('username', "guest");
     window.location.href='/login'
   }
 
+  // Function to set teh state for the search result in the search bar
   handleResultSelect = (e, { result }) => this.setState({ value: result.title })
 
+  // Function to perform teh serach on the basis of movies to pupulate in the dropdown menu.
   handleSearchChange = (e, { value }) => {
     this.setState({ isLoading: true, value })
 
@@ -255,6 +267,7 @@ export default class MenuExampleInvertedSegment extends Component {
   }
 }
 
+// Import all the semantic UI css
 const styleLink = document.createElement("link");
 styleLink.rel = "stylesheet";
 styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Icon } from 'semantic-ui-react';
 
+// This component is called when a page which we searched for does not exist.
 const NotFoundPage = () => (
     <Container>
         <br />

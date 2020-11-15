@@ -2,15 +2,13 @@ import React , { Component } from 'react'
 import { Segment, Grid, Button,Form, Dropdown } from 'semantic-ui-react'
 import './style.css'
 import {gender,genres,languages} from '../components/genericLists';
-export default class SignUp extends Component {
 
+
+export default class SignUp extends Component {
     
     genderOptions = gender
-    
     genreOptions = genres
-
     languageOptions = languages
-
 
     constructor() {
         super();
@@ -18,7 +16,6 @@ export default class SignUp extends Component {
             error: null,
             isLoaded: false,
             items: [],
-            
             firstName: "",
             lastName: "",
             gender : "",
@@ -26,17 +23,13 @@ export default class SignUp extends Component {
             email: "",
             password: "",
             languages : [],
-            genres : [],
-            
+            genres : []
         };
-        
     }
-
 
     checkSignUp = async() => {
         if (this.state.email !== "" & this.state.password !== "" & this.state.gender !== "" & this.state.languages !== [] &
         this.state.userName !== "" & this.state.firstName !== "" & this.state.lastName !== "" & this.state.genres !== []){
-            
             
             var obj = {"email": this.state.email, "password": this.state.password, "genre": this.state.genres, "language": this.state.languages,
                 "profile": {"firstname": this.state.firstName, "lastname": this.state.lastName, "username": this.state.userName,
@@ -56,14 +49,12 @@ export default class SignUp extends Component {
                 window.location.href='/login';
             }
             else{
-                alert("Please enter unique Username and Email!");
+                this.setState({error: "Please enter unique Username and Email!"})
             }
         }
         else{
-            alert("Please check all fields are filled correctly!")
-        }
-
-            
+            this.setState({error: "Please check all fields are filled correctly!"})
+        }     
     }
 
     render() {
@@ -81,6 +72,14 @@ export default class SignUp extends Component {
                 <Segment  inverted style={{margin: 15 }}>
                 
                   <h1 style={{textAlign:"center", color:"white"}}>Sign Up</h1>
+                    <center>
+                      {
+                        (this.state.error) &&
+                          <p className="errorMessage">
+                            {this.state.error}
+                          </p>
+                      }
+                    </center>
                   <Form className="register">
                     <Form.Group >
                       <Form.Field width={16} id="inputField">

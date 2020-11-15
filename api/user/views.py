@@ -629,7 +629,7 @@ class MovieBrowse(APIView):
                      browse_page=json.dumps(data)
                      return JsonResponse(json.loads(browse_page), safe=False)
 
-
+#gets a list of all the users in the database
 class usersList(APIView):
     def get(self,request):
         users = UserProfile.objects.all().order_by('username')

@@ -90,8 +90,8 @@ export default class WishListPage extends Component {
                         {this.props.match.params.userId.charAt(0).toUpperCase() + this.props.match.params.userId.slice(1)}'s Wishlist
                     </Header>
                     </Divider>
+                    {/* Wish list is loaded dynamically from the data received from the database */ }
                     {
-                        {/* Wish list is loaded dynamically from the data received from the database */ }
                             (this.state.items.length !== 0) ?
                             <Grid columns='equal' divided={'vertically'}>
                                 {

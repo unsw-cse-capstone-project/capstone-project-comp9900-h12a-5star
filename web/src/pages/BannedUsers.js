@@ -82,8 +82,8 @@ export default class WishListPage extends Component {
                             {this.props.match.params.userId.charAt(0).toUpperCase() + this.props.match.params.userId.slice(1)}'s List of banned users
                     </Header>
                     </Divider>
+                    {/* User list is loaded dynamically from the data received from the database */}
                     {
-                        {/* User list is loaded dynamically from the data received from the database */}
                         (this.state.items.data && this.state.items.data.length !== 0) ?
                             <Grid columns='equal' divided={'vertically'}>
                                 {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
-import {  Form, Segment,  Button, Dropdown, GridColumn} from 'semantic-ui-react';
-import { Container, Header, Divider, Grid, Label, Card, Placeholder} from 'semantic-ui-react';
+import {  Form,  Button, Dropdown, GridColumn} from 'semantic-ui-react';
+import { Container, Header, Divider, Grid, Card, Placeholder} from 'semantic-ui-react';
 import MovieTile from '../components/MovieTile';
 import {directorList,genreList} from '../components/genericLists';
 
@@ -51,7 +51,6 @@ export default class BrowsePage extends Component {
     checkGenreDirector = () => {
         
         this.setState({ isLoaded: true })
-        console.log(this.state.isLoaded)
         var obj = {"genre_id":this.state.genres,"director_id":this.state.directors};
    
         const requestOptions = {
@@ -60,7 +59,7 @@ export default class BrowsePage extends Component {
             body: JSON.stringify(obj)
         };
         if (this.state.genres.length >0 & this.state.directors.length >0){
-            this.state.flag=1
+            this.setState({flag: 1})
             
             fetch("http://127.0.0.1:8000/api/browse/",requestOptions)
             .then(res => res.json())
@@ -82,7 +81,7 @@ export default class BrowsePage extends Component {
             this.setState({isLoaded:false})
         }
         else if (this.state.genres.length >0){
-            this.state.flag=2
+            this.setState({flag: 2})
             
             fetch("http://127.0.0.1:8000/api/browse/",requestOptions)
             .then(res => res.json())
@@ -104,7 +103,7 @@ export default class BrowsePage extends Component {
             this.setState({isLoaded:false})
         }
         else if (this.state.directors.length > 0){
-            this.state.flag=3
+            this.setState({flag: 3})
             
             fetch("http://127.0.0.1:8000/api/browse/",requestOptions)
             .then(res => res.json())
@@ -148,7 +147,7 @@ export default class BrowsePage extends Component {
 
         
         if ( movieLength >=4 ) {
-            console.log('inside movie length >= 4')
+           
             columnsMovie = _.times(x, (i) => (
                 <Grid.Row key={i}>{
                     _.times(4, (j) => (
@@ -168,7 +167,7 @@ export default class BrowsePage extends Component {
                 ))
         }
         else if(movieLength>0 & movieLength<4){
-            console.log('inside movie length < 4')
+            
             columnsMovie = _.times(movieLength, (i) => (
                 <Grid.Column key={i}>
                     <MovieTile 
@@ -184,12 +183,11 @@ export default class BrowsePage extends Component {
             ))
         }
         else if(movieLength ===0 & this.state.flag!==0){
-            console.log('inside movie length is 0 and flag not 0')
+           
             columnsMovie=null
         }
         if(this.state.isLoaded === false){
             
-            console.log('inside movie length 0')
             columnsMovie = _.times(12, (i) => (
                 <Grid.Row key={i}>{
                     _.times(4, (j) => (
@@ -256,19 +254,19 @@ export default class BrowsePage extends Component {
                     </Form.Group >
                 </Form> 
                 <Divider section />
-                { this.state.flag==1 &&
+                { this.state.flag===1 &&
                     <Grid.Column>
                         <Header as='h1'>Browse Results by Genres and Directors: {y} </Header>
                         <Divider section />
                     </Grid.Column>
                 }
-                { this.state.flag==2 &&
+                { this.state.flag===2 &&
                     <Grid.Column>
                         <Header as='h1'>Browse Results by Genres: {y}</Header>
                         <Divider section />
                     </Grid.Column>
                 }
-                { this.state.flag==3 &&
+                { this.state.flag===3 &&
                     <Grid.Column>
                         <Header as='h1'>Browse Results by Directors: {y}</Header>
                         <Divider section />

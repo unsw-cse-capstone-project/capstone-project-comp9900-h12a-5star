@@ -1,7 +1,6 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from profile.models import UserProfile
 from movie_review.models import movies,reviews
 from movie_review.helper import verify_user, get_movie_details, send_notifications
 import datetime
@@ -43,7 +42,7 @@ def add_review(request):
                 'message': 'Review updated',
                 }
 
-    send_notifications(request.data['user'], request.data['movie'])
+    send_notifications(request.data['user'], request.data['movie'], request.data['movieTitle'])
     #print(response)
     return Response(response)
 
@@ -167,6 +166,7 @@ def get_wishlist(request):
                 'statusCode': status.HTTP_200_OK,
                 'wishlist': []
                 }
+
     wished, response = [],[]
     for i in reviews.objects.filter(review_user_id=request.data['reviewerUsername']):
         if i.wishlist == True:
@@ -213,8 +213,21 @@ def upvote(request):
     a,b = verify_user(request.data['reviewerUsername'])
     if a==False:
         return Response(b)
-    for i in reviews.objects.filter(review_user_id=request.data['reviewerUsername'], movie_id=request.data['movieId']):
-        i.upvote_count += int(request.data['upvote'])
+
+    i = reviews.objects.get(review_user_id=request.data['reviewerUsername'], movie_id=request.data['movieId'])
+    if len(i.like_reviewers) == 0 or i.like_reviewers==None:
+        i.like_reviewers= []
+        i.save()
+    if request.data['likerUsername'] not in i.like_reviewers:
+        i.like_reviewers.append(request.data['likerUsername'])
+        print('------------',request.data['reviewerUsername'],i.like_reviewers)
+        i.upvote_count += 1
+        votes = i.upvote_count
+        i.save()
+    else:
+        i.like_reviewers.remove(request.data['likerUsername'])
+        print('------------',request.data['reviewerUsername'],i.like_reviewers)
+        i.upvote_count -= 1
         votes = i.upvote_count
         i.save()
     response = {

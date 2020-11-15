@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import _ from 'lodash'
 import { Button, Container, Grid, Header, Icon, Image, Divider, Message} from 'semantic-ui-react';
 import {
     Link,
@@ -60,7 +59,7 @@ export default class WatchListPage extends Component {
         }
         
     }
-    removeFromWishlist = (val) => {
+    removeFromWatchlist = (val) => {
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -71,25 +70,6 @@ export default class WatchListPage extends Component {
         fetch("http://127.0.0.1:8000/api/watchMovie/", requestOptions)
         this.revoveElement(val)
         // window.location.reload(false
-    }
-   
-    
-    addToMyWishlist = (val) => {
-        this.setState((prevState) => ({ active_wishlist: !prevState.active_wishlist }))
-
-        // this.state.active_wishlist = !this.state.active_wishlist
-
-        const requestOptions = {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
-            body: JSON.stringify({ username: this.user, movieID: val, movieStatus: !this.state.items.watched})
-
-        };
-
-        // fetch("http://127.0.0.1:8000/api/addWishlist/", requestOptions)
-            
-            // this.state.items.wishlist = !this.state.items.wishlist
     }
 
     render() {
@@ -132,15 +112,8 @@ export default class WatchListPage extends Component {
                                     
                                 </Grid.Column>
                                 <Grid.Column>
-                                    <br/><br/>
-                                    {
-                                        (this.props.match.params.userId === window.sessionStorage.getItem('username'))?
-                                            <Button circular floated='right' color='red' icon='close' onClick={()=>this.removeFromWishlist(item)} />
-                                            :
-                                            <Button primary floated='right'><Link style={{ color: '#FFF'}} className="MovieDetails" key={item.movieID} to= {`/movieDetails/${item.movieID}`}>
-                                            View Details
-                                        </Link><Icon name='right chevron' />  </Button> 
-                                    }
+                                    <p><br /></p>
+                                    <Button circular floated='right' color='red' icon='close' onClick={()=>this.removeFromWatchlist(item)} />
                                     
                             </Grid.Column>
                         </Grid.Row>

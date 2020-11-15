@@ -39,7 +39,7 @@ def get_movie_details(movie):
     movie_details["myWishlist"] = True
     return movie_details
 
-def send_notifications(userID, movieID):
+def send_notifications(userID, movieID, movieTitle):
     followers = UserProfile.objects.get(username = userID).followed_by
 
     for follower in followers:
@@ -47,7 +47,8 @@ def send_notifications(userID, movieID):
         new.toUsername = follower
         new.fromUsername = userID
         new.movieId = movieID
-        new.type = 'COMMENT'
+        new.movieTitle = movieTitle
+        new.type = userID + ' added a review for ' + movieTitle
         new.Date = datetime.date.today()
         new.Time = datetime.datetime.now().time()
         new.save()

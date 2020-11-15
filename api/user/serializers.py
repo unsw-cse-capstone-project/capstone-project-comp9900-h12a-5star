@@ -26,6 +26,7 @@ class UserSerializer(serializers.ModelSerializer):
             'interests': Select2MultipleWidget,
         }
 
+#user registers here. Create func. creates a user object and returns
 class UserRegistrationSerializer(serializers.ModelSerializer):
 
     profile = UserSerializer(required=False)
@@ -44,7 +45,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
 #        print('yes!!!!',validated_data)
         profile_data = validated_data.pop('profile')
-        print(profile_data)
+        #print(profile_data)
         user = User.objects.create_user(validated_data['email'],validated_data['password'])
         UserProfile.objects.create(
             user=user,
@@ -58,6 +59,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         )
         return user
 
+#user login handled here.
 class UserLoginSerializer(serializers.Serializer):
 
     email = serializers.CharField(max_length=255)
@@ -66,7 +68,7 @@ class UserLoginSerializer(serializers.Serializer):
     def validate(self, data):
         email = data.get("email", None)
         password = data.get("password", None)
-        print('yess',data)
+        #print('yess',data)
         user = authenticate(email=email, password=password)
         if user is None:
             raise serializers.ValidationError(

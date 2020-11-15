@@ -450,11 +450,11 @@ export default class MovieDetails extends Component {
                                         (this.state.items.title)?
                                         <div>
                                             <Icon name='star' color={"yellow"}/> {this.state.items.avg_rating}&nbsp;&nbsp;&nbsp;
-                                            <Icon name='chart pie' color={(this.props.rating >4) ? 'green' : ((this.props.rating >2.5) ? 'yellow' : 'orange')} />  {this.state.items.tmdb_rating * 20}% 
+                                            <Icon name='chart pie' color={(this.state.items.tmdb_rating >4) ? 'green' : ((this.state.items.tmdb_rating >2.5) ? 'yellow' : 'orange')} />  {this.state.items.tmdb_rating * 20}% 
                                         </div>:
                                         <div>
                                             <Icon name='star' color={"yellow"}/> 
-                                            <Icon name='chart pie' color={(this.props.rating >4) ? 'green' : ((this.props.rating >2.5) ? 'yellow' : 'orange')} />
+                                            <Icon name='chart pie' color={(this.state.items.tmdb_rating >4) ? 'green' : ((this.state.items.tmdb_rating >2.5) ? 'yellow' : 'orange')} />
                                         </div>
                                     }  
                                 </p>

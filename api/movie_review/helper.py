@@ -41,12 +41,11 @@ def get_movie_details(movie):
     movie_details["avgRating"] = 0
     j = 0
     for i in reviews.objects.filter(movie_id=movie):
-        if i.rating != None:
+        if i.rating != None and i.rating!=0.0:
             j += 1
             movie_details["avgRating"] += i.rating
     if j != 0:
-        movie_details["avgRating"] = movie_details["avgRating"]//j
-
+        movie_details["avgRating"] = round((movie_details["avgRating"])/j,1)
     return movie_details
 
 def send_notifications(userID, movieID, movieTitle):

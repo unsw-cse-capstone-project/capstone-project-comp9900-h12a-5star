@@ -21,3 +21,9 @@ Attended first demo and Presented the project progress by going through the webs
 
 Week 7
 Completed the UI of browse pages. Added multiselect feature for genres and directors. Completed backend/api integration of browse pages. Completed on the fly search based on movie name. Removing redundant lines of code. Testing the application and reporting issues. I will be working on filtering reviews and upvote a review. 
+
+Week 8
+Completed the filtering of reviews based on gender and date range. Attended the second demo. Fixed the issues raised during demo and website testing. Attended the second retrospective meeting and contributed in preparing the retrospective document. I will be working on upvote a review novelty.
+
+Week 9
+Completed the functionality to like/upvote a review given by user. Updated the Jira board accordingly. Conducted team meeting to distribute tasks on report writing and also final product progress for submission. I will be adding comments to my code and cleaning any redundant lines of code.

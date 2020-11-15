@@ -486,7 +486,7 @@ export default class MovieDetails extends Component {
                                         <Form>
                                             <Form.Field >
                                                 <Header as="h1">Please enter the username</Header>
-                                                {/* <input onChange={(event) => this.setState({ shareUser: event.target.value })} required /> */}
+        
                                                 <Dropdown placeholder='Select user' onChange={(event, { value }) => this.setState({ shareUser: value })} fluid selection options={this.state.userList} search required />
                                             </Form.Field>
                                         </Form>
@@ -771,9 +771,6 @@ export default class MovieDetails extends Component {
                                                                         {this.state.items.review[j]}
                                                                     </Comment.Text>
                                                                     <Comment.Actions>
-
-                                                                        {/* <Button icon='heart' color="red" active={false} content='Like' label={{ basic: true, color: 'red', pointing: 'left', content: this.state.items.upvote[j] }} size={'mini'}  onClick={() => this.handleClickLikeReview(this.state.items.user[j])} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/> */}
-                                                                        {/* <Button icon='heart'  active={this.state.items.upvoteStatus[j]}  size={'mini'}  onClick={() => this.handleClickLikeReview(this.state.items.user[j])} disabled={window.sessionStorage.getItem('username') === 'guest' ? true: false}/> {this.state.items.upvote[j]} */}
                                                                         <Icon name={this.state.items.upvoteStatus[j] ? 'heart' : 'heart outline'} color='red' onClick={() => this.handleClickLikeReview(this.state.items.user[j], j)} disabled={window.sessionStorage.getItem('username') === 'guest' ? true : false} />{this.state.items.upvote[j]}
                                                                     </Comment.Actions>
                                                                 </Comment.Content>
@@ -826,9 +823,7 @@ export default class MovieDetails extends Component {
                                     <Divider hidden />
                                     <Grid columns="equal">
                                         <Grid.Column>
-                                            {/*<Label hidden as='a' color='blue' ribbon='right' onClick={event => window.location.href = `/movieRecommendations/${this.props.match.params.movieId}/${this.state.features}/RecommendMore`}>
-                                see more
-                                </Label>*/}
+                                            
                                         </Grid.Column>
                                     </Grid>
                                     <Grid columns='equal'>{recommendSimilar}</Grid>

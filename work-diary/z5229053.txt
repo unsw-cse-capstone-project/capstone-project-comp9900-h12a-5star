@@ -18,3 +18,6 @@ Completed the API integration of the Wishlist page and movie details page. Imple
 
 Week 7
 Completed the API rendering of the reviews section. Completed the view prodile page and the edit profile page. Started testing the application and reporting issues in the application.
+
+Week 8
+Added trailers on the movie details page. Added tool tip text for better represenation on all buttion on movie details page. Added styling for movie tiles to make them consistant with the page. Added fix on Navigation bar active state.  Redid teh karan's story of registration page as it was not as per the team consensus. Added option to edit avatar in profile page. Asked everyoen to remove all the static data from code base.

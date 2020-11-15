@@ -1,34 +1,18 @@
-import React , { Component, createRef } from 'react'
-import { Tab, Container, Grid, Card, Icon, Image, Button, Input, Header, Divider,Form, Label, Modal, Dropdown, List } from 'semantic-ui-react'
+import React , { Component } from 'react'
+import { Container, Icon, Image, Button, Header, Divider,Form, Label, Modal, Dropdown, List } from 'semantic-ui-react'
 import './style.css'
-import {gender,genres,languages} from '../components/genericLists';
+import {gender,genres,languages, maleProfile, femaleProfile} from '../components/genericLists';
+
+
 
 export default class ProfilePage extends Component {
 
     genderOptions = gender
-    
     genreOptions = genres
-
     languageOptions = languages
+    maleProfile = maleProfile
+    femaleProfile = femaleProfile
 
-    maleProfile = [
-        "https://react.semantic-ui.com/images/avatar/large/elliot.jpg",
-        "https://react.semantic-ui.com/images/avatar/large/matthew.png",
-        "https://react.semantic-ui.com/images/avatar/large/steve.jpg",
-        "https://react.semantic-ui.com/images/avatar/large/daniel.jpg",
-        "https://react.semantic-ui.com/images/avatar/large/joe.jpg",
-        "https://react.semantic-ui.com/images/avatar/large/christian.jpg",
-        "https://react.semantic-ui.com/images/avatar/large/matt.jpg"
-    ]
-
-    femaleProfile = [
-        "https://react.semantic-ui.com/images/avatar/large/molly.png",
-        "https://react.semantic-ui.com/images/avatar/large/jenny.jpg",
-        "https://react.semantic-ui.com/images/avatar/large/stevie.jpg",
-        "https://react.semantic-ui.com/images/avatar/large/helen.jpg",
-        "https://react.semantic-ui.com/images/avatar/large/laura.jpg",
-        "https://react.semantic-ui.com/images/avatar/large/veronika.jpg"
-    ]
     
     constructor() {
         super();

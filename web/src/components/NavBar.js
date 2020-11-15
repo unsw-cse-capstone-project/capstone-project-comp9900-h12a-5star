@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {moviesList} from './MovieData'
-import { Icon, Button, Menu, Segment, Search, Image, Popup, Feed, Label, Grid, Message } from 'semantic-ui-react'
+import { Icon, Button, Menu, Segment, Search, Image, Popup, Label, Grid, Message } from 'semantic-ui-react'
 import _ from 'lodash'
 import {
   Link,
@@ -120,27 +120,9 @@ export default class MenuExampleInvertedSegment extends Component {
     const { activeItem, isLoading, value, results } = this.state
     console.log(value)
 
-    const image = 'https://react.semantic-ui.com/images/avatar/large/laura.jpg'
-    const date = '3 days ago'
-    const summary = 'roku1234 added a new review on Gabriels Inferno Part II'
-    const extraText = "Have you seen what's going on in Israel? Can you believe it."
-
     const style = {
       width: 450
     }
-
-    var content = (items) => (
-      <div>
-        <Link  key={items.movieID} to= {`/movieDetails/${items.movieID}`}>
-                      <Feed.Event
-                          image={items.profilePic}
-                          date={items.time}
-                          summary={summary}
-                          extraText={extraText}
-                        />
-                      </Link>
-      </div>
-    )
 
     return (
       <Segment inverted>
@@ -223,7 +205,7 @@ export default class MenuExampleInvertedSegment extends Component {
                           <Link  key={items.movieID} to= {`/movieDetails/${items.movieID}`}>
                               <Grid className={(items.status)? "oldNotification" : "newNotification"}>
                                 <Grid.Column width={2}>
-                                  <img className="notification" src={items.profilePic} />
+                                  <img className="notification" src={items.profilePic} alt=""/>
                                 </Grid.Column>
                                 <Grid.Column width={12} stretched>
                                   <Grid.Row className="day">

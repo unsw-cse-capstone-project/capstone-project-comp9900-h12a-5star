@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
 import { Grid, Container, Image, Segment, Card, Placeholder,Icon, List, Button, Comment, Form, Header, Rating , Popup, Label, Message, Modal, Embed,Dropdown} from 'semantic-ui-react'
-import {gender,genres,languages} from '../components/genericLists';
+import {gender} from '../components/genericLists';
 import MovieTile from '../components/MovieTile';
 import {
-    DateInput,
-    TimeInput,
-    DateTimeInput,
     DatesRangeInput
   } from 'semantic-ui-calendar-react';
 export default class MovieDetails extends Component {
@@ -42,11 +39,7 @@ export default class MovieDetails extends Component {
     }
 
     componentDidMount() {
-        if(window.sessionStorage.getItem('username')==="guest"){
-
-            // alert("You are not Signed in! Sign up to tell us what do you think about this movie.")
-        }
-
+        
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -81,25 +74,31 @@ export default class MovieDetails extends Component {
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
             body: JSON.stringify({ movieId: this.props.match.params.movieId, username: this.user, likeMovie: !this.state.items.liked})
         };
 
         fetch("http://127.0.0.1:8000/api/likeMovie/", requestOptions)
 
-        this.state.items.liked = !this.state.items.liked
+
+        var itemTemp = this.state.items
+        itemTemp.liked = !itemTemp.liked
+
+        this.setState({items : itemTemp})
     }
     handleClick_seen = () =>{
         this.setState((prevState) => ({ active_seen: !prevState.active_seen }))
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
             body: JSON.stringify({ username: this.user, movieID: this.props.match.params.movieId, movieStatus: !this.state.items.watched})
         };
         fetch("http://127.0.0.1:8000/api/watchMovie/", requestOptions)
 
-        this.state.items.watched = !this.state.items.watched
+        // this.state.items.watched = !this.state.items.watched
+
+        var itemTemp = this.state.items
+        itemTemp.watched = !itemTemp.watched
+        this.setState({items : itemTemp})
 
     }
     handleClick_wishlist = () =>{
@@ -110,14 +109,17 @@ export default class MovieDetails extends Component {
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            // body: JSON.stringify({ id: this.props.match.params.movieId, user: this.user })
             body: JSON.stringify({ movieId: this.props.match.params.movieId, username: this.user, wishlist: !this.state.items.wishlist})
         };
 
         fetch("http://127.0.0.1:8000/api/addWishlist/", requestOptions)
             
            
-            this.state.items.wishlist = !this.state.items.wishlist
+            // this.state.items.wishlist = !this.state.items.wishlist
+
+        var itemTemp = this.state.items
+        itemTemp.wishlist = !itemTemp.wishlist
+        this.setState({items : itemTemp})
     }
 
     setOpen(val){
@@ -216,12 +218,12 @@ export default class MovieDetails extends Component {
         window.location.reload(false);
 
     }
-    handleReview = (event) => {   
-       this.state.review = event.target.value;
+    handleReview = (event) => {
+       this.setState({review : event.target.value})
 
        }
      handleRate = (e, { rating, maxRating }) => {
-     this.state.rating = rating;
+     this.setState({rating : rating})
     }
     handle_adding_review = async() => {
         const movie = this.props.match.params.movieId;
@@ -283,8 +285,8 @@ export default class MovieDetails extends Component {
         if(this.state.datesRange){
             
             var date=this.state.datesRange.split(" - ")
-            var fromDate=date[0].split("-").reverse().join("-");
-            var toDate=date[1].split("-").reverse().join("-");
+            fromDate=date[0].split("-").reverse().join("-");
+            toDate=date[1].split("-").reverse().join("-");
         }
         
         var obj= {"user":this.user,"id":this.props.match.params.movieId,"from_date":fromDate, "to_date":toDate, "gender_sort":this.state.gender}

@@ -214,7 +214,7 @@ export default class MenuExampleInvertedSegment extends Component {
                     (this.state.items.notifications) && 
                       (this.state.items.notifications.length > 0) ?
                         this.state.items.notifications.map((items) => 
-                          <Link  key={items.movieID} to= {`/movieDetails/${items.movieID}`}>
+                          // <Link  key={items.movieID} to= {`/movieDetails/${items.movieID}`}>
                               <Grid className={(items.status)? "oldNotification" : "newNotification"}>
                                 <Grid.Column width={2}>
                                   <img className="notification" src={items.profilePic} alt=""/>
@@ -223,12 +223,12 @@ export default class MenuExampleInvertedSegment extends Component {
                                   <Grid.Row className="day">
                                     {items.time}
                                   </Grid.Row>
-                                  <Grid.Row className="title">
+                                  <Grid.Row className="title" onClick={event => window.location.href = `/movieDetails/${items.movieID}`}>
                                     <b>{items.type}</b>
                                   </Grid.Row>
                                 </Grid.Column>
                               </Grid>
-                        </Link>
+                        // </Link>
                         )
                         :
                         <Message>

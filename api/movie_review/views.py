@@ -8,7 +8,6 @@ import datetime
 #adds a review by a user for a movie
 @api_view(['POST', ])
 def add_review(request):
-    #print(request.data)
     a,b = verify_user(request.data['user'])
     if a==False:return Response(b)
     try:
@@ -35,7 +34,7 @@ def add_review(request):
             if 'rating' in request.data.keys():
                 i.rating=request.data['rating']
             i.review_date = datetime.date.today()
-            i.review_time = datetime.datetime.now().time()
+            i.review_time =  datetime.datetime.now().time()
             i.save()
         response = {
                 'success': 'True' ,

@@ -44,19 +44,29 @@ def getNotifications(request):
         data['date'] = str(abs((datetime.date.today() - i.Date).days)) + ' days ago'
         data['profilePic'] = UserProfile.objects.get(username = i.fromUsername).profilePic
         data['status'] = i.status
-
         if abs((datetime.date.today() - i.Date).days) ==0:
-            date_time_obj = datetime.datetime.strptime(str(i.Date) + ' ' + str(i.Time), '%Y-%m-%d %H:%M:%S.%f')
-            diff = str(datetime.datetime.today() - date_time_obj).split('.')[0].split(':')
-            if int(diff[0]) > 0:
-                data['time'] = diff[0] + ' hours ago'
-            elif int(diff[1]) > 0:
-                data['time'] = diff[1] + ' minutes ago'
-            elif int(diff[2]) > 0:
-                data['time'] = diff[2] + ' seconds ago'
-            #data['time'] = diff[0] + ' hours ago,' + diff[1] + ' minutes ago,' + diff[2]+' seconds ago'
-        else:
-            data['time'] = str(abs((datetime.date.today() - i.Date).days)) + ' days ago'
+            #date_time_obj = datetime.datetime.strptime(str(i.Date) + ' ' + str(i.Time), '%Y-%m-%d %H:%M:%S.%f')
+            d=datetime.datetime.now()-datetime.datetime.combine(i.Date,i.Time)
+            day=d.days
+            #diff = str(datetime.datetime.today() - date_time_obj).split('.')[0].split(':')
+            if day >0:
+                data['time']=str(day)+' Days Ago'
+            else:
+                x=str(d)
+                x=x.replace(':',' ')
+                x=x.replace(',',' ')
+                sec=x.split(' ')
+                if int(sec[-3]) >0:
+                    data['time']=str(int(sec[-3]))+' Hours Ago'
+                elif int(sec[-2])>0:
+                    data['time']=str(int(sec[-2]))+' Minutes Ago'
+                else:
+                    a=str(sec[-1])
+                    if int(float(a)) == 0:
+                        data['time']='Just now'
+                    else:
+                        data['time']=str(int(a[:2]))+' Seconds Ago'
+
         new_data.append(data)
 
         if i.status == False:

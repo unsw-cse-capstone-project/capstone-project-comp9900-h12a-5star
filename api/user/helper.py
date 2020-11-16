@@ -7,9 +7,9 @@ password = 'Pa@92675'
 
 def verification_email(user_id):
     msg = EmailMessage()
-    msg.set_content('You created an Account with 5star')
+    msg.set_content('You have successfully registered to 5 Star Film Finder. Congratulations!')
 
-    msg['Subject'] = 'Account creation Alert'
+    msg['Subject'] = 'Welcome to 5Star Film Finder'
     msg['From'] = gmail_id
     msg['To'] = user_id #'rohithkorupalli@gmail.com'
 

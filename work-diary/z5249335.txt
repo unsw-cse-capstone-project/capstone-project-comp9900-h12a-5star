@@ -22,4 +22,7 @@ Week 6:
      Fixed Bugs in the working code . Jira Tasks are updated . Participated in Dem0 2 and attended Retrospective Meeting 2 on Friday. Decided to start recurring scrum meeting (5 -10 mins ) on daily progress.
 Week 9:
       Backend part received feedback to load results from external API. Strated working on Caching using Memcached and need to create a Dynamic Java script file creation for front end task.
+      
+Week 10:
+     Report prearation. Minor Code Fixes. Populating Database. Demo Preparation is done. User stories are upodated in Jira
      

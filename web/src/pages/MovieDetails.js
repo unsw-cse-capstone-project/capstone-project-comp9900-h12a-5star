@@ -5,7 +5,7 @@ import { gender, featureList } from '../components/genericLists';
 import MovieTile from '../components/MovieTile';
 import {
     DatesRangeInput
-} from 'semantic-ui-calendar-react';
+  } from 'semantic-ui-calendar-react';
 
 
 export default class MovieDetails extends Component {
@@ -25,6 +25,7 @@ export default class MovieDetails extends Component {
             open: false,
             review: "",
             rating: "0",
+            datesRange:"",
             gender: "",
             features: [],
             shareUser: "",

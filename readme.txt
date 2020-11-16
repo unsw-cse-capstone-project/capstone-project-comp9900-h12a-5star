@@ -35,7 +35,7 @@ Build and Run Frontend Server
 1.	Open command prompt in Windows or terminal in Linux/Mac OS.
 2.	Go to the root directory of the application.
 3.	Now, cd to the web folder
-4.	 Now install the Node.js dependencies. Run the below command.
+4.	Now install the Node.js dependencies. Run the below command.
 •	npm install
 
 5.	Run the frontend server.

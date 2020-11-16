@@ -99,20 +99,20 @@ def UserLoginView(request):
 
 #This function is used to send results and store the results in Cache . It has 2 parameters b,a . Where b specifies whether it is Browse or Search and a specifies cache key
 def searchpage(b,a):
-                search_page = defaultdict(list)
-                for i in range(1,11):
-                    nav_search=defaultdict(list)
-                    res=requests.get('https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=vote_average.desc&include_adult=false&include_video=false&page='+str(i)+'&release_date.gte=2014-01-01')
-                    nav_search['result'].extend(res.json()['results'])
-                    y_search=search_func(nav_search,'search_bar')
-                    if len(y_search) !=0:
-                            search_page['name_results'].extend(y_search['navbar_result'])
-                search_page['name_results'].sort(key=lambda x: datetime.strptime(x['release_date'], '%Y-%m-%d'), reverse=True)
-                if b == 'browse':
-                    search_page['name_results'] = sorted(search_page['name_results'], key=lambda k: ( -k['rating'],k['title'].lower()))
-                cache.set(a,search_page,None)
-                search_page=json.dumps(search_page)
-                return JsonResponse(json.loads(search_page),safe=False)
+    search_page = defaultdict(list)
+    for i in range(1,11):
+        nav_search=defaultdict(list)
+        res=requests.get('https://api.themoviedb.org/3/discover/movie?api_key=c8b243a9c923fff8227feadbf8e4294e&language=en-US&sort_by=vote_average.desc&include_adult=false&include_video=false&page='+str(i)+'&release_date.gte=2014-01-01')
+        nav_search['result'].extend(res.json()['results'])
+        y_search=search_func(nav_search,'search_bar')
+        if len(y_search) !=0:
+                search_page['name_results'].extend(y_search['navbar_result'])
+    search_page['name_results'].sort(key=lambda x: datetime.strptime(x['release_date'], '%Y-%m-%d'), reverse=True)
+    if b == 'browse':
+        search_page['name_results'] = sorted(search_page['name_results'], key=lambda k: ( -k['rating'],k['title'].lower()))
+    cache.set(a,search_page,None)
+    search_page=json.dumps(search_page)
+    return JsonResponse(json.loads(search_page),safe=False)
 
 #This function will retun all the review and rating reviews for particular Movie
 def get_review(from_user,id,final,gender,from_date,to_date):

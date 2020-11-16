@@ -35,3 +35,22 @@ Attended Our first Demo and presented the progress of the project.
 Attended our first retrospective meeting and scrutionized on pending tasks
 Talked about increasing the sprint velocity and pushing project progress.
 Started working on creating movie Watch list for Users.
+
+Week 7
+Created watchlist page where users can add movies to thier watchlist.
+Implemented banned list page where users can add other users to thier banned list.
+Implemented adding reviews to the movie with a star rating
+
+Week 8
+Worked on implementing notifications where users can be notified about any changes from other users.
+Started working on Recommendations and tried to implement Speech recognition to the search menu for ease of access
+Researched about adding semetiment analysis to the reviews and displaying additional statistics about the movie.
+
+Week 9
+Completed implementing recommnedations to personalize the experience for the user.
+Added recommendations on the movie details page so that the user can select the attributes like genre and descriptions.
+Could not implement Speech Recognition as it was not supported in other browsers except chrome
+Could not implement sentiment analysis as I could not get enough support from backend team.
+Started working on the Final Report
+
+

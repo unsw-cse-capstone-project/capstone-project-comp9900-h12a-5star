@@ -27,3 +27,6 @@ Completed the filtering of reviews based on gender and date range. Attended the 
 
 Week 9
 Completed the functionality to like/upvote a review given by user. Updated the Jira board accordingly. Conducted team meeting to distribute tasks on report writing and also final product progress for submission. I will be adding comments to my code and cleaning any redundant lines of code.
+
+Week 10
+Completed the code checkin with all bug fixes on GIT, finished report writing, completed unit testing of the Film Finder application. The final presentation of the software application will be done this week on Thursday.

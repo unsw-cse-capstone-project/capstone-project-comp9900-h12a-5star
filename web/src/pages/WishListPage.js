@@ -135,10 +135,7 @@ export default class WishListPage extends Component {
                     :
                     <Message>
                         {/* Message incase there are no movies in wishlist */}
-                        <Message.Header>Opps...It's time to create a wishlist!</Message.Header>
-                        <p>
-                            Go ahead and add items to your wishlist.
-                        </p>
+                        <Message.Header>Opps...There are no items to show in the wishlist!</Message.Header>
                     </Message>
                 }
                 </Container> 

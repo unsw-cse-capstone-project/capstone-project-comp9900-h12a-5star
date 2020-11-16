@@ -51,7 +51,7 @@ def UserRegistrationView(request):
         permission_classes = (AllowAny,)
         serializer = serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        try:
+        '''try:
             verification_email(request.data['email'])
         except Exception as e:
             response = {
@@ -61,7 +61,7 @@ def UserRegistrationView(request):
             }
             statusCode = status.HTTP_400_BAD_REQUEST
 
-            return Response(response, status=statusCode)
+            return Response(response, status=statusCode)'''
         serializer.save()
         response = {
             'success' : 'True',

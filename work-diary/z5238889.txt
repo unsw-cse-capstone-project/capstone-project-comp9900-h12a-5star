@@ -53,4 +53,9 @@ Could not implement Speech Recognition as it was not supported in other browsers
 Could not implement sentiment analysis as I could not get enough support from backend team.
 Started working on the Final Report
 
+Week 10
+Minor UI fixes 
+Finished writing Functionalities and User Manual part in the Final report to submit.
+
+
 

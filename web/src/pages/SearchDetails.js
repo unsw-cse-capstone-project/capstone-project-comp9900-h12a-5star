@@ -127,8 +127,8 @@ export default class SearchDetails extends Component {
             if (this.state.items.genre_result){
                 genreLength=this.state.items.genre_result.length;
             }
-            var x = Math.floor(genreLength/4);
-            var y= x*4;
+            x = Math.floor(genreLength/4);
+            y= x*4;
             if (genreLength>0 && genreLength<4){
                 y=genreLength
             }
@@ -209,8 +209,8 @@ export default class SearchDetails extends Component {
             if (this.state.items.description_result){
                 descLength=this.state.items.description_result.length;
             }
-            var x = Math.floor(descLength/4);
-            var y= x*4;
+            x = Math.floor(descLength/4);
+            y= x*4;
             if (descLength>0 && descLength<4){
                 y=descLength
             }
@@ -288,13 +288,13 @@ export default class SearchDetails extends Component {
             <>
                 <Container style={{ margin: 20 }}>
                     {/* To make the flow dynamic flag value is set based on user selection of search category */}
-                    {flag==1 &&
+                    {flag===1 &&
                         <Header as='h1'>Search Results by Movie Title: {this.props.match.params.searchText}</Header>
                     }
-                    {flag==1 &&
+                    {flag===1 &&
                         <Divider section />
                     }
-                    {  flag==1 && y >= 4 
+                    {  flag===1 && y >= 4 
 
                             ? <Grid columns='equal'>{columnsMovie}</Grid>
                             : <Grid columns='equal'>{columnsMovie}
@@ -302,13 +302,13 @@ export default class SearchDetails extends Component {
 
                                 </Grid>
                     }
-                    {flag==2 &&
+                    {flag===2 &&
                         <Header as='h1'>Search Results by Movie Genre: {this.props.match.params.searchText}</Header>
                     }
-                    {flag==2 &&
+                    {flag===2 &&
                         <Divider section />
                     }
-                    {   flag==2 && y >= 4 
+                    {   flag===2 && y >= 4 
 
                         ? <Grid columns='equal'>{columnsGenre}</Grid>
                         : <Grid columns='equal'>{columnsGenre}
@@ -316,13 +316,13 @@ export default class SearchDetails extends Component {
 
                             </Grid>
                     }
-                    {flag ==3 &&
+                    {flag ===3 &&
                         <Header as='h1'>Search Results by Movie Description: {this.props.match.params.searchText}</Header>
                     }
-                    {flag==3 &&
+                    {flag===3 &&
                         <Divider section />
                     }
-                    {   flag==3 && y >= 4 
+                    {   flag===3 && y >= 4 
 
                         ? <Grid columns='equal'>{columnsDesc}</Grid>
                         : <Grid columns='equal'>{columnsDesc}

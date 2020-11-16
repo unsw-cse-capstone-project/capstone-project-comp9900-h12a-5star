@@ -19,3 +19,21 @@ Week 4:
 Finished user login and registration backend
 
 Week 5:
+Created api for adding reviews
+
+Week 6:
+created api for ban users, watchlist
+
+Week 7:
+Created api for wishlist and added email notification service
+
+Week 8:
+Added api to suggest a movie to another user, follow a user and added api for showing notifications
+Modified code so for shifhting from MongoDB to sqlite3
+
+Week 9:
+Added api for the movie recommendations
+Fixed code bugs
+
+Week 10:
+Report writing, code testing and submission

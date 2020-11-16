@@ -25,7 +25,7 @@ source env/bin/activate
 python3 -m pip install -r requirement.txt
 ```
 
-- run the following commands
+- skip these commands if there is database/sqlite3 file in the files.
 ```(bash)
 python3 manage.py makemigrations user
 python3 manage.py makemigrations profile
@@ -39,6 +39,10 @@ python3 manage.py migrate notifications
 
 python3 manage.py makemigrations
 python3 manage.py migrate
+```
+
+- runt he following command to run the server
+```(bash)
 python3 manage.py runserver
 ```
 =======

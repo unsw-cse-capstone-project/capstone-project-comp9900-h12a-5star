@@ -47,10 +47,10 @@ export default class FollowUserPage extends Component {
 
     // Removes the unfollowed user from the state so that it is instantly loaded on the page and a refresh is not required.
     revoveElement = (val) => {
-        delete this.state.items.data[this.state.items.data.indexOf(val)]
-        this.setState({item: this.state.items.data})
+        delete this.state.items.following[this.state.items.following.indexOf(val)]
+        this.setState({item: this.state.items.following})
         var len = 0
-        this.state.items.data.map(()=>
+        this.state.items.following.map(()=>
             len = len+1
         )
         if (len === 0){
@@ -60,6 +60,7 @@ export default class FollowUserPage extends Component {
 
     // Unfollow a user and send the request to the database
     removeFromFollowlist = (val) => {
+        this.revoveElement(val)
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -67,7 +68,7 @@ export default class FollowUserPage extends Component {
         };
 
         fetch("http://127.0.0.1:8000/api/unfollowUser/", requestOptions)
-        this.revoveElement(val)
+        
     }
 
     render() {

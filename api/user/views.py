@@ -507,8 +507,9 @@ class MovieDetails(APIView):
                         movie_details['trailers'].append(None)
             if not(movie_details['teasers']):
                         movie_details['teasers'].append(None)
-
-            selection = request.data['selection']
+            selection = []
+            if 'selection' in request.data.keys():
+                selection = request.data['selection']
             movie_details['recomendations'] = []
             data = []
             if 'Description' in selection or len(selection)==0:

@@ -202,6 +202,7 @@ def get_review(from_user,id,final,gender,from_date,to_date):
                     final['rating'].append(i.rating)
                     final['time'].append(i.review_time)
                     final['date'].append(i.review_date)
+                    #print(i.review_user_id, i.like_reviewers)
                     if from_user in i.like_reviewers:
                         final['upvoteStatus'].append(True)
                     else:
@@ -221,7 +222,7 @@ def get_review(from_user,id,final,gender,from_date,to_date):
                             final['date_modified'].append(str(int(sec[-2]))+' Minutes Ago')
                         else:
                             a=str(sec[-1])
-                            if int(a) == 0:
+                            if int(float(a)) == 0:
                                 final['date_modified'].append('Just Now')
                             else:
                                 final['date_modified'].append(str(int(a[:2])) +' Seconds Ago')
@@ -238,19 +239,16 @@ def get_review(from_user,id,final,gender,from_date,to_date):
         final['liked']=False
         final['wishlist']=False
         if len(final['rating'])>0:
-
-             final['rating']=[i  for i in final['rating'] ]
-             x = [i  for i in final['rating'] if i and i!=0.0]
-             final['avg_rating']=round(sum(final['rating'])/len(x),1)
+             final['rating']=[i  for i in final['rating'] if i]
+             final['avg_rating']=round(sum(final['rating'])/len(final['rating']),1)
     else:
-        for i in reviews.objects.filter(movie_id=id):
+        for i in reviews.objects.filter(movie_id=id , review_user_id=from_user):
             final['watched'] = i.watched
             final['liked'] = i.liked
             final['wishlist'] = i.wishlist
             if len(final['rating'])>0:
-                 final['rating']=[i for i in final['rating']]
-                 x = [i  for i in final['rating'] if i and i!=0.0]
-                 final['avg_rating']=round(sum(final['rating'])/len(x),1)
+                 final['rating']=[i for i in final['rating'] if i]
+                 final['avg_rating']=round(sum(final['rating'])/len(final['rating']),1)
     return final
 
 
@@ -507,9 +505,8 @@ class MovieDetails(APIView):
                         movie_details['trailers'].append(None)
             if not(movie_details['teasers']):
                         movie_details['teasers'].append(None)
-            selection = []
-            if 'selection' in request.data.keys():
-                selection = request.data['selection']
+
+            selection = request.data['selection']
             movie_details['recomendations'] = []
             data = []
             if 'Description' in selection or len(selection)==0:

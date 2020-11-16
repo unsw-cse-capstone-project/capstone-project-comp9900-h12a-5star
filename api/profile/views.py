@@ -183,8 +183,10 @@ class followUser(RetrieveAPIView):
     def put(self, request, *args, **kwargs):
         follower = UserProfile.objects.get(username=request.data['follower'])
         followee = UserProfile.objects.get(username=request.data['followee'])
-
-        if str(request.data['follower']) in followee.followed_by or str(request.data['followee']) in follower.following:
+        message = ''
+        print(request.data['follower'],request.data['followee'])
+        print(followee.followed_by,follower.following)
+        if str(request.data['follower']) in followee.followed_by and str(request.data['followee']) in follower.following:
             response = {
             'success': 'false',
             'statusCode': statusCode,
@@ -193,24 +195,24 @@ class followUser(RetrieveAPIView):
         if str(request.data['follower']) not in followee.followed_by:
             followee.followed_by.append(str(request.data['follower']))
             followee.save()
-            message1 = 'follower added'
+            message += 'follower added'
 
         if str(request.data['followee']) not in follower.following:
             follower.following.append(str(request.data['followee']))
             follower.save()
-            message2 = 'followee added'
+            message += ' & followee added'
 
-        new = notifications()
+        '''new = notifications()
         new.toUsername = request.data['followee']
         new.fromUsername = request.data['follower']
         new.type = request.data['follower'] + ' is following you'
         new.Date = datetime.date.today()
         new.Time = datetime.datetime.now().time()
-        new.save()
+        new.save()'''
         response = {
             'success': 'true',
             'statusCode': status.HTTP_200_OK,
-            'message': message1 + ' & ' + message2}
+            'message': message}
         return Response(response, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):

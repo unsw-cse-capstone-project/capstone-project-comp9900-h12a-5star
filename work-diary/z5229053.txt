@@ -24,3 +24,6 @@ Added trailers on the movie details page. Added tool tip text for better represe
 
 Week 9
 Added the notification functionality on the website. Tested the application and fixed the bugs in the application. Added the follow user feature. Users can add, view and remove a user form follow list. Added the share movie feature. Redid the like/upvote on the reviews. Imporved the asthetic appeal of the website.
+
+Week 10
+Worked on the project report. Added the user manual and overall functionality of the product. Worked on the overall format of the report.

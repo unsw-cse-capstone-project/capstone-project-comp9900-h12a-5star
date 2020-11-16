@@ -202,7 +202,6 @@ def get_review(from_user,id,final,gender,from_date,to_date):
                     final['rating'].append(i.rating)
                     final['time'].append(i.review_time)
                     final['date'].append(i.review_date)
-                    #print(i.review_user_id, i.like_reviewers)
                     if from_user in i.like_reviewers:
                         final['upvoteStatus'].append(True)
                     else:
